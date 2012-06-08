@@ -73,4 +73,4 @@ land of lisp根本这几天就没看，试了试[racket][1]，相当有意思，
 
 [1]: http://racket-lang.org/
 [2]: http://htdp.org
-[3]:
+[3]: 
