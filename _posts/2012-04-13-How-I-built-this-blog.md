@@ -44,9 +44,11 @@ gem sources -a http://ruby.taobao.org/ --http-proxy http://127.0.0.1:1998
 gem install --http-proxy http://127.0.0.1:1998 jekyll 
 {% endhighlight %}
 其它和官方文档就没什么区别了。
+
+ps:如果用socks代理请自行配置tsocks。
 ### jekyll
 
-直接从soimort扒来的源码和bootjekyll的源码经过个人需求重新加工整合，这个过程比较繁琐,此处略去。
+直接从soimort扒来的源码和jekyllbootstrap的源码经过个人需求重新加工整合，这个过程比较繁琐,此处略去。
 
 然后就是push...
 

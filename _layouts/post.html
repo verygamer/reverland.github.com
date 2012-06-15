@@ -16,6 +16,13 @@ author: Reverland
     <article id="articlePost">
         {{ content }}
     </article>
+    <div class="BlogNav">
+{% if page.next %}
+<a class="next" href="{{ page.next.url }}" rel="bookmark">&laquo;&nbsp;{{ page.next.title | truncatewords:5 }}</a>
+{% endif %}
+{% if page.previous %}
+<a class="prev" href="{{ page.previous.url }}" rel="bookmark" style="float:right">{{ page.previous.title | truncatewords:5 }}&nbsp;&raquo;</a>
+{% endif %}
     
     {% if page.disqus == true %}
     <div class="disqus">
