@@ -1,3 +1,3 @@
 git add .
-git commit -m "添加上一篇下一篇，blog update"
+git commit -m "修正tag缺失"
 git push master
