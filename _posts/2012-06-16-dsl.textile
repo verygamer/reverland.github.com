@@ -275,7 +275,7 @@ h2. 照例的废话
 
 寝室的室友在看dota比赛，不要这么激情好么，吵死了。晚上试着跑了将近一个小时步，感觉不错。
 
-[1] domian-specific language
+fn1. domian-specific language
 
 [wizard]http://reverland.github.com/Tech/2012/04/26/a-text-game-engine-written-by-lisp/
 
