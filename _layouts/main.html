@@ -29,112 +29,71 @@ generator: Jekyll 0.11.2
     <link rel="stylesheet" type="text/css" href="/~css/pygments.css" media="all"/>
     <!--link rel="stylesheet" type="text/css" href="/~css/bootstrap.min.css" media="all"/-->
 
+    <!-- load MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+	tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+      });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-      <!-- load Google Web Fonts -->
-      <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Droid+Sans' />
 
-      <!-- load MathJax >
+    <!-- load Google Web Fonts -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Droid+Sans' />
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
+  </head>
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
+  <body>
+    <!-- load background image (must be put in body) -->
+    <script type="text/javascript">
+      document.body.style.backgroundImage = "url('{{ page.background-image }}')";
+      </script>
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
+      <nav id="navBarTop">
+      <ul class="navBarListLeft">
+	<li><a href="/"><img src="/~images/reverland.png" alt="reverland" title="{{ page.author }}'s Home Page" height="32" /></a></li>
+	<li><a href="/"><img src="/~images/home.png" alt="home" title="Home" class="navDock" height="32" /></a></li>
+	<li><a href="/atom.xml" target="_blank"><img src="/~images/feed.png" alt="feed" title="Feed" class="navDock" height="32" /></a></li>
+	<li style="position: relative; top: -12px; font-size: 16px">|</li>
+	<li style="position: relative; top: -12px; font-size: 16px"><a href="http://reverland.github.com/about.html" >About</a></li>
+	<li style="position: relative; top: -12px; font-size: 16px">|</li>
+	<li style="position: relative; top: -12px; font-size: 16px"><a href="http://reverland.github.com/tags.html" >Tags</a></li>
+	<li style="position: relative; top: -12px; font-size: 16px">|</li>
+	<li style="position: relative; top: -12px; font-size: 16px"><a href="http://reverland.github.com/archive.html" >Archive</a></li>
+	<li style="position: relative; top: -12px; font-size: 16px">|</li>
+	<li style="position: relative; top: -12px; font-size: 16px"><a href="http://reverland.github.com/categories.html" >Categories</a></li>
+      </ul>
 
-	<script type="text/javascript" src="/~mathjax/MathJax.js?config=TeX-AMS_HTML-full"></script-->
+      <ul class="navBarListRight">
+	<li style="position: relative; top: -12px"><b>{{ page.author }}</b> on </li>
+	<li><a href="http://github.com/reverland" target="_blank"><img src="/~images/github.png" alt="github" title="GitHub" class="navDock" height="32" /></a></li>
+	<li><a href="http://twitter.com/lhtlyy" target="_blank"><img src="/~images/twitter.png" alt="twitter" title="Twitter" class="navDock" height="32" /></a></li>
+	<li><a href="http://reverland.lofter.com/" target="_blank"><img src="/~images/lofter.ico" alt="lofter" title="Lofter" class="navDock" height="32" /></a></li>
+	<li><a href="http://www.douban.com/people/reverland/" target="_blank"><img src="/~images/douban.png" alt="douban" title="Douban" class="navDock" height="32" /></a></li>
+	<li><a href="http://www.renren.com/306127150" target="_blank"><img src="/~images/renren.ico" alt="renren" title="Renren" class="navDock" height="32" /></a></li>
+      </ul>
+      </nav>
 
-	<!-- load ShareThis 
-	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-	<script type="text/javascript">stLight.options({publisher: "9aabed9c-ac3f-4f96-8f5a-8e7a27307543"}); </script>
-	--> 
-	<!-- load Google Analytics -->
-	<!--script type="text/javascript">
-	  var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-30814702-1']);
-	_gaq.push(['_setDomainName', '.reverland.github.com']);
-	_gaq.push(['_trackPageview']);
-	(function() {
-	 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	 })();
-       </script-->
+      <nav id="navBarBottom">
+      <div class="navBarListLeft">
+	<div class="g-plusone" data-size="medium" data-annotation="none"></div>
+	<!--div class='st_fblike_hcount' displayText='Facebook Like'></div-->
+	<br />
+	<div style="position: relative; top: 4px; width: 60%">
+	  © 2012 <a href="http://www.renren.com/306127150" target="_blank"><b>Reverland</b></a>. Unless otherwise stated, all contents on this site are released under a <a href="http://creativecommons.org/licenses/by-nc/3.0/" target="_blank"><b>CC BY-NC 3.0 License</b></a>.
+	</div>
+      </div>
 
-       <script type="text/javascript" src="/~js/main.js"></script>
+      <div class="navBarListRight">
+	<a href="http://www.w3.org/html/logo/" target="_blank" style="position: absolute; right: 0"><img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-semantics.png" height="36" alt="HTML5 Powered with CSS3 / Styling, and Semantics" title="HTML5 Powered with CSS3 / Styling, and Semantics" /></a>
+	<br />
+	<div style="position: relative; top: 20px; right: 0">
+	  Designed by <a href="http://www.soimort.org/" target="_blank"><b>Mort</b></a> | Powered by <a href="http://jekyllrb.com/" target="_blank"><b>Jekyll</b></a>
+	</div>
+      </div>
+      </nav>
 
-     </head>
+      {{ content }}
 
-     <body>
-       <!-- load background image (must be put in body) -->
-       <script type="text/javascript">
-	 document.body.style.backgroundImage = "url('{{ page.background-image }}')";
-       </script>
-
-       <nav id="navBarTop">
-       <ul class="navBarListLeft">
-	 <li><a href="/"><img src="/~images/reverland.png" alt="reverland" title="{{ page.author }}'s Home Page" height="32" /></a></li>
-	 <li><a href="/"><img src="/~images/home.png" alt="home" title="Home" class="navDock" height="32" /></a></li>
-	 <li><a href="/atom.xml" target="_blank"><img src="/~images/feed.png" alt="feed" title="Feed" class="navDock" height="32" /></a></li>
-	 <li style="position: relative; top: -12px; font-size: 16px">|</li>
-	 <li style="position: relative; top: -12px; font-size: 16px"><a href="http://reverland.github.com/about.html" >About</a></li>
-	 <li style="position: relative; top: -12px; font-size: 16px">|</li>
-	 <li style="position: relative; top: -12px; font-size: 16px"><a href="http://reverland.github.com/tags.html" >Tags</a></li>
-	 <li style="position: relative; top: -12px; font-size: 16px">|</li>
-	 <li style="position: relative; top: -12px; font-size: 16px"><a href="http://reverland.github.com/archive.html" >Archive</a></li>
-	 <li style="position: relative; top: -12px; font-size: 16px">|</li>
-	 <li style="position: relative; top: -12px; font-size: 16px"><a href="http://reverland.github.com/categories.html" >Categories</a></li>
-       </ul>
-
-       <ul class="navBarListRight">
-	 <li style="position: relative; top: -12px"><b>{{ page.author }}</b> on </li>
-	 <li><a href="http://github.com/reverland" target="_blank"><img src="/~images/github.png" alt="github" title="GitHub" class="navDock" height="32" /></a></li>
-	 <li><a href="http://twitter.com/lhtlyy" target="_blank"><img src="/~images/twitter.png" alt="twitter" title="Twitter" class="navDock" height="32" /></a></li>
-	 <li><a href="http://reverland.lofter.com/" target="_blank"><img src="/~images/lofter.ico" alt="lofter" title="Lofter" class="navDock" height="32" /></a></li>
-	 <li><a href="http://www.douban.com/people/reverland/" target="_blank"><img src="/~images/douban.png" alt="douban" title="Douban" class="navDock" height="32" /></a></li>
-	 <li><a href="http://www.renren.com/306127150" target="_blank"><img src="/~images/renren.ico" alt="renren" title="Renren" class="navDock" height="32" /></a></li>
-       </ul>
-       </nav>
-
-       <nav id="navBarBottom">
-       <div class="navBarListLeft">
-	 <div class="g-plusone" data-size="medium" data-annotation="none"></div>
-	 <!--div class='st_fblike_hcount' displayText='Facebook Like'></div-->
-	 <br />
-	 <div style="position: relative; top: 4px; width: 60%">
-	   © 2012 <a href="http://www.renren.com/306127150" target="_blank"><b>Reverland</b></a>. Unless otherwise stated, all contents on this site are released under a <a href="http://creativecommons.org/licenses/by-nc/3.0/" target="_blank"><b>CC BY-NC 3.0 License</b></a>.
-	 </div>
-       </div>
-
-       <div class="navBarListRight">
-	 <a href="http://www.w3.org/html/logo/" target="_blank" style="position: absolute; right: 0"><img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-semantics.png" height="36" alt="HTML5 Powered with CSS3 / Styling, and Semantics" title="HTML5 Powered with CSS3 / Styling, and Semantics" /></a>
-	 <br />
-	 <div style="position: relative; top: 20px; right: 0">
-	   Designed by <a href="http://www.soimort.org/" target="_blank"><b>Mort</b></a> | Powered by <a href="http://jekyllrb.com/" target="_blank"><b>Jekyll</b></a>
-	 </div>
-       </div>
-       </nav>
-
-       {{ content }}
-
-     </body>
-   </html>
+    </body>
+  </html>

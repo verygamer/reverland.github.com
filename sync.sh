@@ -1,3 +1,3 @@
 git add .
-git commit -m "修正tag缺失"
+git commit -m "载入mathjax"
 git push master
