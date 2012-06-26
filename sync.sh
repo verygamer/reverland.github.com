@@ -1,3 +1,3 @@
 git add .
-git commit -m "载入mathjax"
+git commit -m "update"
 git push master
