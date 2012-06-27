@@ -162,7 +162,7 @@ h2. 下一步是什么？
 
 h2. Footnotes
 
-fn1. 当然可以用vim，vim中slimv正是为此而生，可参考译者的 "在Vim中使用lisp":slimv 一文。本文中操作都可以在vim中完成。
+fn1. 当然可以用vim，vim中slimv正是为此而生，可参考译者的 "在Vim中使用lisp":slimv 一文。本文中操作都可以在vim中完成,只是不要尝试用那个quicklisp-slime-helper了。
 
 fn2. Emacs内置elisp解释器。elisp是lisp的一个变种。
 
