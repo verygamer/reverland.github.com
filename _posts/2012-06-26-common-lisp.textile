@@ -113,9 +113,7 @@ CL-Project 在运行时更改了当前路径，使得第一次加载你的应用
 你有3种方法把应用放到你的加载路径：
 
 # 为了让应用在你的当前路径，或者从应用路径启动你的Emacs或者在加载slime之前更改目录。
-
 # 把你的应用移动到 ~/quicklisp/local-projects 它将总是有用。
-
 # "向你的加载路径添加项目":http://common-lisp.net/project/asdf/asdf/Controlling-where-ASDF-searches-for-systems.html#Controlling-where-ASDF-searches-for-systems 。
 
 
