@@ -28,7 +28,7 @@ disqus: true
 ## Knowledge Structure:
 - There are some courses I've learned in University: Quantum Mechanics/Mathematics/Electrodynamics/Optics/Electron Technics/C++/Singlechip and so on ....Which really broaden my mind.
 - Learn to install and config servers by my own.I once help to config the workstations in the lab of my college.Furthermore, I'm a practical linux user.
-- Learn to design and administrate website on my own.My personal site is http://reverland.github.com/ and there is another wiki site http://reverland.tk/.
+- Learn to design and administrate website on my own.My personal site is http://reverland.github.com/ and there is another ugly wiki site http://reverland.bitbucket.org/.
 - A good basis of mathematics at school.Mathematics Modeling greatly influence me.Then I become geeker and geeker.
 - A good feeling of English and get used to reading English documents,Have a good command of both spoken and written English.I'm also maintaining some wiki documents translated from English.You can refer it at [archlinux wiki][1]
 - Good at processing documents and typesets.Have good knowledge of LaTeX,basic knowledge of html/css and good knowledge of office.
@@ -45,7 +45,7 @@ Also, I'm happy to share,communicate and help with people.
 - weibo: [薛定鄂的猫耳朵][3]
 - twitter: [Yu-reverland][4]
 ## In fact
-I just feel terrible that I'm so weak......
+Yeah,I am so weak,but nothing stop me from doing better by far.
 
 [1]: https://wiki.archlinux.org/index.php/Special:Contributions/Reverland
 [2]: https://github.com/reverland
