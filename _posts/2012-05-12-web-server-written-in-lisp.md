@@ -7,7 +7,9 @@ tags: [lisp]
 disqus: true
 ---
 {% include JB/setup %}
+
 ## 关于服务器
+
 首先我们要知道服务器是怎么工作的。如下图(有没有很熟悉?)
 
 ![Alt 服务器工作原理][1]
@@ -54,6 +56,7 @@ userid=foo&password=supersecretpassword
 {% endhighlight %}
 
 ## 如何以lisp的方式处理
+
 在common lisp中，我们可以通过socket stream来完成服务器和浏览器的通信，通过把http报文转换成alist形式存储在clisp webserver中，同时完成对浏览器相应信息的响应。
 
 因为网络中有许多意料之外的例外错误，为了确保发生错误后程序继续运行，比如说让webserver出错后可以正确关闭socket。可以使用unwind-protect.
@@ -195,24 +198,30 @@ userid=foo&password=supersecretpassword
 - read-line
 
 ## 写在最后
+
 其实这个webserver还是有很多疑惑的。
 
 首先，实际操作中我在firebugs中并没有看到Post request，<strike>邮件组中热心人说可以用telnet来查看交互信息但我不会。所以对content-length的处理就感觉挺蹊跷（liutos同学似乎也这样认为）。可能通信时为了准确性都要验证吧。</strike>
 
-其二是照书上源码和网上提供的源码返回给浏览器的是plain text而非解析为html，经参照所以服务器返回信息添加上
+其二是照书上源码和网上提供的源码返回给浏览器的是plain text而非解析为html，经参照服务器返回信息添加上
+
 {% highlight bash %}
 HTTP/1.1 200 OK
 {% endhighlight %}
+
+同时保证html5标准，不要漏掉一大堆head、body、html标签。
 
 最后还有对parse-params的处理，为什么要分三种情况处理?我把后两种去掉后也能正常运行,还是说三种情况容错性好？<strike>我不明白，这个问题留待高人吧。</strike>
 
 edit:第二种情况处理末尾，虽然对commonlisp来说没有指定输入nil的情况也会输出nil，秉持着递归时考虑所有情况的lisper们还是会写出来。另外最后一种情况处理错误情况，以防出现中断.
 
 如果webserver不能正常工作，可以用telnet来测试。
+
 {% highlight bash %}
 telnet 127.0.0.1 8080
 {% endhighlight %}
 
 最后对Purity和liuto的解惑与帮助致以诚挚谢意。
-[1]: /~images/server.dot.png
+
+[1]: /images/server.dot.png
 

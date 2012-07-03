@@ -7,7 +7,9 @@ tags: [lisp]
 disqus: true
 ---
 {% include JB/setup %}
+
 ## Powerful format
+
 format又是一个在common lisp中灵活“过头”，争议超多的一个宏。它十分强大。
 
 基本用法如下
@@ -108,6 +110,7 @@ format又是一个在common lisp中灵活“过头”，争议超多的一个宏
 可以看到，format的参数多的……而且像perl一样有很多“奇怪”的符号。
 
 ## Attack by robots
+
 让我们接下来看看一个被作者称作可怕的游戏，It's really drive me crazy!!
 
 {% highlight cl %}
@@ -161,9 +164,11 @@ format又是一个在common lisp中灵活“过头”，争议超多的一个宏
                                      #\ ))))))
 
 {% endhighlight %}
+
 整个游戏就一个函数，由loop和format这种强大的lisp异类来完成。
 
 ## 写在最后
+
 挺好玩的一个游戏。挺难理解的代码……
 
 为了看懂又回头看看作者的loop周期表，再次见识了format和loop的强大之处，也感受到了它们的复杂。

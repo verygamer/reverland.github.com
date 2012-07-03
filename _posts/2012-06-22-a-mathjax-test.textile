@@ -6,6 +6,7 @@ category: Tech
 tags: [mathjax]
 disqus: true
 ---
+{% include sd/math %}
 {% include JB/setup %}
 
 h1. TeX Samples
@@ -14,11 +15,13 @@ h1. TeX Samples
 
 h2. 洛伦兹公式
 
+$$
 \begin{aligned}
 \dot{x} & = \sigma(y-x) \\
 \dot{y} & = \rho x - y - xz \\
 \dot{z} & = -\beta z + xy
 \end{aligned}
+$$
 
 h2. 柯西-施瓦茨不等式
 

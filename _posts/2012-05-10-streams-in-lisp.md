@@ -7,6 +7,7 @@ tags: [lisp]
 disqus: true
 ---
 {% include JB/setup %}
+
 lisp中有多种流，不同的流与不同的资源交互。这些流包括控制台流，文件流，socket流和字符串流。
 
 流的处理方式是popup和push.
@@ -18,6 +19,7 @@ Socket流允许网络上的计算机程序进行通信。我们必须在通信�
 字符串流允许我们使用不需要连接外部资源来使用流的函数来调试，同时能帮我们用优美有效率的方法（with-open-to-string）来建立复杂字符串。但这个宏不符合函数式编程原则，争议很大。
 
 下面是使用stream的一些例子
+
 {% highlight cl %}
 ;;在做图的那部分已经见识过了
 ;;to see if we have a valid output stream

@@ -7,7 +7,9 @@ tags: [lisp]
 disqus: true
 ---
 {% include JB/setup %}
+
 ## About this game
+
 假设你是lisp生物，你和一个怪物刚刚抢劫了一家酒品店，并带着战利品窜逃。然而，在逃跑期间，怪物决定出卖你并抢走你的车和钱。虽然他把车开走之前你多次试图截获它。
 
 现在你别无选择，因为你的“原则”，决定去hunt the wumpus。你知道他受了重伤需要在堵塞的都市中某处静养好几个月。问题是道路十分复杂，即使城市中的老居民也难以判清方向。
@@ -31,7 +33,9 @@ disqus: true
 如果你认为你足够作为一个能抓住怪物的lisp生物，开始写这个游戏并猎杀怪物！
 
 ## 游戏
+
 整个游戏lisp代码如下，我们需要上次写的库来可视化lisp的数据
+
 {% highlight cl %}
 (cd "/home/reverland/Documents/lisp/")
 ;;加载上回写的库
@@ -283,13 +287,17 @@ disqus: true
 new-game
 {% endhighlight %}
 用konqureror打开生成的png文件known-city.png，一遍walk/charge一边按住F5疯狂刷新吧。
+
 ***
+
 看看截图效果
 
 <img src="http://lhtlyybox.googlecode.com/files/%E6%8A%93%E5%9B%BE70.png" hight="200" width="400" alt="konqureror中玩hunt the wumpus" />
 
 ***
+
 ## 我学到了什么
+
 以下命令：
 
 - load

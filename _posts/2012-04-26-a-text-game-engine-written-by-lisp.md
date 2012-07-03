@@ -6,6 +6,7 @@ category: Tech
 tags: [lisp]
 disqus: true
 ---
+
 ## Lisp is amazing,isn't it?
 
 最早的时候，是从emacs听说lisp的，不过emacs这等神器，却并非我的菜，几经折腾最终滚回了简洁的vim。
@@ -17,8 +18,11 @@ disqus: true
 然后找啊找在[common-lisp](http://common-lisp.net/)上有推荐Land of lisp这本书,虽然很贵，但天朝的孩子们总是有办法的：[lisp资料](http://115.com/folder/faujangp#lisp)。
 
 好难得有本图文并茂的书，声称一次一个游戏，我就喜欢这种例子丰富的东西，幽默点不致于无聊更好。找不到中文版，算了，英文版直接上吧。话说还考研，唉，还是想抽空看看这个。
+
 ***
+
 ## 第一个游戏
+
 猜数的小游戏，不解释。
 {% highlight cl %}
 (defun guess-my-number ()
@@ -34,7 +38,9 @@ disqus: true
   (defparameter *big* 100)
   (guess-my-number))
 {% endhighlight %}
+
 ## 一个简单的文本游戏引擎
+
 {% highlight cl %}
 ;;定义节点及描述
 (defparameter *nodes* '((living-room (you are in the living-room.

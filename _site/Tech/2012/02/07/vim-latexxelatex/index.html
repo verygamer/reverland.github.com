@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>vim-latex插件对xelatex的配置</title>
+    <meta name="description" content="vimlatex插件在archlinux下配置过程，包括中文化安装，xelatex设置，okular正反向搜索。">
+    <meta name="author" content="Reverland">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/syntax.css" rel="stylesheet" type="text/css" media="all">
+
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <!-- Update these with your own images
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+    
+  </head>
+
+  <body>
+    <!--[if lt IE 8]><div style='border:1px solid #F7941D;background:#FEEFDA;text-align:center;clear:both;height:75px;position:relative;'><div style='position:absolute;right:3px;top:3px;font-family:courier new;font-weight:bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none";return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border:none;' alt='Close this notice'/></a></div><div style='width:640px;margin:0 auto;text-align:left;padding:0;overflow:hidden;color:black;'><div style='width:75px;float:left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div><div style='width:275px;float:left;font-family:Arial,sans-serif;'><div style='font-size:14px;font-weight:bold;margin-top:12px;'>You are using an outdated browser</div><div style='font-size:12px;margin-top:6px;line-height:12px;'>For a better experience using this site, please upgrade to a modern web browser.</div></div><div style='width:75px;float:left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border:none;' alt='Get Firefox 3.5'/></a></div><div style='width:75px;float:left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border:none;' alt='Get IE 8'/></a></div><div style='width:73px;float:left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border:none;' alt='Get Safari 4'/></a></div><div style='float:left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border:none;' alt='Get Google Chrome'/></a></div></div></div><![endif]-->
+
+
+    <div class="navbar" id="top-navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">Reverland的行知阁</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+    	
+    	<li><a href="/about.html">关于</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/archive.html">归档</a></li>
+    	
+    
+  
+    
+    	
+    	<li><a href="/categories.html">分类</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/tags.html">标签</a></li>
+    	
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+          </ul>
+          <ul class="nav subscription pull-right" data-subscription="rss">
+            <li>
+              <a href="/atom.xml" rel="nofollow" title="subscribe via RSS">RSS</a>
+            </li>
+          </ul>
+          <form class="navbar-search pull-right" method="get" action="http://www.google.com/search" target="google_window">
+            <label for="g_search" class="hidden"></label>
+            <input id="g_search" type="text" class="search-query" placeholder="Search..." name="q" />
+            <input type="submit" name=”btnG” style="display:none" id="searchsubmit" value="Search" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="hidden" name="oe" value="UTF-8" />
+            <input type="hidden" name="hl" value="zh-CN" />
+            <input type="hidden" name="domains" value="http://reverland.github.com/" />
+            <input type="hidden" name="sitesearch" value="http://reverland.github.com/" />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div id="main-content" class="content">
+        
+<div class="page-header">
+    <h1>vim-latex插件对xelatex的配置 <small><!--Supporting tagline--></small></h1>
+</div>
+
+<div class="row">
+  <div id="article_indent" class="span9 pull-left">
+    <div class="span3 article_published">发表于
+      <span class="date">07 February 2012</span>
+      <div class="article_gplus"><div class="g-plusone" data-size="small" data-annotation="none"></div></div>
+    </div>
+    <div class="clear"></div>
+    
+      <h2 id="vim-latexxelatex">vim-latex设置xelatex</h2>
+
+<h3 id="section">准备工作</h3>
+
+<p>首先我的系统配置情况:</p>
+
+<div class="highlight"><pre><code class="bash">Distributor ID: Arch i686 
+Description:    a little light distro
+</code></pre>
+</div>
+
+<p>使用的arch源中的texlive2011,直接用pacman安装，建议把相关包都安上，不占多少空间。如果要详细了解请见<a href="https://wiki.archlinux.org/index.php/TeXLive_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29">这里</a> ,又是我译的…英文版的都不只多久没更新了，不过可以参考。我安装的如下：</p>
+
+<div class="highlight"><pre><code class="bash">texlive-bin 2011.3-1.2 
+texlive-core 2011.24722-1 
+texlive-langcjk 2011.24689-1 
+texlive-latexextra 2011.24718-1 
+</code></pre>
+</div>
+
+<p>因为我用的是xelatex，所以直接生成的就是pdf文件，也就是这个原因，我才花时间折腾vim-latex-suite和okular，目前Linux下似乎也就是okular支持反向搜索…
+安装vim-latex过程不细述。别忘了更改ctex字体配置文件,使楷体和仿宋的名称是你系统上的名称。</p>
+
+<p>安装okular不细述。</p>
+
+<p>假设你已经把上面两项安装好了，那么进入正题。</p>
+
+<hr />
+
+<h3 id="hack-vimrc">hack 源码（其实，貌似可以在vimrc中更改）</h3>
+
+<h4 id="latex-suite">修改latex-suite默认的目标文件</h4>
+
+<p>在~/.vim/ftplugin/latex-suit/texrc中找到:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="k">if </span>has<span class="o">(</span><span class="s1">&#39;macunix&#39;</span><span class="o">)</span>
+   TexLet g:Tex_DefaultTargetFormat <span class="c"># &#39;pdf&#39;</span>
+<span class="k">else   </span>
+<span class="k">   </span>TexLet g:Tex_DefaultTargetFormat <span class="c"># &#39;dvi&#39;</span>
+endif
+</code></pre>
+</div>
+
+<p>修改为：</p>
+
+<div class="highlight"><pre><code class="bash"><span class="k">if </span>has<span class="o">(</span><span class="s1">&#39;macunix&#39;</span><span class="o">)</span>
+   TexLet g:Tex_DefaultTargetFormat <span class="c"># &#39;pdf&#39;</span>
+<span class="k">else   </span>
+<span class="k">   </span>TexLet g:Tex_DefaultTargetFormat <span class="c"># &#39;pdf&#39;</span>
+endif
+</code></pre>
+</div>
+
+<p>这个变量告诉latex-suite，你需要的目标文件是pdf</p>
+
+<h4 id="pdf">修改pdf的编译命令</h4>
+
+<p>同样在texrc文件中找到：</p>
+
+<div class="highlight"><pre><code class="bash">TexLet g:Tex_CompileRule_pdf <span class="c"># &#39;pdflatex -interaction#nonstopmode $*&#39;</span>
+</code></pre>
+</div>
+
+<p>修改为：</p>
+
+<div class="highlight"><pre><code class="bash">TexLet g:Tex_CompileRule_pdf <span class="c"># &#39;xelatex --src-specials -interaction#nonstopmode $*&#39;</span>
+</code></pre>
+</div>
+
+<p>这样，你用来编译pdf的命令就有xelatex来负责了，同时也指定了前向搜索所必备的一个参数：<code>--src-specials</code></p>
+
+<h4 id="pdf-1">修改默认pdf浏览器</h4>
+
+<p>继续在texrc修改latex-suite默认为各种文件调用的浏览器，找到相应部分修改成以下模样。</p>
+
+<div class="highlight"><pre><code class="bash">TexLet g:Tex_UseEditorSettingInDVIViewer <span class="c"># 1</span>
+</code></pre>
+</div>
+
+<div class="highlight"><pre><code class="bash"><span class="k">if </span>executable<span class="o">(</span><span class="s1">&#39;xdg-open&#39;</span><span class="o">)</span>
+   TexLet g:Tex_ViewRule_ps <span class="c"># &#39;okular&#39;</span>
+   TexLet g:Tex_ViewRule_pdf <span class="c"># &#39;okular&#39;</span>
+   TexLet g:Tex_ViewRule_dvi <span class="c"># &#39;okular&#39;</span>
+<span class="k">else</span>
+<span class="k">   </span>TexLet g:Tex_ViewRule_ps <span class="c"># &#39;okular&#39;</span>
+   TexLet g:Tex_ViewRule_pdf <span class="c"># &#39;okular&#39;</span>
+   TexLet g:Tex_ViewRule_dvi <span class="c"># &#39;okular&#39;</span>
+</code></pre>
+</div>
+
+<p>经过这一步，latex-suite在浏览pdf，dvi，ps的时候都会调用okular.</p>
+
+<h4 id="section-1">设置正向搜索</h4>
+
+<p>修改~/.vim/ftplugin/latex-suit/compiler.vim，让latex-suite能够以正确的参数在前向搜索和普通模式下打开生成的pdf文件：
+找到相应部分做如下修改</p>
+
+<div class="highlight"><pre><code class="bash"><span class="s2">&quot; We&#39;re either UNIX or Mac and using a UNIX-type viewer</span>
+
+<span class="s2">&quot;</span> Check <span class="k">for </span>the special DVI viewers first
+.................
+elseif <span class="o">(</span>viewer <span class="c">## &quot;okular&quot;)</span>
+  <span class="nb">let </span>execString <span class="c"># &#39;silent! !okular --unique &#39;.mainfnameRoot.&#39;.pdf\#src:&#39;.line(&#39;.&#39;).expand(&quot;%&quot;)</span>
+</code></pre>
+</div>
+
+<h4 id="section-2">设置反向搜索</h4>
+
+<pre><code>警告！文件名和路径中不要有空格和汉字 打开okular，菜单：setting&gt;&gt;configure okular&gt;&gt;Editor属性页 把里面的Editor下拉到Custom Text Editor，然后在Command:一栏输入：
+</code></pre>
+
+<div class="highlight"><pre><code class="bash">    gvim -c <span class="s2">&quot;:RemoteOpen +%l %f&quot;</span>
+</code></pre>
+</div>
+
+<p>注意，系统要有gvim…</p>
+
+<p>然后在你的tex源文件的preamble部分，加入：</p>
+
+<div class="highlight"><pre><code class="bash">    <span class="se">\s</span>ynctex#1
+</code></pre>
+</div>
+
+<p>大功告成啦，重新用\ll编译一遍你的源文件，然后\ls前向搜索，最后在pdf中想要反向搜索的地方按：</p>
+
+<div class="highlight"><pre><code class="bash">    Shift+鼠标左键
+</code></pre>
+</div>
+
+<p>就会自动的重定位到gvim中源码对应的地方，不过记住，不要开多个gvim，否则很可能用错误的gvim打开源码，然后就会提示交换文件已经存在之类. </p>
+
+<hr />
+
+<h2 id="section-3">参考文献</h2>
+
+<p>sorry,写的比较早遗忘了，如果有知道的联系我。</p>
+
+<hr />
+
+<h6 id="changelog">changelog</h6>
+<ul>
+  <li>2012年02月07日 星期二 12时54分48秒</li>
+  <li>2012年04月06日 星期五 18时44分54秒 添加ctex字体配置部分，更改高亮</li>
+</ul>
+
+
+    
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev disabled"><a>&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/Tech/2012/02/23/vimlisp" title="在vim中使用lisp">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_container">
+    <a href="#" class="comment btn btn-primary" onclick="return false;">点击查看评论</a>
+    <div id="disqus_thread"></div>
+</div>
+<script type="text/javascript">
+var show_comments = function(){
+    var disqus_developer = 1;
+    var disqus_shortname = 'reverlandblog'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+};
+
+$(document).ready(function(){
+  $('#disqus_container>.comment').click(function(){
+    $(this).html('加载中……');
+	show_comments();
+	$(this).remove();
+  });
+});
+
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+
+  <div class="span3 pull-right">
+    <ul class="nav nav-list">
+      <li class="nav-header">分类</li>
+      
+       
+        
+        <li class="active">
+        
+        <a href="/categories.html#Tech-ref">Tech <span>30</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Reviews-ref">Reviews <span>2</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Life-ref">Life <span>6</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#painting-ref">painting <span>1</span></a>
+        </li>
+      
+      
+        <li class="nav-header">Tags</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#latex-ref">latex <span>2</span></a></li>
+     
+    	<li><a href="/tags.html#vim-ref">vim <span>2</span></a></li>
+    
+  
+
+
+
+      
+    </ul>
+  </div>
+</div>
+
+<!-- Gplus -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'zh-CN'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+
+      </div>
+
+      <footer>
+        <p>&copy; Reverland 2012 
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+    <script type="text/javascript" src="/js/sd.js"></script>
+  </body>
+</html>
+

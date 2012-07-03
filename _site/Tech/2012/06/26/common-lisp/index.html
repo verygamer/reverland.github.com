@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Common lisp菜鸟指南(译)</title>
+    <meta name="description" content="翻译自http://ghostopera.org/blog/2012/06/24/the-newbie-guide-to-common-lisp/ ">
+    <meta name="author" content="Reverland">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/syntax.css" rel="stylesheet" type="text/css" media="all">
+
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <!-- Update these with your own images
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+    
+  </head>
+
+  <body>
+    <!--[if lt IE 8]><div style='border:1px solid #F7941D;background:#FEEFDA;text-align:center;clear:both;height:75px;position:relative;'><div style='position:absolute;right:3px;top:3px;font-family:courier new;font-weight:bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none";return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border:none;' alt='Close this notice'/></a></div><div style='width:640px;margin:0 auto;text-align:left;padding:0;overflow:hidden;color:black;'><div style='width:75px;float:left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div><div style='width:275px;float:left;font-family:Arial,sans-serif;'><div style='font-size:14px;font-weight:bold;margin-top:12px;'>You are using an outdated browser</div><div style='font-size:12px;margin-top:6px;line-height:12px;'>For a better experience using this site, please upgrade to a modern web browser.</div></div><div style='width:75px;float:left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border:none;' alt='Get Firefox 3.5'/></a></div><div style='width:75px;float:left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border:none;' alt='Get IE 8'/></a></div><div style='width:73px;float:left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border:none;' alt='Get Safari 4'/></a></div><div style='float:left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border:none;' alt='Get Google Chrome'/></a></div></div></div><![endif]-->
+
+
+    <div class="navbar" id="top-navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">Reverland的行知阁</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+    	
+    	<li><a href="/about.html">关于</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/archive.html">归档</a></li>
+    	
+    
+  
+    
+    	
+    	<li><a href="/categories.html">分类</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/tags.html">标签</a></li>
+    	
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+          </ul>
+          <ul class="nav subscription pull-right" data-subscription="rss">
+            <li>
+              <a href="/atom.xml" rel="nofollow" title="subscribe via RSS">RSS</a>
+            </li>
+          </ul>
+          <form class="navbar-search pull-right" method="get" action="http://www.google.com/search" target="google_window">
+            <label for="g_search" class="hidden"></label>
+            <input id="g_search" type="text" class="search-query" placeholder="Search..." name="q" />
+            <input type="submit" name=”btnG” style="display:none" id="searchsubmit" value="Search" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="hidden" name="oe" value="UTF-8" />
+            <input type="hidden" name="hl" value="zh-CN" />
+            <input type="hidden" name="domains" value="http://reverland.github.com/" />
+            <input type="hidden" name="sitesearch" value="http://reverland.github.com/" />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div id="main-content" class="content">
+        
+<div class="page-header">
+    <h1>Common lisp菜鸟指南(译) <small><!--Supporting tagline--></small></h1>
+</div>
+
+<div class="row">
+  <div id="article_indent" class="span9 pull-left">
+    <div class="span3 article_published">发表于
+      <span class="date">26 June 2012</span>
+      <div class="article_gplus"><div class="g-plusone" data-size="small" data-annotation="none"></div></div>
+    </div>
+    <div class="clear"></div>
+    
+      <h1>Common Lisp菜鸟指南</h1>
+<p>进入Common Lisp的世界可能非常让人退缩，甚至对有经验的程序猿也是这样。这个语言兼有力与美，但也有许多清晰的边界和没有真正被普遍理解的开端。</p>
+<p>这个指南可能将持续一段时间，但是希望它将使踏入Common Lisp的任务变得不那么可怕。</p>
+<h2>理解Common Lisp</h2>
+<p><a href="http://labs.ariel-networks.com/cl-style-guide.html">Ariel Networks</a> 有个适当形式的 Common Lisp 指南。</p>
+<p>The <a href="http://www.lispworks.com/documentation/HyperSpec/Front/index.htm">HyperSpec</a> 有完整的 Common Lisp 文档。</p>
+<p><a href="http://clqr.boundp.org/"><span class="caps">CLQR</span></a> 是一个好的课下载的 Common Lisp 快速参考手册。</p>
+<h2>了解你的工具</h2>
+<h3>Emacs<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></h3>
+<p><a href="http://www.gnu.org/software/emacs/">Emacs</a> 是一个可实用lisp高度定制的编辑器<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup>。它可以为lisp提供一个非常独特的实时开发流程。查看 <a href="http://dto.github.com/notebook/">David O&#8217;Toole</a> 在通过Emacs和他的 &#8220;Blocky.io&#8221; 游戏开发系统在一个游戏中的 <a href="http://blocky.io/blocky-lightning-talk-4.ogv">lightning talk</a> ，来查看实时开发实例。很酷不是吗？</p>
+<h3>Steel Bank Common Lisp</h3>
+<p>当这世界上有很多可用的 Common Lisp 实现时，&quot;SBCL&quot;:sbcl 是非常标准的实现。它很积极的被开发着，有适合的调试器、原生线程、多平台支持。</p>
+<h3>Quicklisp</h3>
+<p><a href="http://www.quicklisp.org/">Quicklisp</a> 使得从一套丰富的由社区发展的 Common Lisp 库开始变得更容易。它允许你仅仅通过几个简单命令下载、安装和加载任何700多库中的库。它完全取代了它的前任asdf-install,如果你熟悉RubyGems，这非常相似。</p>
+<h3>CL-Project</h3>
+<p><a href="https://github.com/fukamachi/cl-project">CL-Project</a> 是白手起家一个新的 Common Lisp 项目的最佳现代方法。虽然它肯定不是必须的，但是它提供了一个创建新项目的合理起点。</p>
+<h3>Buildapp</h3>
+<p><a href="http://www.xach.com/lisp/buildapp/">Buildapp</a> 使得创建SBCL的可执行文件更加方便</p>
+<h3><span class="caps">ASDF</span></h3>
+<p><a href="http://www.xach.com/lisp/buildapp/"><span class="caps">ASDF</span></a> 允许你定义你的项目的结构和依赖。你可以把它当作Ruby世界中Rake和Gemfile的杂交。</p>
+<hr />
+<h2>创建你的第一个应用程序</h2>
+<p>我将把获取Emacs和SBCL的任务留给你自己，你可以找到所有Linux、Windows和MacOS的版本。</p>
+<h3>安装Quicklisp和SLIME</h3>
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>curl -O http://beta.quicklisp.org/quicklisp.lisp
+<span class="nv">$ </span>sbcl --load quicklisp.lisp
+This is SBCL 1.0.42.52, an implementation of ANSI Common Lisp.
+More information about SBCL is available at &lt;http://www.sbcl.org/&gt;.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution <span class="k">for </span>more information.
+
+  <span class="o">====</span> quicklisp quickstart <span class="nv">loaded</span> <span class="o">====</span>
+
+    To <span class="k">continue</span>, evaluate: <span class="o">(</span>quicklisp-quickstart:install<span class="o">)</span>
+</code></pre>
+</div>
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">quicklisp-quickstart:install</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">ql:add-to-init-file</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">ql:quickload</span> <span class="s">&quot;quicklisp-slime-helper&quot;</span><span class="p">)</span>
+</code></pre>
+</div>
+<h3>创建应用程序</h3>
+<p>载入Emacs并键入<esc> x slime <enter>。你现在应该可以看到REPL——一个交互的lisp提示符。</p>
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">ql:quickload</span> <span class="s">&quot;cl-project&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">cl-project:make-project</span> <span class="l-Other">#p&quot;myapp&quot;</span>
+  <span class="ss">:author</span> <span class="s">&quot;Your name&quot;</span>
+  <span class="ss">:email</span> <span class="s">&quot;your@email.com&quot;</span>
+  <span class="ss">:license</span> <span class="s">&quot;BSD or whatever&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">ql:quickload</span> <span class="s">&quot;myapp&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">in-package</span> <span class="ss">:myapp</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>现在在Emacs有scratch标签的窗口键入<esc> x cd <enter> myapp <enter> 紧接着输入 <control>x <control>f src/myapp.lisp <enter> 。你应该拥有了一个为准备极棒的编码新建立的myapp.lisp文件。</p>
+<p>让我们继续添加一些东西然后试试结果</p>
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">hello-world</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;Hello world.~%&quot;</span><span class="p">))</span>
+</code></pre>
+</div>
+<p>现在我们可以把我们的更改注入REPL，通过把光标放到最后一行并键入<control>c <control>c。通过切换到REPL键入以下内容执行我们的新函数：</p>
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">hello-world</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>恭喜你！你在通过 Common Lisp 编程</p>
+<h3>重启Emacs后加载你的应用<sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup></h3>
+<p>CL-Project 在运行时更改了当前路径，使得第一次加载你的应用很简单。</p>
+<p>你有3种方法把应用放到你的加载路径：</p>
+<ol>
+	<li>为了让应用在你的当前路径，或者从应用路径启动你的Emacs或者在加载slime之前更改目录。</li>
+	<li>把你的应用移动到 ~/quicklisp/local-projects 它将总是有用。</li>
+	<li><a href="http://common-lisp.net/project/asdf/asdf/Controlling-where-ASDF-searches-for-systems.html#Controlling-where-ASDF-searches-for-systems">向你的加载路径添加项目</a> 。</li>
+</ol>
+<p>个人选择对应用选择方法1对库文件选择方法2。</p>
+<h3>创建可执行文件</h3>
+<p>虽然做出有用的 Common Lisp 程序不必要创建可执行文件，它却肯定可以方便发布独立的应用。你生成的可执行文件将内嵌整个lisp环境，所以不要因二进制文件的体积感到吃惊……</p>
+<p>首先，定义可执行文件的切入点</p>
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">export</span> <span class="ss">&#39;main</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">main</span> <span class="p">(</span><span class="nv">args</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">hello-world</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">cl-user::quit</span><span class="p">))</span>
+</code></pre>
+</div>
+<p>你将需要下载 <a href="http://www.xach.com/lisp/buildapp/">buildapp工具</a> ，指导在它的网站上。</p>
+<p>现在从你的myapp目录我们可以在命令行运行buildapp去编译你的程序！</p>
+<div class="highlight"><pre><code class="bash">buildapp --asdf-tree <span class="nv">$HOME</span>/quicklisp/dists/quicklisp/software <span class="se">\</span>
+  --load-system myapp --entry myapp:main --output hello
+</code></pre>
+</div>
+<p>在程序所在目录运行你的程序</p>
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>./hello
+Hello World.
+</code></pre>
+</div>
+<h2>下一步是什么？</h2>
+<p><a href="http://www.gigamonkeys.com/book/">实用Common Lisp编程</a> <sup class="footnote" id="fnr4"><a href="#fn4">4</a></sup>很好的介绍Common Lisp的书。是我看的第一本对该语言介绍的书。</p>
+<p><a href="http://www.cs.cmu.edu/Groups/AI/html/cltl/cltl2.html">Common Lisp the Language,2nd Edition</a> Common Lisp的权威书籍</p>
+<p><a href="http://www.paulgraham.com/onlisp.html">On Lisp</a> <sup class="footnote" id="fnr5"><a href="#fn5">5</a></sup>提供全面的高级Lisp技术</p>
+<p>你应该看看 <a href="http://landoflisp.com/">Land of Lisp</a> 。它非常有趣，会是个相当愉快的阅读。</p>
+<hr />
+<h2>Footnotes</h2>
+<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> 当然可以用vim，vim中slimv正是为此而生，可参考译者的 <a href="http://reverland.org/Tech/2012/02/23/vimlisp/">在Vim中使用lisp</a> 一文。本文中操作都可以在vim中完成,只是不要尝试用那个quicklisp-slime-helper了。</p>
+<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> Emacs内置elisp解释器。elisp是lisp的一个变种。</p>
+<p class="footnote" id="fn3"><a href="#fnr3"><sup>3</sup></a> Vim中类似。</p>
+<p class="footnote" id="fn4"><a href="#fnr4"><sup>4</sup></a> 有中文版，田春译。</p>
+<p class="footnote" id="fn5"><a href="#fnr5"><sup>5</sup></a> 有中文版，有兴趣的同学也许可以看看 <a href="http://115.com/folder/faujangp#lisp">这里</a></p>
+<hr />
+<h2>Changelog</h2>
+<ul>
+	<li>2012年06月27日 星期三 11时03分37秒 更正一些错误。加译作者更新内容</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/Reviews/2012/06/23/" title="宽容">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/Tech/2012/06/28/google-glasses" title="Google glasses">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_container">
+    <a href="#" class="comment btn btn-primary" onclick="return false;">点击查看评论</a>
+    <div id="disqus_thread"></div>
+</div>
+<script type="text/javascript">
+var show_comments = function(){
+    var disqus_developer = 1;
+    var disqus_shortname = 'reverlandblog'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+};
+
+$(document).ready(function(){
+  $('#disqus_container>.comment').click(function(){
+    $(this).html('加载中……');
+	show_comments();
+	$(this).remove();
+  });
+});
+
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+
+  <div class="span3 pull-right">
+    <ul class="nav nav-list">
+      <li class="nav-header">分类</li>
+      
+       
+        
+        <li class="active">
+        
+        <a href="/categories.html#Tech-ref">Tech <span>30</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Reviews-ref">Reviews <span>2</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Life-ref">Life <span>6</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#painting-ref">painting <span>1</span></a>
+        </li>
+      
+      
+        <li class="nav-header">Tags</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#lisp-ref">lisp <span>21</span></a></li>
+    
+  
+
+
+
+      
+    </ul>
+  </div>
+</div>
+
+<!-- Gplus -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'zh-CN'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+
+      </div>
+
+      <footer>
+        <p>&copy; Reverland 2012 
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+    <script type="text/javascript" src="/js/sd.js"></script>
+  </body>
+</html>
+

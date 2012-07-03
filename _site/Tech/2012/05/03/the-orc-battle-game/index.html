@@ -1,0 +1,632 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>The Orc Battle Game</title>
+    <meta name="description" content="Yet another game written by lisp">
+    <meta name="author" content="Reverland">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/syntax.css" rel="stylesheet" type="text/css" media="all">
+
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <!-- Update these with your own images
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+    
+  </head>
+
+  <body>
+    <!--[if lt IE 8]><div style='border:1px solid #F7941D;background:#FEEFDA;text-align:center;clear:both;height:75px;position:relative;'><div style='position:absolute;right:3px;top:3px;font-family:courier new;font-weight:bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none";return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border:none;' alt='Close this notice'/></a></div><div style='width:640px;margin:0 auto;text-align:left;padding:0;overflow:hidden;color:black;'><div style='width:75px;float:left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div><div style='width:275px;float:left;font-family:Arial,sans-serif;'><div style='font-size:14px;font-weight:bold;margin-top:12px;'>You are using an outdated browser</div><div style='font-size:12px;margin-top:6px;line-height:12px;'>For a better experience using this site, please upgrade to a modern web browser.</div></div><div style='width:75px;float:left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border:none;' alt='Get Firefox 3.5'/></a></div><div style='width:75px;float:left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border:none;' alt='Get IE 8'/></a></div><div style='width:73px;float:left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border:none;' alt='Get Safari 4'/></a></div><div style='float:left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border:none;' alt='Get Google Chrome'/></a></div></div></div><![endif]-->
+
+
+    <div class="navbar" id="top-navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">Reverland的行知阁</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+    	
+    	<li><a href="/about.html">关于</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/archive.html">归档</a></li>
+    	
+    
+  
+    
+    	
+    	<li><a href="/categories.html">分类</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/tags.html">标签</a></li>
+    	
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+          </ul>
+          <ul class="nav subscription pull-right" data-subscription="rss">
+            <li>
+              <a href="/atom.xml" rel="nofollow" title="subscribe via RSS">RSS</a>
+            </li>
+          </ul>
+          <form class="navbar-search pull-right" method="get" action="http://www.google.com/search" target="google_window">
+            <label for="g_search" class="hidden"></label>
+            <input id="g_search" type="text" class="search-query" placeholder="Search..." name="q" />
+            <input type="submit" name=”btnG” style="display:none" id="searchsubmit" value="Search" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="hidden" name="oe" value="UTF-8" />
+            <input type="hidden" name="hl" value="zh-CN" />
+            <input type="hidden" name="domains" value="http://reverland.github.com/" />
+            <input type="hidden" name="sitesearch" value="http://reverland.github.com/" />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div id="main-content" class="content">
+        
+<div class="page-header">
+    <h1>The Orc Battle Game <small><!--Supporting tagline--></small></h1>
+</div>
+
+<div class="row">
+  <div id="article_indent" class="span9 pull-left">
+    <div class="span3 article_published">发表于
+      <span class="date">03 May 2012</span>
+      <div class="article_gplus"><div class="g-plusone" data-size="small" data-annotation="none"></div></div>
+    </div>
+    <div class="clear"></div>
+    
+      
+<h2 id="lisp">Lisp中的特殊数据结构</h2>
+
+<p>引用原文中的话来形容Lisp,</p>
+
+<div class="highlight"><pre><code class="bash">Think of the Babel fish in the Hitchhiker’s Guide to the Galaxy trilogy—something 
+so impossibly useful that it really has no business existing in the first place.
+</code></pre>
+</div>
+
+<p>现在知道land of lisp的作者为什么把common lisp比作狼狗，为什么说cl强大了。支持list也就算了，支持个array、hash table、OOp、范型(generic)什么乱七八糟一堆其它语言中各种强大的东西，这么逆天的东西根本就不该存在！不过作为代价，丧失了一种纯粹的美。</p>
+
+<div class="highlight"><pre><code class="cl"><span class="nv">lisp</span> <span class="nv">is</span> <span class="nv">symmetry,while</span> <span class="nv">common</span> <span class="nv">lisp</span> <span class="nv">is</span> <span class="nv">powerful.</span>
+</code></pre>
+</div>
+
+<h3 id="arrays">Arrays</h3>
+
+<p>一些有用的命令</p>
+
+<ul>
+  <li>make-array</li>
+  <li>aref</li>
+  <li>setf</li>
+</ul>
+
+<p>array有比列表更高的效率</p>
+
+<h3 id="hash-table">Hash Table</h3>
+
+<p>这玩意强到逆天：</p>
+
+<ul>
+  <li>make-hash-table</li>
+  <li>gethash</li>
+</ul>
+
+<h4 id="section">返回多值</h4>
+
+<ul>
+  <li>round</li>
+  <li>values</li>
+  <li>multiple-value-bind</li>
+</ul>
+
+<p>hash表性能总体还是很高的..比如说我们上回写的wumpus游戏，我们可以分别对hash表和alists运行效率做如下对比。先看alists：</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">load</span> <span class="s">&quot;/home/lyy/Documents/lisp/wumpus.lisp&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">setf</span> <span class="vg">*edge-num*</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">setf</span> <span class="vg">*node-num*</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">time</span> <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">i</span> <span class="mi">100</span><span class="p">)</span> <span class="p">(</span><span class="nv">get-connected</span> <span class="mi">1</span> <span class="p">(</span><span class="nv">make-edge-list</span><span class="p">))))</span>
+</code></pre>
+</div>
+
+<p>好吧，我花的时间：</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">time</span> <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">i</span> <span class="mi">100</span><span class="p">)</span> <span class="p">(</span><span class="nv">get-connected</span> <span class="mi">1</span> <span class="p">(</span><span class="nv">make-edge-list</span><span class="p">))))</span>
+<span class="nv">Real</span> <span class="nv">time:</span> <span class="mf">64.1503</span> <span class="nv">sec.</span>
+<span class="nv">Run</span> <span class="nv">time:</span> <span class="mf">64.025826</span> <span class="nv">sec.</span>
+<span class="nv">Space:</span> <span class="mi">75275184</span> <span class="nv">Bytes</span>
+<span class="nv">GC:</span> <span class="mi">65</span><span class="o">,</span> <span class="nv">GC</span> <span class="nv">time:</span> <span class="mf">0.43664</span> <span class="nv">sec.</span>
+<span class="no">NIL</span>
+</code></pre>
+</div>
+
+<p>下面我们更改之前的wumpus游戏。</p>
+
+<div class="highlight"><pre><code class="cl"><span class="c1">;;生成hash表的边版本</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">hash-edges</span> <span class="p">(</span><span class="nv">edge-list</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">tab</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">mapc</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span><span class="c1">;mapc返回副作用</span>
+            <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">node</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">x</span><span class="p">)))</span>
+              <span class="p">(</span><span class="nb">push</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">node</span> <span class="nv">tab</span><span class="p">))))</span><span class="c1">;推入新值</span>
+          <span class="nv">edge-list</span><span class="p">)</span>
+    <span class="nv">tab</span><span class="p">))</span>
+<span class="c1">;;生成hash表。如果与node相连，则hash表中值为t</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">get-connected-hash</span> <span class="p">(</span><span class="nv">node</span> <span class="nv">edge-tab</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">visited</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">)))</span>
+    <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">traverse</span> <span class="p">(</span><span class="nv">node</span><span class="p">)</span>
+               <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">node</span> <span class="nv">visited</span><span class="p">)</span><span class="c1">;非则执行</span>
+                 <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">node</span> <span class="nv">visited</span><span class="p">)</span> <span class="no">t</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nb">mapc</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">edge</span><span class="p">)</span>
+                         <span class="p">(</span><span class="nv">traverse</span> <span class="nv">edge</span><span class="p">))</span>
+                       <span class="p">(</span><span class="nb">gethash</span> <span class="nv">node</span> <span class="nv">edge-tab</span><span class="p">)))))</span>
+      <span class="p">(</span><span class="nv">traverse</span> <span class="nv">node</span><span class="p">))</span>
+    <span class="nv">visited</span><span class="p">))</span>
+<span class="c1">;;可以看看什么样的</span>
+<span class="c1">;;看看运行时间</span>
+<span class="p">(</span><span class="nb">time</span> <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">i</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="p">(</span><span class="nv">get-connected-hash</span> <span class="mi">1</span> <span class="p">(</span><span class="nv">hash-edges</span> <span class="p">(</span><span class="nv">make-edge-list</span><span class="p">)))))</span>
+</code></pre>
+</div>
+
+<p>很显然，效率高多了：</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">time</span> <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">i</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="p">(</span><span class="nv">get-connected-hash</span> <span class="mi">1</span> <span class="p">(</span><span class="nv">hash-edges</span> <span class="p">(</span><span class="nv">make-edge-list</span><span class="p">)))))</span>
+<span class="nv">Real</span> <span class="nv">time:</span> <span class="mf">1.530112</span> <span class="nv">sec.</span>
+<span class="nv">Run</span> <span class="nv">time:</span> <span class="mf">1.526567</span> <span class="nv">sec.</span>
+<span class="nv">Space:</span> <span class="mi">64337496</span> <span class="nv">Bytes</span>
+<span class="nv">GC:</span> <span class="mi">56</span><span class="o">,</span> <span class="nv">GC</span> <span class="nv">time:</span> <span class="mf">0.366641</span> <span class="nv">sec.</span>
+<span class="no">NIL</span>
+</code></pre>
+</div>
+
+<h3 id="structures">Structures</h3>
+
+<p>构建structure可以直接用defstruct：</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defstruct</span> <span class="nv">person</span>
+  <span class="nv">name</span>
+  <span class="nv">age</span>
+  <span class="nv">waist-size</span>
+  <span class="nv">favorite-color</span><span class="p">)</span>
+<span class="c1">;;然后进行跟改</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*bob*</span> <span class="p">(</span><span class="nv">make-person</span> <span class="ss">:name</span> <span class="s">&quot;Bob&quot;</span><span class="c1">;make-person函数自动生成</span>
+                                 <span class="ss">:age</span> <span class="mi">35</span>
+                                 <span class="ss">:waist-size</span> <span class="mi">32</span>
+                                 <span class="ss">:favorite-color</span> <span class="s">&quot;blue&quot;</span><span class="p">))</span>
+<span class="vg">*bob*</span> <span class="c1">;查看</span>
+<span class="c1">;#S(person :name &quot;rob&quot; :age 35 :waist-size 32 :favorite-color &quot;blue&quot;)</span>
+<span class="p">(</span><span class="nv">person-age</span> <span class="vg">*bob*</span><span class="p">)</span><span class="c1">;自动生成person-age函数</span>
+<span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nv">person-age</span> <span class="vg">*bob*</span><span class="p">)</span> <span class="mi">36</span><span class="p">)</span><span class="c1">;generical programming</span>
+</code></pre>
+</div>
+
+<p>也可以直接这样：</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*that-guy*</span> <span class="l-Other">#S</span><span class="p">(</span><span class="nv">person</span> <span class="ss">:name</span> <span class="s">&quot;rob&quot;</span> <span class="ss">:age</span> <span class="mi">35</span> <span class="ss">:waist-size</span> <span class="mi">32</span>
+                                   <span class="ss">:favorite-color</span> <span class="s">&quot;blue&quot;</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">print</span> <span class="vg">*that-guy*</span><span class="p">)</span> 
+</code></pre>
+</div>
+
+<h3 id="generical-programming">Generical Programming</h3>
+
+<p>有些范函可以接受多种类型参数,典型的sequence函数有：</p>
+
+<ul>
+  <li>length</li>
+  <li>sequence</li>
+  <li>find-if</li>
+  <li>count</li>
+  <li>position</li>
+  <li>some</li>
+  <li>every</li>
+  <li>reduce</li>
+  <li>subseq</li>
+  <li>sort</li>
+</ul>
+
+<p>通过类型检验创建generic function是可行的但不太好。有种叫作type dispatching的东西可以让用户自己通过defmethod来定义generic function。</p>
+
+<hr />
+
+<h2 id="the-orc-battle-game">The Orc Battle Game</h2>
+
+<p>好了，之前全是扯淡。开始进入正题，写我们的新游戏：</p>
+
+<div class="highlight"><pre><code class="cl"><span class="c1">;;;player的三属性</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*player-health*</span> <span class="no">nil</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*player-agility*</span> <span class="no">nil</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*player-strength*</span> <span class="no">nil</span><span class="p">)</span>
+<span class="c1">;;;monsters</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*monsters*</span> <span class="no">nil</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*monster-builders*</span> <span class="no">nil</span><span class="p">)</span><span class="c1">;各种怪物</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*monster-num*</span> <span class="mi">12</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">princ</span> <span class="vg">*monster-builders*</span><span class="p">)</span> 
+<span class="c1">;;;main function</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">orc-battle</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nv">init-monsters</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">init-player</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">game-loop</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nv">player-dead</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;You have been killed. Game Over.&quot;</span><span class="p">))</span>
+  <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nv">monsters-dead</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Congratulations! You have vanquished all of your foes.&quot;</span><span class="p">)))</span>
+<span class="c1">;;;define game loop</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">game-loop</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nv">player-dead</span><span class="p">)</span> <span class="p">(</span><span class="nv">monsters-dead</span><span class="p">))</span>
+    <span class="p">(</span><span class="nv">show-player</span><span class="p">)</span>
+  <span class="c1">;;依据敏捷计算攻击次数</span>
+    <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">k</span> <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">truncate</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">max</span> <span class="mi">0</span> <span class="vg">*player-agility*</span><span class="p">)</span> <span class="mi">15</span><span class="p">))))</span>
+      <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nv">monsters-dead</span><span class="p">)</span>
+        <span class="p">(</span><span class="nv">show-monsters</span><span class="p">)</span>
+        <span class="p">(</span><span class="nv">player-attack</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">map</span> <span class="ss">&#39;list</span>
+         <span class="p">(</span><span class="k">lambda</span><span class="p">(</span><span class="nv">m</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nv">monster-dead</span> <span class="nv">m</span><span class="p">)</span> <span class="p">(</span><span class="nv">monster-attack</span> <span class="nv">m</span><span class="p">)))</span>
+         <span class="vg">*monsters*</span><span class="p">)</span>
+    <span class="p">(</span><span class="nv">game-loop</span><span class="p">)))</span>
+<span class="c1">;;;manage players function</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">init-player</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*player-health*</span> <span class="mi">30</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*player-agility*</span> <span class="mi">30</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*player-strength*</span> <span class="mi">30</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">player-dead</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">&lt;=</span> <span class="vg">*player-health*</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">show-player</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;You are a valiant knight with a health of &quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="vg">*player-health*</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;, an agility of &quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="vg">*player-agility*</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;, and a strength of &quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="vg">*player-strength*</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">player-attack</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Attack style: [s]tab [d]ouble swing [r]oundhouse:&quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">case</span> <span class="p">(</span><span class="nb">read</span><span class="p">)</span><span class="c1">;case函数</span>
+    <span class="p">(</span><span class="nv">s</span> <span class="p">(</span><span class="nv">monster-hit</span> <span class="p">(</span><span class="nv">pick-monster</span><span class="p">)</span><span class="c1">;monster-hit表monster被攻击</span>
+                    <span class="p">(</span><span class="nb">+</span> <span class="mi">2</span> <span class="p">(</span><span class="nv">randval</span> <span class="p">(</span><span class="nb">ash</span> <span class="vg">*player-strength*</span> <span class="mi">-1</span><span class="p">)))))</span>
+    <span class="p">(</span><span class="nv">d</span> <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="p">(</span><span class="nv">randval</span> <span class="p">(</span><span class="nb">truncate</span> <span class="p">(</span><span class="nb">/</span> <span class="vg">*player-strength*</span> <span class="mi">6</span><span class="p">)))))</span>
+         <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Your double swing has a strength of &quot;</span><span class="p">)</span>
+         <span class="p">(</span><span class="nb">princ</span> <span class="nv">x</span><span class="p">)</span>
+         <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+         <span class="p">(</span><span class="nv">monster-hit</span> <span class="p">(</span><span class="nv">pick-monster</span><span class="p">)</span> <span class="nv">x</span><span class="p">)</span>
+         <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nv">monsters-dead</span><span class="p">)</span><span class="c1">;除非第一次攻击就消灭所有怪物</span>
+           <span class="p">(</span><span class="nv">monster-hit</span> <span class="p">(</span><span class="nv">pick-monster</span><span class="p">)</span> <span class="nv">x</span><span class="p">))))</span>
+    <span class="p">(</span><span class="nv">otherwise</span> <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">x</span> <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nv">randval</span> <span class="p">(</span><span class="nb">truncate</span> <span class="p">(</span><span class="nb">/</span> <span class="vg">*player-strength*</span> <span class="mi">3</span><span class="p">)))))</span>
+<span class="c1">;否则一阵乱打</span>
+                 <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nv">monsters-dead</span><span class="p">)</span><span class="c1">;若之中有一次已经消灭所有怪物</span>
+                   <span class="p">(</span><span class="nv">monster-hit</span> <span class="p">(</span><span class="nv">random-monster</span><span class="p">)</span> <span class="mi">1</span><span class="p">))))))</span>
+<span class="c1">;;;产生不小于1的1到n的随机数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">randval</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">random</span> <span class="p">(</span><span class="nb">max</span> <span class="mi">1</span> <span class="nv">n</span><span class="p">))))</span><span class="c1">;以防n&lt;1</span>
+<span class="c1">;;;Player Attacks的辅助函数</span>
+<span class="c1">;;随机活着的怪物编号</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">random-monster</span> <span class="p">()</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">m</span> <span class="p">(</span><span class="nb">aref</span> <span class="vg">*monsters*</span> <span class="p">(</span><span class="nb">random</span> <span class="p">(</span><span class="nb">length</span> <span class="vg">*monsters*</span><span class="p">)))))</span>
+    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nv">monster-dead</span> <span class="nv">m</span><span class="p">)</span>
+      <span class="p">(</span><span class="nv">random-monster</span><span class="p">)</span>
+      <span class="nv">m</span><span class="p">)))</span>
+
+<span class="c1">;;选择特定monster</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">pick-monster</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Monster #:&quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="p">(</span><span class="nb">read</span><span class="p">)))</span>
+    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">integerp</span> <span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="nb">&gt;=</span> <span class="nv">x</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nb">&lt;=</span> <span class="nv">x</span> <span class="vg">*monster-num*</span><span class="p">)))</span>
+      <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;That is not a valid monster number.&quot;</span><span class="p">)</span>
+             <span class="p">(</span><span class="nv">pick-monster</span><span class="p">))</span>
+      <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">m</span> <span class="p">(</span><span class="nb">aref</span> <span class="vg">*monsters*</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">x</span><span class="p">))))</span>
+        <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nv">monster-dead</span> <span class="nv">m</span><span class="p">)</span>
+          <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;That monster is alread dead.&quot;</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nv">pick-monster</span><span class="p">))</span>
+          <span class="nv">m</span><span class="p">)))))</span>
+<span class="c1">;;Monster Management Functions</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">init-monsters</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*monsters*</span>
+        <span class="p">(</span><span class="nb">map</span> <span class="ss">&#39;vector</span>
+             <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span><span class="c1">;I make no sense of it</span>
+               <span class="p">(</span><span class="nb">funcall</span> <span class="p">(</span><span class="nb">nth</span> <span class="p">(</span><span class="nb">random</span> <span class="p">(</span><span class="nb">length</span> <span class="vg">*monster-builders*</span><span class="p">))</span>
+                             <span class="vg">*monster-builders*</span><span class="p">)))</span>
+             <span class="p">(</span><span class="nb">make-array</span> <span class="vg">*monster-num*</span><span class="p">))))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">monster-dead</span> <span class="p">(</span><span class="nv">m</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">&lt;=</span> <span class="p">(</span><span class="nv">monster-health</span> <span class="nv">m</span><span class="p">)</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">monsters-dead</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">every</span> <span class="nf">#&#39;</span><span class="nv">monster-dead</span> <span class="vg">*monsters*</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">show-monsters</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Your foes:&quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="p">(</span><span class="nb">map</span> <span class="ss">&#39;list</span>
+         <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">m</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;     &quot;</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nb">incf</span> <span class="nv">x</span><span class="p">))</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;. &quot;</span><span class="p">)</span>
+           <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nv">monster-dead</span> <span class="nv">m</span><span class="p">)</span>
+             <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;**dead**&quot;</span><span class="p">)</span>
+             <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;(Health=&quot;</span><span class="p">)</span>
+                    <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">monster-health</span> <span class="nv">m</span><span class="p">))</span>
+                    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;) &quot;</span><span class="p">)</span>
+                    <span class="p">(</span><span class="nv">monster-show</span> <span class="nv">m</span><span class="p">))))</span><span class="c1">;怪物描述</span>
+                  <span class="vg">*monsters*</span><span class="p">)))</span>
+<span class="c1">;;定义monster的structure</span>
+<span class="p">(</span><span class="nb">defstruct</span> <span class="nv">monster</span> <span class="p">(</span><span class="nv">health</span> <span class="p">(</span><span class="nv">randval</span> <span class="mi">10</span><span class="p">)))</span>
+<span class="c1">;;monster被攻击</span>
+<span class="p">(</span><span class="nb">defmethod</span> <span class="nv">monster-hit</span> <span class="p">(</span><span class="nv">m</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">decf</span> <span class="p">(</span><span class="nv">monster-health</span> <span class="nv">m</span><span class="p">)</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nv">monster-dead</span> <span class="nv">m</span><span class="p">)</span>
+    <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;You killed the &quot;</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nb">type-of</span> <span class="nv">m</span><span class="p">))</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;! &quot;</span><span class="p">))</span>
+    <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;You hit the &quot;</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nb">type-of</span> <span class="nv">m</span><span class="p">))</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;, knocking off &quot;</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="nv">x</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot; health points! &quot;</span><span class="p">))))</span>
+<span class="c1">;;(type-of (make-monster))</span>
+<span class="c1">;;;;MONSTER</span>
+<span class="c1">;;;总体定义下</span>
+<span class="p">(</span><span class="nb">defmethod</span> <span class="nv">monster-show</span> <span class="p">(</span><span class="nv">m</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;A fierce &quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nb">type-of</span> <span class="nv">m</span><span class="p">)))</span>
+<span class="c1">;;占位</span>
+<span class="p">(</span><span class="nb">defmethod</span> <span class="nv">monster-attack</span> <span class="p">(</span><span class="nv">m</span><span class="p">))</span>
+<span class="c1">;;;orc</span>
+<span class="c1">;;;defstruct还可以这样定义</span>
+<span class="p">(</span><span class="nb">defstruct</span> <span class="p">(</span><span class="nv">orc</span> <span class="p">(</span><span class="ss">:include</span> <span class="nv">monster</span><span class="p">))</span> <span class="p">(</span><span class="nv">club-level</span> <span class="p">(</span><span class="nv">randval</span> <span class="mi">8</span><span class="p">)))</span>
+<span class="p">(</span><span class="nb">push</span> <span class="nf">#&#39;</span><span class="nv">make-orc</span> <span class="vg">*monster-builders*</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defmethod</span> <span class="nv">monster-show</span> <span class="p">((</span><span class="nv">m</span> <span class="nv">orc</span><span class="p">))</span><span class="c1">;something like &quot;defmethod function ((a number) (b string))&quot;</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;A wicked orc with a level &quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">orc-club-level</span> <span class="nv">m</span><span class="p">))</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot; club&quot;</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defmethod</span> <span class="nv">monster-attack</span> <span class="p">((</span><span class="nv">m</span> <span class="nv">orc</span><span class="p">))</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="p">(</span><span class="nv">randval</span> <span class="p">(</span><span class="nv">orc-club-level</span> <span class="nv">m</span><span class="p">))))</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;An orc swings his club at you and knocks off &quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="nv">x</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot; of your health points. &quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">decf</span> <span class="vg">*player-health*</span> <span class="nv">x</span><span class="p">)))</span>
+<span class="c1">;;;hydra,多头鸟</span>
+<span class="p">(</span><span class="nb">defstruct</span> <span class="p">(</span><span class="nv">hydra</span> <span class="p">(</span><span class="ss">:include</span> <span class="nv">monster</span><span class="p">)))</span>
+<span class="p">(</span><span class="nb">push</span> <span class="nf">#&#39;</span><span class="nv">make-hydra</span> <span class="vg">*monster-builders*</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defmethod</span> <span class="nv">monster-show</span> <span class="p">((</span><span class="nv">m</span> <span class="nv">hydra</span><span class="p">))</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;A malicious hydra with &quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">monster-health</span> <span class="nv">m</span><span class="p">))</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot; heads.&quot;</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defmethod</span> <span class="nv">monster-hit</span> <span class="p">((</span><span class="nv">m</span> <span class="nv">hydra</span><span class="p">)</span> <span class="nv">x</span><span class="p">)</span><span class="c1">;x代表头数</span>
+  <span class="p">(</span><span class="nb">decf</span> <span class="p">(</span><span class="nv">monster-health</span> <span class="nv">m</span><span class="p">)</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nv">monster-dead</span> <span class="nv">m</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;The corpse of the fully decapitated and decapacitated hydra</span>
+<span class="s">           falls to the floor!&quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;You lop off &quot;</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="nv">x</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot; of the hydra&#39;s heads! &quot;</span><span class="p">))))</span>
+<span class="p">(</span><span class="nb">defmethod</span> <span class="nv">monster-attack</span> <span class="p">((</span><span class="nv">m</span> <span class="nv">hydra</span><span class="p">))</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="p">(</span><span class="nv">randval</span> <span class="p">(</span><span class="nb">ash</span> <span class="p">(</span><span class="nv">monster-health</span> <span class="nv">m</span><span class="p">)</span> <span class="mi">-1</span><span class="p">))))</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;A hydra attacks you with &quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="nv">x</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot; of its heads! It also grows back one more head! &quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">incf</span> <span class="p">(</span><span class="nv">monster-health</span> <span class="nv">m</span><span class="p">))</span>
+    <span class="p">(</span><span class="nb">decf</span> <span class="vg">*player-health*</span> <span class="nv">x</span><span class="p">)))</span>
+<span class="c1">;;;slime</span>
+<span class="p">(</span><span class="nb">defstruct</span> <span class="p">(</span><span class="nv">slime-mold</span> <span class="p">(</span><span class="ss">:include</span> <span class="nv">monster</span><span class="p">))</span> <span class="p">(</span><span class="nv">sliminess</span> <span class="p">(</span><span class="nv">randval</span> <span class="mi">5</span><span class="p">)))</span>
+<span class="p">(</span><span class="nb">push</span> <span class="nf">#&#39;</span><span class="nv">make-slime-mold</span> <span class="vg">*monster-builders*</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defmethod</span> <span class="nv">monster-show</span> <span class="p">((</span><span class="nv">m</span> <span class="nv">slime-mold</span><span class="p">))</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;A slime mold with a sliminess of &quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">slime-mold-sliminess</span> <span class="nv">m</span><span class="p">)))</span>
+<span class="p">(</span><span class="nb">defmethod</span> <span class="nv">monster-attack</span> <span class="p">((</span><span class="nv">m</span> <span class="nv">slime-mold</span><span class="p">))</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="p">(</span><span class="nv">randval</span> <span class="p">(</span><span class="nv">slime-mold-sliminess</span> <span class="nv">m</span><span class="p">))))</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;A slime mold wraps around your legs and decreases your agility</span>
+<span class="s">           by &quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="nv">x</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;! &quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">decf</span> <span class="vg">*player-agility*</span> <span class="nv">x</span><span class="p">)</span>
+    <span class="c1">;;为了防止进入永无止境的僵持,使slime有几率攻击</span>
+    <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">zerop</span> <span class="p">(</span><span class="nb">random</span> <span class="mi">2</span><span class="p">))</span>
+      <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;It also squirts in your face, taking away a health point! &quot;</span><span class="p">)</span>
+      <span class="p">(</span><span class="nb">decf</span> <span class="vg">*player-health*</span><span class="p">))))</span>
+<span class="c1">;The Cunning Brigand</span>
+<span class="p">(</span><span class="nb">defstruct</span> <span class="p">(</span><span class="nv">brigand</span> <span class="p">(</span><span class="ss">:include</span> <span class="nv">monster</span><span class="p">)))</span>
+<span class="p">(</span><span class="nb">push</span> <span class="nf">#&#39;</span><span class="nv">make-brigand</span> <span class="vg">*monster-builders*</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defmethod</span> <span class="nv">monster-attack</span> <span class="p">((</span><span class="nv">m</span> <span class="nv">brigand</span><span class="p">))</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="p">(</span><span class="nb">max</span> <span class="vg">*player-health*</span> <span class="vg">*player-agility*</span> <span class="vg">*player-strength*</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">=</span> <span class="nv">x</span> <span class="vg">*player-health*</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;A brigand hits you with his slingshot, taking off 2 health</span>
+<span class="s">                  points! &quot;</span><span class="p">)</span>
+                  <span class="p">(</span><span class="nb">decf</span> <span class="vg">*player-health*</span> <span class="mi">2</span><span class="p">))</span>
+          <span class="p">((</span><span class="nb">=</span> <span class="nv">x</span> <span class="vg">*player-agility*</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;A brigand catches your leg with his whip, taking off 2</span>
+<span class="s">                  agility points! &quot;</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">decf</span> <span class="vg">*player-agility*</span> <span class="mi">2</span><span class="p">))</span>
+          <span class="p">((</span><span class="nb">=</span> <span class="nv">x</span> <span class="vg">*player-strength*</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;A brigand cuts your arm with his whip, taking off 2</span>
+<span class="s">                  strength points! &quot;</span><span class="p">)</span>
+           <span class="p">(</span><span class="nb">decf</span> <span class="vg">*player-strength*</span> <span class="mi">2</span><span class="p">)))))</span>
+</code></pre>
+</div>
+
+<p>然后这样开始游戏</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">orc-battle</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>不过游戏参数貌似设置的不太好，我基本是出来被秒的！！</p>
+
+    
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/Tech/2012/05/01/grand-theft-wumpus" title="Grand Theft Wumpus">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/Tech/2012/05/06/using-loop-to-evolve" title="Using Loop To Evolve">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_container">
+    <a href="#" class="comment btn btn-primary" onclick="return false;">点击查看评论</a>
+    <div id="disqus_thread"></div>
+</div>
+<script type="text/javascript">
+var show_comments = function(){
+    var disqus_developer = 1;
+    var disqus_shortname = 'reverlandblog'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+};
+
+$(document).ready(function(){
+  $('#disqus_container>.comment').click(function(){
+    $(this).html('加载中……');
+	show_comments();
+	$(this).remove();
+  });
+});
+
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+
+  <div class="span3 pull-right">
+    <ul class="nav nav-list">
+      <li class="nav-header">分类</li>
+      
+       
+        
+        <li class="active">
+        
+        <a href="/categories.html#Tech-ref">Tech <span>30</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Reviews-ref">Reviews <span>2</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Life-ref">Life <span>6</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#painting-ref">painting <span>1</span></a>
+        </li>
+      
+      
+        <li class="nav-header">Tags</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#lisp-ref">lisp <span>21</span></a></li>
+    
+  
+
+
+
+      
+    </ul>
+  </div>
+</div>
+
+<!-- Gplus -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'zh-CN'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+
+      </div>
+
+      <footer>
+        <p>&copy; Reverland 2012 
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+    <script type="text/javascript" src="/js/sd.js"></script>
+  </body>
+</html>
+

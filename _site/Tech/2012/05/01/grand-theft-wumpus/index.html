@@ -1,0 +1,575 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Grand Theft Wumpus</title>
+    <meta name="description" content="一个lisp游戏————The most violent programming example ever put into a textbook">
+    <meta name="author" content="Reverland">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/syntax.css" rel="stylesheet" type="text/css" media="all">
+
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <!-- Update these with your own images
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+    
+  </head>
+
+  <body>
+    <!--[if lt IE 8]><div style='border:1px solid #F7941D;background:#FEEFDA;text-align:center;clear:both;height:75px;position:relative;'><div style='position:absolute;right:3px;top:3px;font-family:courier new;font-weight:bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none";return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border:none;' alt='Close this notice'/></a></div><div style='width:640px;margin:0 auto;text-align:left;padding:0;overflow:hidden;color:black;'><div style='width:75px;float:left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div><div style='width:275px;float:left;font-family:Arial,sans-serif;'><div style='font-size:14px;font-weight:bold;margin-top:12px;'>You are using an outdated browser</div><div style='font-size:12px;margin-top:6px;line-height:12px;'>For a better experience using this site, please upgrade to a modern web browser.</div></div><div style='width:75px;float:left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border:none;' alt='Get Firefox 3.5'/></a></div><div style='width:75px;float:left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border:none;' alt='Get IE 8'/></a></div><div style='width:73px;float:left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border:none;' alt='Get Safari 4'/></a></div><div style='float:left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border:none;' alt='Get Google Chrome'/></a></div></div></div><![endif]-->
+
+
+    <div class="navbar" id="top-navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">Reverland的行知阁</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+    	
+    	<li><a href="/about.html">关于</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/archive.html">归档</a></li>
+    	
+    
+  
+    
+    	
+    	<li><a href="/categories.html">分类</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/tags.html">标签</a></li>
+    	
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+          </ul>
+          <ul class="nav subscription pull-right" data-subscription="rss">
+            <li>
+              <a href="/atom.xml" rel="nofollow" title="subscribe via RSS">RSS</a>
+            </li>
+          </ul>
+          <form class="navbar-search pull-right" method="get" action="http://www.google.com/search" target="google_window">
+            <label for="g_search" class="hidden"></label>
+            <input id="g_search" type="text" class="search-query" placeholder="Search..." name="q" />
+            <input type="submit" name=”btnG” style="display:none" id="searchsubmit" value="Search" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="hidden" name="oe" value="UTF-8" />
+            <input type="hidden" name="hl" value="zh-CN" />
+            <input type="hidden" name="domains" value="http://reverland.github.com/" />
+            <input type="hidden" name="sitesearch" value="http://reverland.github.com/" />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div id="main-content" class="content">
+        
+<div class="page-header">
+    <h1>Grand Theft Wumpus <small><!--Supporting tagline--></small></h1>
+</div>
+
+<div class="row">
+  <div id="article_indent" class="span9 pull-left">
+    <div class="span3 article_published">发表于
+      <span class="date">01 May 2012</span>
+      <div class="article_gplus"><div class="g-plusone" data-size="small" data-annotation="none"></div></div>
+    </div>
+    <div class="clear"></div>
+    
+      
+<h2 id="about-this-game">About this game</h2>
+
+<p>假设你是lisp生物，你和一个怪物刚刚抢劫了一家酒品店，并带着战利品窜逃。然而，在逃跑期间，怪物决定出卖你并抢走你的车和钱。虽然他把车开走之前你多次试图截获它。</p>
+
+<p>现在你别无选择，因为你的“原则”，决定去hunt the wumpus。你知道他受了重伤需要在堵塞的都市中某处静养好几个月。问题是道路十分复杂，即使城市中的老居民也难以判清方向。</p>
+
+<p>幸好你是个lisp生物，你随身带着计算机……(这……)</p>
+
+<p>你很了解怪物，知道它藏身之前一定会先侦查两条路内的所有地点，所以那里会留下血迹。</p>
+
+<p>问题是它有把AK-47,你只有把小手枪和一发子弹。你只有一次机会找到并消灭它。</p>
+
+<p>不幸的是，城市里有许多3G党，他们是残忍的绑匪，如果你落入他们手中，他们会蒙上你的眼睛，然后把你仍在城市的可能的任何一个地方。</p>
+
+<p>幸运的是，他们会发光(这……)，你可以在一条路外看见他们发出的光。而且城市里只有三个他们的团伙。</p>
+
+<p>最后，警察也在四处设卡追捕你们，你会在街区两端听见警笛如果这条街上有警察。</p>
+
+<p>找到并消灭怪物，拿回你的车和钱很难很难</p>
+
+<p>是很难，有时候不可能成功……</p>
+
+<p>如果你认为你足够作为一个能抓住怪物的lisp生物，开始写这个游戏并猎杀怪物！</p>
+
+<h2 id="section">游戏</h2>
+
+<p>整个游戏lisp代码如下，我们需要上次写的库来可视化lisp的数据</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">cd</span> <span class="s">&quot;/home/reverland/Documents/lisp/&quot;</span><span class="p">)</span>
+<span class="c1">;;加载上回写的库</span>
+<span class="p">(</span><span class="nb">load</span> <span class="s">&quot;graph-util.lisp&quot;</span><span class="p">)</span>
+<span class="c1">;;定义基本参数</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*congestion-city-nodes*</span> <span class="no">nil</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*congestion-city-edges*</span> <span class="no">nil</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*visited-nodes*</span> <span class="no">nil</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*node-num*</span> <span class="mi">30</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*edge-num*</span> <span class="mi">45</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*worm-num*</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*cop-odds*</span> <span class="mi">15</span><span class="p">)</span>
+<span class="c1">;;产生1到30的随机数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">random-node</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">random</span> <span class="vg">*node-num*</span><span class="p">)))</span>
+<span class="c1">;;生成形如((a . b) (b . a))的节点对</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">edge-pair</span> <span class="p">(</span><span class="nv">a</span> <span class="nv">b</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nb">eql</span> <span class="nv">a</span> <span class="nv">b</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">a</span> <span class="nv">b</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">b</span> <span class="nv">a</span><span class="p">))))</span>
+<span class="c1">;;形成45条随机边</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">make-edge-list</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">append</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">repeat</span> <span class="vg">*edge-num*</span><span class="c1">;合并进一个列表</span>
+                        <span class="nv">collect</span> <span class="p">(</span><span class="nv">edge-pair</span> <span class="p">(</span><span class="nv">random-node</span><span class="p">)</span> <span class="p">(</span><span class="nv">random-node</span><span class="p">)))))</span>
+<span class="c1">;;与node直接相连,即以node开头的边</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">direct-edges</span> <span class="p">(</span><span class="nv">node</span> <span class="nv">edge-list</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">remove-if-not</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span>
+                   <span class="p">(</span><span class="nb">eql</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">x</span><span class="p">)</span> <span class="nv">node</span><span class="p">))</span>
+                 <span class="nv">edge-list</span><span class="p">))</span>
+<span class="c1">;;返回与node相连的nodes，(node 2 3 4 5 6)</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">get-connected</span> <span class="p">(</span><span class="nv">node</span> <span class="nv">edge-list</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">visited</span> <span class="no">nil</span><span class="p">))</span>
+    <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">traverse</span> <span class="p">(</span><span class="nv">node</span><span class="p">)</span>
+               <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">node</span> <span class="nv">visited</span><span class="p">)</span><span class="c1">;如果没访问过</span>
+                 <span class="p">(</span><span class="nb">push</span> <span class="nv">node</span> <span class="nv">visited</span><span class="p">)</span><span class="c1">;加入visited中</span>
+                 <span class="p">(</span><span class="nb">mapc</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">edge</span><span class="p">)</span>
+                         <span class="c1">;递归node的子节点，没访问过则推入visited</span>
+                         <span class="p">(</span><span class="nv">traverse</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">edge</span><span class="p">)))</span>
+                       <span class="p">(</span><span class="nv">direct-edges</span> <span class="nv">node</span> <span class="nv">edge-list</span><span class="p">)))))</span>
+      <span class="p">(</span><span class="nv">traverse</span> <span class="nv">node</span><span class="p">))</span>
+    <span class="nv">visited</span><span class="p">))</span><span class="c1">;返回visited列表</span>
+<span class="c1">;;找到孤岛，返回((1 2 3) (4 5 6))一类的东西</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">find-islands</span> <span class="p">(</span><span class="nv">nodes</span> <span class="nv">edge-list</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">islands</span> <span class="no">nil</span><span class="p">))</span>
+    <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">find-island</span> <span class="p">(</span><span class="nv">nodes</span><span class="p">)</span>
+               <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">connected</span> <span class="p">(</span><span class="nv">get-connected</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">nodes</span><span class="p">)</span> <span class="nv">edge-list</span><span class="p">))</span>
+                      <span class="p">(</span><span class="nv">unconnected</span> <span class="p">(</span><span class="nb">set-difference</span> <span class="nv">nodes</span> <span class="nv">connected</span><span class="p">)))</span>
+                 <span class="p">(</span><span class="nb">push</span> <span class="nv">connected</span> <span class="nv">islands</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nb">when</span> <span class="nv">unconnected</span><span class="c1">;如果没相连对不相连的部分递归调用</span>
+                   <span class="p">(</span><span class="nv">find-island</span> <span class="nv">unconnected</span><span class="p">)))))</span>
+      <span class="p">(</span><span class="nv">find-island</span> <span class="nv">nodes</span><span class="p">))</span>
+    <span class="nv">islands</span><span class="p">))</span>
+<span class="c1">;;把不想连的孤岛连上</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">connect-with-bridges</span> <span class="p">(</span><span class="nv">islands</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">islands</span><span class="p">)</span><span class="c1">;如果不止一个island</span>
+    <span class="p">(</span><span class="nb">append</span> <span class="p">(</span><span class="nv">edge-pair</span> <span class="p">(</span><span class="nb">caar</span> <span class="nv">islands</span><span class="p">)</span> <span class="p">(</span><span class="nb">caadr</span> <span class="nv">islands</span><span class="p">))</span><span class="c1">;想象以下islands，它就是这样</span>
+            <span class="p">(</span><span class="nv">connect-with-bridges</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">islands</span><span class="p">)))))</span>
+<span class="c1">;;把新添加的桥加入边的列表((a . b) (c . d))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">connect-all-islands</span> <span class="p">(</span><span class="nv">nodes</span> <span class="nv">edge-list</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">append</span> <span class="p">(</span><span class="nv">connect-with-bridges</span> <span class="p">(</span><span class="nv">find-islands</span> <span class="nv">nodes</span> <span class="nv">edge-list</span><span class="p">))</span> <span class="nv">edge-list</span><span class="p">))</span>
+<span class="c1">;;生成整个城市的边</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">make-city-edges</span> <span class="p">()</span>
+  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">nodes</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">to</span> <span class="vg">*node-num*</span>
+                      <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
+         <span class="c1">;nodes</span>
+         <span class="p">(</span><span class="nv">edge-list</span> <span class="p">(</span><span class="nv">connect-all-islands</span> <span class="nv">nodes</span> <span class="p">(</span><span class="nv">make-edge-list</span><span class="p">)))</span>
+         <span class="c1">;节点与节点关系，即边((a .b) (b .a) (e. f) (f .e)...) </span>
+         <span class="p">(</span><span class="nv">cops</span> <span class="p">(</span><span class="nb">remove-if-not</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span><span class="c1">;为什么一定要有个变量？</span>
+                                <span class="p">(</span><span class="nb">zerop</span> <span class="p">(</span><span class="nb">random</span> <span class="vg">*cop-odds*</span><span class="p">)))</span>
+                              <span class="nv">edge-list</span><span class="p">)))</span>
+    <span class="c1">;有cops的边(点对）</span>
+    <span class="p">(</span><span class="nv">add-cops</span> <span class="p">(</span><span class="nv">edges-to-alist</span> <span class="nv">edge-list</span><span class="p">)</span> <span class="nv">cops</span><span class="p">)))</span>
+<span class="c1">;;将点对转换成(node1 ((1) (2)...))的形式，即alist</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">edges-to-alist</span> <span class="p">(</span><span class="nv">edge-list</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">node1</span><span class="p">)</span><span class="c1">;遍历每个node</span>
+            <span class="p">(</span><span class="nb">cons</span> <span class="nv">node1</span>
+                  <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">edge</span><span class="p">)</span>
+                            <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">edge</span><span class="p">)))</span>
+                          <span class="p">(</span><span class="nb">remove-duplicates</span> <span class="p">(</span><span class="nv">direct-edges</span> <span class="nv">node1</span> <span class="nv">edge-list</span><span class="p">)</span>
+                                             <span class="ss">:test</span> <span class="nf">#&#39;</span><span class="nb">equal</span><span class="p">))))</span><span class="c1">;为什么会有重复的？确实可能有,生成是随机的</span>
+          <span class="p">(</span><span class="nb">remove-duplicates</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nb">car</span> <span class="nv">edge-list</span><span class="p">))))</span>
+<span class="c1">;(mapcar #&#39;car &#39;((a . b) (c . d)))</span>
+<span class="c1">;(a c)</span>
+<span class="c1">;(remove-duplicates &#39;((a . b) (a . b)) :test #&#39;equal)</span>
+<span class="c1">;((a . b))</span>
+<span class="c1">;往edge-alist中加入cops,返回形如(a ((b cops) (c)))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">add-cops</span> <span class="p">(</span><span class="nv">edge-alist</span> <span class="nv">edges-with-cops</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span>
+            <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">node1</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">x</span><span class="p">))</span>
+                  <span class="p">(</span><span class="nv">node1-edges</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">x</span><span class="p">)))</span>
+              <span class="p">(</span><span class="nb">cons</span> <span class="nv">node1</span>
+                    <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">edge</span><span class="p">)</span>
+                              <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">node2</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">edge</span><span class="p">)))</span>
+                                <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">intersection</span> <span class="p">(</span><span class="nv">edge-pair</span> <span class="nv">node1</span> <span class="nv">node2</span><span class="p">)</span>
+                                                  <span class="nv">edges-with-cops</span>
+                                                  <span class="ss">:test</span> <span class="nf">#&#39;</span><span class="nb">equal</span><span class="p">)</span>
+                                  <span class="p">(</span><span class="nb">list</span> <span class="nv">node2</span> <span class="ss">&#39;cops</span><span class="p">)</span>
+                                  <span class="nv">edge</span><span class="p">)))</span>
+                            <span class="nv">node1-edges</span><span class="p">))))</span>
+          <span class="nv">edge-alist</span><span class="p">))</span>
+<span class="c1">;(mapcar #&#39;car &#39;((a) (b) (c)))</span>
+<span class="c1">;(a b c)</span>
+<span class="c1">;;返回与node相邻的点(a b c)</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">neighbors</span> <span class="p">(</span><span class="nv">node</span> <span class="nv">edge-alist</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nb">car</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">assoc</span> <span class="nv">node</span> <span class="nv">edge-alist</span><span class="p">))))</span>
+<span class="c1">;;判断是否相邻的点</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">within-one</span> <span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">edge-alist</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">member</span> <span class="nv">b</span> <span class="p">(</span><span class="nv">neighbors</span> <span class="nv">a</span> <span class="nv">edge-alist</span><span class="p">)))</span>
+<span class="c1">;;是否相差两个的点</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">within-two</span> <span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">edge-alist</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nv">within-one</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">edge-alist</span><span class="p">)</span>
+      <span class="p">(</span><span class="nb">some</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span><span class="c1">;存在与a相邻的点与b相邻</span>
+              <span class="p">(</span><span class="nv">within-one</span> <span class="nv">x</span> <span class="nv">b</span> <span class="nv">edge-alist</span><span class="p">))</span>
+            <span class="p">(</span><span class="nv">neighbors</span> <span class="nv">a</span> <span class="nv">edge-alist</span><span class="p">))))</span>
+<span class="c1">;;最终生成这个城市所有的点</span>
+<span class="c1">;;形如</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">make-city-nodes</span> <span class="p">(</span><span class="nv">edge-alist</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">wumpus</span> <span class="p">(</span><span class="nv">random-node</span><span class="p">))</span><span class="c1">;随机wumpus位置</span>
+        <span class="p">(</span><span class="nv">glow-worms</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">below</span> <span class="vg">*worm-num*</span>
+                          <span class="nv">collect</span> <span class="p">(</span><span class="nv">random-node</span><span class="p">))))</span>
+    <span class="c1">;glow-worms位置列表</span>
+    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">n</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">to</span> <span class="vg">*node-num*</span>
+          <span class="nv">collect</span> <span class="p">(</span><span class="nb">append</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">n</span><span class="p">)</span>
+                          <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">eql</span> <span class="nv">n</span> <span class="nv">wumpus</span><span class="p">)</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">wumpus</span><span class="p">))</span>
+                                <span class="p">((</span><span class="nv">within-two</span> <span class="nv">n</span> <span class="nv">wumpus</span> <span class="nv">edge-alist</span><span class="p">)</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">blood!</span><span class="p">)))</span>
+                          <span class="c1">;添加血迹</span>
+                          <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">member</span> <span class="nv">n</span> <span class="nv">glow-worms</span><span class="p">)</span>
+                                 <span class="o">&#39;</span><span class="p">(</span><span class="nv">glow-worm</span><span class="p">))</span>
+                                <span class="c1">;添加glow-worn标志</span>
+                                <span class="p">((</span><span class="nb">some</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">worm</span><span class="p">)</span>
+                                         <span class="p">(</span><span class="nv">within-one</span> <span class="nv">n</span> <span class="nv">worm</span> <span class="nv">edge-alist</span><span class="p">))</span>
+                                       <span class="nv">glow-worms</span><span class="p">)</span><span class="c1">;glow-warms中存在元素在n的withinone范围内，则让n发光</span>
+                                 <span class="o">&#39;</span><span class="p">(</span><span class="nv">lights!</span><span class="p">)))</span><span class="c1">;添加lights</span>
+                          <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">some</span> <span class="nf">#&#39;</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">assoc</span> <span class="nv">n</span> <span class="nv">edge-alist</span><span class="p">)))</span>
+                            <span class="o">&#39;</span><span class="p">(</span><span class="nv">sirens!</span><span class="p">))))))</span><span class="c1">;如果n的alist存在有cops这一项添加警笛</span>
+<span class="c1">;(some (lambda (n) (= (- n 1) 1)) &#39;(1 2 3 3))</span>
+<span class="c1">;T</span>
+<span class="c1">;定义新游戏</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">new-game</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*congestion-city-edges*</span> <span class="p">(</span><span class="nv">make-city-edges</span><span class="p">))</span>
+  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*congestion-city-nodes*</span> <span class="p">(</span><span class="nv">make-city-nodes</span> <span class="vg">*congestion-city-edges*</span><span class="p">))</span>
+  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*player-pos*</span> <span class="p">(</span><span class="nv">find-empty-node</span><span class="p">))</span>
+  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*visited-nodes*</span> <span class="p">(</span><span class="nb">list</span> <span class="vg">*player-pos*</span><span class="p">))</span>
+  <span class="p">(</span><span class="nv">draw-city</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">draw-known-city</span><span class="p">))</span>
+<span class="c1">;;寻找没有线索的点</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">find-empty-node</span> <span class="p">()</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="p">(</span><span class="nv">random-node</span><span class="p">)))</span>
+    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">assoc</span> <span class="nv">x</span> <span class="vg">*congestion-city-nodes*</span><span class="p">))</span>
+      <span class="p">(</span><span class="nv">find-empty-node</span><span class="p">)</span>
+      <span class="nv">x</span><span class="p">)))</span>
+<span class="c1">;;根据已知绘图</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">draw-city</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nv">ugraph-&gt;png</span> <span class="s">&quot;city&quot;</span> <span class="vg">*congestion-city-nodes*</span> <span class="vg">*congestion-city-edges*</span><span class="p">))</span>
+<span class="c1">;;可以先编译看看都什么样的</span>
+<span class="c1">;(princ *congestion-city-edges*)</span>
+<span class="c1">;(princ *congestion-city-nodes*)</span>
+<span class="c1">;;已知城市节点</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">known-city-nodes</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">node</span><span class="p">)</span>
+            <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">node</span> <span class="vg">*visited-nodes*</span><span class="p">)</span>
+              <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">n</span> <span class="p">(</span><span class="nb">assoc</span> <span class="nv">node</span> <span class="vg">*congestion-city-nodes*</span><span class="p">)))</span>
+                <span class="c1">;若访问过</span>
+                <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eql</span> <span class="nv">node</span> <span class="vg">*player-pos*</span><span class="p">)</span>
+                  <span class="p">(</span><span class="nb">append</span> <span class="nv">n</span> <span class="o">&#39;</span><span class="p">(</span><span class="nb">*</span><span class="p">))</span><span class="c1">;player位置加*号</span>
+                  <span class="nv">n</span><span class="p">))</span>
+              <span class="p">(</span><span class="nb">list</span> <span class="nv">node</span> <span class="ss">&#39;?</span><span class="p">)))</span><span class="c1">;没访问过则加?</span>
+          <span class="c1">;之后一大段返回访问过和与访问过点相邻的点的列表</span>
+          <span class="p">(</span><span class="nb">remove-duplicates</span><span class="c1">;保留后一个</span>
+            <span class="p">(</span><span class="nb">append</span> <span class="vg">*visited-nodes*</span>
+                    <span class="p">(</span><span class="nb">mapcan</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">node</span><span class="p">)</span><span class="c1">;把结果归入一个列表</span>
+                              <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nb">car</span>
+                                      <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">assoc</span> <span class="nv">node</span>
+                                                  <span class="vg">*congestion-city-edges*</span><span class="p">))))</span>
+                            <span class="vg">*visited-nodes*</span><span class="p">)))))</span>
+<span class="c1">;已知的边</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">known-city-edges</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">node</span><span class="p">)</span>
+            <span class="p">(</span><span class="nb">cons</span> <span class="nv">node</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span><span class="c1">;yes</span>
+                                 <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">member</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">x</span><span class="p">)</span> <span class="vg">*visited-nodes*</span><span class="p">)</span>
+                                   <span class="nv">x</span><span class="c1">;保留边的信息cops</span>
+                                   <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">x</span><span class="p">))))</span><span class="c1">;去掉cops</span>
+                               <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">assoc</span> <span class="nv">node</span> <span class="vg">*congestion-city-edges*</span><span class="p">)))))</span>
+          <span class="vg">*visited-nodes*</span><span class="p">))</span>
+<span class="c1">;(cons 1 &#39;(2 3 4))</span>
+<span class="c1">;(1 2 3 4)</span>
+<span class="c1">;;绘制已知地图</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">draw-known-city</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nv">ugraph-&gt;png</span> <span class="s">&quot;known-city&quot;</span> <span class="p">(</span><span class="nv">known-city-nodes</span><span class="p">)</span> <span class="p">(</span><span class="nv">known-city-edges</span><span class="p">)))</span>
+<span class="c1">;;定义walk和charge</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">walk</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">handle-direction</span> <span class="nv">pos</span> <span class="no">nil</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">charge</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">handle-direction</span> <span class="nv">pos</span> <span class="no">t</span><span class="p">))</span>
+<span class="p">()</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">handle-direction</span> <span class="p">(</span><span class="nv">pos</span> <span class="nv">charging</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">edge</span> <span class="p">(</span><span class="nb">assoc</span> <span class="nv">pos</span><span class="c1">;原来单元素可以assoc，看作(element,nil)?</span>
+                     <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">assoc</span> <span class="vg">*player-pos*</span> <span class="vg">*congestion-city-edges*</span><span class="p">)))))</span>
+    <span class="p">(</span><span class="k">if</span> <span class="nv">edge</span>
+      <span class="p">(</span><span class="nv">handle-new-place</span> <span class="nv">edge</span> <span class="nv">pos</span> <span class="nv">charging</span><span class="p">)</span>
+      <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;That location does not exist!&quot;</span><span class="p">))))</span>
+<span class="c1">;;处理新节点</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">handle-new-place</span> <span class="p">(</span><span class="nv">edge</span> <span class="nv">pos</span> <span class="nv">charging</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">node</span> <span class="p">(</span><span class="nb">assoc</span> <span class="nv">pos</span> <span class="vg">*congestion-city-nodes*</span><span class="p">))</span>
+         <span class="p">(</span><span class="nv">has-worm</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">member</span> <span class="ss">&#39;glow-worm</span> <span class="nv">node</span><span class="p">)</span>
+                        <span class="c1">;第二次访问不会有worm</span>
+                        <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">pos</span> <span class="vg">*visited-nodes*</span><span class="p">)))))</span>
+    <span class="p">(</span><span class="nb">pushnew</span> <span class="nv">pos</span> <span class="vg">*visited-nodes*</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">setf</span> <span class="vg">*player-pos*</span> <span class="nv">pos</span><span class="p">)</span>
+    <span class="p">(</span><span class="nv">draw-known-city</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">member</span> <span class="ss">&#39;cops</span> <span class="nv">edge</span><span class="p">)</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;You ran into the cops. Game Over.&quot;</span><span class="p">))</span>
+          <span class="p">((</span><span class="nb">member</span> <span class="ss">&#39;wumpus</span> <span class="nv">node</span><span class="p">)</span> <span class="p">(</span><span class="k">if</span> <span class="nv">charging</span>
+                                   <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;You found the Wumpus!&quot;</span><span class="p">)</span>
+                                   <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;You ran into the Wumpus&quot;</span><span class="p">)))</span>
+          <span class="p">(</span><span class="nv">charging</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;You wasted your last bullet. Game Over.&quot;</span><span class="p">))</span>
+          <span class="p">(</span><span class="nv">has-worm</span> <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">new-pos</span> <span class="p">(</span><span class="nv">random-node</span><span class="p">)))</span>
+                      <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;You ran into a Glow Worm Gang! You&#39;re now at &quot;</span><span class="p">)</span>
+                      <span class="p">(</span><span class="nb">princ</span> <span class="nv">new-pos</span><span class="p">)</span>
+                      <span class="p">(</span><span class="nv">handle-new-place</span> <span class="no">nil</span> <span class="nv">new-pos</span> <span class="no">nil</span><span class="p">))))))</span>
+</code></pre>
+</div>
+
+<p>当然，你可以参照第一章定义自己的interface</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">game-start</span> <span class="p">()</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">cmd</span> <span class="p">(</span><span class="nv">my-read</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">cmd</span><span class="p">)</span> <span class="ss">&#39;quit</span><span class="p">)</span>
+      <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">my-eval</span> <span class="nv">cmd</span><span class="p">))</span>
+      <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+      <span class="p">(</span><span class="nv">game-start</span><span class="p">))))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">my-read</span> <span class="p">()</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">cmd</span> <span class="p">(</span><span class="nb">read-from-string</span>
+               <span class="p">(</span><span class="nb">concatenate</span> <span class="ss">&#39;string</span> <span class="s">&quot;(&quot;</span> <span class="p">(</span><span class="nb">read-line</span><span class="p">)</span> <span class="s">&quot;)&quot;</span><span class="p">))))</span>
+    <span class="nv">cmd</span><span class="p">))</span>
+<span class="p">(</span><span class="nv">my-read</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*allowed-commands*</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">walk</span> <span class="nv">charge</span> <span class="nv">new-game</span> <span class="nv">quit</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">my-eval</span> <span class="p">(</span><span class="nv">sexp</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">member</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">sexp</span><span class="p">)</span> <span class="vg">*allowed-commands*</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">eval</span> <span class="nv">sexp</span><span class="p">)</span>
+    <span class="o">&#39;</span><span class="p">(</span><span class="nv">i</span> <span class="nb">do</span> <span class="nb">not</span> <span class="nv">know</span> <span class="nv">that</span> <span class="nv">command.</span><span class="p">)))</span>
+</code></pre>
+</div>
+
+<p>在终端中启动clisp，并且加载你的这些代码。</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">load</span> <span class="s">&quot;/path/to/wumpus.lisp&quot;</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>输入如下命令进入游戏环境：</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">(</span>game-start<span class="o">)</span>
+</code></pre>
+</div>
+
+<p>没有提示，加个sayhello可能更好，但我们开始新游戏吧</p>
+
+<div class="highlight"><pre><code class="bash">new-game
+</code></pre>
+</div>
+
+<p>用konqureror打开生成的png文件known-city.png，一遍walk/charge一边按住F5疯狂刷新吧。</p>
+
+<hr />
+
+<p>看看截图效果</p>
+
+<p><img src="http://lhtlyybox.googlecode.com/files/%E6%8A%93%E5%9B%BE70.png" hight="200" width="400" alt="konqureror中玩hunt the wumpus" /></p>
+
+<hr />
+
+<h2 id="section-1">我学到了什么</h2>
+
+<p>以下命令：</p>
+
+<ul>
+  <li>load</li>
+  <li>random</li>
+  <li>cons</li>
+  <li>apply</li>
+  <li>loop</li>
+  <li>remove-if-not</li>
+  <li>let*</li>
+  <li>push</li>
+  <li>when</li>
+  <li>remove-duplicates</li>
+  <li>mapcan</li>
+  <li>intersection :test equal</li>
+  <li>some</li>
+  <li>pushnew</li>
+</ul>
+
+<p>搞得有些乱了，一般alist和本文中的alist不一样。lisp对列表的处理看得我眼花缭乱，自由但复杂。不过lisp没什么语法，这点有些Simple and stupid。</p>
+
+<p>剩下是对编程的想法了，把各种情况都想清楚并设计好不是件容易的事！！就像前一阵去为一个机器人小车编程，两个传感器四个轮子都研究了半天，何况这个游戏，我只能说能看懂了，自己写就各种错误和手足无措了。</p>
+
+
+    
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/Tech/2012/04/28/visualize-tree-like-data-in-lisp" title="Visualize tree like data in Lisp">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/Tech/2012/05/03/the-orc-battle-game" title="The Orc Battle Game">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_container">
+    <a href="#" class="comment btn btn-primary" onclick="return false;">点击查看评论</a>
+    <div id="disqus_thread"></div>
+</div>
+<script type="text/javascript">
+var show_comments = function(){
+    var disqus_developer = 1;
+    var disqus_shortname = 'reverlandblog'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+};
+
+$(document).ready(function(){
+  $('#disqus_container>.comment').click(function(){
+    $(this).html('加载中……');
+	show_comments();
+	$(this).remove();
+  });
+});
+
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+
+  <div class="span3 pull-right">
+    <ul class="nav nav-list">
+      <li class="nav-header">分类</li>
+      
+       
+        
+        <li class="active">
+        
+        <a href="/categories.html#Tech-ref">Tech <span>30</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Reviews-ref">Reviews <span>2</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Life-ref">Life <span>6</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#painting-ref">painting <span>1</span></a>
+        </li>
+      
+      
+        <li class="nav-header">Tags</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#lisp-ref">lisp <span>21</span></a></li>
+    
+  
+
+
+
+      
+    </ul>
+  </div>
+</div>
+
+<!-- Gplus -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'zh-CN'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+
+      </div>
+
+      <footer>
+        <p>&copy; Reverland 2012 
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+    <script type="text/javascript" src="/js/sd.js"></script>
+  </body>
+</html>
+

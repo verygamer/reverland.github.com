@@ -9,6 +9,7 @@ disqus: true
 {% include JB/setup %}
 
 ## Lisp中的特殊数据结构
+
 引用原文中的话来形容Lisp,
 {% highlight bash %}
 Think of the Babel fish in the Hitchhiker’s Guide to the Galaxy trilogy—something 
@@ -20,6 +21,7 @@ lisp is symmetry,while common lisp is powerful.
 {% endhighlight %}
 
 ### Arrays
+
 一些有用的命令
 
 - make-array
@@ -27,7 +29,9 @@ lisp is symmetry,while common lisp is powerful.
 - setf
 
 array有比列表更高的效率
+
 ### Hash Table
+
 这玩意强到逆天：
 
 - make-hash-table
@@ -97,6 +101,7 @@ NIL
 {% endhighlight %}
 
 ### Structures
+
 构建structure可以直接用defstruct：
 
 {% highlight cl %}
@@ -124,6 +129,7 @@ NIL
 {% endhighlight %}
 
 ### Generical Programming
+
 有些范函可以接受多种类型参数,典型的sequence函数有：
 
 - length
@@ -140,7 +146,9 @@ NIL
 通过类型检验创建generic function是可行的但不太好。有种叫作type dispatching的东西可以让用户自己通过defmethod来定义generic function。
 
 ***
+
 ## The Orc Battle Game
+
 好了，之前全是扯淡。开始进入正题，写我们的新游戏：
 
 {% highlight cl %}

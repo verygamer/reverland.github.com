@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Attack of the Robots</title>
+    <meta name="description" content="Yet another robots game written with loop and format">
+    <meta name="author" content="Reverland">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/syntax.css" rel="stylesheet" type="text/css" media="all">
+
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <!-- Update these with your own images
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+    
+  </head>
+
+  <body>
+    <!--[if lt IE 8]><div style='border:1px solid #F7941D;background:#FEEFDA;text-align:center;clear:both;height:75px;position:relative;'><div style='position:absolute;right:3px;top:3px;font-family:courier new;font-weight:bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none";return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border:none;' alt='Close this notice'/></a></div><div style='width:640px;margin:0 auto;text-align:left;padding:0;overflow:hidden;color:black;'><div style='width:75px;float:left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div><div style='width:275px;float:left;font-family:Arial,sans-serif;'><div style='font-size:14px;font-weight:bold;margin-top:12px;'>You are using an outdated browser</div><div style='font-size:12px;margin-top:6px;line-height:12px;'>For a better experience using this site, please upgrade to a modern web browser.</div></div><div style='width:75px;float:left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border:none;' alt='Get Firefox 3.5'/></a></div><div style='width:75px;float:left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border:none;' alt='Get IE 8'/></a></div><div style='width:73px;float:left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border:none;' alt='Get Safari 4'/></a></div><div style='float:left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border:none;' alt='Get Google Chrome'/></a></div></div></div><![endif]-->
+
+
+    <div class="navbar" id="top-navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">Reverland的行知阁</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+    	
+    	<li><a href="/about.html">关于</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/archive.html">归档</a></li>
+    	
+    
+  
+    
+    	
+    	<li><a href="/categories.html">分类</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/tags.html">标签</a></li>
+    	
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+          </ul>
+          <ul class="nav subscription pull-right" data-subscription="rss">
+            <li>
+              <a href="/atom.xml" rel="nofollow" title="subscribe via RSS">RSS</a>
+            </li>
+          </ul>
+          <form class="navbar-search pull-right" method="get" action="http://www.google.com/search" target="google_window">
+            <label for="g_search" class="hidden"></label>
+            <input id="g_search" type="text" class="search-query" placeholder="Search..." name="q" />
+            <input type="submit" name=”btnG” style="display:none" id="searchsubmit" value="Search" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="hidden" name="oe" value="UTF-8" />
+            <input type="hidden" name="hl" value="zh-CN" />
+            <input type="hidden" name="domains" value="http://reverland.github.com/" />
+            <input type="hidden" name="sitesearch" value="http://reverland.github.com/" />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div id="main-content" class="content">
+        
+<div class="page-header">
+    <h1>Attack of the Robots <small><!--Supporting tagline--></small></h1>
+</div>
+
+<div class="row">
+  <div id="article_indent" class="span9 pull-left">
+    <div class="span3 article_published">发表于
+      <span class="date">09 May 2012</span>
+      <div class="article_gplus"><div class="g-plusone" data-size="small" data-annotation="none"></div></div>
+    </div>
+    <div class="clear"></div>
+    
+      
+<h2 id="powerful-format">Powerful format</h2>
+
+<p>format又是一个在common lisp中灵活“过头”，争议超多的一个宏。它十分强大。</p>
+
+<p>基本用法如下</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nb">reverse</span> <span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="s">&quot;Add onion rings for only ~$ dollars more!&quot;</span> <span class="mf">1.5</span><span class="p">)))</span> 
+<span class="c1">;;;Control sequences for printing lisp values</span>
+<span class="c1">;;(prin1 &quot;foo&quot;)</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;I am printing ~s in the middle of this sentence&quot;</span> <span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<span class="c1">;;(princ &quot;foo&quot;)</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;I am printing ~a in the middle of this sentence&quot;</span> <span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<span class="c1">;;第一个参数,右边补白</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;I am printing ~10a within ten spaces of room.&quot;</span> <span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<span class="c1">;;第二个参数，分成3部分，补白9格</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;I am printing ~10,3a within ten (or more) spaces of room.&quot;</span> <span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<span class="c1">;;第三个参数，右边补白4格</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;I am printing ~,,4a in the middle of this sentence.&quot;</span> <span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<span class="c1">;;第四个参数，补充符号</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;The world ~,,4,&#39;!a feels very important.&quot;</span> <span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;The world ~,,4,&#39;!@a feels very important.&quot;</span> <span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<span class="c1">;;;Control Sequences for formatting numbers</span>
+<span class="c1">;;Integers</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;The number 1000 in hexadrcimal is ~x&quot;</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;The number 1000 in hexadrcimal is ~b&quot;</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;The number 1000 in hexadrcimal is ~d&quot;</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="c1">;digit group separators</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;Numbers with commas in them are ~:d times better.&quot;</span> <span class="mi">1000000</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;I am printing ~10d within ten spaces of room.&quot;</span> <span class="mi">1000000</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;I am printing ~10,&#39;xd within ten spaces of room.&quot;</span> <span class="mi">1000000</span><span class="p">)</span>
+<span class="c1">;;;Control Sequences for formatting Floating-point numbers</span>
+<span class="c1">;;default</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;PI can be estimated as ~4f&quot;</span> <span class="mf">3.141593</span><span class="p">)</span>
+<span class="c1">;;小数点后数位</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;PI can be estimated as ~,4f&quot;</span> <span class="nv">pi</span><span class="p">)</span>
+<span class="c1">;;Percentage</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;Percentages are ~,,2f percent better than fractions&quot;</span> <span class="mf">0.77</span><span class="p">)</span>
+<span class="c1">;;Format currency</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;I wish I had ~$ dollars in my bank account.&quot;</span> <span class="mf">1000000.2</span><span class="p">)</span>
+<span class="c1">;;;Print multiple lines of output</span>
+<span class="c1">;;terpri</span>
+<span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">princ</span> <span class="mi">22</span><span class="p">)</span>
+       <span class="p">(</span><span class="nb">terpri</span><span class="p">)</span>
+       <span class="p">(</span><span class="nb">princ</span> <span class="mi">33</span><span class="p">))</span>
+<span class="c1">;;fresh-line</span>
+<span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">princ</span> <span class="mi">22</span><span class="p">)</span>
+       <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+       <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+       <span class="p">(</span><span class="nb">princ</span> <span class="mi">33</span><span class="p">))</span>
+<span class="c1">;;~% like terpri</span>
+<span class="c1">;;~&amp; like fresh-line</span>
+<span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;This is on one line ~%&quot;</span><span class="p">)</span>
+       <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~%This is on another line&quot;</span><span class="p">))</span> 
+<span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;This is on one line ~&amp;&quot;</span><span class="p">)</span>
+       <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~&amp;This is on another line&quot;</span><span class="p">))</span>
+<span class="c1">;;there can be a number in front of them</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;this will print ~5%on two lines spread far apart&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;this will print ~5&amp;on two lines spread far apart&quot;</span><span class="p">)</span>
+<span class="c1">;;;Justifying output</span>
+<span class="c1">;;for example a function</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">random-animal</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">nth</span> <span class="p">(</span><span class="nb">random</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;dog&quot;</span> <span class="s">&quot;tick&quot;</span> <span class="s">&quot;tiger&quot;</span> <span class="s">&quot;walrus&quot;</span> <span class="s">&quot;kangaroo&quot;</span><span class="p">)))</span>
+<span class="c1">;;equally width</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">repeat</span> <span class="mi">10</span>
+      <span class="nb">do</span> <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~5t~a ~15t~a ~25t~a~%&quot;</span>
+                 <span class="p">(</span><span class="nv">random-animal</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nv">random-animal</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nv">random-animal</span><span class="p">)))</span>
+<span class="c1">;;equally apart</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">repeat</span> <span class="mi">10</span>
+      <span class="nb">do</span> <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~30&lt;~a~;~a~;~a~&gt;~%&quot;</span>
+                 <span class="p">(</span><span class="nv">random-animal</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nv">random-animal</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nv">random-animal</span><span class="p">)))</span>
+<span class="c1">;;center</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">repeat</span> <span class="mi">10</span>
+      <span class="nb">do</span> <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~30:@&lt;~a~&gt;~%&quot;</span> <span class="p">(</span><span class="nv">random-animal</span><span class="p">)))</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">repeat</span> <span class="mi">10</span>
+      <span class="nb">do</span> <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~30:@&lt;~a~;~a~;~a~&gt;~%&quot;</span>
+                 <span class="p">(</span><span class="nv">random-animal</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nv">random-animal</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nv">random-animal</span><span class="p">)))</span>
+<span class="c1">;;still wavy?to make it like this</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">repeat</span> <span class="mi">10</span>
+      <span class="nb">do</span> <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~10:@&lt;~a~&gt;~10:@&lt;~a~&gt;~10:@&lt;~a~&gt;~%&quot;</span>
+                 <span class="p">(</span><span class="nv">random-animal</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nv">random-animal</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nv">random-animal</span><span class="p">)))</span>
+<span class="c1">;;;Iterating Through Lists Using Control Sequences</span>
+<span class="c1">;;Lets create a list of animals</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*animals*</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">repeat</span> <span class="mi">10</span> <span class="nv">collect</span> <span class="p">(</span><span class="nv">random-animal</span><span class="p">)))</span>
+<span class="c1">;;loop through sequenses</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~{I see a ~a! ~%~}&quot;</span> <span class="vg">*animals*</span><span class="p">)</span> 
+<span class="c1">;;not only one item</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~{I see a ~a... or was it a ~a?~%~}&quot;</span> <span class="vg">*animals*</span><span class="p">)</span>
+<span class="c1">;;;A crazy formatting trick for creating pretty tables of data</span>
+<span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;|~{~&lt;|~%|~,33:;~2d ~&gt;~}|&quot;</span>
+        <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">x</span> <span class="nv">below</span> <span class="mi">100</span> <span class="nv">collect</span> <span class="nv">x</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p>可以看到，format的参数多的……而且像perl一样有很多“奇怪”的符号。</p>
+
+<h2 id="attack-by-robots">Attack by robots</h2>
+
+<p>让我们接下来看看一个被作者称作可怕的游戏，It’s really drive me crazy!!</p>
+
+<div class="highlight"><pre><code class="cl"><span class="c1">;;;整个界面大小为16x64，产生个1024长度序列</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">robots</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">loop</span> <span class="nv">named</span> <span class="nv">main</span><span class="c1">;便于跳出</span>
+     <span class="c1">;;方向</span>
+     <span class="nv">with</span> <span class="nv">directions</span> <span class="nb">=</span> <span class="o">&#39;</span><span class="p">((</span><span class="nv">q</span> <span class="o">.</span> <span class="mi">-65</span><span class="p">)</span> <span class="p">(</span><span class="nv">w</span> <span class="o">.</span> <span class="mi">-64</span><span class="p">)</span> <span class="p">(</span><span class="nv">e</span> <span class="o">.</span> <span class="mi">-63</span><span class="p">)</span> <span class="p">(</span><span class="nv">a</span> <span class="o">.</span> <span class="mi">-1</span><span class="p">)</span>
+                         <span class="p">(</span><span class="nv">d</span> <span class="o">.</span>   <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nv">z</span> <span class="o">.</span>  <span class="mi">63</span><span class="p">)</span> <span class="p">(</span><span class="nv">x</span> <span class="o">.</span>  <span class="mi">64</span><span class="p">)</span> <span class="p">(</span><span class="nv">c</span> <span class="o">.</span> <span class="mi">65</span><span class="p">))</span>
+     <span class="c1">;;初始位置</span>
+     <span class="nv">for</span> <span class="nv">pos</span> <span class="nb">=</span> <span class="mi">544</span>
+     <span class="nv">then</span> <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~%qwe/asd/zxc to move, (t)eleport, (l)eave:&quot;</span><span class="p">)</span>
+                 <span class="p">(</span><span class="nb">force-output</span><span class="p">)</span><span class="c1">;clean any output not waiting return</span>
+                 <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">c</span> <span class="p">(</span><span class="nb">read</span><span class="p">))</span>
+                        <span class="p">(</span><span class="nv">d</span> <span class="p">(</span><span class="nb">assoc</span> <span class="nv">c</span> <span class="nv">directions</span><span class="p">)))</span>
+                   <span class="p">(</span><span class="nb">cond</span> <span class="p">(</span><span class="nv">d</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">pos</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">d</span><span class="p">)))</span>
+                         <span class="p">((</span><span class="nb">eq</span> <span class="ss">&#39;t</span> <span class="nv">c</span><span class="p">)</span> <span class="p">(</span><span class="nb">random</span> <span class="mi">1024</span><span class="p">))</span>
+                         <span class="p">((</span><span class="nb">eq</span> <span class="ss">&#39;l</span> <span class="nv">c</span><span class="p">)</span> <span class="p">(</span><span class="k">return-from</span> <span class="nv">main</span> <span class="ss">&#39;bye</span><span class="p">))</span>
+                         <span class="p">(</span><span class="no">t</span> <span class="nv">pos</span><span class="p">))))</span>
+     <span class="c1">;;获得monster的位置</span>
+     <span class="nv">for</span> <span class="nv">monsters</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">repeat</span> <span class="mi">10</span>
+                          <span class="nv">collect</span> <span class="p">(</span><span class="nb">random</span> <span class="mi">1024</span><span class="p">))</span>
+     <span class="nv">then</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">mpos</span> <span class="nv">in</span> <span class="nv">monsters</span>
+                <span class="nv">collect</span> <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="p">(</span><span class="nb">count</span> <span class="nv">mpos</span> <span class="nv">monsters</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
+                          <span class="nv">mpos</span>
+                          <span class="c1">;;都走了一遍。</span>
+                          <span class="p">(</span><span class="nb">cdar</span> <span class="p">(</span><span class="nb">sort</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="p">(</span><span class="nv">k</span> <span class="o">.</span> <span class="nv">d</span><span class="p">)</span> <span class="nv">in</span> <span class="nv">directions</span>
+                                            <span class="nv">for</span> <span class="nv">new-mpos</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">mpos</span> <span class="nv">d</span><span class="p">)</span>
+                                            <span class="c1">;行与列距离和与新位置cons                                </span>
+                                            <span class="nv">collect</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">abs</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">new-mpos</span> <span class="mi">64</span><span class="p">)</span> 
+                                                                     <span class="p">(</span><span class="nb">mod</span> <span class="nv">pos</span> <span class="mi">64</span><span class="p">)))</span>
+                                                             <span class="p">(</span><span class="nb">abs</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">ash</span> <span class="nv">new-mpos</span> <span class="mi">-6</span><span class="p">)</span>
+                                                                     <span class="p">(</span><span class="nb">ash</span> <span class="nv">pos</span> <span class="mi">-6</span><span class="p">))))</span>
+                                                          <span class="nv">new-mpos</span><span class="p">))</span>
+                                      <span class="ss">&#39;&lt;</span>
+                                      <span class="ss">:key</span> <span class="nf">#&#39;</span><span class="nb">car</span><span class="p">))))</span>
+     <span class="nb">when</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">mpos</span> <span class="nv">in</span> <span class="nv">monsters</span>
+                <span class="nv">always</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="p">(</span><span class="nb">count</span> <span class="nv">mpos</span> <span class="nv">monsters</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
+     <span class="nb">return</span> <span class="ss">&#39;player-wins</span>
+     <span class="nb">do</span> <span class="p">(</span><span class="nb">format</span> <span class="no">t</span>
+                <span class="s">&quot;~%|~{~&lt;|~%|~,65:;~A~&gt;~}|&quot;</span>
+                <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">p</span> 
+                      <span class="nv">below</span> <span class="mi">1024</span>
+                      <span class="nv">collect</span> <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">member</span> <span class="nv">p</span> <span class="nv">monsters</span><span class="p">)</span> 
+                                     <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">=</span> <span class="nv">p</span> <span class="nv">pos</span><span class="p">)</span> <span class="p">(</span><span class="k">return-from</span> <span class="nv">main</span> <span class="ss">&#39;player-loses</span><span class="p">))</span>
+                                           <span class="p">((</span><span class="nb">&gt;</span> <span class="p">(</span><span class="nb">count</span> <span class="nv">p</span> <span class="nv">monsters</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span> <span class="sc">#\#</span><span class="p">)</span>
+                                           <span class="p">(</span><span class="no">t</span> <span class="sc">#\A</span><span class="p">)))</span>
+                                    <span class="p">((</span><span class="nb">=</span> <span class="nv">p</span> <span class="nv">pos</span><span class="p">)</span> 
+                                     <span class="sc">#\@</span><span class="p">)</span>
+                                    <span class="p">(</span><span class="no">t</span> 
+                                     <span class="sc">#\ </span><span class="p">))))))</span>
+</code></pre>
+</div>
+
+<p>整个游戏就一个函数，由loop和format这种强大的lisp异类来完成。</p>
+
+<h2 id="section">写在最后</h2>
+
+<p>挺好玩的一个游戏。挺难理解的代码……</p>
+
+<p>为了看懂又回头看看作者的loop周期表，再次见识了format和loop的强大之处，也感受到了它们的复杂。</p>
+
+    
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/Tech/2012/05/06/using-loop-to-evolve" title="Using Loop To Evolve">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/Tech/2012/05/10/streams-in-lisp" title="Streams in Lisp">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_container">
+    <a href="#" class="comment btn btn-primary" onclick="return false;">点击查看评论</a>
+    <div id="disqus_thread"></div>
+</div>
+<script type="text/javascript">
+var show_comments = function(){
+    var disqus_developer = 1;
+    var disqus_shortname = 'reverlandblog'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+};
+
+$(document).ready(function(){
+  $('#disqus_container>.comment').click(function(){
+    $(this).html('加载中……');
+	show_comments();
+	$(this).remove();
+  });
+});
+
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+
+  <div class="span3 pull-right">
+    <ul class="nav nav-list">
+      <li class="nav-header">分类</li>
+      
+       
+        
+        <li class="active">
+        
+        <a href="/categories.html#Tech-ref">Tech <span>30</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Reviews-ref">Reviews <span>2</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Life-ref">Life <span>6</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#painting-ref">painting <span>1</span></a>
+        </li>
+      
+      
+        <li class="nav-header">Tags</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#lisp-ref">lisp <span>21</span></a></li>
+    
+  
+
+
+
+      
+    </ul>
+  </div>
+</div>
+
+<!-- Gplus -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'zh-CN'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+
+      </div>
+
+      <footer>
+        <p>&copy; Reverland 2012 
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+    <script type="text/javascript" src="/js/sd.js"></script>
+  </body>
+</html>
+

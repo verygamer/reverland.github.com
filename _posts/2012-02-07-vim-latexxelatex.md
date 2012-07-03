@@ -6,8 +6,11 @@ category: Tech
 tags: [latex, vim]
 disqus: true
 ---
+
 ## vim-latex设置xelatex 
+
 ### 准备工作 
+
 首先我的系统配置情况:
 {% highlight bash %}
 Distributor ID: Arch i686 
@@ -30,8 +33,11 @@ texlive-latexextra 2011.24718-1
 假设你已经把上面两项安装好了，那么进入正题。
 
 ***
+
 ### hack 源码（其实，貌似可以在vimrc中更改）
+
 ####修改latex-suite默认的目标文件
+
 在~/.vim/ftplugin/latex-suit/texrc中找到:
 
 {% highlight bash %}
@@ -55,6 +61,7 @@ endif
 这个变量告诉latex-suite，你需要的目标文件是pdf
 
 #### 修改pdf的编译命令
+
 同样在texrc文件中找到：
 
 {% highlight bash %}
@@ -70,6 +77,7 @@ TexLet g:Tex_CompileRule_pdf # 'xelatex --src-specials -interaction#nonstopmode 
 这样，你用来编译pdf的命令就有xelatex来负责了，同时也指定了前向搜索所必备的一个参数：`--src-specials`
 
 #### 修改默认pdf浏览器
+
  继续在texrc修改latex-suite默认为各种文件调用的浏览器，找到相应部分修改成以下模样。
 
 {% highlight bash %}
@@ -90,6 +98,7 @@ else
 经过这一步，latex-suite在浏览pdf，dvi，ps的时候都会调用okular.
 
 #### 设置正向搜索
+
 修改~/.vim/ftplugin/latex-suit/compiler.vim，让latex-suite能够以正确的参数在前向搜索和普通模式下打开生成的pdf文件：
 找到相应部分做如下修改
 
@@ -103,6 +112,7 @@ elseif (viewer ## "okular")
 {% endhighlight %}
 
 #### 设置反向搜索
+
     警告！文件名和路径中不要有空格和汉字
 打开okular，菜单：setting>>configure okular>>Editor属性页
 把里面的Editor下拉到Custom Text Editor，然后在Command:一栏输入：
@@ -121,10 +131,15 @@ elseif (viewer ## "okular")
 {% endhighlight %}
 
 就会自动的重定位到gvim中源码对应的地方，不过记住，不要开多个gvim，否则很可能用错误的gvim打开源码，然后就会提示交换文件已经存在之类. 
+
 ***
+
 ## 参考文献 ##
+
 sorry,写的比较早遗忘了，如果有知道的联系我。
+
 ***
+
 ###### changelog 
 - 2012年02月07日 星期二 12时54分48秒
 - 2012年04月06日 星期五 18时44分54秒 添加ctex字体配置部分，更改高亮

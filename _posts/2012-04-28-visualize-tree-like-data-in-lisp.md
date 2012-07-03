@@ -6,6 +6,7 @@ category: Tech
 tags: [lisp]
 disqus: true
 ---
+
 ## lisp中的特殊列表结构
 
 - 点状列表
@@ -13,7 +14,9 @@ disqus: true
 - circular list
 
 ***
+
 ## 可视化lisp数据
+
 用graphviz把lisp中数据可视化的方法，代码如下：
 {% highlight cl %}
 ;;切换到工作目录
@@ -140,6 +143,8 @@ disqus: true
 - funcall
 
 ***
+
 ## 参考资料
+
 [graphivz中文使用指南](http://blog.openrays.org/blog.php?do=showone&tid=420)
 

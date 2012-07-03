@@ -5,11 +5,12 @@ require 'time'
 
 SOURCE = "."
 CONFIG = {
-  'version' => "0.2.13",
+  'version' => "0.2.9",
   'themes' => File.join(SOURCE, "_includes", "themes"),
   'layouts' => File.join(SOURCE, "_layouts"),
   'posts' => File.join(SOURCE, "_posts"),
-  'post_ext' => "textile",
+  'encrypts' => File.join(SOURCE, "_encrypted"),
+  'post_ext' => "md",
   'theme_package_version' => "0.1.0"
 }
 
@@ -62,10 +63,9 @@ task :post do
     post.puts "---"
     post.puts "layout: post"
     post.puts "title: \"#{title.gsub(/-/,' ')}\""
-    post.puts 'description: ""'
     post.puts "category: "
+    post.puts "excerpt: "
     post.puts "tags: []"
-    post.puts "disqus: true"
     post.puts "---"
     post.puts "{% include JB/setup %}"
   end
@@ -90,15 +90,91 @@ task :page do
     post.puts "---"
     post.puts "layout: page"
     post.puts "title: \"#{title}\""
-    post.puts 'description: ""'
     post.puts "---"
     post.puts "{% include JB/setup %}"
   end
 end # task :page
 
+desc "Create a encrypted page."
+task :cenc do
+  require 'pp'
+  abort("rake aborted: '#{CONFIG['encrypts']}' directory not found.") unless FileTest.directory?(CONFIG['encrypts'])
+  name = ARGV[1] || "new-page.md"
+  #filename = File.join(CONFIG['encrypts'], "#{name}")
+  filename = File.join(SOURCE, "#{name}")
+  destname = File.join(CONFIG['posts'], File.basename("#{name}"))
+  `cp #{filename} #{destname}`
+  require 'openssl'
+  require 'base64'
+
+  def random_string(len=8)
+	  chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+	  str = ""
+	  1.upto(len) { |i| str << chars[rand(chars.size-1)] }
+	  str
+  end
+
+  def encrypt(obj, pass='12345678', alg='AES-256-CBC', salt=nil)
+	  salt = random_string() unless salt
+	  enc = OpenSSL::Cipher::Cipher.new(alg).encrypt
+	  enc.pkcs5_keyivgen(pass, salt, 1)
+	  s = enc.update(obj) + enc.final
+	  return Base64.encode64(random_string(8)+salt+s)
+  end
+  
+  writer = ''#STDOUT#open(destname, 'w')
+
+  content = open(filename).read()
+  data = {}
+  if content =~ /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
+    data = YAML.load($1)
+    writer << $1 << "\n---\n"
+  end
+
+  require 'jekyll'
+  options = Jekyll.configuration({})
+  site = Jekyll::Site.new(options)
+  
+  site.read_posts('')
+  site.posts.each do |post|
+    post_data = post.to_liquid
+    if post_data['title'] == data['title'] then
+      html = ''
+	  markdown = post_data['markdown'] || site.config['markdown']
+	  if markdown == 'rdiscount' then
+		require 'rdiscount'
+        html << <<-HTML
+          #{RDiscount.new(post_data['content']).to_html}
+        HTML
+	  elsif markdown == 'kramdown' then
+	    require 'kramdown'
+        html << <<-HTML
+          #{Kramdown::Document.new(post_data['content']).to_html}
+        HTML
+	  else
+        html << <<-HTML
+          #{Maruku.new(post_data['content']).to_html}
+        HTML
+	  end
+	  password = post_data['password']
+      writer << encrypt(html, pass=password)
+      open(destname, 'w')<<writer
+      break
+    end
+  end
+end
+
 desc "Launch preview environment"
 task :preview do
   system "jekyll --auto --server"
+end # task :preview
+
+desc "Deploy to server"
+task :deploy do
+  require 'jekyll'
+  options = Jekyll.configuration({})
+  site = Jekyll::Site.new(options)
+  system "jekyll && rsync -avz --delete _site/ #{site.config['deploy']}"
 end # task :preview
 
 # Public: Alias - Maintains backwards compatability for theme switching.

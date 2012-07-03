@@ -7,7 +7,9 @@ tags: [latex]
 disqus: true
 ---
 {% include JB/setup %}
+
 ##linux下合并pdf
+
 写激光原理论文，老师给了个封面。需要将封面和内容弄到一个文件中。
 
 以前用过pdfmod什么的，结果发现我用XeLaTeX编译出来的是乱码。
@@ -27,7 +29,9 @@ gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=bar.pdf -f foo1.pdf foo2.
 {% endhighlight %}
 
 [1]: http://latex.yo2.cn/articles/tex-merg-pdf.html
+
 [2]: http://latex.yo2.cn/articles/gs-pdfwrite.html
+
 ##之外的废话
 这几天一直忙着复习，几天时间把一学期老师讲的东西预习一遍，然后就要吊儿郎当的开卷考试了。又有那激光原理期末大作业，我是当然要用LaTeX来写了，虽然不准备再研究这个，但用word总是让我有些无法忍受。
 

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Ernest Delgado (ernestd@google.com)
+                 Alex Russell (slightlyoff@chromium.org)
+
+  landslide modifications: Adam Zapletal (adamzap@gmail.com)
+                           Nicolas Perriault (nperriault@gmail.com)
+  Forked from landslide 
+    Skydark Chen (skydark2@gmail.com)
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <title>{{ page.title }}</title>
+    {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+    <meta name="author" content="{{ site.author.name }}">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Styles -->
+    <link media="screen, projection" href="{{ ASSET_PATH }}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ BASE_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="{{BASE_PATH}}/css/syntax.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" media="print" href="{{BASE_PATH}}/css/slide_print.css">
+    <link rel="stylesheet" media="screen, projection" href="{{BASE_PATH}}/css/slide.css">
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="{{BASE_PATH}}/images/favicon.ico">
+    <!-- Javascripts -->
+    <script type="text/javascript" src="{{BASE_PATH}}/js/jquery.js"></script>
+    <script type="text/javascript" src="{{BASE_PATH}}/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{BASE_PATH}}/js/jtimer.js"></script>
+</head>
+<body>
+  <div id="blank"></div>
+  <div class="presentation">
+    <div id="current_presenter_notes">
+      <div id="presenter_note"></div>
+    </div>
+    <div class="slides">
+      {% assign page_spliter = '<hr />' %}
+      {% capture slide_header %}
+        <div class="slide-wrapper"><div class="slide"><div class="inner"><section>
+      {% endcapture %}
+      {% capture slide_footer %}
+          </section>
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section><!-- TODO --></section>
+          </div>
+          <footer>
+            <aside class="source">
+              <div class="timer"></div>
+            </aside>
+            <aside class="footer">{{page.footer|markdownify}}</aside>
+            <aside class="page_number">
+            <span class="slide_num"></span>
+            </aside>
+          </footer>
+        </div>
+        </div>
+      {% endcapture %}
+      {% capture slide_joiner %}{{slide_footer}}{{slide_header}}{% endcapture %}
+      {% capture slides_content %}{{ slide_header }}{{content|replace:'<hr />',slide_joiner}}{{ slide_footer }}{% endcapture %}
+      {% capture title_slide %}{{ slide_header}}<h1>{{page.title}}</h1>{{slide_footer}}{% endcapture %}
+      {{ title_slide }}
+      {{ slides_content }}
+    </div>
+  </div>
+  <div id="toc" class="sidebar hidden">
+    <h2>Table of Contents</h2>
+    <table>
+      <caption>Table of Contents</caption>
+    </table>
+  </div>
+  <div id="help" class="sidebar hidden">
+    <h2>Help</h2>
+    <table>
+      <caption>Help</caption>
+      <tr>
+        <th>Table of Contents</th>
+        <td>t</td>
+      </tr>
+      <tr>
+        <th>Exposé</th>
+        <td>ESC</td>
+      </tr>
+      <tr>
+        <th>Show comments</th>
+        <td>e</td>
+      </tr>
+      <tr>
+        <th>Full screen slides</th>
+        <td>f</td>
+      </tr>
+      <tr>
+        <th>Presenter View</th>
+        <td>p</td>
+      </tr>
+      <tr>
+        <th>Source Files</th>
+        <td>s</td>
+      </tr>
+      <tr>
+        <th>Slide Numbers</th>
+        <td>n</td>
+      </tr>
+      <tr>
+        <th>Toggle screen blanking</th>
+        <td>b</td>
+      </tr>
+      <tr>
+        <th>Show/hide slide context</th>
+        <td>c</td>
+      </tr>
+      <tr>
+        <th>Notes</th>
+        <td>2</td>
+      </tr>
+      <tr>
+        <th>Help</th>
+        <td>h</td>
+      </tr>
+    </table>
+  </div>
+  <div id="slide_comment">
+    <div id="slide_comment_inner">
+    {% include JB/comments %}
+    </div>
+  </div>
+<script type="text/javascript" src="{{BASE_PATH}}/js/slides_init.js"></script>
+<script type="text/javascript" src="{{BASE_PATH}}/js/sd.js"></script>
+<script type="text/javascript" src="{{BASE_PATH}}/js/slides.js"></script>
+<script>main()</script>
+{% if page.mathjax %}
+  {% include sd/math %}
+{% endif %}
+</body>
+</html>
+

@@ -7,7 +7,9 @@ tags: [lisp]
 disqus: true
 ---
 {% include JB/setup %}
+
 ## 函数式的记忆优化
+
 记忆利用闭包。这种优化只对函数式有用。函数的行为只受输入参数约束，函数所做的仅仅是计算并将结果返回给调用者。
 
 优化的地方在于：记住每次传递的参数和计算的结果。
@@ -15,6 +17,7 @@ disqus: true
 我们的[Dice of Doom][3]游戏可以做如下优化：
 
 ### 记忆neighbors Function
+
 正如你所记得的，neighbors函数重复检查board的所有边。然而board的形状比赛中从来不变化，这个函数的结果不会变化！
 
 {% highlight cl%}
@@ -34,6 +37,7 @@ disqus: true
 注意……这种函数处理行为可能搞的很乱……
 
 ### 记忆Game Tree
+
 game tree的生成是整个程序最大的开销，可以这样优化。
 
 {% highlight cl%}
@@ -46,6 +50,7 @@ game tree的生成是整个程序最大的开销，可以这样优化。
 因为哈希表中的对象是array，所以我们用`equalp`代替`eql`。`&rest`接受任意数量参数。
 
 ###记忆rate-position函数
+
 这是用lisp实现人工智能中minmax算法中的一个函数，我好像还没纪录人工智能那部分。
 如下：
 {% highlight cl%}
@@ -64,13 +69,17 @@ game tree的生成是整个程序最大的开销，可以这样优化。
 首先创建一个用eql比较的外部哈希表，然后定义一个tab变量在外部哈希表中查找我们的其中一个参数player，获取内部hash表。如果外部没查找到，我们建一个空的内建哈希表，用同样的键保存在外部哈希表中，剩下的例子和先前一样，除了我们使用内嵌哈希表，把tree这个参数作为键值。
 
 ##注意
+
 记忆化可以优化函数式程序，然而记忆化本身一点也不函数式。所以说函数式必然效率低么？其实这种优化我倒希望编译器能自动完成。
 
 ##补记
+
 这些日子忙着准备考试，然而考试当天剩一小时写完果断交卷。对大学考试已经没任何想法了，浪费我时间而已。
 
 land of lisp根本这几天就没看，试了试[racket][1]，相当有意思，库也挺强大。我还是喜欢只有47页规范的scheme啊，所以看完land of lisp想先看看[How to Design Programms][2],common lisp上前页的规范真不是newbie friendly。
 
 [1]: http://racket-lang.org/
+
 [2]: http://htdp.org
+
 [3]: 

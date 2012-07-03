@@ -7,8 +7,11 @@ tags: [lisp]
 disqus: true
 ---
 {% include JB/setup %}
+
 ## 满目的loop
+
 loop是lisp中饱受争议的命令，因为它看起来不这么lispy，但它真得很强大。以下列举下基本用法：
+
 {% highlight cl %}
 (loop for i
       below 5
@@ -60,6 +63,7 @@ loop是lisp中饱受争议的命令，因为它看起来不这么lispy，但它�
 当然还有很多，这个命令异常灵活，以致于作者做了个[loop周期表][1]。
 
 ## Using Loop to Evolve
+
 这个游戏看上去还挺轻松的，很有意思的“生命游戏”。不多说了，上码
 {% highlight cl %}
 ;;;The extent of the world
@@ -227,7 +231,9 @@ M代表某无性生殖动物，`*`代表某随机生长植物
 <img src="http://lhtlyybox.googlecode.com/files/%E6%8A%93%E5%9B%BE75.png" hight="200" width="400" alt="虚拟进化" />
 
 ***
+
 ## 写在最后
+
 资源丰富区自然选择留下了那些逡巡不前的，资源短缺区留下了富于冒险的。
 
 之后有上网查查其它进化游戏，发现资源丰富时资源消耗小的被淘汰，资源缺乏时资源消耗大的被淘汰
