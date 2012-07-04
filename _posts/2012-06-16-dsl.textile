@@ -177,7 +177,7 @@ html的标签是特定的，我们还能为特定的html标签编写宏：
                                collect (random 256))))))
 {% endhighlight %}
 用你的浏览器打开random_walk.svg看看吧，生成大概这样的图像:
-"random_walk":/~images/random_walk.svg
+"random_walk":/images/random_walk.svg
 
 h2. 对先前的游戏进行dsl
 
