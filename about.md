@@ -25,6 +25,13 @@ I just wanna to say to others:
 珍爱生命，远离折腾。
 {% endhighlight %}
 
+## 关于这里的内容
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br />所有作品如未特殊声明则采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">知识共享署名-非商业性使用-相同方式共享 3.0 Unported许可协议</a>进行许可。
+
+## 鸣谢
+
+特别感谢[skydark](http://blog.skydark.info/)同学，直接可耻地从那里把东西扒过来的……
 
 [1]: https://wiki.archlinux.org/index.php/Special:Contributions/Reverland
 [2]: https://github.com/reverland
