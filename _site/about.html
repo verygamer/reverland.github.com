@@ -116,6 +116,8 @@
 <div class="row">
   <div class="span12">
     
+<p>这里是reverland的个人博客，用来放些乱七八糟的东西，如果你有什么意见或什么想法可以在最下面留言，或者给我发 <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#117;&#115;&#101;&#114;&#064;&#101;&#120;&#097;&#109;&#112;&#108;&#101;&#046;&#099;&#111;&#109;">&#117;&#115;&#101;&#114;&#064;&#101;&#120;&#097;&#109;&#112;&#108;&#101;&#046;&#099;&#111;&#109;</a> 也行</p>
+
 <h2 id="any-other-way-to-learn-about-me">Any other way to learn about me</h2>
 
 <ul>
@@ -145,7 +147,37 @@
 
 <h2 id="section-1">鸣谢</h2>
 
-<p>特别感谢<a href="http://blog.skydark.info/">skydark的胡言乱语</a>同学，直接可耻地从那里把东西扒过来的……</p>
+<p>特别感谢<a href="http://blog.skydark.info/">skydark</a>同学，直接可耻地从那里把东西扒过来的……</p>
+
+<div id="disqus_container">
+    <a href="#" class="comment btn btn-primary" onclick="return false;">点击查看评论</a>
+    <div id="disqus_thread"></div>
+</div>
+<script type="text/javascript">
+var show_comments = function(){
+    var disqus_developer = 1;
+    var disqus_shortname = 'reverlandblog'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+};
+
+$(document).ready(function(){
+  $('#disqus_container>.comment').click(function(){
+    $(this).html('加载中……');
+	show_comments();
+	$(this).remove();
+  });
+});
+
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<p><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></p>
 
 
   </div>
