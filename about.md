@@ -2,6 +2,7 @@
 layout: page
 title: "关于"
 group: navigation
+disqus: true
 ---
 {% include JB/setup %}
 

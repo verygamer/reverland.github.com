@@ -4,7 +4,7 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.github.com//atom.xml" rel="self"/>
  <link href="http://reverland.github.com/"/>
- <updated>2012-07-03T23:11:28+08:00</updated>
+ <updated>2012-07-04T08:20:22+08:00</updated>
  <id>http://reverland.github.com/</id>
  <author>
    <name>Reverland</name>
@@ -487,6 +487,7 @@
    <updated>2012-06-26T00:00:00+08:00</updated>
    <id>hhttp://reverland.github.com//Tech/2012/06/26/common-lisp</id>
    <content type="html">&lt;h1&gt;Common Lisp菜鸟指南&lt;/h1&gt;
+&lt;p&gt;翻译自:&lt;a href=&quot;http://ghostopera.org/blog/2012/06/24/the-newbie-guide-to-common-lisp/&quot;&gt;http://ghostopera.org/blog/2012/06/24/the-newbie-guide-to-common-lisp/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;进入Common Lisp的世界可能非常让人退缩，甚至对有经验的程序猿也是这样。这个语言兼有力与美，但也有许多清晰的边界和没有真正被普遍理解的开端。&lt;/p&gt;
 &lt;p&gt;这个指南可能将持续一段时间，但是希望它将使踏入Common Lisp的任务变得不那么可怕。&lt;/p&gt;
 &lt;h2&gt;理解Common Lisp&lt;/h2&gt;
