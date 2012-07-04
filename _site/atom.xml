@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
  
  <title>Reverland的行知阁</title>
- <link href="http://reverland.github.com//atom.xml" rel="self"/>
- <link href="http://reverland.github.com/"/>
- <updated>2012-07-04T08:20:22+08:00</updated>
- <id>http://reverland.github.com/</id>
+ <link href="http://reverland.org//atom.xml" rel="self"/>
+ <link href="http://reverland.org/"/>
+ <updated>2012-07-04T09:36:36+08:00</updated>
+ <id>http://reverland.org/</id>
  <author>
    <name>Reverland</name>
    <email>lhtlyy@gmail.com</email>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>基于web的Dice of Doom</title>
-   <link href="http://reverland.github.com//Tech/2012/07/02/webdice-of-doom"/>
+   <link href="http://reverland.org//Tech/2012/07/02/webdice-of-doom"/>
    <updated>2012-07-02T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/07/02/webdice-of-doom</id>
+   <id>hhttp://reverland.org//Tech/2012/07/02/webdice-of-doom</id>
    <content type="html">&lt;h1&gt;基于web的Dice of Doom游戏&lt;/h1&gt;
 &lt;p&gt;眼看最后两章了,虽然AI那里云山雾罩,然而看到web又精神为之一震,真是看得高潮迭起啊。作者也很给力，直接用html5来编写web应用，把svg直接嵌入到html中。可惜作者用的是firefox3.7 alpha，为了在我的archlinux x86_64的firefox12上运行良好，还是多废了些心机。这章看着很爽。&lt;/p&gt;
 &lt;h2&gt;绘制游戏元素&lt;/h2&gt;
@@ -216,9 +216,9 @@
  
  <entry>
    <title>Dice of Doom v2</title>
-   <link href="http://reverland.github.com//Tech/2012/06/29/dice-of-doom-v2"/>
+   <link href="http://reverland.org//Tech/2012/06/29/dice-of-doom-v2"/>
    <updated>2012-06-29T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/06/29/dice-of-doom-v2</id>
+   <id>hhttp://reverland.org//Tech/2012/06/29/dice-of-doom-v2</id>
    <content type="html">&lt;h1&gt;Dice of Doom v2&lt;/h1&gt;
 &lt;p&gt;我已经不怎么看得懂在讲什么了，所以胡言乱语请见谅,有几个问题:&lt;/p&gt;
 &lt;ol&gt;
@@ -469,9 +469,9 @@
  
  <entry>
    <title>Google glasses</title>
-   <link href="http://reverland.github.com//Tech/2012/06/28/google-glasses"/>
+   <link href="http://reverland.org//Tech/2012/06/28/google-glasses"/>
    <updated>2012-06-28T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/06/28/google-glasses</id>
+   <id>hhttp://reverland.org//Tech/2012/06/28/google-glasses</id>
    <content type="html">&lt;p&gt;最近耳闻google I/O大会，看到个消息： &lt;a href=&quot;http://www.guao.hk/posts/google-glass-pre-order.html&quot;&gt;开发版 Google 眼镜开始接受限量预定，1500 刀超高价格明年年初发货&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;然后随便上网查查，奇怪为啥这么多人吹捧。&lt;/p&gt;
 &lt;p&gt;先看看google的宣传片吧，有种未来触手可及的感觉。下一步就该把眼镜和人的视觉系统整合了吧，攻壳机动队全义体化的假想要实现了么？&lt;/p&gt;
@@ -483,9 +483,9 @@
  
  <entry>
    <title>Common lisp菜鸟指南(译)</title>
-   <link href="http://reverland.github.com//Tech/2012/06/26/common-lisp"/>
+   <link href="http://reverland.org//Tech/2012/06/26/common-lisp"/>
    <updated>2012-06-26T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/06/26/common-lisp</id>
+   <id>hhttp://reverland.org//Tech/2012/06/26/common-lisp</id>
    <content type="html">&lt;h1&gt;Common Lisp菜鸟指南&lt;/h1&gt;
 &lt;p&gt;翻译自:&lt;a href=&quot;http://ghostopera.org/blog/2012/06/24/the-newbie-guide-to-common-lisp/&quot;&gt;http://ghostopera.org/blog/2012/06/24/the-newbie-guide-to-common-lisp/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;进入Common Lisp的世界可能非常让人退缩，甚至对有经验的程序猿也是这样。这个语言兼有力与美，但也有许多清晰的边界和没有真正被普遍理解的开端。&lt;/p&gt;
@@ -623,9 +623,9 @@ Hello World.
  
  <entry>
    <title>宽容</title>
-   <link href="http://reverland.github.com//Reviews/2012/06/23/"/>
+   <link href="http://reverland.org//Reviews/2012/06/23/"/>
    <updated>2012-06-23T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Reviews/2012/06/</id>
+   <id>hhttp://reverland.org//Reviews/2012/06/</id>
    <content type="html">&lt;h1&gt;宽容&lt;/h1&gt;
 &lt;p&gt;&lt;img src=&quot;http://img3.douban.com/lpic/s3967007.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;昨天是个具有双重意义的一天，其一在于它是中国纪念诗人 &lt;a href=&quot;http://zh.wikipedia.org/zh/%E5%B1%88%E5%8E%9F&quot;&gt;屈原&lt;/a&gt; 的端午节，它也是 &lt;a href=&quot;http://zh.wikipedia.org/zh/%E5%B1%88%E5%8E%9F&quot;&gt;阿兰·图灵&lt;/a&gt; 诞辰一百周年。两个人类社会异类的天才，忽然间让我想起了房龙的宽容，于是找来看了看。&lt;/p&gt;
@@ -659,9 +659,9 @@ Hello World.
  
  <entry>
    <title>A Mathjax Test</title>
-   <link href="http://reverland.github.com//Tech/2012/06/22/a-mathjax-test"/>
+   <link href="http://reverland.org//Tech/2012/06/22/a-mathjax-test"/>
    <updated>2012-06-22T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/06/22/a-mathjax-test</id>
+   <id>hhttp://reverland.org//Tech/2012/06/22/a-mathjax-test</id>
    <content type="html">&lt;script type=&quot;text/x-mathjax-config&quot;&gt;
 	MathJax.Hub.Config({
 	  /*showProcessingMessages: false,*/
@@ -747,9 +747,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>罗列下linux的好处</title>
-   <link href="http://reverland.github.com//Life/2012/06/21/linux"/>
+   <link href="http://reverland.org//Life/2012/06/21/linux"/>
    <updated>2012-06-21T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Life/2012/06/21/linux</id>
+   <id>hhttp://reverland.org//Life/2012/06/21/linux</id>
    <content type="html">&lt;h1&gt;是什么把你留在了linux下&lt;/h1&gt;
 &lt;p&gt;不懂者请自行google，不喜者请自行绕道&lt;/p&gt;
 &lt;p&gt;和windows和mac OS相比，linux桌面可谓默默无闻，小众的一塌糊涂。经常能在各种相关论坛看到各种抱怨。驱动、flash、游戏、不稳定、不用户友好……千宗之罪，不可胜数。不过既然linux桌面这么“不堪”，是什么把你留在了这里？&lt;/p&gt;
@@ -792,9 +792,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>惰性求值</title>
-   <link href="http://reverland.github.com//Tech/2012/06/19/"/>
+   <link href="http://reverland.org//Tech/2012/06/19/"/>
    <updated>2012-06-19T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/06/</id>
+   <id>hhttp://reverland.org//Tech/2012/06/</id>
    <content type="html">&lt;h1&gt;惰性求值&lt;/h1&gt;
 &lt;h2&gt;啥叫惰性求值&lt;/h2&gt;
 &lt;p&gt;具体的含义可以参看这里 &lt;a href=&quot;http://zh.wikipedia.org/zh/%E6%83%B0%E6%80%A7%E6%B1%82%E5%80%BC&quot;&gt;惰性求值&lt;/a&gt; 。我的看法就是一种延迟计算方法，好像一个懒汉，只计算需要计算的东西。&lt;/p&gt;
@@ -917,9 +917,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>传说中的DSL</title>
-   <link href="http://reverland.github.com//Tech/2012/06/16/dsl"/>
+   <link href="http://reverland.org//Tech/2012/06/16/dsl"/>
    <updated>2012-06-16T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/06/16/dsl</id>
+   <id>hhttp://reverland.org//Tech/2012/06/16/dsl</id>
    <content type="html">&lt;h1&gt;lisp中的dsl&lt;/h1&gt;
 &lt;h2&gt;什么是dsl，为什么要dsl&lt;/h2&gt;
 &lt;p&gt;显然对于特定的领域，特定的程序是更好的解决方案，这个程序就是DSL&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.lisp非常方便来实现DSL。在land of lisp一书中进行了两种dsl，一种是生成xml或html，另一种是对我们之前 &lt;a href=&quot;http://reverland.github.com/Tech/2012/04/26/a-text-game-engine-written-by-lisp/&quot;&gt;wizard游戏的&lt;/a&gt; 中的游戏命令进行dsl。&lt;/p&gt;
@@ -1065,7 +1065,7 @@ $$&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;用你的浏览器打开random_walk.svg看看吧，生成大概这样的图像:&lt;br /&gt;
-&lt;a href=&quot;/~images/random_walk.svg&quot;&gt;random_walk&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&quot;/images/random_walk.svg&quot;&gt;random_walk&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;对先前的游戏进行dsl&lt;/h2&gt;
 &lt;p&gt;首先别忘了加载那个游戏&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cl&quot;&gt;&lt;span class=&quot;c1&quot;&gt;;Creating Custom Game Commands for Wizard&amp;#39;s Adventure Game&lt;/span&gt;
@@ -1161,9 +1161,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>Macro in lisp</title>
-   <link href="http://reverland.github.com//Tech/2012/06/13/macro-in-lisp"/>
+   <link href="http://reverland.org//Tech/2012/06/13/macro-in-lisp"/>
    <updated>2012-06-13T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/06/13/macro-in-lisp</id>
+   <id>hhttp://reverland.org//Tech/2012/06/13/macro-in-lisp</id>
    <content type="html">&lt;h1&gt;lisp宏的魔力&lt;/h1&gt;
 &lt;h2&gt;lisp的宏&lt;/h2&gt;
 &lt;p&gt;注意：此宏远与cpp中的宏有着天壤之别，而且远复杂很多倍。&lt;br /&gt;
@@ -1408,9 +1408,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>近日简记</title>
-   <link href="http://reverland.github.com//Life/2012/06/12/"/>
+   <link href="http://reverland.org//Life/2012/06/12/"/>
    <updated>2012-06-12T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Life/2012/06/</id>
+   <id>hhttp://reverland.org//Life/2012/06/</id>
    <content type="html">
 &lt;h1 id=&quot;section&quot;&gt;近日简记&lt;/h1&gt;
 
@@ -1581,9 +1581,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>用gimp画了两幅画</title>
-   <link href="http://reverland.github.com//painting/2012/06/09/gimp"/>
+   <link href="http://reverland.org//painting/2012/06/09/gimp"/>
    <updated>2012-06-09T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//painting/2012/06/09/gimp</id>
+   <id>hhttp://reverland.org//painting/2012/06/09/gimp</id>
    <content type="html">
 &lt;p&gt;刚考完试，也不想去复习考研的东西，也不想写两天后要交的论文，感冒了又很难受，用gimp画了两幅画&lt;/p&gt;
 
@@ -1614,9 +1614,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>First AI in lisp</title>
-   <link href="http://reverland.github.com//Tech/2012/06/08/first-ai-in-lisp"/>
+   <link href="http://reverland.org//Tech/2012/06/08/first-ai-in-lisp"/>
    <updated>2012-06-08T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/06/08/first-ai-in-lisp</id>
+   <id>hhttp://reverland.org//Tech/2012/06/08/first-ai-in-lisp</id>
    <content type="html">
 &lt;h2 id=&quot;section&quot;&gt;创造一个智能的对手&lt;/h2&gt;
 
@@ -1713,9 +1713,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>Scheme初体验</title>
-   <link href="http://reverland.github.com//Tech/2012/06/05/scheme"/>
+   <link href="http://reverland.org//Tech/2012/06/05/scheme"/>
    <updated>2012-06-05T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/06/05/scheme</id>
+   <id>hhttp://reverland.org//Tech/2012/06/05/scheme</id>
    <content type="html">
 &lt;h2 id=&quot;racket&quot;&gt;racket&lt;/h2&gt;
 
@@ -1730,9 +1730,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>Memoization in Functional Style</title>
-   <link href="http://reverland.github.com//Tech/2012/06/02/memoization-in-functional-style"/>
+   <link href="http://reverland.org//Tech/2012/06/02/memoization-in-functional-style"/>
    <updated>2012-06-02T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/06/02/memoization-in-functional-style</id>
+   <id>hhttp://reverland.org//Tech/2012/06/02/memoization-in-functional-style</id>
    <content type="html">
 &lt;h2 id=&quot;section&quot;&gt;函数式的记忆优化&lt;/h2&gt;
 
@@ -1813,9 +1813,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>Tail Call Optimization</title>
-   <link href="http://reverland.github.com//Tech/2012/05/31/tail-call-optimization"/>
+   <link href="http://reverland.org//Tech/2012/05/31/tail-call-optimization"/>
    <updated>2012-05-31T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/05/31/tail-call-optimization</id>
+   <id>hhttp://reverland.org//Tech/2012/05/31/tail-call-optimization</id>
    <content type="html">
 &lt;h2 id=&quot;section&quot;&gt;什么是尾递归&lt;/h2&gt;
 
@@ -1887,9 +1887,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>Archlinux下合并pdf</title>
-   <link href="http://reverland.github.com//Tech/2012/05/28/archlinuxpdf"/>
+   <link href="http://reverland.org//Tech/2012/05/28/archlinuxpdf"/>
    <updated>2012-05-28T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/05/28/archlinuxpdf</id>
+   <id>hhttp://reverland.org//Tech/2012/05/28/archlinuxpdf</id>
    <content type="html">
 &lt;h2 id=&quot;linuxpdf&quot;&gt;linux下合并pdf&lt;/h2&gt;
 
@@ -1934,9 +1934,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>失望</title>
-   <link href="http://reverland.github.com//Life/2012/05/26/"/>
+   <link href="http://reverland.org//Life/2012/05/26/"/>
    <updated>2012-05-26T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Life/2012/05/</id>
+   <id>hhttp://reverland.org//Life/2012/05/</id>
    <content type="html">
 &lt;p&gt;有一堆感慨，杂乱不堪，删了写，写了删。总之挺失望，又不好写出来，这势力的社会、无聊的学校。&lt;/p&gt;
 
@@ -1965,9 +1965,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>Dice of Doom</title>
-   <link href="http://reverland.github.com//Tech/2012/05/23/dice-of-doom"/>
+   <link href="http://reverland.org//Tech/2012/05/23/dice-of-doom"/>
    <updated>2012-05-23T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/05/23/dice-of-doom</id>
+   <id>hhttp://reverland.org//Tech/2012/05/23/dice-of-doom</id>
    <content type="html">
 &lt;h2 id=&quot;section&quot;&gt;照例前面来些废话&lt;/h2&gt;
 
@@ -2182,9 +2182,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>这几日</title>
-   <link href="http://reverland.github.com//Life/2012/05/20/"/>
+   <link href="http://reverland.org//Life/2012/05/20/"/>
    <updated>2012-05-20T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Life/2012/05/</id>
+   <id>hhttp://reverland.org//Life/2012/05/</id>
    <content type="html">
 &lt;h2 id=&quot;section&quot;&gt;折腾永无止境&lt;/h2&gt;
 
@@ -2235,9 +2235,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>又折腾了</title>
-   <link href="http://reverland.github.com//Life/2012/05/18/"/>
+   <link href="http://reverland.org//Life/2012/05/18/"/>
    <updated>2012-05-18T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Life/2012/05/</id>
+   <id>hhttp://reverland.org//Life/2012/05/</id>
    <content type="html">
 &lt;h2 id=&quot;ck&quot;&gt;从ck内核开始&lt;/h2&gt;
 
@@ -2375,9 +2375,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>函数式编程初体验</title>
-   <link href="http://reverland.github.com//Tech/2012/05/14/"/>
+   <link href="http://reverland.org//Tech/2012/05/14/"/>
    <updated>2012-05-14T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/05/</id>
+   <id>hhttp://reverland.org//Tech/2012/05/</id>
    <content type="html">
 &lt;h2 id=&quot;section&quot;&gt;跑题的前言&lt;/h2&gt;
 
@@ -2435,9 +2435,9 @@ $$&lt;/p&gt;
  
  <entry>
    <title>Lisp Web Server</title>
-   <link href="http://reverland.github.com//Tech/2012/05/12/web-server-written-in-lisp"/>
+   <link href="http://reverland.org//Tech/2012/05/12/web-server-written-in-lisp"/>
    <updated>2012-05-12T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/05/12/web-server-written-in-lisp</id>
+   <id>hhttp://reverland.org//Tech/2012/05/12/web-server-written-in-lisp</id>
    <content type="html">
 &lt;h2 id=&quot;section&quot;&gt;关于服务器&lt;/h2&gt;
 
@@ -2662,9 +2662,9 @@ Content-Length: 39
  
  <entry>
    <title>Streams in Lisp</title>
-   <link href="http://reverland.github.com//Tech/2012/05/10/streams-in-lisp"/>
+   <link href="http://reverland.org//Tech/2012/05/10/streams-in-lisp"/>
    <updated>2012-05-10T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/05/10/streams-in-lisp</id>
+   <id>hhttp://reverland.org//Tech/2012/05/10/streams-in-lisp</id>
    <content type="html">
 &lt;p&gt;lisp中有多种流，不同的流与不同的资源交互。这些流包括控制台流，文件流，socket流和字符串流。&lt;/p&gt;
 
@@ -2764,9 +2764,9 @@ Content-Length: 39
  
  <entry>
    <title>Attack of the Robots</title>
-   <link href="http://reverland.github.com//Tech/2012/05/09/attack-of-the-robots"/>
+   <link href="http://reverland.org//Tech/2012/05/09/attack-of-the-robots"/>
    <updated>2012-05-09T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/05/09/attack-of-the-robots</id>
+   <id>hhttp://reverland.org//Tech/2012/05/09/attack-of-the-robots</id>
    <content type="html">
 &lt;h2 id=&quot;powerful-format&quot;&gt;Powerful format&lt;/h2&gt;
 
@@ -2938,9 +2938,9 @@ Content-Length: 39
  
  <entry>
    <title>Using Loop To Evolve</title>
-   <link href="http://reverland.github.com//Tech/2012/05/06/using-loop-to-evolve"/>
+   <link href="http://reverland.org//Tech/2012/05/06/using-loop-to-evolve"/>
    <updated>2012-05-06T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/05/06/using-loop-to-evolve</id>
+   <id>hhttp://reverland.org//Tech/2012/05/06/using-loop-to-evolve</id>
    <content type="html">
 &lt;h2 id=&quot;loop&quot;&gt;满目的loop&lt;/h2&gt;
 
@@ -3187,9 +3187,9 @@ Looks good however，&lt;/p&gt;
  
  <entry>
    <title>The Orc Battle Game</title>
-   <link href="http://reverland.github.com//Tech/2012/05/03/the-orc-battle-game"/>
+   <link href="http://reverland.org//Tech/2012/05/03/the-orc-battle-game"/>
    <updated>2012-05-03T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/05/03/the-orc-battle-game</id>
+   <id>hhttp://reverland.org//Tech/2012/05/03/the-orc-battle-game</id>
    <content type="html">
 &lt;h2 id=&quot;lisp&quot;&gt;Lisp中的特殊数据结构&lt;/h2&gt;
 
@@ -3575,9 +3575,9 @@ so impossibly useful that it really has no business existing in the first place.
  
  <entry>
    <title>Grand Theft Wumpus</title>
-   <link href="http://reverland.github.com//Tech/2012/05/01/grand-theft-wumpus"/>
+   <link href="http://reverland.org//Tech/2012/05/01/grand-theft-wumpus"/>
    <updated>2012-05-01T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/05/01/grand-theft-wumpus</id>
+   <id>hhttp://reverland.org//Tech/2012/05/01/grand-theft-wumpus</id>
    <content type="html">
 &lt;h2 id=&quot;about-this-game&quot;&gt;About this game&lt;/h2&gt;
 
@@ -3906,9 +3906,9 @@ so impossibly useful that it really has no business existing in the first place.
  
  <entry>
    <title>Visualize tree like data in Lisp</title>
-   <link href="http://reverland.github.com//Tech/2012/04/28/visualize-tree-like-data-in-lisp"/>
+   <link href="http://reverland.org//Tech/2012/04/28/visualize-tree-like-data-in-lisp"/>
    <updated>2012-04-28T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/04/28/visualize-tree-like-data-in-lisp</id>
+   <id>hhttp://reverland.org//Tech/2012/04/28/visualize-tree-like-data-in-lisp</id>
    <content type="html">&lt;h2 id=&quot;lisp&quot;&gt;lisp中的特殊列表结构&lt;/h2&gt;
 
 &lt;ul&gt;
@@ -4059,9 +4059,9 @@ so impossibly useful that it really has no business existing in the first place.
  
  <entry>
    <title>a text game engine written by lisp</title>
-   <link href="http://reverland.github.com//Tech/2012/04/26/a-text-game-engine-written-by-lisp"/>
+   <link href="http://reverland.org//Tech/2012/04/26/a-text-game-engine-written-by-lisp"/>
    <updated>2012-04-26T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/04/26/a-text-game-engine-written-by-lisp</id>
+   <id>hhttp://reverland.org//Tech/2012/04/26/a-text-game-engine-written-by-lisp</id>
    <content type="html">&lt;h2 id=&quot;lisp-is-amazingisnt-it&quot;&gt;Lisp is amazing,isn’t it?&lt;/h2&gt;
 
 &lt;p&gt;最早的时候，是从emacs听说lisp的，不过emacs这等神器，却并非我的菜，几经折腾最终滚回了简洁的vim。&lt;/p&gt;
@@ -4252,9 +4252,9 @@ so impossibly useful that it really has no business existing in the first place.
  
  <entry>
    <title>折腾</title>
-   <link href="http://reverland.github.com//Life/2012/04/24/"/>
+   <link href="http://reverland.org//Life/2012/04/24/"/>
    <updated>2012-04-24T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Life/2012/04/</id>
+   <id>hhttp://reverland.org//Life/2012/04/</id>
    <content type="html">&lt;div class=&quot;audio&quot;&gt;
 &lt;audio controls=&quot;controls&quot;&gt;
 &lt;source src=&quot;http://lhtlyybox.googlecode.com/files/m.ogg&quot; type=&quot;audio/ogg&quot; /&gt; 
@@ -4378,9 +4378,9 @@ so impossibly useful that it really has no business existing in the first place.
  
  <entry>
    <title>Half Hacker,Half Artist</title>
-   <link href="http://reverland.github.com//Reviews/2012/04/16/half-hackerhalf-artist"/>
+   <link href="http://reverland.org//Reviews/2012/04/16/half-hackerhalf-artist"/>
    <updated>2012-04-16T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Reviews/2012/04/16/half-hackerhalf-artist</id>
+   <id>hhttp://reverland.org//Reviews/2012/04/16/half-hackerhalf-artist</id>
    <content type="html">&lt;h1 id=&quot;section&quot;&gt;《黑客与画家》初体验&lt;/h1&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://ep.yimg.com/ca/I/paulgraham_2202_3598897&quot; alt=&quot;Alt 黑客与画家&quot; /&gt;&lt;/p&gt;
@@ -4515,9 +4515,9 @@ so impossibly useful that it really has no business existing in the first place.
  
  <entry>
    <title>How I built this blog</title>
-   <link href="http://reverland.github.com//Tech/2012/04/13/How-I-built-this-blog"/>
+   <link href="http://reverland.org//Tech/2012/04/13/How-I-built-this-blog"/>
    <updated>2012-04-13T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/04/13/How-I-built-this-blog</id>
+   <id>hhttp://reverland.org//Tech/2012/04/13/How-I-built-this-blog</id>
    <content type="html">&lt;h2 id=&quot;section&quot;&gt;缘起&lt;/h2&gt;
 
 &lt;p&gt;大概两个月前，曾经折腾过jekyll和Octopress。当时对照&lt;a href=&quot;http://chen.yanping.me/cn/blog/2011/12/15/building-static-sites-with-jekyll/&quot;&gt;【译文】用Jekyll构建静态网站&lt;/a&gt;在archlinux实现了把jekyll。因为rvm的问题，octpress就怎么也搞不定了。再加上当时对vimwiki比较熟悉，jekyll和Octopress再也不曾碰过。&lt;/p&gt;
@@ -4625,9 +4625,9 @@ pygmentize -S default -f html &amp;gt; ~css/pygments.css
  
  <entry>
    <title>将Archlinux从32位迁移到64位</title>
-   <link href="http://reverland.github.com//Tech/2012/03/25/archlinux3264"/>
+   <link href="http://reverland.org//Tech/2012/03/25/archlinux3264"/>
    <updated>2012-03-25T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/03/25/archlinux3264</id>
+   <id>hhttp://reverland.org//Tech/2012/03/25/archlinux3264</id>
    <content type="html">&lt;h2 id=&quot;archlinux3264&quot;&gt;将archlinux从32位迁移到64位&lt;/h2&gt;
 
 &lt;h3 id=&quot;section&quot;&gt;概要&lt;/h3&gt;
@@ -4689,9 +4689,9 @@ pygmentize -S default -f html &amp;gt; ~css/pygments.css
  
  <entry>
    <title>LFS初体验</title>
-   <link href="http://reverland.github.com//Tech/2012/03/21/lfs"/>
+   <link href="http://reverland.org//Tech/2012/03/21/lfs"/>
    <updated>2012-03-21T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/03/21/lfs</id>
+   <id>hhttp://reverland.org//Tech/2012/03/21/lfs</id>
    <content type="html">&lt;h2 id=&quot;lfs&quot;&gt;LFS初体验&lt;/h2&gt;
 
 &lt;h3 id=&quot;section&quot;&gt;本文概要&lt;/h3&gt;
@@ -4754,9 +4754,9 @@ pygmentize -S default -f html &amp;gt; ~css/pygments.css
  
  <entry>
    <title>vrdp初体验</title>
-   <link href="http://reverland.github.com//Tech/2012/03/11/vrdp"/>
+   <link href="http://reverland.org//Tech/2012/03/11/vrdp"/>
    <updated>2012-03-11T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/03/11/vrdp</id>
+   <id>hhttp://reverland.org//Tech/2012/03/11/vrdp</id>
    <content type="html">&lt;h2 id=&quot;vrdp&quot;&gt;安装vrdp功能&lt;/h2&gt;
 
 &lt;p&gt;先确定vbox版本&lt;/p&gt;
@@ -4806,9 +4806,9 @@ pygmentize -S default -f html &amp;gt; ~css/pygments.css
  
  <entry>
    <title>vbox安装增强工具提示无权限</title>
-   <link href="http://reverland.github.com//Tech/2012/03/06/vbox"/>
+   <link href="http://reverland.org//Tech/2012/03/06/vbox"/>
    <updated>2012-03-06T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/03/06/vbox</id>
+   <id>hhttp://reverland.org//Tech/2012/03/06/vbox</id>
    <content type="html">&lt;p&gt;在debian中安装vbox增强工具，提示无权限。chmod也无法改变，google找到以下解决方案：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /media/cdrom/
@@ -4823,9 +4823,9 @@ sudo sh ./VboxLinuxAdditions.run
  
  <entry>
    <title>在vim中使用lisp</title>
-   <link href="http://reverland.github.com//Tech/2012/02/23/vimlisp"/>
+   <link href="http://reverland.org//Tech/2012/02/23/vimlisp"/>
    <updated>2012-02-23T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/02/23/vimlisp</id>
+   <id>hhttp://reverland.org//Tech/2012/02/23/vimlisp</id>
    <content type="html">&lt;h2 id=&quot;vimlisp&quot;&gt;在Vim中使用lisp&lt;/h2&gt;
 
 &lt;h3 id=&quot;slimv&quot;&gt;安装slimv&lt;/h3&gt;
@@ -4898,9 +4898,9 @@ sudo sh ./VboxLinuxAdditions.run
  
  <entry>
    <title>vim-latex插件对xelatex的配置</title>
-   <link href="http://reverland.github.com//Tech/2012/02/07/vim-latexxelatex"/>
+   <link href="http://reverland.org//Tech/2012/02/07/vim-latexxelatex"/>
    <updated>2012-02-07T00:00:00+08:00</updated>
-   <id>hhttp://reverland.github.com//Tech/2012/02/07/vim-latexxelatex</id>
+   <id>hhttp://reverland.org//Tech/2012/02/07/vim-latexxelatex</id>
    <content type="html">&lt;h2 id=&quot;vim-latexxelatex&quot;&gt;vim-latex设置xelatex&lt;/h2&gt;
 
 &lt;h3 id=&quot;section&quot;&gt;准备工作&lt;/h3&gt;
