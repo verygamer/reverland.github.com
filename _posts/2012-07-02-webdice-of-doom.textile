@@ -20,7 +20,7 @@ h2. 绘制游戏元素
 
 当然还有我们的游戏新引擎 "Dice of Doom v2":http://reverland.org/Tech/2012/06/29/dice-of-doom-v2/
 
-{% highlight cl%}
+{% highlight cl %}
 (cd "~/Documents/lisp") 
 (load "dice_of_doom_v2")
 (load "webserver")
@@ -29,7 +29,7 @@ h2. 绘制游戏元素
 
 然后需要先设定一些常数
 
-{% highlight cl%}
+{% highlight cl %}
 (defparameter *board-width* 900);面板宽度
 (defparameter *board-height* 500);面板高度
 (defparameter *board-scale* 64);面板缩放比例
@@ -40,7 +40,7 @@ h2. 绘制游戏元素
 
 接下来画骰子
 
-{% highlight cl%}
+{% highlight cl %}
 (defun draw-die-svg (x y col)
   (labels ((calc-pt (pt)
              (cons (+ x (* *dice-scale* (car pt)))
@@ -67,7 +67,7 @@ h2. 绘制游戏元素
 
 再画一小块面板
 
-{% highlight cl%}
+{% highlight cl %}
 (defun draw-tile-svg (x y pos hex xx yy col chosen-tile)
   (loop for z below 2
         do (polygon (mapcar (lambda (pt)
@@ -93,7 +93,7 @@ h2. 绘制游戏元素
 
 接下来是整个面板
 
-{% highlight cl%}
+{% highlight cl %}
 ;Draw the Board
 (defparameter *die-colors* '((255 63 63) (63 63 255)))
 (defun draw-board-svg (board chosen-tile legal-tiles)
@@ -121,7 +121,7 @@ h2. 建立Web服务器
 
 先写游戏的驱动
 
-{% highlight cl%}
+{% highlight cl %}
 (defparameter *cur-game-tree* nil);初始化当前游戏树
 (defparameter *from-tile* nil);选择的一片面板
 
@@ -155,7 +155,7 @@ h2. 建立Web服务器
 
 我们只做了一个超级简化的服务器，功能弱爆了，但作者许诺能在最后一章很轻易的扩展。之后我们处理些基于webserver的函数
 
-{% highlight cl%}
+{% highlight cl %}
 (defun web-initialize ()
   (setf *from-tile* nil)
   (setf *cur-game-tree* (game-tree (gen-board) 0 0 t)))
@@ -201,7 +201,7 @@ h2. 建立Web服务器
 
 然后在html中绘制svg游戏面板时有些tweak，首先是svg，你遵照之前errata提到的修正svg宏后才能正常显示，否则只显示一小块或完全看不到时可别吃惊。另外是作者定义两次点击同一片游戏面板代表取消，但它的legal-tile（合法面板）中却没有包含本身，以致于不能正常取消选中。我做了如下修改，把当前选中的游戏面板添加进合法面板中。
 
-{% highlight cl%}
+{% highlight cl %}
 ;caXXXXXXXdr……以后我要用firstsecond改写
 (defun draw-dod-page (tree selected-tile)
   (svg *board-width* ;svg要更改！！
@@ -221,7 +221,7 @@ h2. 建立Web服务器
 
 然后很显然，enjoy我们基于网络的游戏吧
 
-{% highlight cl%}
+{% highlight cl %}
 (serve #'dod-request-handler)
 {% endhighlight %}
 

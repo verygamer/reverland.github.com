@@ -9,7 +9,6 @@ CONFIG = {
   'themes' => File.join(SOURCE, "_includes", "themes"),
   'layouts' => File.join(SOURCE, "_layouts"),
   'posts' => File.join(SOURCE, "_posts"),
-  'encrypts' => File.join(SOURCE, "_encrypted"),
   'post_ext' => "md",
   'theme_package_version' => "0.1.0"
 }
@@ -63,9 +62,10 @@ task :post do
     post.puts "---"
     post.puts "layout: post"
     post.puts "title: \"#{title.gsub(/-/,' ')}\""
+    post.puts "discription: "" "
     post.puts "category: "
-    post.puts "excerpt: "
     post.puts "tags: []"
+    post.puts "disqus: true"
     post.puts "---"
     post.puts "{% include JB/setup %}"
   end
