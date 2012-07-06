@@ -4,7 +4,7 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org//atom.xml" rel="self"/>
  <link href="http://reverland.org/"/>
- <updated>2012-07-05T23:39:44+08:00</updated>
+ <updated>2012-07-06T08:37:15+08:00</updated>
  <id>http://reverland.org/</id>
  <author>
    <name>Reverland</name>
@@ -31,7 +31,7 @@
 		}
 	  },
 	  tex2jax: {
-		  inlineMath: [ ['$','$'], [&quot;\\(&quot;,&quot;\\)&quot;] ],
+		  inlineMath: [ ['$','$'], ['\\(','\\)'] ],
 		  processEscapes: true
 	  }
 	});
@@ -40,7 +40,7 @@
 &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
     MathJax.Hub.Config({
       tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
       }
     });
 &lt;/script&gt;
@@ -99,7 +99,7 @@ P(ABC)=P(A)P(B)P(C)
 
 &lt;h2 id=&quot;section-3&quot;&gt;离散随机变量常见分布&lt;/h2&gt;
 
-&lt;p&gt;先来个(0-1)分布&lt;/p&gt;
+&lt;p&gt;先来个(0-1)分布&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;table border=&quot;1&quot; cellspacing=&quot;10&quot;&gt;
 &lt;tr&gt;
@@ -136,7 +136,7 @@ P{X = k}=\frac{\lambda^ke^{-\lambda}}{k!},k=0,1,2,\cdots,
 
 &lt;h3 id=&quot;section-5&quot;&gt;均匀分布&lt;/h3&gt;
 
-&lt;p&gt;其概率密度有&lt;/p&gt;
+&lt;p&gt;概率密度函数，图中取$b=2,a=1$。&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
 
@@ -149,6 +149,8 @@ f(x)=\left\{
 \right.
 \end{equation}
  %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://fmn.rrfmn.com/fmn058/20120705/2310/p_large_Wt1C_4925000043391261.jpg&quot; hight=&quot;200&quot; width=&quot;400&quot; alt=&quot;均匀分布概率密度&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;其分布函数为&lt;/p&gt;
 
@@ -165,7 +167,11 @@ F(x)=\left\{
 \end{equation}
  %]]&gt;&lt;/script&gt;
 
+&lt;p&gt;&lt;img src=&quot;http://fmn.rrimg.com/fmn059/20120705/2310/p_large_DfWR_4925000043381261.jpg&quot; hight=&quot;200&quot; width=&quot;400&quot; alt=&quot;均匀分布分布函数&quot; /&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;section-6&quot;&gt;指数分布&lt;/h2&gt;
+
+&lt;p&gt;概率分布函数，图像中红、蓝、绿三种颜色曲线分别是$\theta$取0.5、1、2时所绘制。&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;
 \begin{equation}
@@ -178,6 +184,10 @@ f(x)=\left\{
 \end{equation}
 &lt;/script&gt;
 
+&lt;p&gt;&lt;img src=&quot;http://fmn.rrimg.com/fmn056/20120705/2310/p_large_sWxZ_49250000433a1261.jpg&quot; hight=&quot;200&quot; width=&quot;400&quot; alt=&quot;指数分布概率密度&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;分布函数&lt;/p&gt;
+
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;
 \begin{equation}
 F(x)=\left\{
@@ -189,12 +199,20 @@ F(x)=\left\{
 \end{equation}
 &lt;/script&gt;
 
+&lt;p&gt;&lt;img src=&quot;http://fmn.rrfmn.com/fmn058/20120705/2310/p_large_KHxd_49250000433b1261.jpg&quot; hight=&quot;200&quot; width=&quot;400&quot; alt=&quot;指数函数分布函数&quot; /&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;section-7&quot;&gt;正态分布&lt;/h2&gt;
+
+&lt;p&gt;概率密度函数,图中$\mu$为0,红、蓝、绿三种颜色图像分别取$\sigma=0.5,1,2$。&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
 
 f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}},-\infty &lt; x &lt;\infty
  %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://fmn.rrimg.com/fmn059/20120705/2310/p_large_PZvg_49250000433c1261.jpg&quot; hight=&quot;200&quot; width=&quot;400&quot; alt=&quot;正态分布概率密度函数&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;分布函数&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;
 F(x)=\frac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^x e^{-\frac{(x-\mu)^2}{2\sigma^2}} dt
@@ -204,12 +222,28 @@ F(x)=\frac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^x e^{-\frac{(x-\mu)^2}{2\sigma^2}
 
 &lt;h2 id=&quot;section-8&quot;&gt;后记&lt;/h2&gt;
 
-&lt;p&gt;markdown+mathjax不是一般蛋疼啊……，&lt;code&gt;$B_i,B_j$&lt;/code&gt;总把&lt;code&gt;i,B&lt;/code&gt;给强调了，让它以代码形式mathjax又不解析了……最近看不进英文的文档了，mathjax的文档胡乱翻了半天什么也没记住……&lt;/p&gt;
+&lt;p&gt;markdown+mathjax不是一般蛋疼啊……，&lt;code&gt;\$B_i,B_j\$&lt;/code&gt;总把&lt;code&gt;i,B&lt;/code&gt;给强调了，让它以代码形式mathjax又不解析了……最近看不进英文的文档了，mathjax的文档胡乱翻了半天什么也没记住……&lt;/p&gt;
 
 &lt;p&gt;textile倒好，可没想到出现更奇葩的&lt;code&gt;P(C)&lt;/code&gt;竟然解析成P © ……&lt;code&gt;= =&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;总之，I hate math，以后再也不自己瞎折腾了……&lt;/p&gt;
 
+&lt;h2 id=&quot;changelog&quot;&gt;Changelog&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-9&quot;&gt;2012年07月06日 星期五 08时18分46秒&lt;/h3&gt;
+
+&lt;p&gt;早上爬起来看看mathjax文档，然后试试发现昨天的奇葩问题消失了……懒得折腾的孩子们参考这里处理：&lt;a href=&quot;http://doswa.com/2011/07/20/mathjax-in-markdown.html&quot;&gt;MathJax in Markdown&lt;/a&gt;,想折腾的可以去折腾什么pandoc&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;的……&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;表格做的好难看……有空再改吧&lt;a href=&quot;#fnref:1&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;据说是haskell写的&lt;a href=&quot;#fnref:2&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
 </content>
  </entry>
  
@@ -876,14 +910,14 @@ Hello World.
 		}
 	  },
 	  tex2jax: {
-		  inlineMath: [ ['$','$'], [&quot;\\(&quot;,&quot;\\)&quot;] ],
+		  inlineMath: [ ['$','$'], ['\\(','\\)'] ],
 		  processEscapes: true
 	  }
 	});
 &lt;/script&gt;&lt;script type=&quot;text/x-mathjax-config&quot;&gt;
     MathJax.Hub.Config({
       tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
       }
     });
 &lt;/script&gt;&lt;script type=&quot;text/x-mathjax-config&quot;&gt;

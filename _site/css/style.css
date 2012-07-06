@@ -261,4 +261,4 @@ a.external:hover {background-position:right -14px;}
 .tab-content .tab-pane ul.nav li, .tab-content .tab-pane h3 {
 	clear: both;
 }
-
+code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}

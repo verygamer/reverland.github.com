@@ -135,7 +135,7 @@
 		}
 	  },
 	  tex2jax: {
-		  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+		  inlineMath: [ ['$','$'], ['\\(','\\)'] ],
 		  processEscapes: true
 	  }
 	});
@@ -144,7 +144,7 @@
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
       tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
       }
     });
 </script>
@@ -203,7 +203,7 @@ P(ABC)=P(A)P(B)P(C)
 
 <h2 id="section-3">离散随机变量常见分布</h2>
 
-<p>先来个(0-1)分布</p>
+<p>先来个(0-1)分布<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
 
 <table border="1" cellspacing="10">
 <tr>
@@ -240,7 +240,7 @@ P{X = k}=\frac{\lambda^ke^{-\lambda}}{k!},k=0,1,2,\cdots,
 
 <h3 id="section-5">均匀分布</h3>
 
-<p>其概率密度有</p>
+<p>概率密度函数，图中取$b=2,a=1$。</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 
@@ -253,6 +253,8 @@ f(x)=\left\{
 \right.
 \end{equation}
  %]]></script>
+
+<p><img src="http://fmn.rrfmn.com/fmn058/20120705/2310/p_large_Wt1C_4925000043391261.jpg" hight="200" width="400" alt="均匀分布概率密度" /></p>
 
 <p>其分布函数为</p>
 
@@ -269,7 +271,11 @@ F(x)=\left\{
 \end{equation}
  %]]></script>
 
+<p><img src="http://fmn.rrimg.com/fmn059/20120705/2310/p_large_DfWR_4925000043381261.jpg" hight="200" width="400" alt="均匀分布分布函数" /></p>
+
 <h2 id="section-6">指数分布</h2>
+
+<p>概率分布函数，图像中红、蓝、绿三种颜色曲线分别是$\theta$取0.5、1、2时所绘制。</p>
 
 <script type="math/tex; mode=display">
 \begin{equation}
@@ -282,6 +288,10 @@ f(x)=\left\{
 \end{equation}
 </script>
 
+<p><img src="http://fmn.rrimg.com/fmn056/20120705/2310/p_large_sWxZ_49250000433a1261.jpg" hight="200" width="400" alt="指数分布概率密度" /></p>
+
+<p>分布函数</p>
+
 <script type="math/tex; mode=display">
 \begin{equation}
 F(x)=\left\{
@@ -293,12 +303,20 @@ F(x)=\left\{
 \end{equation}
 </script>
 
+<p><img src="http://fmn.rrfmn.com/fmn058/20120705/2310/p_large_KHxd_49250000433b1261.jpg" hight="200" width="400" alt="指数函数分布函数" /></p>
+
 <h2 id="section-7">正态分布</h2>
+
+<p>概率密度函数,图中$\mu$为0,红、蓝、绿三种颜色图像分别取$\sigma=0.5,1,2$。</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 
 f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}},-\infty < x <\infty
  %]]></script>
+
+<p><img src="http://fmn.rrimg.com/fmn059/20120705/2310/p_large_PZvg_49250000433c1261.jpg" hight="200" width="400" alt="正态分布概率密度函数" /></p>
+
+<p>分布函数</p>
 
 <script type="math/tex; mode=display">
 F(x)=\frac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^x e^{-\frac{(x-\mu)^2}{2\sigma^2}} dt
@@ -308,12 +326,28 @@ F(x)=\frac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^x e^{-\frac{(x-\mu)^2}{2\sigma^2}
 
 <h2 id="section-8">后记</h2>
 
-<p>markdown+mathjax不是一般蛋疼啊……，<code>$B_i,B_j$</code>总把<code>i,B</code>给强调了，让它以代码形式mathjax又不解析了……最近看不进英文的文档了，mathjax的文档胡乱翻了半天什么也没记住……</p>
+<p>markdown+mathjax不是一般蛋疼啊……，<code>\$B_i,B_j\$</code>总把<code>i,B</code>给强调了，让它以代码形式mathjax又不解析了……最近看不进英文的文档了，mathjax的文档胡乱翻了半天什么也没记住……</p>
 
 <p>textile倒好，可没想到出现更奇葩的<code>P(C)</code>竟然解析成P © ……<code>= =</code></p>
 
 <p>总之，I hate math，以后再也不自己瞎折腾了……</p>
 
+<h2 id="changelog">Changelog</h2>
+
+<h3 id="section-9">2012年07月06日 星期五 08时18分46秒</h3>
+
+<p>早上爬起来看看mathjax文档，然后试试发现昨天的奇葩问题消失了……懒得折腾的孩子们参考这里处理：<a href="http://doswa.com/2011/07/20/mathjax-in-markdown.html">MathJax in Markdown</a>,想折腾的可以去折腾什么pandoc<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>的……</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>表格做的好难看……有空再改吧<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>据说是haskell写的<a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 
     
     <hr>
