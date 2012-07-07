@@ -3,8 +3,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>折腾</title>
-    <meta name="description" content="Kiss goodbye to my tossing">
+    <title>概率论与数理统计基础</title>
+    <meta name="description" content="概率论与数理统计基础">
     <meta name="author" content="Reverland">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -28,6 +28,45 @@
     <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
   -->
+    
+      <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+	  /*showProcessingMessages: false,*/
+	  jax: ["input/TeX", "output/HTML-CSS"],
+	  TeX: {
+		TagSide: "left",
+		Macros: {
+		  /*RR: '{\\bf R}',
+		  bold: ['{\\bf #1}',1]*/
+		  sdash: '{|\\!\\!\\!\\sim}'
+		}
+	  },
+	  tex2jax: {
+		  inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+		  processEscapes: true
+	  }
+	});
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript"
+		src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
     
   </head>
 
@@ -110,134 +149,196 @@
       <div id="main-content" class="content">
         
 <div class="page-header">
-    <h1>折腾 <small><!--Supporting tagline--></small></h1>
+    <h1>概率论与数理统计基础 <small><!--Supporting tagline--></small></h1>
 </div>
 
 <div class="row">
   <div id="article_indent" class="span9 pull-left">
     <div class="span3 article_published">发表于
-      <span class="date">24 April 2012</span>
+      <span class="date">05 July 2012</span>
       <div class="article_gplus"><div class="g-plusone" data-size="small" data-annotation="none"></div></div>
     </div>
     <div class="clear"></div>
     
-      <div class="audio">
-<audio controls="controls">
-<source src="http://lhtlyybox.googlecode.com/files/m.ogg" type="audio/ogg" /> 
-您的浏览器不支持 audio 标签。
-</audio>
-音乐：星光伴我心——郑中基
-</div>
+      
 
-<hr />
+# 概率论与数理统计基础
 
-<h1 id="section">折腾</h1>
+## 为什么有了这篇文章
 
-<p>时日多见旧友，每必寒暄，都言相别甚久，近来忙何。吾细思之，并无他言，唯折腾二字也。所折腾何物，唯计算机尔。</p>
+按以往的风格，大概是我想做什么所以就做了什么。但这次不太一样，首先是代人上数学实验课，matlab搞得我云里雾里，一年前深以为然并给我很大影响的东西都忘到九霄云外了，老师布置个聚类分析的练习一点都不会，完全不知怎么下手。其次加上忙着准备考研，无心折腾这折腾那，虽然很有意思……，再次网上看到满天的牛，飞过来飞过去，那个自惭形晦。好了，我胡言乱语，莫深究什么意思。
 
-<hr />
+想想一年了，在各个领域摸爬滚打之后发现自己一无是处，收获在哪里？只能说开阔了视野，告诉自己很多东西我曾经也知道过，思考过，选择过。
 
-<p>这样的状态已经持续大半年了，整个心百分之七十都在计算机上。</p>
+下午看了看概率论与统计，想到自己当初拿着好几本讲R的书学习的日子，现在连个痕迹都没有留下，数学建模学到的东西也忘的精光，唉，先看看基础吧。然后回到寝室，忽然就想试试sagemath和markdown……
 
-<p>二月的时候我对自己说，嗯，该准备考研了，停止折腾吧</p>
+## 概率论基本概念
 
-<p>三月的时候我对自己说，那个，该准备考研了，下个月开始停止折腾吧</p>
+先来个全概率公式：
+     设实验E的样本空间为S，A为E的事件，$B_1,\cdots,B_n $为S的一个划分，且 $P(B_i) > 0 (i = 1,2,\cdots,n)$,则
 
-<p>四月的时候我对自己说，妹的，继续折腾吧，下个月再准备考研吧</p>
+$$
+P(A)=\sum_{i=1}^n P(A \vert B_i)P(B_i)
+$$
 
-<p>然后四月末到来了</p>
+再来个贝叶斯公式：
 
-<p>一学期堆成山的课程稀稀拉拉都准备结课了，留下的是我不堪的到课记录和作业次数，还有准备考试无以名状的感觉。</p>
+$$
+P(B_i \vert A) = \frac{P(A \vert B_i)P(B_i)}{\sum_{j=1}^n P(A|B_j)P(B_j)} , i=1,2,\cdots ,n.
+$$
 
-<p>我还是在折腾，抽时间看着gimp的文档，没事翻译下wiki，自己折腾折腾写写心得，论坛上回答回答别人问题灌灌水，学习学习lisp……</p>
+A,B,C三个事件相互独立
 
-<p>好像学校这世界与我无关。</p>
+$$
+\begin{equation*}
+\left.
+\begin{array}{l}
+P(AB)=P(A)P(B) \\
+P(BC)=P(B)P(C) \\
+P(AC)=P(A)P(C) \\
+P(ABC)=P(A)P(B)P(C)
+\end{array}
+\right\}
+\end{equation*}
+$$
 
-<p>那些考研的同学都在努力学习，白天自习，晚上自习。报各种班，搜集各种资料，旁听各种课</p>
+## 离散随机变量常见分布
 
-<p>那些不考研的同学也在为各种将来的工作努力，做各种激情的事为青春留下难忘的记忆</p>
+先来个(0-1)分布[^1]
 
-<p>我依然在折腾，不离不弃</p>
+<table border="1" cellspacing="10">
+<tr>
+<td>X</td>
+<td>0         </td>
+<td>1         </td>
+</tr>
+<tr>
+<td>$p_k$</td>
+<td>1-p       </td>
+<td>p       </td>
+</tr>
+</table>
 
-<p>然而生活的阴影就这么一点点吞噬自由的生活，越是紧迫，越是想把握住它，怕有生之年再也没机会做这些事，越紧握住这难得的自由不舍得放手。</p>
+二项分布,记为$X \sim b(n,p)$
 
-<p>然而It’s time to say goodbye</p>
+$$
+P{X=k}=\binom{n}{k}p^kq^{n-k},k=0,1,2,\cdots,n.
+$$
 
-<p>不忍心，却无奈。</p>
+泊松分布,记做$X \sim \pi(\lambda)$
 
-<hr />
+$$
+P{X = k}=\frac{\lambda^ke^{-\lambda}}{k!},k=0,1,2,\cdots,
+$$
 
-<p>记忆如此美好，我不会忘记</p>
+泊松定理
 
-<p>自己的坚守与信念，我不会忘记</p>
+$$
+\lim\limits_{n\to \infty} \binom{n}{k}p_n^k(1-p_n)^{n-k} = \frac{\lambda^ke^{-\lambda}}{k!}
+$$
 
-<p>那些社区内热情的网友，我不会忘记</p>
+## 三种连续型随机变量
 
-<p>追求自由、开放、分享、进步的心，我不会改变</p>
+###均匀分布
 
-<p>说是不会改变，只我不愿改变</p>
+概率密度函数，图中取$b=2,a=1$。
 
-<p>生命如斯，终将改变，思之黯然。</p>
+$$
+\begin{equation}
+f(x)=\left\{
+\begin{array}{l}
+\frac{1}{b-a},a < x < b \\
+0, else
+\end{array}
+\right.
+\end{equation}
+$$
 
-<hr />
+<img src="http://fmn.rrfmn.com/fmn058/20120705/2310/p_large_Wt1C_4925000043391261.jpg" hight="200" width="400" alt="均匀分布概率密度" />
 
-<p>我curse这个世界</p>
+其分布函数为
 
-<p>还有什么选择</p>
+$$
+\begin{equation}
+F(x)=\left\{
+\begin{array}{l}
+0,  x<a \\
+\frac{x-a}{b-a}, a \leq x < b \\
+1, x \geq b
+\end{array}
+\right.
+\end{equation}
+$$
 
-<p>世界一次次让我失望至麻木</p>
+<img src="http://fmn.rrimg.com/fmn059/20120705/2310/p_large_DfWR_4925000043381261.jpg" hight="200" width="400" alt="均匀分布分布函数" />
 
-<p>整个世界</p>
+## 指数分布
 
-<p>如行尸走肉般的存在</p>
+概率分布函数，图像中红、蓝、绿三种颜色曲线分别是$\theta$取0.5、1、2时所绘制。
 
-<p>然而我不愿</p>
+$$
+\begin{equation}
+f(x)=\left\{
+\begin{array}{l}
+\frac{1}{\theta}e^{-\frac{x}{\theta}}, x > 0,\\
+0, else,
+\end{array}
+\right.
+\end{equation}
+$$
 
-<p>不愿为生计所迫，埋没残缺而小众的兴趣</p>
+<img src="http://fmn.rrimg.com/fmn056/20120705/2310/p_large_sWxZ_49250000433a1261.jpg" hight="200" width="400" alt="指数分布概率密度" />
 
-<p>不愿熄灭了热情，失去了折腾的动力</p>
+分布函数
 
-<p>不愿失去了耐心，失去了坚持的信念</p>
+$$
+\begin{equation}
+F(x)=\left\{
+\begin{array}{l}
+1-e^{-\frac{x}{\theta}}, x > 0,\\
+0, else,
+\end{array}
+\right.
+\end{equation}
+$$
 
-<p>不愿失去了信心，失去了进步的动力</p>
+<img src="http://fmn.rrfmn.com/fmn058/20120705/2310/p_large_KHxd_49250000433b1261.jpg" hight="200" width="400" alt="指数函数分布函数" />
 
-<p>时光飞逝，依然想要还是那个我</p>
+## 正态分布
 
-<p>追随自己的兴趣，追求美，追求卓越</p>
+概率密度函数,图中$\mu$为0,红、蓝、绿三种颜色图像分别取$\sigma=0.5,1,2$。
 
-<p>追求革新</p>
+$$
+f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}},-\infty < x <\infty
+$$
 
-<p>追寻自我</p>
+<img src="http://fmn.rrimg.com/fmn059/20120705/2310/p_large_PZvg_49250000433c1261.jpg" hight="200" width="400" alt="正态分布概率密度函数" />
 
-<hr />
+分布函数
 
-<p>然而我在这里说，</p>
+$$
+F(x)=\frac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^x e^{-\frac{(x-\mu)^2}{2\sigma^2}} dt
+$$
 
-<p>不再折腾了，考研</p>
+***
 
-<p>很久前就想说，知道我会食言</p>
+## 后记
 
-<p>因为心存幻想，明知没有希望，心存侥幸</p>
+markdown+mathjax不是一般蛋疼啊……，`\$B_i,B_j\$`总把`i,B`给强调了，让它以代码形式mathjax又不解析了……最近看不进英文的文档了，mathjax的文档胡乱翻了半天什么也没记住……
 
-<p>没什么馅饼从天而降</p>
+textile倒好，可没想到出现更奇葩的`P(C)`竟然解析成P &#169; ……`= =`
 
-<p>屈从命运？Fuck it.</p>
+总之，I hate math，以后再也不自己瞎折腾了……
 
-<hr />
+## Changelog
 
-<h3 id="thanks">Thanks</h3>
+###2012年07月06日 星期五 08时18分46秒
 
-<p>Who give my happiness,</p>
+早上爬起来看看mathjax文档，然后试试发现昨天的奇葩问题消失了……懒得折腾的孩子们参考这里处理：[MathJax in Markdown](http://doswa.com/2011/07/20/mathjax-in-markdown.html),想折腾的可以去折腾什么pandoc[^2]的……
 
-<p>warmful help,</p>
 
-<p>predictable instruction,</p>
-
-<p>and who shared with me their philosophizing thoughts.</p>
-
-<p>Thanks all of you</p>
-
-<p>And bless my family and relatives who are really supporting me.</p>
+[^1]: 表格做的好难看……有空再改吧
+[^2]: 据说是haskell写的
 
 
     
@@ -245,11 +346,11 @@
     <div class="pagination">
       <ul>
       
-        <li class="prev"><a href="/Reviews/2012/04/16/half-hackerhalf-artist" title="Half Hacker,Half Artist">&larr; Previous</a></li>
+        <li class="prev"><a href="/Tech/2012/07/02/webdice-of-doom" title="基于web的Dice of Doom">&larr; Previous</a></li>
       
         <li><a href="/archive.html">Archive</a></li>
       
-        <li class="next"><a href="/Tech/2012/04/26/a-text-game-engine-written-by-lisp" title="a text game engine written by lisp">Next &rarr;</a></li>
+        <li class="next"><a href="/Tech/2012/07/07/dice-of-doom-v4" title="Dice of Doom v4">Next &rarr;</a></li>
       
       </ul>
     </div>
@@ -309,7 +410,7 @@ $(document).ready(function(){
         </li>
        
         
-        <li class="active">
+        <li>
         
         <a href="/categories.html#Life-ref">Life <span>6</span></a>
         </li>
@@ -321,7 +422,7 @@ $(document).ready(function(){
         </li>
        
         
-        <li>
+        <li class="active">
         
         <a href="/categories.html#math-ref">math <span>1</span></a>
         </li>
@@ -334,7 +435,7 @@ $(document).ready(function(){
 
   
      
-    	<li><a href="/tags.html#Life-ref">Life <span>5</span></a></li>
+    	<li><a href="/tags.html#statistics-ref">statistics <span>1</span></a></li>
     
   
 

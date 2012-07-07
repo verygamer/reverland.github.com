@@ -5,8 +5,8 @@ description: "换textile了，当然要好好体验下mathjax了"
 category: Tech
 tags: [mathjax]
 disqus: true
+mathjax: true
 ---
-{% include sd/math %}
 {% include JB/setup %}
 
 h1. TeX Samples

@@ -10,7 +10,8 @@ http://reverland.org//atom.xml
 http://reverland.org//page2/index.html
 http://reverland.org//page3/index.html
 
-http://reverland.org//math/2012/07/05/
+http://reverland.org//Tech/2012/07/07/dice-of-doom-v4
+http://reverland.org//math/2012/07/05/.md
 http://reverland.org//Tech/2012/07/02/webdice-of-doom
 http://reverland.org//Tech/2012/06/29/dice-of-doom-v2
 http://reverland.org//Tech/2012/06/28/google-glasses

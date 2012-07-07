@@ -35,6 +35,8 @@ I just wanna to say to others:
 
 特别感谢[skydark](http://blog.skydark.info/)同学，直接可耻地从那里把东西扒过来的……
 
+主题来自[bootswatch](http://bootswatch.com/)
+
 [1]: https://wiki.archlinux.org/index.php/Special:Contributions/Reverland
 [2]: https://github.com/reverland
 [3]: http://www.weibo.com/u/1949708673
