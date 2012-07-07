@@ -263,12 +263,3 @@ a.external:hover {background-position:right -14px;}
 }
 code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
 
-table, td, th
-{
-  border:1px solid #748c73;
-}
-th
-{
-  background-color: #ffffcc;
-  color:green;
-}
