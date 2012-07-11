@@ -223,7 +223,7 @@ p.dsq-widget-meta {
 
 ul.nav-list>li>a>span {
 	font-size: 0.8em;
-	color: #fff;
+	color: #99cc99;
 }
 
 #encrypted {
@@ -263,3 +263,12 @@ a.external:hover {background-position:right -14px;}
 }
 code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
 
+table, td, th
+{
+  border:1px solid #748c73;
+}
+th
+{
+  background-color: #ffffcc;
+  color:green;
+}

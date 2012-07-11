@@ -2,8 +2,8 @@
 layout: post
 title: "Attack of the Robots"
 description: "Yet another robots game written with loop and format"
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}

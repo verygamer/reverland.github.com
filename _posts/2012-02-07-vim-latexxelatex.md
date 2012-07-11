@@ -2,7 +2,7 @@
 layout: post
 title: "vim-latex插件对xelatex的配置"
 description: "vimlatex插件在archlinux下配置过程，包括中文化安装，xelatex设置，okular正反向搜索。"
-category: Tech
+category: linux-tech
 tags: [latex, vim]
 disqus: true
 ---

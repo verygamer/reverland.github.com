@@ -2,8 +2,8 @@
 layout: post
 title: "传说中的DSL"
 description: "Domain-Specific Languages in Common Lisp"
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}
@@ -277,6 +277,6 @@ h2. 照例的废话
 
 fn1. domian-specific language
 
-[wizard]http://reverland.github.com/Tech/2012/04/26/a-text-game-engine-written-by-lisp/
+[wizard]/lisp/2012/04/26/a-text-game-engine-written-by-lisp/
 
 [svg]http://zh.wikipedia.org/zh/SVG

@@ -2,7 +2,7 @@
 layout: post
 title: "Half Hacker,Half Artist"
 description: "《黑客与画家》初体验"
-category: Reviews
+category: reviews
 tags: [books]
 disqus: true
 ---

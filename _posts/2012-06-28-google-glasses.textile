@@ -2,7 +2,7 @@
 layout: post
 title: "Google glasses"
 description: "google眼镜"
-category: Tech
+category: others
 tags: [google]
 disqus: true
 ---

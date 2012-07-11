@@ -2,8 +2,8 @@
 layout: post
 title: "Lisp Web Server"
 description: "A very simple web server written in lisp"
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}

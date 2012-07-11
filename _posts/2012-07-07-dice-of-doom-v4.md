@@ -2,8 +2,8 @@
 layout: post
 title: "Dice of Doom v4"
 discription: "最终版的Dice of Doom" 
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}

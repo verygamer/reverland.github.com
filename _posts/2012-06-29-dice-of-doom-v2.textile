@@ -2,8 +2,8 @@
 layout: post
 title: "Dice of Doom v2"
 description: "关于Dice of Doom游戏的第二个版本优化，实用惰性求值方法和搜索树修剪算法"
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}
@@ -286,7 +286,7 @@ fn5. 编写新的函数，看上去很优雅……
 
 fn6. 可以先看看 "alpha-beta剪枝算法":http://www.xqbase.com/computer/search_alphabeta.htm
 
-[dice]http://reverland.org/Tech/2012/05/23/dice-of-doom/
+[dice]/lisp/2012/05/23/dice-of-doom/
 
 <hr />
 

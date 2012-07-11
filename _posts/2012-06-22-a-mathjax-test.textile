@@ -2,7 +2,7 @@
 layout: post
 title: "A Mathjax Test"
 description: "换textile了，当然要好好体验下mathjax了"
-category: Tech
+category: web
 tags: [mathjax]
 disqus: true
 mathjax: true

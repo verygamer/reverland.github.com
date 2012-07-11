@@ -2,8 +2,8 @@
 layout: post
 title: "基于web的Dice of Doom"
 description: "基于web的Dice of Doom游戏，html5版"
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}
@@ -14,11 +14,11 @@ h1. 基于web的Dice of Doom游戏
 
 h2. 绘制游戏元素
 
-毋庸置疑，所有游戏界面要用svg画出来，于是我们之前写得 "svg库":http://reverland.org/Tech/2012/06/16/dsl/ 要派上用场了。什么？已经没有了？那么从该书主页上下载 "svg.lisp":http://landoflisp.com/source.html.
+毋庸置疑，所有游戏界面要用svg画出来，于是我们之前写得 "svg库":/lisp/2012/06/16/dsl/ 要派上用场了。什么？已经没有了？那么从该书主页上下载 "svg.lisp":http://landoflisp.com/source.html.
 
-由于要创建个基于web的应用程序，之前的 "webserver":http://reverland.org/Tech/2012/05/12/web-server-written-in-lisp/ 也需要加载。
+由于要创建个基于web的应用程序，之前的 "webserver":/lisp/2012/05/12/web-server-written-in-lisp/ 也需要加载。
 
-当然还有我们的游戏新引擎 "Dice of Doom v2":http://reverland.org/Tech/2012/06/29/dice-of-doom-v2/
+当然还有我们的游戏新引擎 "Dice of Doom v2":/lisp/2012/06/29/dice-of-doom-v2/
 
 {% highlight cl %}
 (cd "~/Documents/lisp") 

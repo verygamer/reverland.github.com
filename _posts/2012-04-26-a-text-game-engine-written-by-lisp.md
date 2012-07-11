@@ -2,8 +2,8 @@
 layout: post
 title: "a text game engine written by lisp"
 description: "算是我的《land of lisp》笔记了"
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 

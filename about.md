@@ -6,7 +6,7 @@ disqus: true
 ---
 {% include JB/setup %}
 
-这里是reverland的个人博客，用来放些乱七八糟的东西，如果你有什么意见或什么想法可以在最下面留言，或者给我发 <mailto:lhtlyy@gmail.com> 也行
+这里是reverland的个人博客，用来放些乱七八糟的东西，如果你有什么意见或什么想法可以在最下面留言，或者给我发邮件mailto:<mailto:lhtlyy@gmail.com> 
 
 ## Any other way to learn about me
 

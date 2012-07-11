@@ -15,6 +15,9 @@ div.presentation {
   background: inherit;
   text-indent: 2em;
 }
+div.presentation a {
+  text-indent: 0em;
+}
 
 div.presentation > h1 {
   display: none;
@@ -333,7 +336,7 @@ section img.align-left {
 }
 
 a {
-  color: inherit;
+  color: #0033cc;
   display: inline-block;
   text-decoration: none;
   line-height: 110%;
@@ -643,3 +646,7 @@ li{
 	height: 400px;
 }
 
+/*Some myself tweak*/
+h1, h2, h3, h4, h5, h6{
+  color: #000066;
+}

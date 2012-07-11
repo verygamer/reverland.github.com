@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Streams in Lisp"
-description: ""
-category: Tech
-tags: [lisp]
+description: "clisp中的stream"
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}

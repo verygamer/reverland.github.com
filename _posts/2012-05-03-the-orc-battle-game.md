@@ -2,8 +2,8 @@
 layout: post
 title: "The Orc Battle Game"
 description: "Yet another game written by lisp"
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}

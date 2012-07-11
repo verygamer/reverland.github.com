@@ -2,7 +2,7 @@
 layout: post
 title: "罗列下linux的好处"
 description: "个人观点，忽然就想写这些。"
-category: Life
+category: reviews
 tags: [linux]
 disqus: true
 ---

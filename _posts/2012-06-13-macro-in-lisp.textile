@@ -2,8 +2,8 @@
 layout: post
 title: "Macro in lisp"
 description: "简要介绍lisp中宏的使用"
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}

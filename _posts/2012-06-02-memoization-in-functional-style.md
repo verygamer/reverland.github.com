@@ -2,8 +2,8 @@
 layout: post
 title: "Memoization in Functional Style"
 description: "函数式语言一种优化方法"
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}
@@ -82,4 +82,4 @@ land of lisp根本这几天就没看，试了试[racket][1]，相当有意思，
 
 [2]: http://htdp.org
 
-[3]: 
+[3]: /lisp/2012/05/23/dice-of-doom/

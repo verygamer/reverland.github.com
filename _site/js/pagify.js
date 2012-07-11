@@ -13,7 +13,7 @@
 
     this.defaults = {
       'pages': [],
-      'default': null,
+      'default': [],
       'contentFilter': null,
       'animation': 'show',
       'animationSpeed': 'normal',

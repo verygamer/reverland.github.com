@@ -2,7 +2,7 @@
 layout: post
 title: "Archlinux下合并pdf"
 description: "一种简便的在linux下合并pdf的方法"
-category: Tech
+category: linux-tech
 tags: [latex]
 disqus: true
 ---

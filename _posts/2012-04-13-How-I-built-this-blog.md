@@ -2,10 +2,9 @@
 layout: post
 title: "How I built this blog"
 description: "Simply record what I've done to built up the blog.a non-official document to replenish the official one"
-category: Tech
+category: web
 tags: [jekyll]
 disqus: true
-backgroud-image: ~images/debian.gif
 ---
 
 ## 缘起

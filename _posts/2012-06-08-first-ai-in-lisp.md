@@ -2,8 +2,8 @@
 layout: post
 title: "First AI in lisp"
 description: "用lisp实现一个简单的AI。"
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}
@@ -93,3 +93,5 @@ finished!!
 与一切相关联
 是中庸之道
 {% endhighlight %}
+
+[1]: /lisp/2012/05/23/dice-of-doom/

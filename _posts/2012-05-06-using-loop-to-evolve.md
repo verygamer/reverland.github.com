@@ -2,8 +2,8 @@
 layout: post
 title: "Using Loop To Evolve"
 description: "Something like life game."
-category: Tech 
-tags: [lisp]
+category: lisp 
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}

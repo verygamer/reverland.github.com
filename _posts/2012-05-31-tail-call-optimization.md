@@ -2,8 +2,8 @@
 layout: post
 title: "Tail Call Optimization"
 description: "Tail call optimization in lisp interpreter"
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}

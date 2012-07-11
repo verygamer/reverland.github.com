@@ -2,8 +2,8 @@
 layout: post
 title: "Dice of Doom"
 description: "A game engine written in the functional style"
-category: Tech
-tags: [lisp]
+category: lisp
+tags: [land-of-lisp]
 disqus: true
 ---
 {% include JB/setup %}

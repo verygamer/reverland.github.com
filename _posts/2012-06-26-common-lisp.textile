@@ -2,7 +2,7 @@
 layout: post
 title: "Common lisp菜鸟指南(译)"
 description: "翻译自http://ghostopera.org/blog/2012/06/24/the-newbie-guide-to-common-lisp/ "
-category: Tech
+category: lisp
 tags: [lisp]
 disqus: true
 ---
