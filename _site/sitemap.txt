@@ -10,7 +10,8 @@ http://reverland.org//atom.xml
 http://reverland.org//page2/index.html
 http://reverland.org//page3/index.html
 
-http://reverland.org//test/2012/07/11/python
+http://reverland.org//Life/2012/07/13/
+http://reverland.org//test/2012/07/11/
 http://reverland.org//lisp/2012/07/07/dice-of-doom-v4
 http://reverland.org//math/2012/07/05/
 http://reverland.org//lisp/2012/07/02/webdice-of-doom

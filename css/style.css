@@ -234,7 +234,7 @@ ul.nav-list>li>a>span {
 	margin-left: -15px;
 }
 em{
-	color:red;
+	color:yellow;
 	font-style:normal;
 }
 a.external {
@@ -271,4 +271,8 @@ th
 {
   background-color: #ffffcc;
   color:green;
+}
+blockquote {
+  font-style: italic;
+  margin: 0px 20px 21px;
 }

@@ -8,7 +8,7 @@ disqus: true
 ---
 {% include JB/setup %}
 
-##什么是尾递归
+## 什么是尾递归
 
 尾递归作为一种函数式编程优化方法。为了理解这个奇怪的名字，看下面这个计算列表长度函数的例子:
 {% highlight cl%}
@@ -54,7 +54,7 @@ stack overflow！！问题出现在`+1`函数上，它告诉lisp解释器：“�
 
 有点像Basic中的goto和c++中的longjmp，但lisp中尾递归十分安全。
 
-##clisp中的尾递归优化
+## clisp中的尾递归优化
 
 并非所有的lisp解释器并不会进行尾递归优化，因为尾递归这种减少使用堆栈的方式不适合调试。
 
@@ -67,6 +67,6 @@ stack overflow！！问题出现在`+1`函数上，它告诉lisp解释器：“�
 
 有没有感觉速度超快？
 
-##Variable Shadowing
+## Variable Shadowing
 
 注意`my-length`函数中参数lst和f中的lst，在每次递归调用中后者将取代前者，这种处理方式叫做Variable Shadowing.
