@@ -186,7 +186,7 @@ h2. Changelog
 
 [emacs]http://www.gnu.org/software/emacs/  
 
-[slimv]http://reverland.org/Tech/2012/02/23/vimlisp/
+[slimv]http://reverland.org/lisp/2012/02/23/vimlisp/
 
 [sbcl]http://www.sbcl.org/
 
