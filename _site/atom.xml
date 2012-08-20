@@ -4,13 +4,180 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org//atom.xml" rel="self"/>
  <link href="http://reverland.org/"/>
- <updated>2012-08-17T22:27:19+08:00</updated>
+ <updated>2012-08-20T18:50:57+08:00</updated>
  <id>http://reverland.org/</id>
  <author>
    <name>Reverland</name>
    <email>lhtlyy@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Python学习笔记</title>
+   <link href="http://reverland.org//python/2012/08/19/python"/>
+   <updated>2012-08-19T00:00:00+08:00</updated>
+   <id>hhttp://reverland.org//python/2012/08/19/python</id>
+   <content type="html">
+&lt;h1 id=&quot;python&quot;&gt;Python学习笔记&lt;/h1&gt;
+
+&lt;p&gt;这是看Python2.7的python tutorial的笔记。&lt;/p&gt;
+
+&lt;h2 id=&quot;about-python&quot;&gt;About Python&lt;/h2&gt;
+
+&lt;p&gt;这是个简单的语言，适于当脚本使世界自动化，适于快速完成任务，拥有大量方便的库，跨平台，不用编译……&lt;/p&gt;
+
+&lt;h2 id=&quot;python-1&quot;&gt;使用python解释器&lt;/h2&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;使用解释器&lt;/h3&gt;
+
+&lt;p&gt;在linux上，反正&lt;code&gt;/usr/bin/&lt;/code&gt;或&lt;code&gt;/usr/local/bin/&lt;/code&gt;总是可以找到你安装的python。惟一的问题是，archlinux默认的python版本是3,而python2需要单独安装并且名称是python2。所以，首先检查你的python版本。&lt;/p&gt;
+
+&lt;p&gt;据说在windows下的某cmd中用着很不堪，但linux终端下体验确实很棒。&lt;/p&gt;
+
+&lt;p&gt;你可以这样执行还可以这样python命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;python -c &lt;span class=&quot;s2&quot;&gt;&amp;quot;print &amp;#39;hello&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;有些模块也可以调用&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;python -m module &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;arg&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;你还可以把python脚本(通常是.py后缀的文件)当作参数传递给python，甚至传递更多的参数&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;python hello.py &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;arg&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;当然直接在终端里输入python还可以有个交互模式，顺便题下有个叫ipython的东西会提供更好的交互体验。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;解释器和它的环境&lt;/h3&gt;
+
+&lt;p&gt;环境？如果你使用linux你就会知道是什么了，其实没必要弄清它到底是什么，事实上我也不知道……但它能让正确的程序正确地找到和引用其它程序或配置。好了按下不提。&lt;/p&gt;
+
+&lt;p&gt;python的解释器有着很强大的错误处理功能。这里说错误大概你的程序就直接被中断&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;，并返回一个非零错误状态。当出错时python会打印错误信息和回溯堆栈，给出基本的提示。所有的错误输出到标准错误流。我在说什么？总之python的解释器能很好处理错误。&lt;/p&gt;
+
+&lt;p&gt;在linux系统中，我们通常把python程序写成一个脚本而不是在交互环境中使用。在脚本头部加上一下内容：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# -*- coding : utf-8 -*-&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这是为了方便系统能正确找到你的python和处理中文。&lt;/p&gt;
+
+&lt;p&gt;你还可以提供一个交互脚本的启动时读取的配置文件，如果你使用linux就知道它提供像&lt;code&gt;.profile&lt;/code&gt;一类的文件的功能，可以在默认启动时加载个模块什么的。如果有兴趣，参考Tutorial慢慢来吧。&lt;/p&gt;
+
+&lt;h2 id=&quot;python-2&quot;&gt;Python非正式指南&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;\#&lt;/code&gt;在python中是用来注释的，&lt;/p&gt;
+
+&lt;p&gt;python可以很轻易的完成数学计算，甚至处理复数。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
+&lt;span class=&quot;mf&quot;&gt;7.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# what the difference&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;可以用等号赋值&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;可以向屏幕打印内容&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# what&amp;#39;s this? &lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;world&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;world&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;a comma followed me&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;what happened with that comma?&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;你可以用多种方式操作字符串&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;don&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&amp;#39;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;t&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;quot;don&amp;#39;t&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;&amp;#39;&amp;#39;&amp;#39;first line\n\&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;second line&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;#39;a&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;b&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;#39;str&amp;#39;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;ing&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;还可以对字符串进行切片,它是零索引的，后来你会感觉到这是有好处的。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;jiangnantingyu&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;另外&lt;code&gt;len&lt;/code&gt;可以返回字符串的长度，事实上，字符串、字典、元组都是序列。有近似的操作方法。区别之一有你不能指望修改字符串中某一字母但可以修改字典和元组中的内容。&lt;/p&gt;
+
+&lt;h3 id=&quot;unicode-&quot;&gt;Unicode 字符串&lt;/h3&gt;
+
+&lt;p&gt;先不要管这个,你得先去了解下字符编码。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;列表&lt;/h3&gt;
+
+&lt;p&gt;形如这样的东西&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;你同样可以切片、引用。强调一下，切片可以用来复制东西，不然你简单赋值的结果是两个变量指向同一个东西。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;add&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;更多控制流工具&lt;/h2&gt;
+
+&lt;h3 id=&quot;if&quot;&gt;if&lt;/h3&gt;
+&lt;p&gt;### for
+### range函数
+### break和continue
+### pass
+### 定义函数
+### 定义函数的更多内容
+#### 默认参数值
+#### 关键词参数
+#### 任意参数列表
+#### 拆开参数列表
+#### lambda形式
+#### 文档字符串
+### 编程风格&lt;/p&gt;
+
+&lt;h2 id=&quot;python-3&quot;&gt;我会说python是戴着脚镣跳舞？&lt;/h2&gt;
+
+&lt;p&gt;Pep8 pass&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;其实我是看不懂Guido van Rossum在blabla什么东西.&lt;a href=&quot;#fnref:1&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;不中断的大概只算警告&lt;a href=&quot;#fnref:2&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</content>
+ </entry>
  
  <entry>
    <title>To Be An Epicurean</title>

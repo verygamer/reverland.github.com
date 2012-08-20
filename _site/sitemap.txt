@@ -11,6 +11,7 @@ http://reverland.org//page2/index.html
 http://reverland.org//page3/index.html
 http://reverland.org//page4/index.html
 
+http://reverland.org//python/2012/08/19/python
 http://reverland.org//Life/2012/08/17/to-be-an-epicurean
 http://reverland.org//Life/2012/08/15/galgame
 http://reverland.org//Life/2012/08/11/
