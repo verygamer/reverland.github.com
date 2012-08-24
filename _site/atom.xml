@@ -4,7 +4,7 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org//atom.xml" rel="self"/>
  <link href="http://reverland.org/"/>
- <updated>2012-08-20T18:50:57+08:00</updated>
+ <updated>2012-08-24T12:33:23+08:00</updated>
  <id>http://reverland.org/</id>
  <author>
    <name>Reverland</name>
@@ -13,166 +13,1375 @@
 
  
  <entry>
-   <title>Python学习笔记</title>
-   <link href="http://reverland.org//python/2012/08/19/python"/>
-   <updated>2012-08-19T00:00:00+08:00</updated>
-   <id>hhttp://reverland.org//python/2012/08/19/python</id>
+   <title>试验性NumPy教程(译)</title>
+   <link href="http://reverland.org//python/2012/08/22/numpy"/>
+   <updated>2012-08-22T00:00:00+08:00</updated>
+   <id>hhttp://reverland.org//python/2012/08/22/numpy</id>
    <content type="html">
-&lt;h1 id=&quot;python&quot;&gt;Python学习笔记&lt;/h1&gt;
+&lt;h1 id=&quot;numpy&quot;&gt;试验性的Numpy教程&lt;/h1&gt;
 
-&lt;p&gt;这是看Python2.7的python tutorial的笔记。&lt;/p&gt;
+&lt;p&gt;原文来自&lt;a href=&quot;http://scipy.org/Tentative_NumPy_Tutorial&quot;&gt;Tentative NumPy Tutorial&lt;/a&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;about-python&quot;&gt;About Python&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;目录&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;这是个简单的语言，适于当脚本使世界自动化，适于快速完成任务，拥有大量方便的库，跨平台，不用编译……&lt;/p&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#section&quot;&gt;先决条件&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-1&quot;&gt;基础篇&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-2&quot;&gt;一个例子&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-3&quot;&gt;创建数组&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-4&quot;&gt;打印数组&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-5&quot;&gt;基本运算&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#ufunc&quot;&gt;通用函数(ufunc)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-6&quot;&gt;索引，切片和迭代&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-7&quot;&gt;形状操作&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-8&quot;&gt;更改数组的形状&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#stack&quot;&gt;组合(stack)不同的数组&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#split&quot;&gt;将一个数组分割(split)成几个小数组&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-9&quot;&gt;复制和视图&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-10&quot;&gt;完全不拷贝&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#view&quot;&gt;视图(view)和浅复制&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-11&quot;&gt;深复制&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#method&quot;&gt;函数和方法(method)总览&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-12&quot;&gt;进阶&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#rule&quot;&gt;广播法则(rule)&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-13&quot;&gt;花哨的索引和索引技巧&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-14&quot;&gt;通过数组索引&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-15&quot;&gt;通过布尔数组索引&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#ix&quot;&gt;ix_()函数&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-16&quot;&gt;用字符串索引&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-17&quot;&gt;线性代数&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-18&quot;&gt;简单数组运算&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-19&quot;&gt;矩阵类&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-20&quot;&gt;索引：比较矩阵和二维数组&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-21&quot;&gt;技巧和提示&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-22&quot;&gt;“自动”改变形状&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#stacking&quot;&gt;向量组合(stacking)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#histogram&quot;&gt;直方图(histogram)&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-23&quot;&gt;参考文献&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h2 id=&quot;python-1&quot;&gt;使用python解释器&lt;/h2&gt;
+&lt;hr /&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;使用解释器&lt;/h3&gt;
+&lt;h2 id=&quot;section&quot;&gt;先决条件&lt;/h2&gt;
 
-&lt;p&gt;在linux上，反正&lt;code&gt;/usr/bin/&lt;/code&gt;或&lt;code&gt;/usr/local/bin/&lt;/code&gt;总是可以找到你安装的python。惟一的问题是，archlinux默认的python版本是3,而python2需要单独安装并且名称是python2。所以，首先检查你的python版本。&lt;/p&gt;
+&lt;p&gt;在阅读这个教程之前，你多少需要知道点python。如果你想从新回忆下，请看看&lt;a href=&quot;http://docs.python.org/tut/&quot;&gt;Python Tutorial&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;据说在windows下的某cmd中用着很不堪，但linux终端下体验确实很棒。&lt;/p&gt;
+&lt;p&gt;如果你想要运行教程中的示例，你至少需要在你的电脑上安装了以下一些软件:&lt;/p&gt;
 
-&lt;p&gt;你可以这样执行还可以这样python命令：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.python.org/&quot;&gt;Python&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://numpy.scipy.org/&quot;&gt;NumPy&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;python -c &lt;span class=&quot;s2&quot;&gt;&amp;quot;print &amp;#39;hello&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;p&gt;这些是可能对你有帮助的:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://ipython.scipy.org/&quot;&gt;ipython&lt;/a&gt;是一个净强化的交互Python Shell，对探索NumPy的特性非常方便。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://matplotlib.sourceforge.net/&quot;&gt;matplotlib&lt;/a&gt;将允许你绘图&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://scipy.org/&quot;&gt;Scipy&lt;/a&gt;在NumPy的基础上提供了很多科学模块&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;基础篇&lt;/h2&gt;
+
+&lt;p&gt;NumPy的主要对象是同种元素的多维数组。这是一个所有的元素都是一种类型、通过一个正整数元组索引的元素表格(通常是元素是数字)。在NumPy中维度(dimensions)叫做轴(axes)，轴的个数叫做秩(rank)。&lt;/p&gt;
+
+&lt;p&gt;例如，在3D空间一个点的坐标&lt;code&gt;[1, 2, 3]&lt;/code&gt;是一个秩为1的数组，因为它只有一个轴。那个轴长度为3.又例如，在以下例子中，数组的秩为2(它有两个维度).第一个维度长度为2,第二个维度长度为3.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[[ 1., 0., 0.],
+ [ 0., 1., 2.]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;NumPy的数组类被称作&lt;em&gt;ndarray&lt;/em&gt;。通常被称作数组。注意numpy.array和标准Python库类array.array并不相同，后者只处理一维数组和提供少量功能。更多重要ndarray对象属性有：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;ndarray.ndim&lt;/p&gt;
+
+    &lt;p&gt;数组轴的个数，在python的世界中，轴的个数被称作秩&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ndarray.shape&lt;/p&gt;
+
+    &lt;p&gt;数组的维度。这是一个指示数组在每个维度上大小的整数元组。例如一个n排m列的矩阵，它的shape属性将是(2,3),这个元组的长度显然是秩，即维度或者ndim属性&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ndarray.size&lt;/p&gt;
+
+    &lt;p&gt;数组元素的总个数，等于shape属性中元组元素的乘积。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ndarray.dtype&lt;/p&gt;
+
+    &lt;p&gt;一个用来描述数组中元素类型的对象，可以通过创造或指定dtype使用标准Python类型。另外NumPy提供它自己的数据类型。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ndarray.itemsize&lt;/p&gt;
+
+    &lt;p&gt;数组中每个元素的字节大小。例如，一个元素类型为float64的数组itemsiz属性值为8(=64/8),又如，一个元素类型为complex32的数组item属性为4(=32/8).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ndarray.data&lt;/p&gt;
+
+    &lt;p&gt;包含实际数组元素的缓冲区，通常我们不需要使用这个属性，因为我们总是通过索引来使用数组中的元素。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;一个例子&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from numpy  import *
+&amp;gt;&amp;gt;&amp;gt; a = arange(15).reshape(3, 5)
+&amp;gt;&amp;gt;&amp;gt; a
+array([[ 0,  1,  2,  3,  4],
+       [ 5,  6,  7,  8,  9],
+       [10, 11, 12, 13, 14]])
+&amp;gt;&amp;gt;&amp;gt; a.shape
+(3, 5)
+&amp;gt;&amp;gt;&amp;gt; a.ndim
+2
+&amp;gt;&amp;gt;&amp;gt; a.dtype.name
+'int32'
+&amp;gt;&amp;gt;&amp;gt; a.itemsize
+4
+&amp;gt;&amp;gt;&amp;gt; a.size
+15
+&amp;gt;&amp;gt;&amp;gt; type(a)
+numpy.ndarray
+&amp;gt;&amp;gt;&amp;gt; b = array([6, 7, 8])
+&amp;gt;&amp;gt;&amp;gt; b
+array([6, 7, 8])
+&amp;gt;&amp;gt;&amp;gt; type(b)
+numpy.ndarray
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;创建数组&lt;/h3&gt;
+
+&lt;p&gt;有好几种创建数组的方法。&lt;/p&gt;
+
+&lt;p&gt;例如，你可以使用&lt;code&gt;array&lt;/code&gt;函数从常规的Python列表和元组创造数组。所创建的数组类型由原序列中的元素类型推导而来。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from numpy  import *
+&amp;gt;&amp;gt;&amp;gt; a = array( [2,3,4] )
+&amp;gt;&amp;gt;&amp;gt; a
+array([2, 3, 4])
+&amp;gt;&amp;gt;&amp;gt; a.dtype
+dtype('int32')
+&amp;gt;&amp;gt;&amp;gt; b = array([1.2, 3.5, 5.1])
+&amp;gt;&amp;gt;&amp;gt; b.dtype
+dtype('float64')  一个常见的错误包括用多个数值参数调用`array`而不是提供一个由数值组成的列表作为一个参数。
+
+&amp;gt;&amp;gt;&amp;gt; a = array(1,2,3,4)    # WRONG
+
+&amp;gt;&amp;gt;&amp;gt; a = array([1,2,3,4])  # RIGHT
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;数组将序列包含序列转化成二维的数组，序列包含序列包含序列转化成三维数组等等。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; b = array( [ (1.5,2,3), (4,5,6) ] )
+&amp;gt;&amp;gt;&amp;gt; b
+array([[ 1.5,  2. ,  3. ],
+       [ 4. ,  5. ,  6. ]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;数组类型可以在创建时显示指定&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; c = array( [ [1,2], [3,4] ], dtype=complex )
+&amp;gt;&amp;gt;&amp;gt; c
+array([[ 1.+0.j,  2.+0.j],
+       [ 3.+0.j,  4.+0.j]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;通常，数组的元素开始都是未知的，但是它的大小已知。因此，NumPy提供了一些使用占位符创建数组的函数。这最小化了扩展数组的需要和高昂的运算代价。&lt;/p&gt;
+
+&lt;p&gt;函数&lt;code&gt;function&lt;/code&gt;创建一个全是0的数组，函数&lt;code&gt;ones&lt;/code&gt;创建一个全1的数组，函数&lt;code&gt;empty&lt;/code&gt;创建一个内容随机并且依赖与内存状态的数组。默认创建的数组类型(dtype)都是float64。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; zeros( (3,4) )
+array([[0.,  0.,  0.,  0.],
+       [0.,  0.,  0.,  0.],
+       [0.,  0.,  0.,  0.]])
+&amp;gt;&amp;gt;&amp;gt; ones( (2,3,4), dtype=int16 )                # dtype can also be specified
+array([[[ 1, 1, 1, 1],
+        [ 1, 1, 1, 1],
+        [ 1, 1, 1, 1]],
+       [[ 1, 1, 1, 1],
+        [ 1, 1, 1, 1],
+        [ 1, 1, 1, 1]]], dtype=int16)
+&amp;gt;&amp;gt;&amp;gt; empty( (2,3) )
+array([[  3.73603959e-262,   6.02658058e-154,   6.55490914e-260],
+       [  5.30498948e-313,   3.14673309e-307,   1.00000000e+000]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;为了创建一个数列，NumPy提供一个类似arange的函数返回数组而不是列表:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; arange( 10, 30, 5 )
+array([10, 15, 20, 25])
+&amp;gt;&amp;gt;&amp;gt; arange( 0, 2, 0.3 )                 # it accepts float arguments
+array([ 0. ,  0.3,  0.6,  0.9,  1.2,  1.5,  1.8])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当&lt;code&gt;arange&lt;/code&gt;使用浮点数参数时，由于有限的浮点数精度，通常无法预测获得的元素个数。因此，最好使用函数&lt;code&gt;linspace&lt;/code&gt;去接收我们想要的元素个数来代替用range来指定步长。&lt;/p&gt;
+
+&lt;p&gt;其它函数array, zeros, zeros_like, ones, ones_like, empty, empty_like, arange, linspace, rand, randn, fromfunction, fromfile参考：&lt;a href=&quot;http://scipy.org/Numpy_Example_List&quot;&gt;NumPy示例&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;打印数组&lt;/h3&gt;
+
+&lt;p&gt;当你打印一个数组，NumPy以类似嵌套列表的形式显示它，但是呈以下布局：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;最后的轴从左到右打印&lt;/li&gt;
+  &lt;li&gt;次后的轴从顶向下打印&lt;/li&gt;
+  &lt;li&gt;剩下的轴从顶向下打印，每个切片通过一个空行与下一个隔开&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;一维数组被打印成行，二维数组成矩阵，三维数组成矩阵列表。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = arange(6)                         # 1d array
+&amp;gt;&amp;gt;&amp;gt; print a
+[0 1 2 3 4 5]
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; b = arange(12).reshape(4,3)           # 2d array
+&amp;gt;&amp;gt;&amp;gt; print b
+[[ 0  1  2]
+ [ 3  4  5]
+ [ 6  7  8]
+ [ 9 10 11]]
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; c = arange(24).reshape(2,3,4)         # 3d array
+&amp;gt;&amp;gt;&amp;gt; print c
+[[[ 0  1  2  3]
+  [ 4  5  6  7]
+  [ 8  9 10 11]]
+
+ [[12 13 14 15]
+  [16 17 18 19]
+  [20 21 22 23]]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;查看形状操作一节获得有关reshape的更多细节&lt;/p&gt;
+
+&lt;p&gt;如果一个数组用来打印太大了，NumPy自动省略中间部分而只打印角落&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; print arange(10000)
+[   0    1    2 ..., 9997 9998 9999]
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; print arange(10000).reshape(100,100)
+[[   0    1    2 ...,   97   98   99]
+ [ 100  101  102 ...,  197  198  199]
+ [ 200  201  202 ...,  297  298  299]
+ ...,
+ [9700 9701 9702 ..., 9797 9798 9799]
+ [9800 9801 9802 ..., 9897 9898 9899]
+ [9900 9901 9902 ..., 9997 9998 9999]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;禁用NumPy的这种行为并强制打印整个数组，你可以设置printoptions参数来更改打印选项。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; set_printoptions(threshold='nan')
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;基本运算&lt;/h3&gt;
+
+&lt;p&gt;数组的算术运算是按元素的。新的数组被创建并且被结果填充。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = array( [20,30,40,50] )
+&amp;gt;&amp;gt;&amp;gt; b = arange( 4 )
+&amp;gt;&amp;gt;&amp;gt; b
+array([0, 1, 2, 3])
+&amp;gt;&amp;gt;&amp;gt; c = a-b
+&amp;gt;&amp;gt;&amp;gt; c
+array([20, 29, 38, 47])
+&amp;gt;&amp;gt;&amp;gt; b**2
+array([0, 1, 4, 9])
+&amp;gt;&amp;gt;&amp;gt; 10*sin(a)
+array([ 9.12945251, -9.88031624,  7.4511316 , -2.62374854])
+&amp;gt;&amp;gt;&amp;gt; a&amp;lt;35
+array([True, True, False, False], dtype=bool)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;不像许多矩阵语言，NumPy中的乘法运算符&lt;code&gt;*&lt;/code&gt;指示按元素计算，矩阵乘法可以使用&lt;code&gt;dot&lt;/code&gt;函数或创建矩阵对象实现(参见教程中的矩阵章节)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; A = array( [[1,1],
+...             [0,1]] )
+&amp;gt;&amp;gt;&amp;gt; B = array( [[2,0],
+...             [3,4]] )
+&amp;gt;&amp;gt;&amp;gt; A*B                         # elementwise product
+array([[2, 0],
+       [0, 4]])
+&amp;gt;&amp;gt;&amp;gt; dot(A,B)                    # matrix product
+array([[5, 4],
+       [3, 4]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;有些操作符像&lt;code&gt;+=&lt;/code&gt;和&lt;code&gt;*=&lt;/code&gt;被用来更改已存在数组而不创建一个新的数组。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = ones((2,3), dtype=int)
+&amp;gt;&amp;gt;&amp;gt; b = random.random((2,3))
+&amp;gt;&amp;gt;&amp;gt; a *= 3
+&amp;gt;&amp;gt;&amp;gt; a
+array([[3, 3, 3],
+       [3, 3, 3]])
+&amp;gt;&amp;gt;&amp;gt; b += a
+&amp;gt;&amp;gt;&amp;gt; b
+array([[ 3.69092703,  3.8324276 ,  3.0114541 ],
+       [ 3.18679111,  3.3039349 ,  3.37600289]])
+&amp;gt;&amp;gt;&amp;gt; a += b                                  # b is converted to integer type
+&amp;gt;&amp;gt;&amp;gt; a
+array([[6, 6, 6],
+       [6, 6, 6]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当运算的是不同类型的数组时，结果数组和更普遍和精确的已知(这种行为叫做upcast)。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = ones(3, dtype=int32)
+&amp;gt;&amp;gt;&amp;gt; b = linspace(0,pi,3)
+&amp;gt;&amp;gt;&amp;gt; b.dtype.name
+'float64'
+&amp;gt;&amp;gt;&amp;gt; c = a+b
+&amp;gt;&amp;gt;&amp;gt; c
+array([ 1.        ,  2.57079633,  4.14159265])
+&amp;gt;&amp;gt;&amp;gt; c.dtype.name
+'float64'
+&amp;gt;&amp;gt;&amp;gt; d = exp(c*1j)
+&amp;gt;&amp;gt;&amp;gt; d
+array([ 0.54030231+0.84147098j, -0.84147098+0.54030231j,
+       -0.54030231-0.84147098j])
+&amp;gt;&amp;gt;&amp;gt; d.dtype.name
+'complex128' 许多非数组运算，如计算数组所有元素之和，被作为ndarray类的方法实现
+
+&amp;gt;&amp;gt;&amp;gt; a = random.random((2,3))
+&amp;gt;&amp;gt;&amp;gt; a
+array([[ 0.6903007 ,  0.39168346,  0.16524769],
+       [ 0.48819875,  0.77188505,  0.94792155]])
+&amp;gt;&amp;gt;&amp;gt; a.sum()
+3.4552372100521485
+&amp;gt;&amp;gt;&amp;gt; a.min()
+0.16524768654743593
+&amp;gt;&amp;gt;&amp;gt; a.max()
+0.9479215542670073
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这些运算默认应用到数组好像它就是一个数字组成的列表，无关数组的形状。然而，指定&lt;code&gt;axis&lt;/code&gt;参数你可以吧运算应用到数组指定的轴上：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; b = arange(12).reshape(3,4)
+&amp;gt;&amp;gt;&amp;gt; b
+array([[ 0,  1,  2,  3],
+       [ 4,  5,  6,  7],
+       [ 8,  9, 10, 11]])
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; b.sum(axis=0)                            # sum of each column
+array([12, 15, 18, 21])
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; b.min(axis=1)                            # min of each row
+array([0, 4, 8])
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; b.cumsum(axis=1)                         # cumulative sum along each row
+array([[ 0,  1,  3,  6],
+       [ 4,  9, 15, 22],
+       [ 8, 17, 27, 38]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;ufunc&quot;&gt;通用函数(ufunc)&lt;/h3&gt;
+
+&lt;p&gt;NumPy提供常见的数学函数如&lt;code&gt;sin&lt;/code&gt;,&lt;code&gt;cos&lt;/code&gt;和&lt;code&gt;exp&lt;/code&gt;。在NumPy中，这些叫作“通用函数”(ufunc)。在NumPy里这些函数作用按数组的元素运算，产生一个数组作为输出。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; B = arange(3)
+&amp;gt;&amp;gt;&amp;gt; B
+array([0, 1, 2])
+&amp;gt;&amp;gt;&amp;gt; exp(B)
+array([ 1.        ,  2.71828183,  7.3890561 ])
+&amp;gt;&amp;gt;&amp;gt; sqrt(B)
+array([ 0.        ,  1.        ,  1.41421356])
+&amp;gt;&amp;gt;&amp;gt; C = array([2., -1., 4.])
+&amp;gt;&amp;gt;&amp;gt; add(B, C)
+array([ 2.,  0.,  6.])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;更多函数all, alltrue, any, apply along axis, argmax, argmin, argsort, average, bincount, ceil, clip, conj, conjugate, corrcoef, cov, cross, cumprod, cumsum, diff, dot, floor, inner, inv, lexsort, max, maximum, mean, median, min, minimum, nonzero, outer, prod, re, round, sometrue, sort, std, sum, trace, transpose, var, vdot, vectorize, where 参见:&lt;a href=&quot;http://scipy.org/Numpy_Example_List&quot;&gt;NumPy示例&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-6&quot;&gt;索引，切片和迭代&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;一维&lt;/em&gt;数组可以被索引、切片和迭代，就像&lt;a href=&quot;http://docs.python.org/tutorial/introduction.html#SECTION005140000000000000000&quot;&gt;列表&lt;/a&gt;和其它Python序列。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = arange(10)**3
+&amp;gt;&amp;gt;&amp;gt; a
+array([  0,   1,   8,  27,  64, 125, 216, 343, 512, 729])
+&amp;gt;&amp;gt;&amp;gt; a[2]
+8
+&amp;gt;&amp;gt;&amp;gt; a[2:5]
+array([ 8, 27, 64])
+&amp;gt;&amp;gt;&amp;gt; a[:6:2] = -1000    # equivalent to a[0:6:2] = -1000; from start to position 6, exclusive, set every 2nd element to -1000
+&amp;gt;&amp;gt;&amp;gt; a
+array([-1000,     1, -1000,    27, -1000,   125,   216,   343,   512,   729])
+&amp;gt;&amp;gt;&amp;gt; a[ : :-1]                                 # reversed a
+array([  729,   512,   343,   216,   125, -1000,    27, -1000,     1, -1000])
+&amp;gt;&amp;gt;&amp;gt; for i in a:
+...         print i**(1/3.),
+...
+nan 1.0 nan 3.0 nan 5.0 6.0 7.0 8.0 9.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;多维&lt;/em&gt;数组可以每个轴有一个索引。这些索引由一个逗号分割的元组给出。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; def f(x,y):
+...         return 10*x+y
+...
+&amp;gt;&amp;gt;&amp;gt; b = fromfunction(f,(5,4),dtype=int)
+&amp;gt;&amp;gt;&amp;gt; b
+array([[ 0,  1,  2,  3],
+       [10, 11, 12, 13],
+       [20, 21, 22, 23],
+       [30, 31, 32, 33],
+       [40, 41, 42, 43]])
+&amp;gt;&amp;gt;&amp;gt; b[2,3]
+23
+&amp;gt;&amp;gt;&amp;gt; b[0:5, 1]                       # each row in the second column of b
+array([ 1, 11, 21, 31, 41])
+&amp;gt;&amp;gt;&amp;gt; b[ : ,1]                        # equivalent to the previous example
+array([ 1, 11, 21, 31, 41])
+&amp;gt;&amp;gt;&amp;gt; b[1:3, : ]                      # each column in the second and third row of b
+array([[10, 11, 12, 13],
+       [20, 21, 22, 23]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当少于轴数的索引被提供时，确失的索引被认为是整个切片：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; b[-1]                                  # the last row. Equivalent to b[-1,:]
+array([40, 41, 42, 43])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;b[i]&lt;/code&gt;中括号中的表达式被当作&lt;code&gt;i&lt;/code&gt;和一系列&lt;code&gt;:&lt;/code&gt;，来代表剩下的轴。NumPy也允许你使用“点”像&lt;code&gt;b[i,...]&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;点&lt;/em&gt;(…)代表许多产生一个完整的索引元组必要的分号。如果x是秩为5的数组(即它有5个轴)，那么:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;x[1,2,…] 等同于 x[1,2,:,:,:],&lt;/li&gt;
+  &lt;li&gt;x[…,3] 等同于 x[:,:,:,:,3]&lt;/li&gt;
+  &lt;li&gt;x[4,…,5,:] 等同 x[4,:,:,5,:]. &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;      &lt;span class=&quot;c&quot;&gt;# a 3D array (two stacked 2D arrays)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;               &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]],&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;              &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;101&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;102&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;               &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;110&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;112&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;113&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;                          &lt;span class=&quot;c&quot;&gt;# same as c[1,:,:] or c[1]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;101&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;102&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;110&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;112&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;113&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;                          &lt;span class=&quot;c&quot;&gt;# same as c[:,:,2]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;102&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;113&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;有些模块也可以调用&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;迭代&lt;/em&gt;多维数组是就第一个轴而言的:&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;python -m module &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;arg&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; ...
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; for row in b:
+...         print row
+...
+[0 1 2 3]
+[10 11 12 13]
+[20 21 22 23]
+[30 31 32 33]
+[40 41 42 43]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 
-&lt;p&gt;你还可以把python脚本(通常是.py后缀的文件)当作参数传递给python，甚至传递更多的参数&lt;/p&gt;
+&lt;p&gt;然而，如果一个人想对每个数组中元素进行运算，我们可以使用flat属性，该属性是数组元素的一个迭代器:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;python hello.py &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;arg&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; ...
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; for element in b.flat:
+...         print element,
+...
+0 1 2 3 10 11 12 13 20 21 22 23 30 31 32 33 40 41 42 43
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 
-&lt;p&gt;当然直接在终端里输入python还可以有个交互模式，顺便题下有个叫ipython的东西会提供更好的交互体验。&lt;/p&gt;
+&lt;p&gt;更多[], …, newaxis, ndenumerate, indices, index exp 参考&lt;a href=&quot;http://scipy.org/Numpy_Example_List&quot;&gt;NumPy示例&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;解释器和它的环境&lt;/h3&gt;
+&lt;h2 id=&quot;section-7&quot;&gt;形状操作&lt;/h2&gt;
 
-&lt;p&gt;环境？如果你使用linux你就会知道是什么了，其实没必要弄清它到底是什么，事实上我也不知道……但它能让正确的程序正确地找到和引用其它程序或配置。好了按下不提。&lt;/p&gt;
+&lt;h3 id=&quot;section-8&quot;&gt;更改数组的形状&lt;/h3&gt;
 
-&lt;p&gt;python的解释器有着很强大的错误处理功能。这里说错误大概你的程序就直接被中断&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;，并返回一个非零错误状态。当出错时python会打印错误信息和回溯堆栈，给出基本的提示。所有的错误输出到标准错误流。我在说什么？总之python的解释器能很好处理错误。&lt;/p&gt;
+&lt;p&gt;一个数组的形状由它每个轴上的元素个数给出：&lt;/p&gt;
 
-&lt;p&gt;在linux系统中，我们通常把python程序写成一个脚本而不是在交互环境中使用。在脚本头部加上一下内容：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# -*- coding : utf-8 -*-&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = floor(10*random.random((3,4)))
+&amp;gt;&amp;gt;&amp;gt; a
+array([[ 7.,  5.,  9.,  3.],
+       [ 7.,  2.,  7.,  8.],
+       [ 6.,  8.,  3.,  2.]])
+&amp;gt;&amp;gt;&amp;gt; a.shape
+(3, 4)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 
-&lt;p&gt;这是为了方便系统能正确找到你的python和处理中文。&lt;/p&gt;
+&lt;p&gt;一个数组的形状可以被多种命令修改：&lt;/p&gt;
 
-&lt;p&gt;你还可以提供一个交互脚本的启动时读取的配置文件，如果你使用linux就知道它提供像&lt;code&gt;.profile&lt;/code&gt;一类的文件的功能，可以在默认启动时加载个模块什么的。如果有兴趣，参考Tutorial慢慢来吧。&lt;/p&gt;
-
-&lt;h2 id=&quot;python-2&quot;&gt;Python非正式指南&lt;/h2&gt;
-
-&lt;p&gt;&lt;code&gt;\#&lt;/code&gt;在python中是用来注释的，&lt;/p&gt;
-
-&lt;p&gt;python可以很轻易的完成数学计算，甚至处理复数。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
-&lt;span class=&quot;mf&quot;&gt;7.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# what the difference&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a.ravel() # flatten the array
+array([ 7.,  5.,  9.,  3.,  7.,  2.,  7.,  8.,  6.,  8.,  3.,  2.])
+&amp;gt;&amp;gt;&amp;gt; a.shape = (6, 2)
+&amp;gt;&amp;gt;&amp;gt; a.transpose()
+array([[ 7.,  9.,  7.,  7.,  6.,  3.],
+       [ 5.,  3.,  2.,  8.,  8.,  2.]])
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 
-&lt;p&gt;可以用等号赋值&lt;/p&gt;
+&lt;p&gt;由&lt;code&gt;ravel()&lt;/code&gt;展平的数组元素的顺序通常是“C风格”的，就是说，最右边的索引变化得最快，所以元素a[0,0]之后是a[0,1]。如果数组被改变形状(reshape)成其它形状，数组仍然是“C风格”的。NumPy通常创建一个以这个顺序保存数据的数组，所以&lt;code&gt;ravel()&lt;/code&gt;将总是不需要复制它的参数&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;。但是如果数组是通过切片其它数组或有不同寻常的选项时，它可能需要被复制。函数&lt;code&gt;reshape()&lt;/code&gt;和&lt;code&gt;ravel()&lt;/code&gt;还可以被同过一些可选参数构建成FORTRAN风格的数组，即最左边的索引变化最快。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;
+&lt;p&gt;&lt;code&gt;reshape&lt;/code&gt;函数改变参数形状并返回它，而&lt;code&gt;resize&lt;/code&gt;函数改变数组自身。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a
+array([[ 7.,  5.],
+       [ 9.,  3.],
+       [ 7.,  2.],
+       [ 7.,  8.],
+       [ 6.,  8.],
+       [ 3.,  2.]])
+&amp;gt;&amp;gt;&amp;gt; a.resize((2,6))
+&amp;gt;&amp;gt;&amp;gt; a
+array([[ 7.,  5.,  9.,  3.,  7.,  2.],
+       [ 7.,  8.,  6.,  8.,  3.,  2.]])
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 
-&lt;p&gt;可以向屏幕打印内容&lt;/p&gt;
+&lt;p&gt;如果在改变形状操作中一个维度被给做-1，其维度将自动被计算&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# what&amp;#39;s this? &lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;world&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;world&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;a comma followed me&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;what happened with that comma?&amp;quot;&lt;/span&gt;
+&lt;p&gt;更多 shape, reshape, resize, ravel 参考&lt;a href=&quot;http://scipy.org/Numpy_Example_List&quot;&gt;NumPy示例&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;stack&quot;&gt;组合(stack)不同的数组&lt;/h3&gt;
+
+&lt;p&gt;几种方法可以沿不同轴将数组堆叠在一起：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = floor(10*random.random((2,2)))
+&amp;gt;&amp;gt;&amp;gt; a
+array([[ 1.,  1.],
+       [ 5.,  8.]])
+&amp;gt;&amp;gt;&amp;gt; b = floor(10*random.random((2,2)))
+&amp;gt;&amp;gt;&amp;gt; b
+array([[ 3.,  3.],
+       [ 6.,  0.]])
+&amp;gt;&amp;gt;&amp;gt; vstack((a,b))
+array([[ 1.,  1.],
+       [ 5.,  8.],
+       [ 3.,  3.],
+       [ 6.,  0.]])
+&amp;gt;&amp;gt;&amp;gt; hstack((a,b))
+array([[ 1.,  1.,  3.,  3.],
+       [ 5.,  8.,  6.,  0.]])
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 
-&lt;p&gt;你可以用多种方式操作字符串&lt;/p&gt;
+&lt;p&gt;函数&lt;code&gt;column_stack&lt;/code&gt;以列将一维数组合成二维数组，它等同与&lt;code&gt;vstack&lt;/code&gt;对一维数组。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;don&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&amp;#39;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;t&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;&amp;quot;don&amp;#39;t&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;sd&quot;&gt;&amp;#39;&amp;#39;&amp;#39;first line\n\&lt;/span&gt;
-&lt;span class=&quot;sd&quot;&gt;second line&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;&amp;#39;a&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;b&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;&amp;#39;str&amp;#39;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;ing&amp;#39;&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; column_stack((a,b))   # With 2D arrays
+array([[ 1.,  1.,  3.,  3.],
+       [ 5.,  8.,  6.,  0.]])
+&amp;gt;&amp;gt;&amp;gt; a=array([4.,2.])
+&amp;gt;&amp;gt;&amp;gt; b=array([2.,8.])
+&amp;gt;&amp;gt;&amp;gt; a[:,newaxis]  # This allows to have a 2D columns vector
+array([[ 4.],
+       [ 2.]])
+&amp;gt;&amp;gt;&amp;gt; column_stack((a[:,newaxis],b[:,newaxis]))
+array([[ 4.,  2.],
+       [ 2.,  8.]])
+&amp;gt;&amp;gt;&amp;gt; vstack((a[:,newaxis],b[:,newaxis])) # The behavior of vstack is different
+array([[ 4.],
+       [ 2.],
+       [ 2.],
+       [ 8.]])
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 
-&lt;p&gt;还可以对字符串进行切片,它是零索引的，后来你会感觉到这是有好处的。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;row_stack&lt;/code&gt;函数，另一方面，将一维数组以行组合成二维数组。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;jiangnantingyu&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt;
+&lt;p&gt;对那些维度比二维更高的数组，&lt;code&gt;hstack&lt;/code&gt;沿着第二个轴组合，&lt;code&gt;vstack&lt;/code&gt;沿着第一个轴组合,&lt;code&gt;concatenate&lt;/code&gt;允许可选参数给出组合时沿着的轴。&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Note&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;在复杂情况下，&lt;code&gt;r_[]&lt;/code&gt;和&lt;code&gt;c_[]&lt;/code&gt;对创建沿着一个方向组合的数很有用，它们允许范围符号(“:”):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; r_[1:4,0,4]
+array([1, 2, 3, 0, 4])
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 
-&lt;p&gt;另外&lt;code&gt;len&lt;/code&gt;可以返回字符串的长度，事实上，字符串、字典、元组都是序列。有近似的操作方法。区别之一有你不能指望修改字符串中某一字母但可以修改字典和元组中的内容。&lt;/p&gt;
+&lt;p&gt;当使用数组作为参数时，&lt;code&gt;r_&lt;/code&gt;和&lt;code&gt;c_&lt;/code&gt;的默认行为和&lt;code&gt;vstack&lt;/code&gt;和&lt;code&gt;hstack&lt;/code&gt;很像，但是允许可选的参数给出组合所沿着的轴的代号。&lt;/p&gt;
 
-&lt;h3 id=&quot;unicode-&quot;&gt;Unicode 字符串&lt;/h3&gt;
+&lt;p&gt;更多函数hstack , vstack, column_stack , row_stack , concatenate , c_ , r_ 
+参见&lt;a href=&quot;http://scipy.org/Numpy_Example_List&quot;&gt;NumPy示例&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;先不要管这个,你得先去了解下字符编码。&lt;/p&gt;
+&lt;h3 id=&quot;split&quot;&gt;将一个数组分割(split)成几个小数组&lt;/h3&gt;
 
-&lt;h3 id=&quot;section-2&quot;&gt;列表&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;hsplit&lt;/code&gt;你能将数组沿着它的水平轴分割，或者指定返回相同形状数组的个数，或者指定在哪些列后发生分割:&lt;/p&gt;
 
-&lt;p&gt;形如这样的东西&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = floor(10*random.random((2,12)))
+&amp;gt;&amp;gt;&amp;gt; a
+array([[ 8.,  8.,  3.,  9.,  0.,  4.,  3.,  0.,  0.,  6.,  4.,  4.],
+       [ 0.,  3.,  2.,  9.,  6.,  0.,  4.,  5.,  7.,  5.,  1.,  4.]])
+&amp;gt;&amp;gt;&amp;gt; hsplit(a,3)   # Split a into 3
+[array([[ 8.,  8.,  3.,  9.],
+       [ 0.,  3.,  2.,  9.]]), array([[ 0.,  4.,  3.,  0.],
+       [ 6.,  0.,  4.,  5.]]), array([[ 0.,  6.,  4.,  4.],
+       [ 7.,  5.,  1.,  4.]])]
+&amp;gt;&amp;gt;&amp;gt; hsplit(a,(3,4))   # Split a after the third and the fourth column
+[array([[ 8.,  8.,  3.],
+       [ 0.,  3.,  2.]]), array([[ 9.],
+       [ 9.]]), array([[ 0.,  4.,  3.,  0.,  0.,  6.,  4.,  4.],
+       [ 6.,  0.,  4.,  5.,  7.,  5.,  1.,  4.]])]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 
-&lt;p&gt;你同样可以切片、引用。强调一下，切片可以用来复制东西，不然你简单赋值的结果是两个变量指向同一个东西。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;vsplit&lt;/code&gt;沿着纵向的轴分割，&lt;code&gt;array split&lt;/code&gt;允许指定沿哪个轴分割。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;add&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
+&lt;h2 id=&quot;section-9&quot;&gt;复制和视图&lt;/h2&gt;
+
+&lt;p&gt;当运算和处理数组时，它们的数据有时被拷贝到新的数组有时不是。这通常是新手的困惑之源。这有三种情况:&lt;/p&gt;
+
+&lt;h3 id=&quot;section-10&quot;&gt;完全不拷贝&lt;/h3&gt;
+
+&lt;p&gt;简单的赋值不拷贝数组对象或它们的数据。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = arange(12)
+&amp;gt;&amp;gt;&amp;gt; b = a            # no new object is created
+&amp;gt;&amp;gt;&amp;gt; b is a           # a and b are two names for the same ndarray object
+True
+&amp;gt;&amp;gt;&amp;gt; b.shape = 3,4    # changes the shape of a
+&amp;gt;&amp;gt;&amp;gt; a.shape
+(3, 4)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 
-&lt;h2 id=&quot;section-3&quot;&gt;更多控制流工具&lt;/h2&gt;
+&lt;p&gt;Python 传递不定对象作为参考&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;，所以函数调用不拷贝数组。&lt;/p&gt;
 
-&lt;h3 id=&quot;if&quot;&gt;if&lt;/h3&gt;
-&lt;p&gt;### for
-### range函数
-### break和continue
-### pass
-### 定义函数
-### 定义函数的更多内容
-#### 默认参数值
-#### 关键词参数
-#### 任意参数列表
-#### 拆开参数列表
-#### lambda形式
-#### 文档字符串
-### 编程风格&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; def f(x):
+...     print id(x)
+...
+&amp;gt;&amp;gt;&amp;gt; id(a)                           # id is a unique identifier of an object
+148293216
+&amp;gt;&amp;gt;&amp;gt; f(a)
+148293216
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&quot;python-3&quot;&gt;我会说python是戴着脚镣跳舞？&lt;/h2&gt;
+&lt;h3 id=&quot;view&quot;&gt;视图(view)和浅复制&lt;/h3&gt;
 
-&lt;p&gt;Pep8 pass&lt;/p&gt;
+&lt;p&gt;不同的数组对象分享同一个数据。视图方法创造一个新的数组对象指向同一数据。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; c = a.view()
+&amp;gt;&amp;gt;&amp;gt; c is a
+False
+&amp;gt;&amp;gt;&amp;gt; c.base is a                        # c is a view of the data owned by a
+True
+&amp;gt;&amp;gt;&amp;gt; c.flags.owndata
+False
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; c.shape = 2,6                      # a's shape doesn't change
+&amp;gt;&amp;gt;&amp;gt; a.shape
+(3, 4)
+&amp;gt;&amp;gt;&amp;gt; c[0,4] = 1234                      # a's data changes
+&amp;gt;&amp;gt;&amp;gt; a
+array([[   0,    1,    2,    3],
+       [1234,    5,    6,    7],
+       [   8,    9,   10,   11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;切片数组返回它的一个视图：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; s = a[ : , 1:3]     # spaces added for clarity; could also be written &quot;s = a[:,1:3]&quot;
+&amp;gt;&amp;gt;&amp;gt; s[:] = 10           # s[:] is a view of s. Note the difference between s=10 and s[:]=10
+&amp;gt;&amp;gt;&amp;gt; a
+array([[   0,   10,   10,    3],
+       [1234,   10,   10,    7],
+       [   8,   10,   10,   11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;section-11&quot;&gt;深复制&lt;/h2&gt;
+
+&lt;p&gt;这个复制方法完全复制数组和它的数据。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; d = a.copy()                          # a new array object with new data is created
+&amp;gt;&amp;gt;&amp;gt; d is a
+False
+&amp;gt;&amp;gt;&amp;gt; d.base is a                           # d doesn't share anything with a
+False
+&amp;gt;&amp;gt;&amp;gt; d[0,0] = 9999
+&amp;gt;&amp;gt;&amp;gt; a
+array([[   0,   10,   10,    3],
+       [1234,   10,   10,    7],
+       [   8,   10,   10,   11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;method&quot;&gt;函数和方法(method)总览&lt;/h3&gt;
+
+&lt;p&gt;这是个NumPy函数和方法分类排列目录。这些名字链接到&lt;a href=&quot;http://scipy.org/Numpy_Example_List&quot;&gt;NumPy示例&lt;/a&gt;,你可以看到这些函数起作用。[^5]&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;创建数组&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;arange, array, copy, empty, empty_like, eye, fromfile, fromfunction, identity, linspace, logspace, mgrid, ogrid, ones, ones_like, r , zeros, zeros_like 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;转化&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;astype, atleast 1d, atleast 2d, atleast 3d, mat 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;操作&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;array split, column stack, concatenate, diagonal, dsplit, dstack, hsplit, hstack, item, newaxis, ravel, repeat, reshape, resize, squeeze, swapaxes, take, transpose, vsplit, vstack 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;询问&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;all, any, nonzero, where 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;排序&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;argmax, argmin, argsort, max, min, ptp, searchsorted, sort 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;运算&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;choose, compress, cumprod, cumsum, inner, fill, imag, prod, put, putmask, real, sum 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;基本统计&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cov, mean, std, var 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;基本线性代数&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cross, dot, outer, svd, vdot
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;section-12&quot;&gt;进阶&lt;/h2&gt;
+
+&lt;h3 id=&quot;rule&quot;&gt;广播法则(rule)&lt;/h3&gt;
+
+&lt;p&gt;广播法则能使通用函数有意义地处理不具有相同形状的输入。&lt;/p&gt;
+
+&lt;p&gt;广播第一法则是，如果所有的输入数组维度不都相同，一个“1”将被重复地添加在维度较小的数组上直至所有的数组拥有一样的维度。&lt;/p&gt;
+
+&lt;p&gt;广播第二法则确定长度为1的数组沿着特殊的方向表现地好像它有沿着那个方向最大形状的大小。对数组来说，沿着那个维度的数组元素的值理应相同。&lt;/p&gt;
+
+&lt;p&gt;应用广播法则之后，所有数组的大小必须匹配。更多细节可以从这个&lt;a href=&quot;http://scipy.org/EricsBroadcastingDoc&quot;&gt;文档&lt;/a&gt;找到。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-13&quot;&gt;花哨的索引和索引技巧&lt;/h2&gt;
+
+&lt;p&gt;NumPy比普通Python序列提供更多的索引功能。除了索引整数和切片，正如我们之前看到的，数组可以被整数数组和布尔数组索引。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-14&quot;&gt;通过数组索引&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = arange(12)**2                          # the first 12 square numbers
+&amp;gt;&amp;gt;&amp;gt; i = array( [ 1,1,3,8,5 ] )                 # an array of indices
+&amp;gt;&amp;gt;&amp;gt; a[i]                                       # the elements of a at the positions i
+array([ 1,  1,  9, 64, 25])
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; j = array( [ [ 3, 4], [ 9, 7 ] ] )         # a bidimensional array of indices
+&amp;gt;&amp;gt;&amp;gt; a[j]                                       # the same shape as j
+array([[ 9, 16],
+       [81, 49]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当被索引数组a是多维的时，每一个唯一的索引数列指向a的第一维&lt;sup id=&quot;fnref:6&quot;&gt;&lt;a href=&quot;#fn:6&quot; rel=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;。以下示例通过将图片标签用调色版转换成色彩图像展示了这种行为。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; palette = array( [ [0,0,0],                # black
+...                    [255,0,0],              # red
+...                    [0,255,0],              # green
+...                    [0,0,255],              # blue
+...                    [255,255,255] ] )       # white
+&amp;gt;&amp;gt;&amp;gt; image = array( [ [ 0, 1, 2, 0 ],           # each value corresponds to a color in the palette
+...                  [ 0, 3, 4, 0 ]  ] )
+&amp;gt;&amp;gt;&amp;gt; palette[image]                            # the (2,4,3) color image
+array([[[  0,   0,   0],
+        [255,   0,   0],
+        [  0, 255,   0],
+        [  0,   0,   0]],
+       [[  0,   0,   0],
+        [  0,   0, 255],
+        [255, 255, 255],
+        [  0,   0,   0]]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们也可以给出不不止一维的索引，每一维的索引数组必须有相同的形状。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = arange(12).reshape(3,4)
+&amp;gt;&amp;gt;&amp;gt; a
+array([[ 0,  1,  2,  3],
+       [ 4,  5,  6,  7],
+       [ 8,  9, 10, 11]])
+&amp;gt;&amp;gt;&amp;gt; i = array( [ [0,1],                        # indices for the first dim of a
+...              [1,2] ] )
+&amp;gt;&amp;gt;&amp;gt; j = array( [ [2,1],                        # indices for the second dim
+...              [3,3] ] )
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; a[i,j]                                     # i and j must have equal shape
+array([[ 2,  5],
+       [ 7, 11]])
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; a[i,2]
+array([[ 2,  6],
+       [ 6, 10]])
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; a[:,j]                                     # i.e., a[ : , j]
+array([[[ 2,  1],
+        [ 3,  3]],
+       [[ 6,  5],
+        [ 7,  7]],
+       [[10,  9],
+        [11, 11]]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;自然，我们可以把i和j放到序列中(比如说列表)然后通过list索引。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; l = [i,j]
+&amp;gt;&amp;gt;&amp;gt; a[l]                                       # equivalent to a[i,j]
+array([[ 2,  5],
+       [ 7, 11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然而，我们不能把i和j放在一个数组中，因为这个数组将被解释成索引a的第一维。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; s = array( [i,j] )
+&amp;gt;&amp;gt;&amp;gt; a[s]                                       # not what we want
+---------------------------------------------------------------------------
+IndexError                                Traceback (most recent call last)
+&amp;lt;ipython-input-100-b912f631cc75&amp;gt; in &amp;lt;module&amp;gt;()
+----&amp;gt; 1 a[s]
+
+IndexError: index (3) out of range (0&amp;lt;=index&amp;lt;2) in dimension 0
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; a[tuple(s)]                                # same as a[i,j]
+array([[ 2,  5],
+       [ 7, 11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;另一个常用的数组索引用法是搜索时间序列最大值&lt;sup id=&quot;fnref:7&quot;&gt;&lt;a href=&quot;#fn:7&quot; rel=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; time = linspace(20, 145, 5)                 # time scale
+&amp;gt;&amp;gt;&amp;gt; data = sin(arange(20)).reshape(5,4)         # 4 time-dependent series
+&amp;gt;&amp;gt;&amp;gt; time
+array([  20.  ,   51.25,   82.5 ,  113.75,  145.  ])
+&amp;gt;&amp;gt;&amp;gt; data
+array([[ 0.        ,  0.84147098,  0.90929743,  0.14112001],
+       [-0.7568025 , -0.95892427, -0.2794155 ,  0.6569866 ],
+       [ 0.98935825,  0.41211849, -0.54402111, -0.99999021],
+       [-0.53657292,  0.42016704,  0.99060736,  0.65028784],
+       [-0.28790332, -0.96139749, -0.75098725,  0.14987721]])
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; ind = data.argmax(axis=0)                   # index of the maxima for each series
+&amp;gt;&amp;gt;&amp;gt; ind
+array([2, 0, 3, 1])
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; time_max = time[ ind]                       # times corresponding to the maxima
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; data_max = data[ind, xrange(data.shape[1])] # =&amp;gt; data[ind[0],0], data[ind[1],1]...
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; time_max
+array([  82.5 ,   20.  ,  113.75,   51.25])
+&amp;gt;&amp;gt;&amp;gt; data_max
+array([ 0.98935825,  0.84147098,  0.99060736,  0.6569866 ])
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; all(data_max == data.max(axis=0))
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你也可以使用数组索引作为目标来赋值：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = arange(5)
+&amp;gt;&amp;gt;&amp;gt; a
+array([0, 1, 2, 3, 4])
+&amp;gt;&amp;gt;&amp;gt; a[[1,3,4]] = 0
+&amp;gt;&amp;gt;&amp;gt; a
+array([0, 0, 2, 0, 0])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然而，当一个索引列表包含重复时，赋值被多次完成，保留最后的值：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = arange(5)
+&amp;gt;&amp;gt;&amp;gt; a[[0,0,2]]=[1,2,3]
+&amp;gt;&amp;gt;&amp;gt; a
+array([2, 1, 3, 3, 4])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这足够合理，但是小心如果你想用Python的&lt;code&gt;+=&lt;/code&gt;结构，可能结果并非你所期望：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = arange(5)
+&amp;gt;&amp;gt;&amp;gt; a[[0,0,2]]+=1
+&amp;gt;&amp;gt;&amp;gt; a
+array([1, 1, 3, 3, 4])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;即使0在索引列表中出现两次，索引为0的元素仅仅增加一次。这是因为Python要求&lt;code&gt;a+=1&lt;/code&gt;和&lt;code&gt;a=a+1&lt;/code&gt;等同。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-15&quot;&gt;通过布尔数组索引&lt;/h3&gt;
+
+&lt;p&gt;当我们使用整数数组索引数组时，我们提供一个索引列表去选择。通过布尔数组索引的方法是不同的我们显式地选择数组中我们想要和不想要的元素。&lt;/p&gt;
+
+&lt;p&gt;我们能想到的使用布尔数组的索引最自然方式就是使用和原数组一样形状的布尔数组。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = arange(12).reshape(3,4)
+&amp;gt;&amp;gt;&amp;gt; b = a &amp;gt; 4
+&amp;gt;&amp;gt;&amp;gt; b                                          # b is a boolean with a's shape
+array([[False, False, False, False],
+       [False, True, True, True],
+       [True, True, True, True]], dtype=bool)
+&amp;gt;&amp;gt;&amp;gt; a[b]                                       # 1d array with the selected elements
+array([ 5,  6,  7,  8,  9, 10, 11])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这个属性在赋值时非常有用：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a[b] = 0                                   # All elements of 'a' higher than 4 become 0
+&amp;gt;&amp;gt;&amp;gt; a
+array([[0, 1, 2, 3],
+       [4, 0, 0, 0],
+       [0, 0, 0, 0]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你可以参考&lt;a href=&quot;http://scipy.org/Tentative_NumPy_Tutorial/Mandelbrot_Set_Example&quot;&gt;曼德博集合示例&lt;/a&gt;看看如何使用布尔索引来生成曼德博集合的图像。&lt;/p&gt;
+
+&lt;p&gt;第二种通过布尔来索引的方法更近似于整数索引；对数组的每个维度我们给一个一维布尔数组来选择我们想要的切片。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = arange(12).reshape(3,4)
+&amp;gt;&amp;gt;&amp;gt; b1 = array([False,True,True])             # first dim selection
+&amp;gt;&amp;gt;&amp;gt; b2 = array([True,False,True,False])       # second dim selection
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; a[b1,:]                                   # selecting rows
+array([[ 4,  5,  6,  7],
+       [ 8,  9, 10, 11]])
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; a[b1]                                     # same thing
+array([[ 4,  5,  6,  7],
+       [ 8,  9, 10, 11]])
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; a[:,b2]                                   # selecting columns
+array([[ 0,  2],
+       [ 4,  6],
+       [ 8, 10]])
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; a[b1,b2]                                  # a weird thing to do
+array([ 4, 10])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注意一维数组的长度必须和你想要切片的维度或轴的长度一致，在之前的例子中，b1是一个秩为1长度为三的数组(a的行数)，b2(长度为4)与a的第二秩(列)相一致。&lt;sup id=&quot;fnref:8&quot;&gt;&lt;a href=&quot;#fn:8&quot; rel=&quot;footnote&quot;&gt;7&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;ix&quot;&gt;ix_()函数&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;ix_&lt;/code&gt;函数可以为了获得&lt;a href=&quot;http://zh.wikipedia.org/wiki/%E5%A4%9A%E5%85%83%E7%BB%84&quot;&gt;多元组&lt;/a&gt;的结果而用来结合不同向量。例如，如果你想要用所有向量a、b和c元素组成的三元组来计算&lt;code&gt;a+b*c&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = array([2,3,4,5])
+&amp;gt;&amp;gt;&amp;gt; b = array([8,5,4])
+&amp;gt;&amp;gt;&amp;gt; c = array([5,4,6,8,3])
+&amp;gt;&amp;gt;&amp;gt; ax,bx,cx = ix_(a,b,c)
+&amp;gt;&amp;gt;&amp;gt; ax
+array([[[2]],
+
+       [[3]],
+
+       [[4]],
+
+       [[5]]])
+&amp;gt;&amp;gt;&amp;gt; bx
+array([[[8],
+        [5],
+        [4]]])
+&amp;gt;&amp;gt;&amp;gt; cx
+array([[[5, 4, 6, 8, 3]]])
+&amp;gt;&amp;gt;&amp;gt; ax.shape, bx.shape, cx.shape
+((4, 1, 1), (1, 3, 1), (1, 1, 5))
+&amp;gt;&amp;gt;&amp;gt; result = ax+bx*cx
+&amp;gt;&amp;gt;&amp;gt; result
+array([[[42, 34, 50, 66, 26],
+        [27, 22, 32, 42, 17],
+        [22, 18, 26, 34, 14]],
+       [[43, 35, 51, 67, 27],
+        [28, 23, 33, 43, 18],
+        [23, 19, 27, 35, 15]],
+       [[44, 36, 52, 68, 28],
+        [29, 24, 34, 44, 19],
+        [24, 20, 28, 36, 16]],
+       [[45, 37, 53, 69, 29],
+        [30, 25, 35, 45, 20],
+        [25, 21, 29, 37, 17]]])
+&amp;gt;&amp;gt;&amp;gt; result[3,2,4]
+17
+&amp;gt;&amp;gt;&amp;gt; a[3]+b[2]*c[4]
+17
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你也可以实行如下简化：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def ufunc_reduce(ufct, *vectors):
+    vs = ix_(*vectors)
+    r = ufct.identity
+    for v in vs:
+        r = ufct(r,v)
+    return r
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后这样使用它：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; ufunc_reduce(add,a,b,c)
+array([[[15, 14, 16, 18, 13],
+        [12, 11, 13, 15, 10],
+        [11, 10, 12, 14,  9]],
+       [[16, 15, 17, 19, 14],
+        [13, 12, 14, 16, 11],
+        [12, 11, 13, 15, 10]],
+       [[17, 16, 18, 20, 15],
+        [14, 13, 15, 17, 12],
+        [13, 12, 14, 16, 11]],
+       [[18, 17, 19, 21, 16],
+        [15, 14, 16, 18, 13],
+        [14, 13, 15, 17, 12]]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这个reduce与ufunc.reduce(比如说add.reduce)相比的优势在于它利用了广播法则，避免了创建一个输出大小乘以向量个数的参数数组。&lt;sup id=&quot;fnref:9&quot;&gt;&lt;a href=&quot;#fn:9&quot; rel=&quot;footnote&quot;&gt;8&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-16&quot;&gt;用字符串索引&lt;/h3&gt;
+
+&lt;p&gt;参见&lt;a href=&quot;http://www.scipy.org/RecordArrays&quot;&gt;RecordArray&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-17&quot;&gt;线性代数&lt;/h2&gt;
+
+&lt;p&gt;继续前进，基本线性代数包含在这里。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-18&quot;&gt;简单数组运算&lt;/h3&gt;
+
+&lt;p&gt;参考numpy文件夹中的linalg.py获得更多信息&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from numpy import *
+&amp;gt;&amp;gt;&amp;gt; from numpy.linalg import *
+
+&amp;gt;&amp;gt;&amp;gt; a = array([[1.0, 2.0], [3.0, 4.0]])
+&amp;gt;&amp;gt;&amp;gt; print a
+[[ 1.  2.]
+ [ 3.  4.]]
+
+&amp;gt;&amp;gt;&amp;gt; a.transpose()
+array([[ 1.,  3.],
+       [ 2.,  4.]])
+
+&amp;gt;&amp;gt;&amp;gt; inv(a)
+array([[-2. ,  1. ],
+       [ 1.5, -0.5]])
+
+&amp;gt;&amp;gt;&amp;gt; u = eye(2) # unit 2x2 matrix; &quot;eye&quot; represents &quot;I&quot;
+&amp;gt;&amp;gt;&amp;gt; u
+array([[ 1.,  0.],
+       [ 0.,  1.]])
+&amp;gt;&amp;gt;&amp;gt; j = array([[0.0, -1.0], [1.0, 0.0]])
+
+&amp;gt;&amp;gt;&amp;gt; dot (j, j) # matrix product
+array([[-1.,  0.],
+       [ 0., -1.]])
+
+&amp;gt;&amp;gt;&amp;gt; trace(u)  # trace
+ 2.0
+
+&amp;gt;&amp;gt;&amp;gt; y = array([[5.], [7.]])
+&amp;gt;&amp;gt;&amp;gt; solve(a, y)
+array([[-3.],
+       [ 4.]])
+
+&amp;gt;&amp;gt;&amp;gt; eig(j)
+(array([ 0.+1.j,  0.-1.j]),
+array([[ 0.70710678+0.j,  0.70710678+0.j],
+       [ 0.00000000-0.70710678j,  0.00000000+0.70710678j]]))
+Parameters:
+    square matrix
+
+Returns
+    The eigenvalues, each repeated according to its multiplicity.
+
+    The normalized (unit &quot;length&quot;) eigenvectors, such that the
+    column ``v[:,i]`` is the eigenvector corresponding to the
+    eigenvalue ``w[i]`` .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-19&quot;&gt;矩阵类&lt;/h3&gt;
+
+&lt;p&gt;这是一个关于矩阵类的简短介绍。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; A = matrix('1.0 2.0; 3.0 4.0')
+&amp;gt;&amp;gt;&amp;gt; A
+[[ 1.  2.]
+ [ 3.  4.]]
+&amp;gt;&amp;gt;&amp;gt; type(A)  # file where class is defined
+&amp;lt;class 'numpy.matrixlib.defmatrix.matrix'&amp;gt;
+
+&amp;gt;&amp;gt;&amp;gt; A.T  # transpose
+[[ 1.  3.]
+ [ 2.  4.]]
+
+&amp;gt;&amp;gt;&amp;gt; X = matrix('5.0 7.0')
+&amp;gt;&amp;gt;&amp;gt; Y = X.T
+&amp;gt;&amp;gt;&amp;gt; Y
+[[5.]
+ [7.]]
+
+&amp;gt;&amp;gt;&amp;gt; print A*Y  # matrix multiplication
+[[19.]
+ [43.]]
+
+&amp;gt;&amp;gt;&amp;gt; print A.I  # inverse
+[[-2.   1. ]
+ [ 1.5 -0.5]]
+
+&amp;gt;&amp;gt;&amp;gt; solve(A, Y)  # solving linear equation
+matrix([[-3.],
+        [ 4.]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-20&quot;&gt;索引：比较矩阵和二维数组&lt;/h3&gt;
+
+&lt;p&gt;注意NumPy中数组和矩阵有些重要的区别。NumPy提供了两个基本的对象：一个N维数组对象和一个通用函数对象。其它对象都是建构在它们之上的。特别的，矩阵是继承自NumPy数组对象的二维数组对象。对数组和矩阵，索引都必须包含合适的一个或多个这些组合：整数标量、省略号(ellipses)、整数列表;布尔值，整数或布尔值构成的元组，和一个一维整数或布尔值数组。矩阵可以被用作矩阵的索引，但是通常需要数组、列表或者其它形式来完成这个任务。&lt;/p&gt;
+
+&lt;p&gt;像平常在Python中一样，索引是从0开始的。传统上我们用矩形的行和列表示一个二维数组或矩阵，其中沿着0轴的方向被穿过的称作行，沿着1轴的方向被穿过的是列。&lt;sup id=&quot;fnref:10&quot;&gt;&lt;a href=&quot;#fn:10&quot; rel=&quot;footnote&quot;&gt;9&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;让我们创建数组和矩阵用来切片：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; A = arange(12)
+&amp;gt;&amp;gt;&amp;gt; A
+array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])
+&amp;gt;&amp;gt;&amp;gt; A.shape = (3,4)
+&amp;gt;&amp;gt;&amp;gt; M = mat(A.copy())
+&amp;gt;&amp;gt;&amp;gt; print type(A),&quot;  &quot;,type(M)
+&amp;lt;type 'numpy.ndarray'&amp;gt;    &amp;lt;class 'numpy.core.defmatrix.matrix'&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; print A
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]]
+&amp;gt;&amp;gt;&amp;gt; print M
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;现在，让我们简单的切几片。基本的切片使用切片对象或整数。例如，&lt;code&gt;A[:]&lt;/code&gt;和&lt;code&gt;M[:]&lt;/code&gt;的求值将表现得和Python索引很相似。然而要注意很重要的一点就是NumPy切片数组&lt;em&gt;不&lt;/em&gt;创建数据的副本;切片提供统一数据的视图。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; print A[:]; print A[:].shape
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]]
+(3, 4)
+&amp;gt;&amp;gt;&amp;gt; print M[:]; print M[:].shape
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]]
+(3, 4)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;现在有些和Python索引不同的了：你可以同时使用逗号分割索引来沿着多个轴索引。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; print A[:,1]; print A[:,1].shape
+[1 5 9]
+(3,)
+&amp;gt;&amp;gt;&amp;gt; print M[:,1]; print M[:,1].shape
+[[1]
+ [5]
+ [9]]
+(3, 1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注意最后两个结果的不同。对二维数组使用一个冒号产生一个一维数组，然而矩阵产生了一个二维矩阵。&lt;sup id=&quot;fnref:11&quot;&gt;&lt;a href=&quot;#fn:11&quot; rel=&quot;footnote&quot;&gt;10&lt;/a&gt;&lt;/sup&gt;例如，一个&lt;code&gt;M[2,:]&lt;/code&gt;切片产生了一个形状为(1,4)的矩阵，相比之下，一个数组的切片总是产生一个最低可能维度&lt;sup id=&quot;fnref:12&quot;&gt;&lt;a href=&quot;#fn:12&quot; rel=&quot;footnote&quot;&gt;11&lt;/a&gt;&lt;/sup&gt;的数组。例如，如果C是一个三维数组，&lt;code&gt;C[...,1]&lt;/code&gt;产生一个二维的数组而&lt;code&gt;C[1,:,1]&lt;/code&gt;产生一个一维数组。从这时开始，如果相应的矩阵切片结果是相同的话，我们将只展示数组切片的结果。&lt;/p&gt;
+
+&lt;p&gt;假如我们想要一个数组的第一列和第三列，一种方法是使用列表切片：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; A[:,[1,3]]
+array([[ 1,  3],
+       [ 5,  7],
+       [ 9, 11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;稍微复杂点的方法是使用&lt;code&gt;take()&lt;/code&gt;方法(method):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; A[:,].take([1,3],axis=1)
+array([[ 1,  3],
+       [ 5,  7],
+       [ 9, 11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果我们想跳过第一行，我们可以这样：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; A[1:,].take([1,3],axis=1)
+array([[ 5,  7],
+       [ 9, 11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;或者我们仅仅使用&lt;code&gt;A[1:,[1,3]]&lt;/code&gt;。还有一种方法是通过矩阵向量积(叉积)。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; A[ix_((1,2),(1,3))]
+array([[ 5,  7],
+       [ 9, 11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;为了读者的方便，在次写下之前的矩阵：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; A[ix_((1,2),(1,3))]
+array([[ 5,  7],
+       [ 9, 11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;现在让我们做些更复杂的。比如说我们想要保留第一行大于1的列。一种方法是创建布尔索引：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; A[0,:]&amp;gt;1
+array([False, False, True, True], dtype=bool)
+&amp;gt;&amp;gt;&amp;gt; A[:,A[0,:]&amp;gt;1]
+array([[ 2,  3],
+       [ 6,  7],
+       [10, 11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;就是我们想要的！但是索引矩阵没这么方便。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; M[0,:]&amp;gt;1
+matrix([[False, False, True, True]], dtype=bool)
+&amp;gt;&amp;gt;&amp;gt; M[:,M[0,:]&amp;gt;1]
+matrix([[2, 3]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这个过程的问题是用“矩阵切片”来切片产生一个矩阵&lt;sup id=&quot;fnref:13&quot;&gt;&lt;a href=&quot;#fn:13&quot; rel=&quot;footnote&quot;&gt;12&lt;/a&gt;&lt;/sup&gt;，但是矩阵有个方便的&lt;code&gt;A&lt;/code&gt;属性，它的值是数组呈现的。所以我们仅仅做以下替代：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; M[:,M.A[0,:]&amp;gt;1]
+matrix([[ 2,  3],
+        [ 6,  7],
+        [10, 11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果我们想要在矩阵两个方向有条件地切片，我们必须稍微调整策略，代之以：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; A[A[:,0]&amp;gt;2,A[0,:]&amp;gt;1]
+array([ 6, 11])
+&amp;gt;&amp;gt;&amp;gt; M[M.A[:,0]&amp;gt;2,M.A[0,:]&amp;gt;1]
+matrix([[ 6, 11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们需要使用向量积&lt;code&gt;ix_&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; A[ix_(A[:,0]&amp;gt;2,A[0,:]&amp;gt;1)]
+array([[ 6,  7],
+       [10, 11]])
+&amp;gt;&amp;gt;&amp;gt; M[ix_(M.A[:,0]&amp;gt;2,M.A[0,:]&amp;gt;1)]
+matrix([[ 6,  7],
+        [10, 11]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;section-21&quot;&gt;技巧和提示&lt;/h2&gt;
+
+&lt;p&gt;下面我们给出简短和有用的提示。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-22&quot;&gt;“自动”改变形状&lt;/h3&gt;
+
+&lt;p&gt;更改数组的维度，你可以省略一个尺寸，它将被自动推导出来。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = arange(30)
+&amp;gt;&amp;gt;&amp;gt; a.shape = 2,-1,3  # -1 means &quot;whatever is needed&quot;
+&amp;gt;&amp;gt;&amp;gt; a.shape
+(2, 5, 3)
+&amp;gt;&amp;gt;&amp;gt; a
+array([[[ 0,  1,  2],
+        [ 3,  4,  5],
+        [ 6,  7,  8],
+        [ 9, 10, 11],
+        [12, 13, 14]],
+       [[15, 16, 17],
+        [18, 19, 20],
+        [21, 22, 23],
+        [24, 25, 26],
+        [27, 28, 29]]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;stacking&quot;&gt;向量组合(stacking)&lt;/h3&gt;
+
+&lt;p&gt;我们如何用两个相同尺寸的行向量列表构建一个二维数组？在MATLAB中这非常简单：如果x和y是两个相同长度的向量，你仅仅需要做&lt;code&gt;m=[x;y]&lt;/code&gt;。在NumPy中这个过程通过函数&lt;code&gt;column_stack&lt;/code&gt;、&lt;code&gt;dstack&lt;/code&gt;、&lt;code&gt;hstack&lt;/code&gt;和&lt;code&gt;vstack&lt;/code&gt;来完成，取决于你想要在那个维度上组合。例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;x = arange(0,10,2)                     # x=([0,2,4,6,8])
+y = arange(5)                          # y=([0,1,2,3,4])
+m = vstack([x,y])                      # m=([[0,2,4,6,8],
+                                       #     [0,1,2,3,4]])
+xy = hstack([x,y])                     # xy =([0,2,4,6,8,0,1,2,3,4])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;二维以上这些函数背后的逻辑会很奇怪。&lt;/p&gt;
+
+&lt;p&gt;参考&lt;a href=&quot;http://scipy.org/NumPy_for_Matlab_Users&quot;&gt;写个Matlab用户的NumPy指南&lt;/a&gt;并且在这里添加你的新发现: )&lt;/p&gt;
+
+&lt;h3 id=&quot;histogram&quot;&gt;直方图(histogram)&lt;/h3&gt;
+
+&lt;p&gt;NumPy中&lt;code&gt;histogram&lt;/code&gt;函数应用到一个数组返回一对变量：直方图数组和箱式向量。注意：&lt;code&gt;matplotlib&lt;/code&gt;也有一个用来建立直方图的函数(叫作&lt;code&gt;hist&lt;/code&gt;,正如matlab中一样)与NumPy中的不同。主要的差别是&lt;code&gt;pylab.hist&lt;/code&gt;自动绘制直方图，而&lt;code&gt;numpy.histogram&lt;/code&gt;仅仅产生数据。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import numpy
+import pylab
+# Build a vector of 10000 normal deviates with variance 0.5^2 and mean 2
+mu, sigma = 2, 0.5
+v = numpy.random.normal(mu,sigma,10000)
+# Plot a normalized histogram with 50 bins
+pylab.hist(v, bins=50, normed=1)       # matplotlib version (plot)
+pylab.show()
+# Compute the histogram with numpy and then plot it
+(n, bins) = numpy.histogram(v, bins=50, normed=True)  # NumPy version (no plot)
+pylab.plot(.5*(bins[1:]+bins[:-1]), n)
+pylab.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;section-23&quot;&gt;参考文献&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;a href=&quot;http://docs.python.org/tut/tut.html&quot;&gt;Python tutorial&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;The &lt;a href=&quot;http://scipy.org/Numpy_Example_List&quot;&gt;Numpy Example List&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;The nonexistent &lt;a href=&quot;http://scipy.org/NumPy_Tutorial&quot;&gt;NumPy Tutorial&lt;/a&gt; at scipy.org, where we can find the old Numeric documentation.&lt;/li&gt;
+  &lt;li&gt;The &lt;a href=&quot;http://www.tramy.us/&quot;&gt;Guide to NumPy&lt;/a&gt; book.&lt;/li&gt;
+  &lt;li&gt;The &lt;a href=&quot;http://scipy.org/SciPy_Tutorial&quot;&gt;SciPy Tutorial&lt;/a&gt; and a &lt;a href=&quot;http://www.rexx.com/~dkuhlman/scipy_course_01.html&quot;&gt;SciPy course online&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://scipy.org/NumPy_for_Matlab_Users&quot;&gt;NumPy for Matlab Users&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;A &lt;a href=&quot;http://mathesaurus.sf.net/&quot;&gt;matlab, R, IDL, NumPy/SciPy dictionary&lt;/a&gt;. &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
 
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;其实我是看不懂Guido van Rossum在blabla什么东西.&lt;a href=&quot;#fnref:1&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;在python的交互环境或ipython中&lt;a href=&quot;#fnref:1&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;不中断的大概只算警告&lt;a href=&quot;#fnref:2&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;0轴&lt;a href=&quot;#fnref:2&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;即self，它自己&lt;a href=&quot;#fnref:3&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:4&quot;&gt;
+      &lt;p&gt;形参&lt;a href=&quot;#fnref:4&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:6&quot;&gt;
+      &lt;p&gt;0轴&lt;a href=&quot;#fnref:6&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:7&quot;&gt;
+      &lt;p&gt;我也不知道在翻译什么了……&lt;a href=&quot;#fnref:7&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:8&quot;&gt;
+      &lt;p&gt;上面最后一个例子，b1和b2中的true个数必须一致&lt;a href=&quot;#fnref:8&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:9&quot;&gt;
+      &lt;p&gt;我不怎么明白……总之避免创建一个很大的数组。&lt;a href=&quot;#fnref:9&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:10&quot;&gt;
+      &lt;p&gt;水平是1轴，垂直是0轴。&lt;a href=&quot;#fnref:10&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:11&quot;&gt;
+      &lt;p&gt;&lt;code&gt;type(M[:,1])&lt;/code&gt;和&lt;code&gt;type(A[:,1])&lt;/code&gt;你可以看到是这样。&lt;a href=&quot;#fnref:11&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:12&quot;&gt;
+      &lt;p&gt;什么叫尽可能低的维度？不懂。&lt;a href=&quot;#fnref:12&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:13&quot;&gt;
+      &lt;p&gt;用矩阵切片&lt;a href=&quot;#fnref:13&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;

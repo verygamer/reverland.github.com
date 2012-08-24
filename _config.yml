@@ -7,6 +7,8 @@ auto: true
 pygments: true
 markdown: kramdown
 #rdiscount
+kramdown:
+  toc_levels: 2..6
 paginate : 15
 
 # Themes are encouraged to use these universal variables 
