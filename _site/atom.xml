@@ -4,13 +4,908 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org//atom.xml" rel="self"/>
  <link href="http://reverland.org/"/>
- <updated>2012-08-25T18:14:24+08:00</updated>
+ <updated>2012-09-03T12:45:50+08:00</updated>
  <id>http://reverland.org/</id>
  <author>
    <name>Reverland</name>
    <email>lhtlyy@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>SymPy Tutorial(译)</title>
+   <link href="http://reverland.org//python/2012/08/30/sympy-tutorial"/>
+   <updated>2012-08-30T00:00:00+08:00</updated>
+   <id>hhttp://reverland.org//python/2012/08/30/sympy-tutorial</id>
+   <content type="html">
+&lt;h1 id=&quot;sympy-tutorial&quot;&gt;SymPy Tutorial&lt;/h1&gt;
+
+&lt;p&gt;翻译自：&lt;a href=&quot;http://docs.sympy.org/dev/tutorial.html&quot;&gt;SymPy Tutorial&lt;/a&gt;,其实有人译过了，但我看着不爽……你看我的不爽可以参考他的&lt;a href=&quot;http://blankdesktop.blogbus.com/logs/74200705.html&quot;&gt;SymPy简明教程&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;目录&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#section&quot;&gt;引言&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#sympy&quot;&gt;SymPy第一步&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#isympy&quot;&gt;isympy控制台&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#sympy-1&quot;&gt;用SymPy做计算器&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-1&quot;&gt;符号&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-2&quot;&gt;代数&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-3&quot;&gt;演算&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-4&quot;&gt;极限&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-5&quot;&gt;微分&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-6&quot;&gt;级数展开&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-7&quot;&gt;求和&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-8&quot;&gt;积分&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-9&quot;&gt;复数&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-10&quot;&gt;函数&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-11&quot;&gt;微分方程&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-12&quot;&gt;代数方程&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-13&quot;&gt;线性代数&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-14&quot;&gt;矩阵&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-15&quot;&gt;模式匹配&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-16&quot;&gt;打印&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-17&quot;&gt;注意&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-18&quot;&gt;更多文档&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-19&quot;&gt;翻译&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#footnotes&quot;&gt;FootNotes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;引言&lt;/h2&gt;
+
+&lt;p&gt;SymPy是一个符号数学Python库。它的目标是成为一个全功能的计算机代数系统，同时保持代码的精简而易于理解和课扩展。SymPy完全由Python写成，不需要任何外部库。 &lt;/p&gt;
+
+&lt;p&gt;这个教程概述和简介SymPy。阅读它能让你知道SymPy可以为你做什么。如果你想了解更多，阅读&lt;a href=&quot;http://docs.sympy.org/0.7.1/guide.html#guide&quot;&gt;SymPy用户指南&lt;/a&gt;和&lt;a href=&quot;http://docs.sympy.org/0.7.1/modules/index.html#module-docs&quot;&gt;SymPy模块参考&lt;/a&gt;。或者直接阅读&lt;a href=&quot;https://github.com/sympy/sympy/&quot;&gt;源码&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;sympy&quot;&gt;SymPy第一步&lt;/h2&gt;
+
+&lt;p&gt;下载它最简单的方法是去&lt;a href=&quot;http://code.google.com/p/sympy/&quot;&gt;http://code.google.com/p/sympy/&lt;/a&gt;从“推荐下载”下载最新的压缩包。&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;
+&lt;img src=&quot;http://fmn.rrimg.com/fmn061/20120901/1800/p_large_M3yG_5d30000027c61261.jpg&quot; alt=&quot;downloads&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;解压：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tar xzf sympy-0.7.1.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后用Python解释器尝试它：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[lyy@arch ~]cd sympy-0.7.1
+[lyy@arch ~]$ python2
+Python 2.7.3 (default, Apr 24 2012, 00:00:54) 
+[GCC 4.7.0 20120414 (prerelease)] on linux2
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&amp;gt;&amp;gt;&amp;gt; from sympy import Symbol, cos
+&amp;gt;&amp;gt;&amp;gt; x = Symbol('x')
+&amp;gt;&amp;gt;&amp;gt; (1/cos(x)).series(x, 0, 10)
+1 + x**2/2 + 5*x**4/24 + 61*x**6/720 + 277*x**8/8064 + O(x**10)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你可以如上展示使用SymPy。如果你在你的程序中使用它的话，这确实是推荐的方法。你也可以用&lt;code&gt;./setup.py install&lt;/code&gt;像所有其它Python模块一样安装它，或者仅仅在你心爱的发行版中安装相应的包，等等。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;在archlinux中安装SymPy&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[lyy@arch ~]$ sudo pacman -S python2-sympy
+警告：python2-sympy-0.7.1-4 已经为最新 -- 重新安装
+正在解决依赖关系...
+正在查找内部冲突...
+
+目标 (1)： python2-sympy-0.7.1-4
+
+全部安装大小：25.12 MiB
+净更新大小：0.00 MiB
+
+进行安装吗？ [Y/n] 
+(1/1) 正在检查软件包完整性      [###############################] 100%
+(1/1) 正在加载软件包文件        [###############################] 100%
+(1/1) 正在检查文件冲突          [###############################] 100%
+(1/1) 正在检查可用硬盘空间      [###############################] 100%
+(1/1) 正在更新 python2-sympy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其它安装SymPy的方法，查阅SymPy主页上的&lt;a href=&quot;http://code.google.com/p/sympy/wiki/DownloadInstallation?tm=2&quot;&gt;下载&lt;/a&gt;标签。&lt;/p&gt;
+
+&lt;h3 id=&quot;isympy&quot;&gt;isympy控制台&lt;/h3&gt;
+
+&lt;p&gt;为了试验新功能，或当搞清楚如何做事时，你可以使用我们对IPython的特殊封装&lt;code&gt;isympy&lt;/code&gt;(它位于&lt;code&gt;/bin/isympy&lt;/code&gt;中，如果你正在从源码文件夹运行的话)，它仅仅是一个已经导入相关sympy模块的标准python shell，定义了符号&lt;code&gt;x,y,z&lt;/code&gt;和一些其它东西：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[lyy@arch ~]$ cd sympy 
+[lyy@arch ~]$ ./bin/isympy 
+IPython console for SymPy 0.7.1 (Python 2.7.3-64-bit) (ground types: python)
+
+These commands were executed:
+&amp;gt;&amp;gt;&amp;gt; from __future__ import division
+&amp;gt;&amp;gt;&amp;gt; from sympy import *
+&amp;gt;&amp;gt;&amp;gt; x, y, z, t = symbols('x y z t')
+&amp;gt;&amp;gt;&amp;gt; k, m, n = symbols('k m n', integer=True)
+&amp;gt;&amp;gt;&amp;gt; f, g, h = symbols('f g h', cls=Function)
+
+Documentation can be found at http://www.sympy.org
+
+In [1]: (1/cos(x)).series(x, 0, 10)
+Out[1]: 
+     2      4       6        8           
+    x    5⋅x    61⋅x    277⋅x            
+1 + ── + ──── + ───── + ────── + O(x**10)
+    2     24     720     8064  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;sympy-1&quot;&gt;用SymPy做计算器&lt;/h3&gt;
+
+&lt;p&gt;SymPy有三种内建的数值类型：浮点数、有理数和整数。&lt;/p&gt;
+
+&lt;p&gt;有理数类用一对整数表示一个有理数：分子和分母，所以&lt;code&gt;Rational(1,2)&lt;/code&gt;代表1/2,&lt;code&gt;Rational(5,2)&lt;/code&gt;代表5/2等等。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import *
+&amp;gt;&amp;gt;&amp;gt; a = Rational(1,2)
+
+&amp;gt;&amp;gt;&amp;gt; a
+1/2
+
+&amp;gt;&amp;gt;&amp;gt; a*2
+1
+
+&amp;gt;&amp;gt;&amp;gt; Rational(2)**50/Rational(10)**50
+1/88817841970012523233890533447265625
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当计算整型数据时小心处理，因为他们会截取整数部分。这就是为何：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; 1/2
+0
+
+&amp;gt;&amp;gt;&amp;gt; 1.0/2
+0.5
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然而你可以这样做&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from __future__ import division
+
+&amp;gt;&amp;gt;&amp;gt; 1/2 
+0.5
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;真正的除法将要成为python3k的标准，isympy中也是。&lt;/p&gt;
+
+&lt;p&gt;我们也有些特殊的常数，像e和pi，它们被视为符号(1+pi将不被数值求解，它将保持为1+pi)，并且我们可以有任意精度：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; pi**2
+pi**2
+
+&amp;gt;&amp;gt;&amp;gt; pi.evalf()
+3.14159265358979
+
+&amp;gt;&amp;gt;&amp;gt; (pi+exp(1)).evalf()
+5.85987448204884
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;就像你看到的，&lt;code&gt;evalf&lt;/code&gt;将表达式求解为浮点数。&lt;/p&gt;
+
+&lt;p&gt;这还有一个类表示数学上的无限，叫作&lt;code&gt;oo&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; oo &amp;gt; 99999
+True
+&amp;gt;&amp;gt;&amp;gt; oo + 1
+oo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;符号&lt;/h3&gt;
+
+&lt;p&gt;和其它计算机代数系统相比，在SymPy中你不得不显式地声明符号变量：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import *
+&amp;gt;&amp;gt;&amp;gt; x = Symbol('x')
+&amp;gt;&amp;gt;&amp;gt; y = Symbol('y')
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后你可以使用它们：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; x+y+x-y
+2*x
+
+&amp;gt;&amp;gt;&amp;gt; (x+y)**2
+(x + y)**2
+
+&amp;gt;&amp;gt;&amp;gt; ((x+y)**2).expand()
+x**2 + 2*x*y + y**2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用&lt;code&gt;subs(old, new)&lt;/code&gt;用其它符号和数代换它们：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; ((x+y)**2).subs(x, 1)
+(y + 1)**2
+
+&amp;gt;&amp;gt;&amp;gt; ((x+y)**2).subs(x, y)
+4*y**2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;对于剩余的教程，我们假设我们已经运行了：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; import sys
+&amp;gt;&amp;gt;&amp;gt; oldhook = sys.displayhook
+&amp;gt;&amp;gt;&amp;gt; sys.displayhook = pprint
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样就有漂亮的打印。参见之后的&lt;a href=&quot;#section-16&quot;&gt;打印&lt;/a&gt;部分。如果你安装了unicode字体，你的输出可能看起来有点不同。(将看起来稍微好些)&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;代数&lt;/h2&gt;
+
+&lt;p&gt;对部分分式分解，使用&lt;code&gt;apart(expr, x)&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; 1/((x+2)*(x+1))
+       1       
+───────────────
+(x + 1)⋅(x + 2)
+&amp;gt;&amp;gt;&amp;gt; apart(1/((x+2)*(x+1)), x)
+    1       1  
+- ───── + ─────
+  x + 2   x + 1
+&amp;gt;&amp;gt;&amp;gt; (x+1)/(x-1)
+x + 1
+─────
+x - 1
+&amp;gt;&amp;gt;&amp;gt; apart((x+1)/(x-1), x)
+      2  
+1 + ─────
+    x - 1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;把它们重新结合起来，使用&lt;code&gt;together(expr, x)&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; z = Symbol('z')
+&amp;gt;&amp;gt;&amp;gt; together(1/x + 1/y + 1/z)
+x⋅y + x⋅z + y⋅z
+───────────────
+     x⋅y⋅z     
+&amp;gt;&amp;gt;&amp;gt; together(apart((x+1)/(x-1), x), x)
+x + 1
+─────
+x - 1
+&amp;gt;&amp;gt;&amp;gt; together(apart(1/( (x+2)*(x+1) ), x), x)
+       1       
+───────────────
+(x + 1)⋅(x + 2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;演算&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;极限&lt;/h3&gt;
+
+&lt;p&gt;极限在sympy中使用很简单，它们的语法是&lt;code&gt;limit(function, variable, point)&lt;/code&gt;，所以计算当x趋近于0时f(x)的极限，你可以给出&lt;code&gt;limit(f, x, 0)&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import *
+&amp;gt;&amp;gt;&amp;gt; x=Symbol(&quot;x&quot;)
+&amp;gt;&amp;gt;&amp;gt; limit(sin(x)/x, x, 0)
+1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你也可以计算在无穷的极限：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; limit(sin(x)/x,x,0)
+1
+&amp;gt;&amp;gt;&amp;gt; limit(x,x,oo)
+∞ 对于一些不寻常的极限例子，你可以阅读这个测试文件[test_demidovich.py](https://github.com/sympy/sympy/blob/master/sympy/series/tests/test_demidovich.py)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;微分&lt;/h3&gt;
+
+&lt;p&gt;你可以使用&lt;code&gt;diff(func, var)&lt;/code&gt;微分任何SymPy表达式。例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import *
+&amp;gt;&amp;gt;&amp;gt; x = Symbol('x')
+&amp;gt;&amp;gt;&amp;gt; diff(sin(x), x)
+cos(x)
+&amp;gt;&amp;gt;&amp;gt; diff(sin(2*x), x)
+2⋅cos(2⋅x)
+&amp;gt;&amp;gt;&amp;gt; diff(tan(x), x)
+   2       
+tan (x) + 1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你可以检查正确性：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; limit((tan(x+y)-tan(x))/y, y, 0)
+   2       
+tan (x) + 1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;高阶微分可以使用&lt;code&gt;diff(func, var, n)&lt;/code&gt;来计算：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; diff(sin(2*x), x, 1)
+2⋅cos(2⋅x)
+&amp;gt;&amp;gt;&amp;gt; diff(sin(2*x), x, 2)
+-4⋅sin(2⋅x)
+&amp;gt;&amp;gt;&amp;gt; diff(sin(2*x), x, 3)
+-8⋅cos(2⋅x)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-6&quot;&gt;级数展开&lt;/h3&gt;
+
+&lt;p&gt;使用&lt;code&gt;.series(var, point, order)&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; cos(x).series(x, 0, 10)
+     2    4     6      8            
+    x    x     x      x             
+1 - ── + ── - ─── + ───── + O(x**10)
+    2    24   720   40320 
+&amp;gt;&amp;gt;&amp;gt; (1/cos(x)).series(x, 0, 10)
+     2      4       6        8           
+    x    5⋅x    61⋅x    277⋅x            
+1 + ── + ──── + ───── + ────── + O(x**10)
+    2     24     720     8064            
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;另一个简单的例子：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import Integral, Symbol, pprint
+&amp;gt;&amp;gt;&amp;gt; x = Symbol('x')
+&amp;gt;&amp;gt;&amp;gt; y = Symbol('y')
+&amp;gt;&amp;gt;&amp;gt; e = 1/(x + y)
+&amp;gt;&amp;gt;&amp;gt; s = e.series(x, 0, 5)
+&amp;gt;&amp;gt;&amp;gt; print(s)
+1/y - x/y**2 + x**2/y**3 - x**3/y**4 + x**4/y**5 + O(x**5)
+&amp;gt;&amp;gt;&amp;gt; pprint(s)
+          2    3    4          
+1   x    x    x    x           
+─ - ── + ── - ── + ── + O(x**5)
+y    2    3    4    5          
+    y    y    y    y           
+None
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-7&quot;&gt;求和&lt;/h3&gt;
+
+&lt;p&gt;计算给定求和变量界限的f的总和(Summation)。&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;summation(f, (i, a, b))&lt;/code&gt;变量i从a到b计算f的和，也就是，&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;                            b
+                          ____
+                          \   `
+summation(f, (i, a, b)) =  )    f
+                          /___,
+                          i = a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果不能计算总和，它将打印相应的求和公式。求值可引入额外的极限计算：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import summation, oo, symbols, log
+&amp;gt;&amp;gt;&amp;gt; i, n, m = symbols('i n m', integer=True)
+&amp;gt;&amp;gt;&amp;gt; summation(2*i - 1, (i, 1, n))
+ 2
+n 
+&amp;gt;&amp;gt;&amp;gt; summation(1/2**i, (i, 0, oo))
+2
+&amp;gt;&amp;gt;&amp;gt; summation(1/log(n)**n, (n, 2, oo))
+  ∞           
+ ___          
+ \  `         
+  \      -n   
+  /   log  (n)
+ /__,         
+n = 2         
+&amp;gt;&amp;gt;&amp;gt; summation(i, (i, 0, n), (n, 0, m))
+ 3    2    
+m    m    m
+── + ── + ─
+6    2    3
+&amp;gt;&amp;gt;&amp;gt; from sympy.abc import x
+&amp;gt;&amp;gt;&amp;gt; from sympy import factorial
+&amp;gt;&amp;gt;&amp;gt; summation(x**n/factorial(n), (n, 0, oo))
+ x
+ℯ 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-8&quot;&gt;积分&lt;/h3&gt;
+
+&lt;p&gt;通过&lt;code&gt;integrate()&lt;/code&gt;功能(facility)，SymPy对基本和特殊函数定与不定积分有卓越的支持。
+该功能使用有力的扩展Risch-Norman算法，启发算法和模式匹配：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import integrate, erf, exp, sin, log, oo, pi, sinh, symbols
+&amp;gt;&amp;gt;&amp;gt; x, y = symbols('x,y')
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你可以对基本函数积分：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; integrate(6*x**5, x)
+ 6
+x 
+&amp;gt;&amp;gt;&amp;gt; integrate(sin(x), x)
+-cos(x)
+&amp;gt;&amp;gt;&amp;gt; integrate(log(x), x)
+x⋅log(x) - x
+&amp;gt;&amp;gt;&amp;gt; integrate(2*x + sinh(x), x)
+ 2          
+x  + cosh(x)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;特殊函数也可以简单的处理：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; integrate(exp(-x**2)*erf(x), x)
+  ⎽⎽⎽    2   
+╲╱ π ⋅erf (x)
+─────────────
+      4      
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;还可以计算定积分：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; integrate(x**3, (x, -1, 1))
+0
+&amp;gt;&amp;gt;&amp;gt; integrate(sin(x), (x, 0, pi/2))
+1
+&amp;gt;&amp;gt;&amp;gt; integrate(cos(x), (x, -pi/2, pi/2))
+2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;反常积分也被支持：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; integrate(exp(-x), (x, 0, oo))
+1
+&amp;gt;&amp;gt;&amp;gt; integrate(log(x), (x, 0, 1))
+-1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-9&quot;&gt;复数&lt;/h3&gt;
+
+&lt;p&gt;除了复数单元&lt;code&gt;I&lt;/code&gt;是虚数，符号可以被用属性创建(例如 real,positive,complex,等等)这将影响它们的表现：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import Symbol, exp, I
+&amp;gt;&amp;gt;&amp;gt; x = Symbol('x')  # a plain x with no attributes
+&amp;gt;&amp;gt;&amp;gt; exp(I*x).expand()
+ ⅈ⋅x
+ℯ   
+&amp;gt;&amp;gt;&amp;gt; exp(I*x).expand(complex=True)
+   -im(x)               -im(x)           
+ⅈ⋅ℯ      ⋅sin(re(x)) + ℯ      ⋅cos(re(x))
+&amp;gt;&amp;gt;&amp;gt; x = Symbol('x', real=True)
+&amp;gt;&amp;gt;&amp;gt; exp(I*x).expand(complex=True)
+ⅈ⋅sin(x) + cos(x)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-10&quot;&gt;函数&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;三角函数:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import asin, asinh, cos, sin, sinh, symbols, I
+&amp;gt;&amp;gt;&amp;gt; x, y = symbols('x,y')
+&amp;gt;&amp;gt;&amp;gt; sin(x+y).expand(trig=True)
+sin(x)⋅cos(y) + sin(y)⋅cos(x)
+&amp;gt;&amp;gt;&amp;gt; cos(x+y).expand(trig=True)
+-sin(x)⋅sin(y) + cos(x)⋅cos(y)
+&amp;gt;&amp;gt;&amp;gt; sin(I*x)
+ⅈ⋅sinh(x)
+&amp;gt;&amp;gt;&amp;gt; sinh(I*x)
+ⅈ⋅sin(x)
+&amp;gt;&amp;gt;&amp;gt; asinh(I)
+ⅈ⋅π
+───
+ 2 
+&amp;gt;&amp;gt;&amp;gt; asinh(I*x)
+ⅈ⋅asin(x)
+&amp;gt;&amp;gt;&amp;gt; sin(x).series(x, 0, 10)
+     3     5     7       9             
+    x     x     x       x              
+x - ── + ─── - ──── + ────── + O(x**10)
+    6    120   5040   362880           
+&amp;gt;&amp;gt;&amp;gt; sinh(x).series(x, 0, 10)
+     3     5     7       9             
+    x     x     x       x              
+x + ── + ─── + ──── + ────── + O(x**10)
+    6    120   5040   362880           
+&amp;gt;&amp;gt;&amp;gt; asin(x).series(x, 0, 10)
+     3      5      7       9           
+    x    3⋅x    5⋅x    35⋅x            
+x + ── + ──── + ──── + ───── + O(x**10)
+    6     40    112     1152           
+&amp;gt;&amp;gt;&amp;gt; asinh(x).series(x, 0, 10)
+     3      5      7       9           
+    x    3⋅x    5⋅x    35⋅x            
+x - ── + ──── - ──── + ───── + O(x**10)
+    6     40    112     1152    
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;球谐函数：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import Ylm
+&amp;gt;&amp;gt;&amp;gt; from sympy.abc import theta, phi
+&amp;gt;&amp;gt;&amp;gt; Ylm(1, 0, theta, phi)
+  ⎽⎽⎽       
+╲╱ 3 ⋅cos(θ)
+────────────
+      ⎽⎽⎽   
+  2⋅╲╱ π    
+&amp;gt;&amp;gt;&amp;gt; Ylm(1, 1, theta, phi)
+   ⎽⎽⎽  ⅈ⋅φ       
+-╲╱ 6 ⋅ℯ   ⋅sin(θ)
+──────────────────
+         ⎽⎽⎽      
+     4⋅╲╱ π       
+&amp;gt;&amp;gt;&amp;gt; Ylm(2, 1, theta, phi)
+   ⎽⎽⎽⎽  ⅈ⋅φ              
+-╲╱ 30 ⋅ℯ   ⋅sin(θ)⋅cos(θ)
+──────────────────────────
+             ⎽⎽⎽          
+         4⋅╲╱ π       
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;阶乘和伽马函数：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import factorial, gamma, Symbol
+&amp;gt;&amp;gt;&amp;gt; x = Symbol(&quot;x&quot;)
+&amp;gt;&amp;gt;&amp;gt; n = Symbol(&quot;n&quot;, integer=True)
+&amp;gt;&amp;gt;&amp;gt; factorial(x)
+x!
+&amp;gt;&amp;gt;&amp;gt; factorial(n)
+n!
+&amp;gt;&amp;gt;&amp;gt; gamma(x + 1).series(x, 0, 3) # i.e. factorial(x)
+                    2  2             2  2          
+                   π ⋅x    EulerGamma ⋅x           
+1 - EulerGamma⋅x + ───── + ────────────── + O(x**3)
+                     12          2     
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;zeta函数：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import zeta
+&amp;gt;&amp;gt;&amp;gt; zeta(4, x)
+ζ(4, x)
+&amp;gt;&amp;gt;&amp;gt; zeta(4, 1)
+ 4
+π 
+──
+90
+&amp;gt;&amp;gt;&amp;gt; zeta(4, 2)
+      4
+     π 
+-1 + ──
+     90
+&amp;gt;&amp;gt;&amp;gt; zeta(4, 3)
+        4
+  17   π 
+- ── + ──
+  16   90
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;多项式：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import assoc_legendre, chebyshevt, legendre, hermite
+&amp;gt;&amp;gt;&amp;gt; chebyshevt(2, x)
+   2    
+2⋅x  - 1
+&amp;gt;&amp;gt;&amp;gt; chebyshevt(4, x)
+   4      2    
+8⋅x  - 8⋅x  + 1
+&amp;gt;&amp;gt;&amp;gt; legendre(2, x)
+   2    
+3⋅x    1
+──── - ─
+ 2     2
+&amp;gt;&amp;gt;&amp;gt; legendre(8, x)
+      8         6         4        2      
+6435⋅x    3003⋅x    3465⋅x    315⋅x     35
+─────── - ─────── + ─────── - ────── + ───
+  128        32        64       32     128
+&amp;gt;&amp;gt;&amp;gt; assoc_legendre(2, 1, x)
+        ⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽
+       ╱    2     
+-3⋅x⋅╲╱  - x  + 1 
+&amp;gt;&amp;gt;&amp;gt; assoc_legendre(2, 2, x)
+     2    
+- 3⋅x  + 3
+&amp;gt;&amp;gt;&amp;gt; hermite(3, x)
+   3       
+8⋅x  - 12⋅x
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-11&quot;&gt;微分方程&lt;/h3&gt;
+
+&lt;p&gt;在 isympy中：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import Function, Symbol, dsolve
+&amp;gt;&amp;gt;&amp;gt; f = Function('f')
+&amp;gt;&amp;gt;&amp;gt; x = Symbol('x')
+&amp;gt;&amp;gt;&amp;gt; f(x).diff(x, x) + f(x)
+         2      
+        d       
+f(x) + ───(f(x))
+         2      
+       dx       
+&amp;gt;&amp;gt;&amp;gt; dsolve(f(x).diff(x, x) + f(x), f(x))
+f(x) = C₁⋅cos(x) + C₂⋅sin(x)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-12&quot;&gt;代数方程&lt;/h3&gt;
+
+&lt;p&gt;在isympy中：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import solve, symbols
+&amp;gt;&amp;gt;&amp;gt; x, y = symbols('x,y')
+&amp;gt;&amp;gt;&amp;gt; solve(x**4 - 1, x)
+[1, -1, -ⅈ, ⅈ]
+&amp;gt;&amp;gt;&amp;gt; solve([x + 5*y - 2, -3*x + 6*y - 15], [x, y])
+{x: -3, y: 1}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;section-13&quot;&gt;线性代数&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-14&quot;&gt;矩阵&lt;/h3&gt;
+
+&lt;p&gt;矩阵从Matrix类创建：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import Matrix, Symbol
+&amp;gt;&amp;gt;&amp;gt; Matrix([[1,0], [0,1]])
+⎡1  0⎤
+⎢    ⎥
+⎣0  1⎦
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;它可以包含符号：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; x = Symbol('x')
+&amp;gt;&amp;gt;&amp;gt; y = Symbol('y')
+&amp;gt;&amp;gt;&amp;gt; A = Matrix([[1,x], [y,1]])
+&amp;gt;&amp;gt;&amp;gt; A
+⎡1  x⎤
+⎢    ⎥
+⎣y  1⎦
+&amp;gt;&amp;gt;&amp;gt; A**2
+⎡x⋅y + 1    2⋅x  ⎤
+⎢                ⎥
+⎣  2⋅y    x⋅y + 1⎦
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;更多有关矩阵信息，参见线性代数教程。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-15&quot;&gt;模式匹配&lt;/h2&gt;
+
+&lt;p&gt;使用&lt;code&gt;.match()&lt;/code&gt;方法，和Wild类对表达式实行模式匹配。这个方法将返回一个发生替换的字典，如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import Symbol, Wild
+&amp;gt;&amp;gt;&amp;gt; x = Symbol('x')
+&amp;gt;&amp;gt;&amp;gt; p = Wild('p')
+&amp;gt;&amp;gt;&amp;gt; (5*x**2).match(p*x**2)
+{p: 5}
+&amp;gt;&amp;gt;&amp;gt; q = Wild('q')
+&amp;gt;&amp;gt;&amp;gt; (x**2).match(p*x**q)
+{p: 1, q: 2}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果匹配失败，将返回&lt;code&gt;None&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; print (x+1).match(p**x)
+None
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以指定&lt;code&gt;Wild&lt;/code&gt;类的排除参数去保证一些东西不出现在结果之中：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; p = Wild('p', exclude=[1,x])
+&amp;gt;&amp;gt;&amp;gt; print (x+1).match(x+p) # 1 is excluded
+None
+&amp;gt;&amp;gt;&amp;gt; print (x+1).match(p+1) # x is excluded
+None
+&amp;gt;&amp;gt;&amp;gt; print (x+1).match(x+2+p) # -1 is not excluded
+{p_: -1}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;section-16&quot;&gt;打印&lt;/h2&gt;
+
+&lt;p&gt;这里有许多打印表达式的方法：&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;标准&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;这就是&lt;code&gt;str(expression)&lt;/code&gt;返回的，看起来想这样：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import Integral
+&amp;gt;&amp;gt;&amp;gt; from sympy.abc import x
+&amp;gt;&amp;gt;&amp;gt; print x**2
+x**2
+&amp;gt;&amp;gt;&amp;gt; print 1/x
+1/x
+&amp;gt;&amp;gt;&amp;gt; print Integral(x**2, x)
+Integral(x**2, x)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;漂亮的打印&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;pprint&lt;/code&gt;函数产生好看的ascii艺术打印：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import Integral, pprint
+&amp;gt;&amp;gt;&amp;gt; from sympy.abc import x
+&amp;gt;&amp;gt;&amp;gt; pprint(x**2)
+ 2
+x 
+None
+&amp;gt;&amp;gt;&amp;gt; pprint(1/x)
+1
+─
+x
+None
+&amp;gt;&amp;gt;&amp;gt; pprint(Integral(x**2, x))
+⌠      
+⎮  2   
+⎮ x  dx
+⌡      
+None
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果你安装了unicode字体，&lt;code&gt;pprint&lt;/code&gt;函数将默认使用它。你可以使用&lt;code&gt;use_unicode&lt;/code&gt;函数改变这个选项。：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; pprint(Integral(x**2, x), use_unicode=False)
+  /     
+ |      
+ |  2   
+ | x  dx
+ |      
+/       
+None
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;更多好看的unicode打印另见维基&lt;a href=&quot;https://github.com/sympy/sympy/wiki/Pretty-Printing&quot;&gt;Pretty Printing&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;小技巧：在Python解释器中默认使用漂亮的打印，使用：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ python
+Python 2.5.2 (r252:60911, Jun 25 2008, 17:58:32)
+[GCC 4.3.1] on linux2
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&amp;gt;&amp;gt;&amp;gt; from sympy import init_printing, var, Integral
+&amp;gt;&amp;gt;&amp;gt; init_printing(use_unicode=False, wrap_line=False, no_global=True)
+&amp;gt;&amp;gt;&amp;gt; var(&quot;x&quot;)
+x
+&amp;gt;&amp;gt;&amp;gt; x**3/3
+ 3
+x
+--
+3
+&amp;gt;&amp;gt;&amp;gt; Integral(x**2, x) #doctest: +NORMALIZE_WHITESPACE
+  /
+ |
+ |  2
+ | x  dx
+ |
+/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Python打印&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy.printing.python import python
+&amp;gt;&amp;gt;&amp;gt; from sympy import Integral
+&amp;gt;&amp;gt;&amp;gt; from sympy.abc import x
+&amp;gt;&amp;gt;&amp;gt; print python(x**2)
+x = Symbol('x')
+e = x**2
+&amp;gt;&amp;gt;&amp;gt; print python(1/x)
+x = Symbol('x')
+e = 1/x
+&amp;gt;&amp;gt;&amp;gt; print python(Integral(x**2, x))
+x = Symbol('x')
+e = Integral(x**2, x)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;LaTeX打印&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import Integral, latex
+&amp;gt;&amp;gt;&amp;gt; from sympy.abc import x
+&amp;gt;&amp;gt;&amp;gt; latex(x**2)
+x^{2}
+&amp;gt;&amp;gt;&amp;gt; latex(x**2, mode='inline')
+$x^{2}$
+&amp;gt;&amp;gt;&amp;gt; latex(x**2, mode='equation')
+\begin{equation}x^{2}\end{equation}
+&amp;gt;&amp;gt;&amp;gt; latex(x**2, mode='equation*')
+\begin{equation*}x^{2}\end{equation*}
+&amp;gt;&amp;gt;&amp;gt; latex(1/x)
+\frac{1}{x}
+&amp;gt;&amp;gt;&amp;gt; latex(Integral(x**2, x))
+\int x^{2}\,dx
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;MathML&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy.printing.mathml import mathml
+&amp;gt;&amp;gt;&amp;gt; from sympy import Integral, latex
+&amp;gt;&amp;gt;&amp;gt; from sympy.abc import x
+&amp;gt;&amp;gt;&amp;gt; print mathml(x**2)
+&amp;lt;apply&amp;gt;&amp;lt;power/&amp;gt;&amp;lt;ci&amp;gt;x&amp;lt;/ci&amp;gt;&amp;lt;cn&amp;gt;2&amp;lt;/cn&amp;gt;&amp;lt;/apply&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; print mathml(1/x)
+&amp;lt;apply&amp;gt;&amp;lt;power/&amp;gt;&amp;lt;ci&amp;gt;x&amp;lt;/ci&amp;gt;&amp;lt;cn&amp;gt;-1&amp;lt;/cn&amp;gt;&amp;lt;/apply&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Pylet&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sympy import Integral, preview
+&amp;gt;&amp;gt;&amp;gt; from sympy.abc import x
+&amp;gt;&amp;gt;&amp;gt; preview(Integral(x**2, x))
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux)
+ restricted \write18 enabled.
+entering extended mode
+(/tmp/tmpGYREx_.tex
+LaTeX2e &amp;lt;2011/06/27&amp;gt;
+Babel &amp;lt;v3.8m&amp;gt; and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
+c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
+h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
+h, french, friulan, galician, german, ngerman, swissgerman, monogreek, greek, h
+ungarian, icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, ma
+rathi, oriya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, 
+kurmanji, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk,
+ polish, portuguese, romanian, romansh, russian, sanskrit, serbian, serbianc, s
+lovak, slovenian, spanish, swedish, turkish, turkmen, ukrainian, uppersorbian, 
+welsh, loaded.
+(/usr/share/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texmf-dist/tex/latex/base/size12.clo))
+(/usr/share/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/share/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/usr/share/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/usr/share/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/usr/share/texmf-dist/tex/latex/eulervm/eulervm.sty)
+No file tmpGYREx_.aux.
+(/usr/share/texmf-dist/tex/latex/eulervm/uzeur.fd)
+(/usr/share/texmf-dist/tex/latex/eulervm/uzeus.fd)
+(/usr/share/texmf-dist/tex/latex/eulervm/uzeuex.fd) [1] (./tmpGYREx_.aux) )
+Output written on tmpGYREx_.dvi (1 page, 320 bytes).
+Transcript written on tmpGYREx_.log.
+This is dvipng 1.14 Copyright 2002-2010 Jan-Ake Larsson
+[1] 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果pyglet被安装了，一个包含LaTeX渲染后表达式的pyglet窗口将被打开：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://fmn.rrimg.com/fmn059/20120903/1210/p_large_ViwY_2fcc000000bf1262.jpg&quot; alt=&quot;pyglet&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-17&quot;&gt;注意&lt;/h3&gt;
+
+&lt;p&gt;isympy自动调用&lt;code&gt;pprint&lt;/code&gt;,这就是为什么默认情况下你看到的是漂亮的打印。&lt;/p&gt;
+
+&lt;p&gt;注意有一个可用的打印模块&lt;code&gt;sympy.printing&lt;/code&gt;。其它通过这个模块的打印方法是：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;pretty(expr)&lt;/code&gt;,&lt;code&gt;pretty_print(expr)&lt;/code&gt;,&lt;code&gt;pprint(expr)&lt;/code&gt;:分别漂亮的表示&lt;code&gt;expr&lt;/code&gt;.这是和之前描述的第二层表示是一样的。&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;latex(expr)&lt;/code&gt;, &lt;code&gt;print_latex(expr)&lt;/code&gt;：分别返回和打印&lt;code&gt;expr&lt;/code&gt;的&lt;a href=&quot;http://www.latex-project.org/&quot;&gt;LaTeX&lt;/a&gt;表示。&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;mathml(expr)&lt;/code&gt;,&lt;code&gt;print_mathml(expr)&lt;/code&gt;：分别返回和打印&lt;code&gt;expr&lt;/code&gt;的&lt;a href=&quot;http://www.w3.org/Math/&quot;&gt;MathML&lt;/a&gt;表示。&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;print_gtk(expr)&lt;/code&gt;：在&lt;a href=&quot;http://helm.cs.unibo.it/mml-widget/&quot;&gt;Gtkmathview&lt;/a&gt;打印&lt;code&gt;expr&lt;/code&gt;，这是一个呈现MathML代码的GTK部件。&lt;a href=&quot;http://helm.cs.unibo.it/mml-widget/&quot;&gt;Gtkmathview&lt;/a&gt;要求安装。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section-18&quot;&gt;更多文档&lt;/h2&gt;
+
+&lt;p&gt;现在该学更多有关SymPy的知识了。浏览&lt;a href=&quot;http://docs.sympy.org/dev/guide.html#guide&quot;&gt;SymPy用户指南&lt;/a&gt;和&lt;a href=&quot;http://docs.sympy.org/dev/modules/index.html#module-docs&quot;&gt;SymPy模块参考&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;一定也浏览我们的公共&lt;a href=&quot;http://wiki.sympy.org/&quot;&gt;wiki.sympy.org&lt;/a&gt;，那里包含了很多我们和我们的用户贡献的示例，教程，cookbook，请自由地编辑它。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-19&quot;&gt;翻译&lt;/h2&gt;
+
+&lt;p&gt;这个教程还有其它语言：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://docs.sympy.org/dev/tutorial.de.html&quot;&gt;德语&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;FootNotes&lt;/h2&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;不介意非稳定版我觉得git更方便一些，当然linux包管理器更方便,所以先用你的包管理器安装它。&lt;a href=&quot;#fnref:1&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;Compute the summation of f with respect to the given summation variable over the given limits.&lt;a href=&quot;#fnref:2&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</content>
+ </entry>
  
  <entry>
    <title>SciPy入门指南(译)</title>
@@ -303,7 +1198,7 @@ b = numpy.fft.fft(a)
 
 &lt;h2 id=&quot;section&quot;&gt;先决条件&lt;/h2&gt;
 
-&lt;p&gt;在阅读这个教程之前，你多少需要知道点python。如果你想从新回忆下，请看看&lt;a href=&quot;http://docs.python.org/tut/&quot;&gt;Python Tutorial&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;在阅读这个教程之前，你多少需要知道点python。如果你想重新回忆下，请看看&lt;a href=&quot;http://docs.python.org/tut/&quot;&gt;Python Tutorial&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;如果你想要运行教程中的示例，你至少需要在你的电脑上安装了以下一些软件:&lt;/p&gt;
 
