@@ -1,3 +1,3 @@
 git add .
 git commit -m "update"
-git push master
+tsocks git push publish master
