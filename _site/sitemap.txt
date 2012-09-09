@@ -11,6 +11,7 @@ http://reverland.org//page2/index.html
 http://reverland.org//page3/index.html
 http://reverland.org//page4/index.html
 
+http://reverland.org//python/2012/09/07/matplotlib-tutorial
 http://reverland.org//python/2012/08/30/sympy-tutorial
 http://reverland.org//python/2012/08/24/scipy
 http://reverland.org//python/2012/08/22/numpy
