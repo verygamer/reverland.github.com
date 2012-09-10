@@ -1,4 +1,4 @@
-python2 sagent
+python2 ~/sagent
 
 git add .
 git commit -m "update"
