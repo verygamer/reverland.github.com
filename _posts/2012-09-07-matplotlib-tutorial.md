@@ -313,41 +313,287 @@ _Note:这一段很绕，我不知道该怎么翻译好。在matplotlib中axes容
     plot (X, Y-1, color='blue', alpha=1.00)
     show()
 
+提示：你需要使用[fill_between](http://matplotlib.sourceforge.net/api/pyplot_api.html#matplotlib.pyplot.fill_between)命令。
+
+点击图片获取答案。
+
 ### 散点图(scatter plots)
+
+[![reguler plots](http://www.loria.fr/~rougier/teaching/matplotlib/figures/scatter_ex.png)](http://www.loria.fr/~rougier/teaching/matplotlib/scripts/scatter_ex.py)
+
+从以下代码开始，尝试生成上边的图形，注意标记大小，颜色和透明度。
+
+    from pylab import *
+    
+    n = 1024
+    X = np.random.normal(0,1,n)
+    Y = np.random.normal(0,1,n)
+    
+    scatter(X,Y)
+    show()
+
+提示：色彩由(X,Y)角度给出。
+
+点击图像获取答案。
 
 ### 条形图(bar plots)
 
+[![reguler plots](http://www.loria.fr/~rougier/teaching/matplotlib/figures/bar_ex.png)](http://www.loria.fr/~rougier/teaching/matplotlib/scripts/bar_ex.py)
+
+从以下代码开始，尝试生成上边的图形，添加标签和红色条形。
+
+    from pylab import *
+    
+    n = 12
+    X = np.arange(n)
+    Y1 = (1-X/float(n)) * np.random.uniform(0.5,1.0,n)
+    Y2 = (1-X/float(n)) * np.random.uniform(0.5,1.0,n)
+    
+    bar(X, +Y1, facecolor='#9999ff', edgecolor='white')
+    bar(X, -Y2, facecolor='#ff9999', edgecolor='white')
+    
+    for x,y in zip(X,Y1):
+        text(x+0.4, y+0.05, '%.2f' % y, ha='center', va= 'bottom')
+    
+    ylim(-1.25,+1.25)
+    show()
+
+提示:你要注意文本对齐。
+
+点击图像获取答案。
+
 ### 等高线图(contour plots)
+
+[![reguler plots](http://www.loria.fr/~rougier/teaching/matplotlib/figures/contour_ex.png)](http://www.loria.fr/~rougier/teaching/matplotlib/scripts/contour_ex.py)
+
+从以下代码开始，尝试生成上边的图形，注意色彩表。(参见[色彩表](http://www.loria.fr/~rougier/teaching/matplotlib/#colormaps))
+
+    from pylab import *
+    
+    def f(x,y): return (1-x/2+x**5+y**3)*np.exp(-x**2-y**2)
+    
+    n = 256
+    x = np.linspace(-3,3,n)
+    y = np.linspace(-3,3,n)
+    X,Y = np.meshgrid(x,y)
+    
+    contourf(X, Y, f(X,Y), 8, alpha=.75, cmap='jet')
+    C = contour(X, Y, f(X,Y), 8, colors='black', linewidth=.5)
+    show()
+
+提示：你需要使用[clabel](http://matplotlib.sourceforge.net/api/pyplot_api.html#matplotlib.pyplot.clabel)命令。
+
+点击图像获取答案。
 
 ### Imshow
 
+[![reguler plots](http://www.loria.fr/~rougier/teaching/matplotlib/figures/imshow_ex.png)](http://www.loria.fr/~rougier/teaching/matplotlib/scripts/imshow_ex.py)
+
+从以下代码开始，尝试生成上边的图形，添加标签和红色条形。
+
+    from pylab import *
+    
+    def f(x,y): return (1-x/2+x**5+y**3)*np.exp(-x**2-y**2)
+    
+    n = 10
+    x = np.linspace(-3,3,4*n)
+    y = np.linspace(-3,3,3*n)
+    X,Y = np.meshgrid(x,y)
+    imshow(f(X,Y)), show()
+
+提示:你需要注意imshow命令中图像的_来源_，并且使用色[彩条](http://matplotlib.sourceforge.net/api/pyplot_api.html#matplotlib.pyplot.colorbar)(colorbar)。
+
+点击图像获取答案。
+
 ### 饼图(Pie charts)
+
+[![reguler plots](http://www.loria.fr/~rougier/teaching/matplotlib/figures/pie_ex.png)](http://www.loria.fr/~rougier/teaching/matplotlib/scripts/pie_ex.py)
+
+从以下代码开始，尝试生成上边的图形，添加标签和红色条形。
+
+    from pylab import *
+    
+    n = 20
+    Z = np.random.uniform(0,1,n)
+    pie(Z), show()
+
+提示：你需要改变Z。
+
+点击图像获取答案。
 
 ### 矢量图(quiver plots)
 
+[![reguler plots](http://www.loria.fr/~rougier/teaching/matplotlib/figures/quiver_ex.png)](http://www.loria.fr/~rougier/teaching/matplotlib/scripts/quiver_ex.py)
+
+从以下代码开始，尝试生成上边的图形，添加标签和红色条形。
+
+    from pylab import *
+    
+    n = 8
+    X,Y = np.mgrid[0:n,0:n]
+    quiver(X,Y), show()
+
+提示：你需要画两次箭头。
+
+点击图像获取答案。
+
 ### 网格(grids)
+
+[![reguler plots](http://www.loria.fr/~rougier/teaching/matplotlib/figures/grid_ex.png)](http://www.loria.fr/~rougier/teaching/matplotlib/scripts/grid_ex.py)
+
+从以下代码开始，尝试生成上边的图形，添加标签和红色条形。
+
+    from pylab import *
+    
+    axes = gca()
+    axes.set_xlim(0,4)
+    axes.set_ylim(0,3)
+    axes.set_xticklabels([])
+    axes.set_yticklabels([])
+    
+    show()
+
+点击图像获取答案。
 
 ### 多图绘制
 
+[![reguler plots](http://www.loria.fr/~rougier/teaching/matplotlib/figures/multiplot_ex.png)](http://www.loria.fr/~rougier/teaching/matplotlib/scripts/multiplot_ex.py)
+
+从以下代码开始，尝试生成上边的图形，添加标签和红色条形。
+
+    from pylab import *
+    
+    subplot(2,2,1)
+    subplot(2,2,3)
+    subplot(2,2,4)
+    
+    show()
+
+提示：你可以对不同部分使用几个subplot命令。
+
+点击图像获取答案。
+
 ### 极轴图
+
+[![reguler plots](http://www.loria.fr/~rougier/teaching/matplotlib/figures/polar_ex.png)](http://www.loria.fr/~rougier/teaching/matplotlib/scripts/polar_ex.py)
+
+从以下代码开始，尝试生成上边的图形，添加标签和红色条形。
+
+    from pylab import *
+    
+    axes([0,0,1,1])
+    
+    N = 20
+    theta = np.arange(0.0, 2*np.pi, 2*np.pi/N)
+    radii = 10*np.random.rand(N)
+    width = np.pi/4*np.random.rand(N)
+    bars = bar(theta, radii, width=width, bottom=0.0)
+    
+    for r,bar in zip(radii, bars):
+        bar.set_facecolor( cm.jet(r/10.))
+        bar.set_alpha(0.5)
+    
+    show()
+
+提示：你仅仅需要修改_axes_这行。
+
+点击图像获取答案。
 
 ### 三维绘图
 
+[![reguler plots](http://www.loria.fr/~rougier/teaching/matplotlib/figures/plot3d_ex.png)](http://www.loria.fr/~rougier/teaching/matplotlib/scripts/plot3d_ex.py)
+
+从以下代码开始，尝试生成上边的图形，添加标签和红色条形。
+
+    from pylab import *
+    from mpl_toolkits.mplot3d import Axes3D
+    
+    fig = figure()
+    ax = Axes3D(fig)
+    X = np.arange(-4, 4, 0.25)
+    Y = np.arange(-4, 4, 0.25)
+    X, Y = np.meshgrid(X, Y)
+    R = np.sqrt(X**2 + Y**2)
+    Z = np.sin(R)
+    
+    ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='hot')
+    
+    show()
+
+提示：你需要使用[contourf](http://matplotlib.sourceforge.net/api/pyplot_api.html#matplotlib.pyplot.contourf)命令。
+
+点击图像获取答案。
+
 ### 绘制文本
+
+[![reguler plots](http://www.loria.fr/~rougier/teaching/matplotlib/figures/text_ex.png)](http://www.loria.fr/~rougier/teaching/matplotlib/scripts/text_ex.py)
+
+试着从头做这个！提示：看一看[matplotlib logo](http://matplotlib.sourceforge.net/examples/api/logo2.html)
+
+点击图像获取答案。
 
 ## 此教程之外
 
+matplotlib受益于丰富的文档和巨大的用户和开发者社区。这有几个有关的链接：
+
 ### 教程
+
+[pyplot教程](http://matplotlib.sourceforge.net/users/pyplot_tutorial.html)
+
+[图像教程](http://matplotlib.sourceforge.net/users/image_tutorial.html)
+
+[文本教程](http://matplotlib.sourceforge.net/users/index_text.html)
+
+[artist对象教程](http://matplotlib.sourceforge.net/users/artists.html)
+
+[路径教程](http://matplotlib.sourceforge.net/users/path_tutorial.html)
+
+[变换教程](http://matplotlib.sourceforge.net/users/transforms_tutorial.html)
 
 ### matplotlib文档
 
+[用户手册](http://matplotlib.sourceforge.net/users/index.html)
+
+[常见问题](http://matplotlib.sourceforge.net/faq/index.html)
+
+[截图](http://matplotlib.sourceforge.net/users/screenshots.html)
+
 ### 代码文档
+
+代码相当好的文档化了，你可以在python会话中快速查询指定命令
+
+    >>> from pylab import *
+    >>> help(plot)
+    Help on function plot in module matplotlib.pyplot:
+    
+    plot(*args, **kwargs)
+       Plot lines and/or markers to the
+       :class:`~matplotlib.axes.Axes`.  *args* is a variable length
+       argument, allowing for multiple *x*, *y* pairs with an
+       optional format string.  For example, each of the following is
+       legal::
+    
+           plot(x, y)         # plot x and y using default line style and color
+           plot(x, y, 'bo')   # plot x and y using blue circle markers
+           plot(y)            # plot y using x as index array 0..N-1
+           plot(y, 'r+')      # ditto, but with red plusses
+    
+       If *x* and/or *y* is 2-dimensional, then the corresponding columns
+       will be plotted.
 
 ### 画廊(Galleries)
 
+当你搜寻如何绘制指定图像时，[matplotlib gallery](http://matplotlib.sourceforge.net/gallery.html)也相当有用。每个例子和它的源码一同被提供。
+
+一个较小的画廊在[这里](http://www.loria.fr/~rougier/coding/gallery/)
+
 ### 邮件列表
 
+最后，这里有一个[用户邮件列表](https://lists.sourceforge.net/lists/listinfo/matplotlib-users)，那里你可以寻求帮助。一个[开发者邮件列表](https://lists.sourceforge.net/lists/listinfo/matplotlib-devel)是更加技术性的。
+
 ## 快速参考
+
+没什么好翻译的，看原文吧……[传送门](http://www.loria.fr/~rougier/teaching/matplotlib/#quick-references)
 
 ### 线条属性
 
@@ -356,6 +602,8 @@ _Note:这一段很绕，我不知道该怎么翻译好。在matplotlib中axes容
 ### 标记
 
 ### 色彩表
+
+----
 
 [^1]:资源文件？
 [^2]:有时是左上角
