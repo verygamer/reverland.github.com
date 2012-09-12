@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Matplotlib Tutorial"
+title: "Matplotlib Tutorial(译)"
 discription: "Nicolas P. Rougier - Euroscipy 2012"
 category: python
 tags: [matplotlib, python]
@@ -8,7 +8,9 @@ disqus: true
 ---
 {% include JB/setup %}
 
-# Matplotlib Tutorial
+# Matplotlib Tutorial(译)
+
+翻译自:[Matplotlib tutorial](http://www.loria.fr/~rougier/teaching/matplotlib/)Nicolas P. Rougier - Euroscipy 2012
 
 * toc
 {: toc}
