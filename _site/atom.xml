@@ -4,7 +4,7 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org//atom.xml" rel="self"/>
  <link href="http://reverland.org/"/>
- <updated>2012-09-11T14:30:49+08:00</updated>
+ <updated>2012-09-12T21:15:27+08:00</updated>
  <id>http://reverland.org/</id>
  <author>
    <name>Reverland</name>
@@ -13,12 +13,261 @@
 
  
  <entry>
-   <title>Matplotlib Tutorial</title>
+   <title>科学计算工具和工作流</title>
+   <link href="http://reverland.org//python/2012/09/12/"/>
+   <updated>2012-09-12T00:00:00+08:00</updated>
+   <id>hhttp://reverland.org//python/2012/09/</id>
+   <content type="html">
+&lt;h1 id=&quot;scientific-computing-with-tools-and-workflow&quot;&gt;Scientific computing with tools and workflow&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;好长的标题……&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;从&lt;a href=&quot;http://scipy-lectures.github.com/intro/intro.html&quot;&gt;scipy lecture notes&lt;/a&gt;引言翻译。这是篇python 做科学计算的水文……&lt;/p&gt;
+
+&lt;p&gt;作者:Fernando Perez, Emmanuelle Gouillart, Gaël Varoquaux。感谢他们贡献了如此棒的教材。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;目录&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#python&quot;&gt;为什么Python？&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section&quot;&gt;科学家的需求&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-1&quot;&gt;要求&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-2&quot;&gt;已经存在的解决方案&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#python-1&quot;&gt;python科学工具&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ipython&quot;&gt;交互工作流:IPython和文本编辑器&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-3&quot;&gt;命令行交互&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-4&quot;&gt;在编辑器中拟定算法&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;python&quot;&gt;为什么Python？&lt;/h2&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;科学家的需求&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;获取数据(模拟，试验操控)&lt;/li&gt;
+  &lt;li&gt;操作和处理数据&lt;/li&gt;
+  &lt;li&gt;可视化结果……让我们理解我们在做什么！&lt;/li&gt;
+  &lt;li&gt;交流结果：产生用来做报告或出版的图像，写演示文稿。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;要求&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;对相应经典数值方法和基本作用已经存在丰富的程序块：我们不想再次为绘制曲线、傅利叶变换或者拟合算法重新编程。不要重复发明轮子。&lt;/li&gt;
+  &lt;li&gt;简单易学：计算机科学不是我们的课程也不是工作。我们想要在几分钟内绘制曲线、平滑信号和做傅利叶变换。&lt;/li&gt;
+  &lt;li&gt;易于和合作者、学生、顾客交流，让代码在试验室或公司内部都生动起来：代码应该像本书一样易读。因此，语言应该包含尽量少的语法符号或不必要的规范，使数学家和科学家读者能够理解代码。&lt;/li&gt;
+  &lt;li&gt;有效率地编码和快速执行……但是不必说如果我们花太多时间来编写它，非常快的代码也变得无用。所以，我们需要同样短的开发时间和短的执行时间。&lt;/li&gt;
+  &lt;li&gt;一个单独的环境/语言解决所有事情。如果可能，避免为每个新问题学习新的软件。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;已经存在的解决方案&lt;/h3&gt;
+
+&lt;p&gt;科学家们用什么工作？&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;编译语言：C,C++,Fortran等等&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;优点：
+    &lt;ul&gt;
+      &lt;li&gt;非常快。高度优化的编译器。对大量计算，很难超越这些语言。&lt;/li&gt;
+      &lt;li&gt;为这些语言已经写了一些高度优化的科学库。例如：BLAS(向量/矩阵运算库)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;缺点：
+    &lt;ul&gt;
+      &lt;li&gt;难用：在开发时没有交互，命令式的编译步骤，累赘的语法(&lt;code&gt;&amp;amp;, ::, }}, ;&lt;/code&gt;等等)，人工内存管理(C中很棘手)。这些对非计算机科学家是&lt;em&gt;难懂的语言&lt;/em&gt;。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;脚本语言：Matlab&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;优点：
+    &lt;ul&gt;
+      &lt;li&gt;在许多领域有丰富的数值算法库。因为这些库经常用编译语言写成而有快的执行速度。&lt;/li&gt;
+      &lt;li&gt;友好的开发环境：全面而且组织良好的帮助，集成的编辑器等。&lt;/li&gt;
+      &lt;li&gt;商业支持&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;缺点：
+    &lt;ul&gt;
+      &lt;li&gt;基本语言太弱了，高级用户将很受限。&lt;/li&gt;
+      &lt;li&gt;不免费&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;其它脚本语言：Scilab, Octave, Igor, R, IDL等等&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;优点：
+    &lt;ul&gt;
+      &lt;li&gt;开源、免费,或者至少比Matlab便宜。&lt;/li&gt;
+      &lt;li&gt;有些功能非常高级(R中的统计，Igor中的绘图等等)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;缺点：
+    &lt;ul&gt;
+      &lt;li&gt;比Matlab中可用算法少，语言不高级。&lt;/li&gt;
+      &lt;li&gt;有些软件专注于一个领域。例如:Gnuplot或xmgrace绘制曲线。这些程序非常强大，但是它们被限制在一种类型的使用上，例如绘图。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Python怎么样&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;优点：
+    &lt;ul&gt;
+      &lt;li&gt;非常丰富的科学计算库(尽管稍微比Matlab少那么一点点)&lt;/li&gt;
+      &lt;li&gt;很好的思考语言，允许写出非常易读和组织很好的代码：“所码即所想” 。&lt;/li&gt;
+      &lt;li&gt;相当之多科学计算任务之外的库(网络服务器管理、串口访问等等。)&lt;/li&gt;
+      &lt;li&gt;自由免费和开源，使用广泛，活跃的社区。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;缺点：
+    &lt;ul&gt;
+      &lt;li&gt;不怎么友好的开发环境和某些软件相比，比如Matlab。(更加geek向一些)。&lt;/li&gt;
+      &lt;li&gt;并非所有的算法可以在专业软件和工具箱中找到。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;python-1&quot;&gt;python科学工具&lt;/h2&gt;
+
+&lt;p&gt;不像Matlab，Scilab和R，Python并不预先绑定一套科学计算模块。以下是用来搭建科学计算环境的基本构建模块：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;Python&lt;/em&gt;，一个通用和现代的计算语言
+    &lt;ul&gt;
+      &lt;li&gt;Python语言：数据结构(字符串、整型)，控制流，数据集合(列表、字典)，模式等等。&lt;/li&gt;
+      &lt;li&gt;标准库的模块&lt;/li&gt;
+      &lt;li&gt;大量用Python写成特殊用途的模块或应用：网络协议，网络框架等等，还有科学计算。&lt;/li&gt;
+      &lt;li&gt;开发工具(自动测试，文档生成)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;IPython&lt;/em&gt;，一个高级&lt;em&gt;Python shell&lt;/em&gt; &lt;a href=&quot;http://ipython.scipy.org/moin/&quot;&gt;http://ipython.scipy.org/moin/&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;Numpy&lt;/em&gt;，提供强大的数值数组对象和操作它们的程序。&lt;a href=&quot;http://www.numpy.org/&quot;&gt;http://www.numpy.org/&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;Scipy&lt;/em&gt;：高水准的数据处理程序。优化、回归、插值等等。&lt;a href=&quot;http://www.scipy.org/&quot;&gt;http://www.scipy.org/&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;Matplotlib&lt;/em&gt;：二维可视化，“出版水准”的绘图。&lt;a href=&quot;http://matplotlib.sourceforge.net/&quot;&gt;http://matplotlib.sourceforge.net/&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Mayavi&lt;/em&gt;：三维可视化。&lt;a href=&quot;http://code.enthought.com/projects/mayavi/&quot;&gt;http://code.enthought.com/projects/mayavi/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;ipython&quot;&gt;交互工作流:IPython和文本编辑器&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;交互工作来测试和理解算法&lt;/strong&gt;：在这一部分，我们描述一个使用&lt;a href=&quot;http://ipython.org/&quot;&gt;IPython&lt;/a&gt;交互工作流，这很方便探索和理解算法。&lt;/p&gt;
+
+&lt;p&gt;Python是一种通用语言。因此，没有一个得天独厚的工作环境,使用它的方式不只一种。尽管这让初学者很难找到自己的路，但让Python可能被用来在服务器上或嵌入设备上写程序。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;注解&lt;/strong&gt;：这部分的参考文档：&lt;/p&gt;
+
+  &lt;p&gt;&lt;strong&gt;IPython用户手册&lt;/strong&gt;：&lt;a href=&quot;http://ipython.org/ipython-doc/dev/index.html&quot;&gt;http://ipython.org/ipython-doc/dev/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;命令行交互&lt;/h3&gt;
+
+&lt;p&gt;启动&lt;em&gt;ipython&lt;/em&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [1]: print('Hello world')
+Hello world
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;获得帮助&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [2]: print?
+Type:               builtin_function_or_method
+Base Class:         &amp;lt;type 'builtin_function_or_method'&amp;gt;
+String Form:        &amp;lt;built-in function print&amp;gt;
+Namespace:          Python builtin
+Docstring:
+    print(value, ..., sep=' ', end='\n', file=sys.stdout)
+
+    Prints the values to a stream, or to sys.stdout by default.
+    Optional keyword arguments:
+    file: a file-like object (stream); defaults to the current sys.stdout.
+    sep:  string inserted between values, default a space.
+    end:  string appended after the last value, default a newline.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;在编辑器中拟定算法&lt;/h3&gt;
+
+&lt;p&gt;在文本编辑器中创建一个文件&lt;code&gt;my_file.py&lt;/code&gt;。在EPD(Enthought Python Distribution)&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;中，你可以使用从开始菜单使用&lt;em&gt;Scite&lt;/em&gt;。在Python(x,y)中&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;，你可以使用Spyder。在Ubuntu下，如果你还没有喜欢的编辑器，我们建议安装&lt;em&gt;Stani’s Python editor&lt;/em&gt;。在这个文件中，添加以下行：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;s = 'Hello world'
+print(s)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;现在，你可以在IPython中运行和探索结果变量：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [3]: %run my_file.py
+Hello word
+
+In [4]: s
+Out[4]: 'Hello word'
+
+In [5]: %whos
+Variable   Type    Data/Info
+
+----------------------------
+s          str     Hello word
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;从脚本到函数&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;p&gt;虽然只用一个接一个指令的脚本工作很诱惑，但请逐渐将脚本改进成一套函数：&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;一个脚本不可复用，但函数可以。&lt;/li&gt;
+    &lt;li&gt;以函数式思考益于将问题分解。&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;在python2.7以后不会这样显示了。&lt;a href=&quot;#fnref:1&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;Enthought公司配置好的一套环境，教育网邮箱可以免费申请使用。&lt;a href=&quot;#fnref:2&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;另一个配置好的环境。&lt;a href=&quot;#fnref:3&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Matplotlib Tutorial(译)</title>
    <link href="http://reverland.org//python/2012/09/07/matplotlib-tutorial"/>
    <updated>2012-09-07T00:00:00+08:00</updated>
    <id>hhttp://reverland.org//python/2012/09/07/matplotlib-tutorial</id>
    <content type="html">
-&lt;h1 id=&quot;matplotlib-tutorial&quot;&gt;Matplotlib Tutorial&lt;/h1&gt;
+&lt;h1 id=&quot;matplotlib-tutorial&quot;&gt;Matplotlib Tutorial(译)&lt;/h1&gt;
+
+&lt;p&gt;翻译自:&lt;a href=&quot;http://www.loria.fr/~rougier/teaching/matplotlib/&quot;&gt;Matplotlib tutorial&lt;/a&gt;Nicolas P. Rougier - Euroscipy 2012&lt;/p&gt;
 
 &lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#section&quot;&gt;引言&lt;/a&gt;    &lt;ul&gt;
