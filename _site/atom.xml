@@ -4,7 +4,7 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org/atom.xml" rel="self"/>
  <link href="http://reverland.org"/>
- <updated>2012-09-20T22:27:39+08:00</updated>
+ <updated>2012-09-23T22:44:25+08:00</updated>
  <id>http://reverland.org</id>
  <author>
    <name>Reverland</name>
@@ -32,7 +32,7 @@
 
 &lt;p&gt;总之，五个人开始填这个大坑。嘛，这dota&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;阵容，我怎么评价么。&lt;/p&gt;
 
-&lt;p&gt;总之，我就是苦逼的技术支持。&lt;/p&gt;
+&lt;p&gt;总之，我就是苦逼的技术支持。一出问题就被召唤……&lt;/p&gt;
 
 &lt;p&gt;开始技术支持的时候我刚接触linux不久&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;，实际上想做另一个偏计算机的项目，不过无所谓了，于是开始了这个NdFeB磁特性的项目。&lt;/p&gt;
 
@@ -51,6 +51,7 @@
   &lt;li&gt;有atk那台的机器卡爆了……&lt;/li&gt;
   &lt;li&gt;各种因为不了解软件及原理本身的而造成的错误&lt;/li&gt;
   &lt;li&gt;各种手误，还有不良的管理习惯，比如说新建的那一堆文件夹，结果我现在都不知道各个文件夹都放的什么东西了。&lt;/li&gt;
+  &lt;li&gt;软件自身问题，比如算法bug&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;section-2&quot;&gt;但我学到了很多&lt;/h2&gt;
@@ -68,7 +69,9 @@
 &lt;p&gt;我学到的很多也用上了，这真让我惊奇，&lt;strong&gt;我从来没想过自己在折腾中学到的很多东西，竟然真的用上了。&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;将学院几台linux机器几乎和自己机器集成起来了。在寝室我可以通过ssh，vnc很方便的查看计算进度，结果，和其它任何操作。&lt;/li&gt;
+  &lt;li&gt;将学院几台linux机器几乎和自己机器集成起来了。&lt;/li&gt;
+  &lt;li&gt;配置好ssh和vnc，在寝室我可以通过ssh，vnc很方便的查看计算进度，结果，和其它任何操作。&lt;/li&gt;
+  &lt;li&gt;利用dolphin的fish特性可视化ssh，这玩意太好用了。远端就像本地一样。&lt;/li&gt;
   &lt;li&gt;打开了vnc服务教他们怎么用浏览器使用远程桌面，可是windows用户还是更习惯去实验室用windows……&lt;/li&gt;
   &lt;li&gt;建立了ftp服务方便几台机器的文件共享。&lt;/li&gt;
   &lt;li&gt;熟悉了怎么在linux下编译软件，怎么使用软件&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;。编译配置mpich尝试集群并行计算，最后发现专有软件真尼玛坑，要集群还要付钱……&lt;/li&gt;
@@ -78,7 +81,8 @@
   &lt;li&gt;完全习惯用终端或者从其它linux或windows机器上ssh上去用cli操作，因为内存被atk吃空的那台机器卡爆了&lt;/li&gt;
   &lt;li&gt;最后因为atk/vnl什么莫名奇妙不能可视化图形的毛病，发现atkpython中已经集成了matplotlib和numpy，自己手动可视化。不过windows用户还是更习惯用Origin……&lt;/li&gt;
   &lt;li&gt;正好学了点python，然后竟然在一些关键问题上比如win和linux在python中路径，序列切片的问题用上了。&lt;/li&gt;
-  &lt;li&gt;很多问题简直凭借常年在linux系统下的经验和直觉解决的&lt;/li&gt;
+  &lt;li&gt;很多问题简直凭借常年在linux系统下的经验和直觉解决的。&lt;/li&gt;
+  &lt;li&gt;忽然想到有次帮别人制作presentation的图连gimp都用上了。不过当时对gimp比较熟悉，完全无压力。&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;section-3&quot;&gt;创新项目对我的影响&lt;/h2&gt;
@@ -109,7 +113,7 @@
 
 &lt;p&gt;&lt;img src=&quot;http://fmn.rrfmn.com/fmn058/20120625/1850/p_large_l0Vh_0cab00011abb1261.jpg&quot; alt=&quot;经常内存就这么满了&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;我用python画出来的自旋平行态密度&lt;/p&gt;
+&lt;p&gt;我用python画出来的自旋平行态密度,和下图一样因算法问题算得根本就不对……&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://fmn.rrimg.com/fmn057/20120919/2245/p_large_C5Mt_608a00001d3b1262.jpg&quot; alt=&quot;我用python画出来的自旋平行态密度&quot; /&gt;&lt;/p&gt;
 
@@ -117,9 +121,18 @@
 
 &lt;p&gt;&lt;img src=&quot;http://fmn.rrimg.com/fmn056/20120919/2245/p_large_b12B_608a00001d3c1262.jpg&quot; alt=&quot;我用python画出来的自旋反平行态密度&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;我们的模型,我用gimp处理的，还有个彩版的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://fmn.rrimg.com/fmn061/20120921/0725/p_large_BcP2_109300000ba71262.jpg&quot; alt=&quot;模型&quot; /&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;section-5&quot;&gt;鸣谢&lt;/h2&gt;
 
 &lt;p&gt;感谢指导老师的支持，各位组员的共同努力，特别感谢某出国党的坚持，希望明天有个不错的结果，最后写论文什么就没我什么事了&lt;sup id=&quot;fnref:5&quot;&gt;&lt;a href=&quot;#fn:5&quot; rel=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;2012年09月21日 星期五 18时23分32秒&lt;/p&gt;
+
+&lt;p&gt;还好，大家争取两天把论文写完。&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -2158,7 +2171,7 @@ This is dvipng 1.14 Copyright 2002-2010 Jan-Ake Larsson
 
 &lt;p&gt;去学习Python语言，python教程可以让你迅速熟悉python语法和对象。你可以从&lt;a href=&quot;http://docs.python.org/download.html&quot;&gt;http://docs.python.org/download.html&lt;/a&gt;下载这个教程。&lt;/p&gt;
 
-&lt;p&gt;Dave Kuhlman的numpy和scipy教程是另一个很好的介绍：[http://www.rexx.com/~dkuhlman/scipy_course&lt;em&gt;01.html](http://www.rexx.com/~dkuhlman/scipy_course&lt;/em&gt;01.html).&lt;/p&gt;
+&lt;p&gt;Dave Kuhlman的numpy和scipy教程是另一个很好的介绍：&lt;a href=&quot;http://www.rexx.com/~dkuhlman/scipy\_course\_01.html&quot;&gt;http://www.rexx.com/~dkuhlman/scipy_course_01.html&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;本站点上的&lt;a href=&quot;http://docs.scipy.org/&quot;&gt;文档&lt;/a&gt;和&lt;a href=&quot;http://www.scipy.org/Cookbook&quot;&gt;Cookbook&lt;/a&gt;部分提供更多学习材料。&lt;/p&gt;
 
@@ -4336,6 +4349,52 @@ pylab.show()
 
 &lt;p&gt;靠，我该洗洗睡了……&lt;/p&gt;
 
+</content>
+ </entry>
+ 
+ <entry>
+   <title>land of lisp读书笔记</title>
+   <link href="http://reverland.org/lisp/2012/07/09/land-of-lisp"/>
+   <updated>2012-07-09T00:00:00+08:00</updated>
+   <id>hhttp://reverland.org/lisp/2012/07/09/land-of-lisp</id>
+   <content type="html">
+&lt;h1 id=&quot;happy-hacking&quot;&gt;Happy Hacking&lt;/h1&gt;
+
+&lt;p&gt;我第一次读这本书，便被其浓郁的黑客风格与幽默所吸引，它向我展示了common lisp这门语言强大与趣味的一面。之前从来没有试着度过原版图书，但看到这么可爱一本书，竟然吸引我一边用着取词软件一边用着google翻译给看完了。&lt;/p&gt;
+
+&lt;p&gt;说是看完了，其实有很多地方都是略略而过，与其说我是学习了一遍common lisp，不如说是大致了解了一下它。很多东西像AI，程序设计，算法的东西都是云里雾里，好在作者假设读者什么也不知道，详细而幽默的解说引人入胜，看起来虽然很累但趣味性十足。所以，即使是lisp菜鸟，这本书也是很推荐。&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;说说我学到的：学到了很多优秀而强大的common lisp技术，在有些地方还进行了自己的hack，甚至学到了服务器、http协议、svg和html、博弈算法的一些东西。&lt;/p&gt;
+
+&lt;p&gt;也说说从这本书中衍生的新想法：
+- lisp做web应用还是蛮好的，正好弥补lisp缺乏图形界面库的短版，
+- common lisp强大但复杂，也许scheme才是我心仪的语言&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;
+- 语言障碍仍然是个很大的问题，要好好学习英语这门世界性语言。&lt;/p&gt;
+
+&lt;p&gt;将我4月26日至7月7日的读书笔记集合在这里,虽然水平很烂但斗胆放在这里，希望对他人有帮助&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://reverland.org/tags.html#land-of-lisp-ref&quot;&gt;land of lisp读书笔记&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;忽然发现这个还在草稿里……&lt;/p&gt;
+
+&lt;p&gt;2012年09月22日 星期六 13时26分44秒&lt;/p&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;好像此书就是为了初学者设计的……&lt;a href=&quot;#fnref:1&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;对一个信奉KISS原则的人尤其如此想，特别是崇尚极简主义的人呢&lt;a href=&quot;#fnref:2&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
 </content>
  </entry>
  
