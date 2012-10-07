@@ -5,6 +5,7 @@ description: "一种简便的在linux下合并pdf的方法"
 category: linux-tech
 tags: [latex]
 disqus: true
+mathjax: true
 ---
 {% include JB/setup %}
 
