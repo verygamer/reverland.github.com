@@ -1,0 +1,30 @@
+---
+layout: page
+title: 分类
+header: Posts By Category
+group: navigation
+---
+{% include JB/setup %}
+
+<ul id="tabs" class="tag_box nav nav-pills">
+  {% assign categories_list = site.categories %}
+  {% include JB/categories_list %}
+</ul>
+
+<hr />
+
+<div class="tab-content">
+
+{% for category in site.categories %} 
+  <div id="{{ category[0] }}-ref">
+  <h2>{{ category[0] }}</h2>
+  <ul>
+    {% assign pages_list = category[1] %}  
+    {% include JB/pages_list %}
+  </ul>
+  </div>
+{% endfor %}
+
+</div>
+
+{% include sd/pretty_tabs %}

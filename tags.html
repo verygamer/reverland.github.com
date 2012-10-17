@@ -1,0 +1,30 @@
+---
+layout: page
+title: 标签
+header: Posts By Tag
+group: navigation
+---
+{% include JB/setup %}
+
+<ul id="tabs" class="tag_box nav nav-pills">
+  {% assign tags_list = site.tags %}  
+  {% include JB/tags_list %}
+</ul>
+
+<hr />
+
+<div class="tab-content">
+
+{% for tag in site.tags %} 
+  <div id="{{ tag[0] }}-ref">
+  <h2>{{ tag[0] }}</h2>
+  <ul>
+    {% assign pages_list = tag[1] %}  
+    {% include JB/pages_list %}
+  </ul>
+  </div>
+{% endfor %}
+
+</div>
+
+{% include sd/pretty_tabs %}

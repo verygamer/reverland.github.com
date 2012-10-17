@@ -1,0 +1,99 @@
+---
+layout: page
+title: "Reverland的行知阁"
+tagline: 开放、分享、自由与进步.
+titleline: 追寻热情、智慧与美
+links: 
+  - url: "http://reverland.bitbucket.org/"
+    name: "my used to be wiki"
+    title: "此中有真意，欲辩已忘言"
+  - url: "http://www.jnrain.com/"
+    name: "江南听雨"
+    title: "种树南山下，听雨江南中"
+  - url: "http://liutos.github.com/"
+    name: "liutos"
+    title: "满目的common lisp"
+  - url: "http://xuyupeng.tk/"
+    name: "fengya90的个人网站"
+    title: "优雅的orgmode"
+  - url: "http://www.seainsight.me/"
+    name: "大名鼎鼎的Nautilus"
+    title: "Geek一枚"
+  - url: "http://aeropig.me/"
+    name: "空谷余音——诗意人生"
+    title: "落花人独立，微雨燕双飞"
+  - url: "http://gndrive.org/"
+    name: "高达数字实验室"
+    title: "It's out of this world"
+  - url: "http://www.cherrot.com/"
+    name: "Cherrot"
+    title: "Hacker to be"
+  - url: "http://xwyam.github.com/"
+    name: "xw_y_am's Github Pages"
+    title: "自幼尚古韵，工于编程，长于数学"
+---
+{% include JB/setup %}
+{% include sd/logo %}
+
+<h2 id="index_titleline">{{page.titleline}}</h2>
+<hr id="index_line" />
+<div class="span8 pull-left">
+  <ul class="posts index_posts span8">
+  <!-- for post in site.posts -->
+  {% for post in paginator.posts %}
+    <li>
+	  <div class="index_intro span6">
+	  <h3 class="index_title"><a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></h3>
+	  <p class="index_excerpt">{{ post.excerpt }}</p>
+	  </div>
+	  <span class="index_date span2">{{ post.date | date_to_string }}</span>
+	</li>
+  {% endfor %}
+  </ul>
+  <ul class="pager">
+    {% if paginator.previous_page %}
+      <li class="previous">
+      {% if paginator.page == 2 %}
+        <a href="/" rel="bookmark">Previous Page</a>
+      {% else %}
+        <a href="/page{{ paginator.previous_page }}" rel="bookmark">Previous Page</a>
+      {% endif %}
+      </li>
+    {% endif %}
+    {% if paginator.next_page %}
+      <li class="next">
+        <a href="/page{{ paginator.next_page }}" rel="bookmark" style="float:right">Next Page</a>
+      </li>
+    {% endif %}
+  </ul>
+</div>
+
+<div id="aside" class="well sidebar-nav">
+<ul class="nav nav-list">
+
+  <li class="nav-header">Categories</li>
+  {% assign categories_list = site.categories %}
+  {% include JB/categories_list %}
+
+  <li class="nav-header">Tags</li>
+  {% assign tags_list = site.tags %}
+  {% if tags_list.first[0] == null %}
+    {% for tag in tags_list %} 
+    	<li class="index_tags"><a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag }}-ref">{{ tag }} <span>{{ site.tags[tag].size }}</span></a></li>
+    {% endfor %}
+  {% else %}
+    {% for tag in tags_list %} 
+    	<li class="index_tags"><a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag[0] }}-ref">{{ tag[0] }} <span>{{ tag[1].size }}</span></a></li>
+    {% endfor %}
+  {% endif %}
+  {% assign tags_list = nil %}
+  <li class="clear"></li>
+  
+  {% include sd/disqus_recent_comment %}
+
+  {% include sd/friend_links %}
+  
+  {% include sd/github %}
+</ul>
+</div>
+

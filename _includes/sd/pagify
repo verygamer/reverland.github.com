@@ -1,0 +1,26 @@
+<script src="{{BASE_PATH}}/js/pagify.js" type="text/javascript"></script>
+<script type='text/javascript'>
+  $(document).ready(function() {
+    var pages = {{ pagify_pages }};
+    $('#top-navbar ul.nav>li>a').each(function(){
+      var href = $(this).attr('href');
+      var i;
+      for (i in pages) {
+        if (href == "{{BASE_PATH}}/"+pages[i]+".html") {
+          $(this).click(function(){
+              window.location.href = '#'+pages[i];
+              return false;
+          });
+          break;
+        }
+      }
+    });
+    $('.content').pagify({
+      pages: pages,
+      animation: 'fadeIn',
+      contentFilter: '.content',
+      default: null,
+      cache: false
+    });
+  });
+</script>

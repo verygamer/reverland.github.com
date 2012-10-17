@@ -1,0 +1,19 @@
+{% if site.author.github != "none" %}
+  <li class="nav-header"><a href="http://github.com/{{site.author.github}}">My Github Repos</a></li>
+  <li>
+	<ul id="github_repos">
+      <li class="loading">Status updating&#8230;</li>
+    </ul>
+  </li>
+  <script type="text/javascript" src="{{BASE_PATH}}/js/github.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+	  github.showRepos({
+        user: "{{site.author.github}}",
+		count: 4,
+		skip_forks: true,
+		target: '#github_repos'
+	  });
+    });
+  </script>
+{% endif %}

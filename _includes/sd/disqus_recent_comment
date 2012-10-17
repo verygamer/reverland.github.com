@@ -1,0 +1,10 @@
+{% if site.JB.comments.provider == "disqus" and page.comments != false %}
+
+  <li class="dsq-widget-title nav-header">最近回复</li>
+  <li id="recentcomments" class="dsq-widget">
+	<script type="text/javascript" src="http://{{ site.JB.comments.disqus.short_name }}.disqus.com/recent_comments_widget.js?num_items=4&amp;hide_avatars=0&amp;avatar_size=24&amp;excerpt_length=50"></script>
+  </li>
+  <li><small><a class="pull-right" href="http://disqus.com/">Powered by Disqus</a></small></li>
+  <li class="clear"></li>
+
+{% endif %}
