@@ -11,6 +11,7 @@ http://reverland.org/page2/index.html
 http://reverland.org/page3/index.html
 http://reverland.org/page4/index.html
 
+http://reverland.org/python/2012/10/14/scikit-learn-machine-learning-in-python
 http://reverland.org/Life/2012/10/14/always-look-on-the-bright-side-of-life
 http://reverland.org/Life/2012/09/20/
 http://reverland.org/python/2012/09/12/
@@ -65,4 +66,5 @@ http://reverland.org/linux-tech/2012/03/21/lfs
 http://reverland.org/linux-tech/2012/03/11/vrdp
 http://reverland.org/linux-tech/2012/03/06/vbox
 http://reverland.org/lisp/2012/02/23/vimlisp
+http://reverland.org/Life/2012/02/15/
 http://reverland.org/linux-tech/2012/02/07/vim-latexxelatex
