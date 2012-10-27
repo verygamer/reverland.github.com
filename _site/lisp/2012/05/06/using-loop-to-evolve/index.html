@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Using Loop To Evolve</title>
+    <meta name="description" content="Something like life game.">
+    <meta name="author" content="Reverland">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/syntax.css" rel="stylesheet" type="text/css" media="all">
+
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <div style="display:none">
+      <!--cnzz-->
+      <script src="http://s22.cnzz.com/stat.php?id=4548201&web_id=4548201" language="JavaScript"></script>
+    </div>
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <!-- Update these with your own images
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+    
+  </head>
+
+  <body>
+
+    <!--[if lt IE 8]><div style='border:1px solid #F7941D;background:#FEEFDA;text-align:center;clear:both;height:75px;position:relative;'><div style='position:absolute;right:3px;top:3px;font-family:courier new;font-weight:bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none";return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border:none;' alt='Close this notice'/></a></div><div style='width:640px;margin:0 auto;text-align:left;padding:0;overflow:hidden;color:black;'><div style='width:75px;float:left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div><div style='width:275px;float:left;font-family:Arial,sans-serif;'><div style='font-size:14px;font-weight:bold;margin-top:12px;'>You are using an outdated browser</div><div style='font-size:12px;margin-top:6px;line-height:12px;'>For a better experience using this site, please upgrade to a modern web browser.</div></div><div style='width:75px;float:left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border:none;' alt='Get Firefox 3.5'/></a></div><div style='width:75px;float:left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border:none;' alt='Get IE 8'/></a></div><div style='width:73px;float:left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border:none;' alt='Get Safari 4'/></a></div><div style='float:left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border:none;' alt='Get Google Chrome'/></a></div></div></div><![endif]-->
+
+
+    <div class="navbar" id="top-navbar">
+      <div class="navbar-inner">
+	<div class="container">
+	  <a class="brand" href="/">Reverland的行知阁</a>
+	  <ul class="nav">
+	    
+	    
+	    
+
+
+  
+    
+    	
+    	<li><a href="/about.html">关于</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/archive.html">归档</a></li>
+    	
+    
+  
+    
+    	
+    	<li><a href="/categories.html">分类</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/tags.html">标签</a></li>
+    	
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+	  </ul>
+	  <ul class="nav subscription pull-right" data-subscription="rss">
+	    <li>
+	    <a href="/atom.xml" rel="nofollow" title="subscribe via RSS">RSS</a>
+	    </li>
+	  </ul>
+	  <form class="navbar-search pull-right" method="get" action="http://www.google.com/search" target="google_window">
+	    <label for="g_search" class="hidden"></label>
+	    <input id="g_search" type="text" class="search-query" placeholder="Search..." name="q" />
+	    <input type="submit" name=”btnG” style="display:none" id="searchsubmit" value="Search" />
+	    <input type="hidden" name="ie" value="UTF-8" />
+	    <input type="hidden" name="oe" value="UTF-8" />
+	    <input type="hidden" name="hl" value="zh-CN" />
+	    <input type="hidden" name="domains" value="http://reverland.org" />
+	    <input type="hidden" name="sitesearch" value="http://reverland.org" />
+	  </form>
+	</div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div id="main-content" class="content">
+	
+<div class="page-header">
+    <h1>Using Loop To Evolve <small><!--Supporting tagline--></small></h1>
+</div>
+
+<div class="row">
+  <div id="article_indent" class="span9 pull-left">
+    <div class="span3 article_published">发表于
+      <span class="date">06 May 2012</span>
+      <div class="article_gplus"><div class="g-plusone" data-size="small" data-annotation="none"></div></div>
+    </div>
+    <div class="clear"></div>
+    
+      
+<h2 id="loop">满目的loop</h2>
+
+<p>loop是lisp中饱受争议的命令，因为它看起来不这么lispy，但它真得很强大。以下列举下基本用法：</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span>
+      <span class="nv">below</span> <span class="mi">5</span>
+      <span class="nv">sum</span> <span class="nv">i</span><span class="p">)</span> 
+<span class="c1">;counting from a starting point to an ending point</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span>
+      <span class="nv">from</span> <span class="mi">5</span>
+      <span class="nv">to</span> <span class="mi">10</span>
+      <span class="nv">sum</span> <span class="nv">i</span><span class="p">)</span>
+<span class="c1">;iterating through values in a list</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span>
+      <span class="nv">in</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">100</span> <span class="mi">20</span> <span class="mi">3</span><span class="p">)</span>
+      <span class="nv">sum</span> <span class="nv">i</span><span class="p">)</span>
+<span class="c1">;doing stuff in a loop</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span>
+      <span class="nv">below</span> <span class="mi">5</span>
+      <span class="nb">do</span> <span class="p">(</span><span class="nb">print</span> <span class="nv">i</span><span class="p">))</span>
+<span class="c1">;dong stuff under certain conditions</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span>
+      <span class="nv">below</span> <span class="mi">10</span>
+      <span class="nb">when</span> <span class="p">(</span><span class="nb">oddp</span> <span class="nv">i</span><span class="p">)</span>
+      <span class="nv">sum</span> <span class="nv">i</span><span class="p">)</span>
+<span class="c1">;breaking out of a loop early</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span>
+      <span class="nv">from</span> <span class="mi">0</span>
+      <span class="nb">do</span> <span class="p">(</span><span class="nb">print</span> <span class="nv">i</span><span class="p">)</span>
+      <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">i</span> <span class="mi">5</span><span class="p">)</span>
+      <span class="nb">return</span> <span class="ss">&#39;falafel</span><span class="p">)</span>
+<span class="c1">;collecting a list of values</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span>
+      <span class="nv">in</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">)</span>
+      <span class="nv">collect</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">i</span> <span class="nv">i</span><span class="p">))</span>
+<span class="c1">;using multiple for clauses</span>
+<span class="c1">;loop 10 times</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">x</span> <span class="nv">below</span> <span class="mi">10</span>
+      <span class="nv">for</span> <span class="nv">y</span> <span class="nv">below</span> <span class="mi">10</span>
+      <span class="nv">collect</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">))</span>
+<span class="c1">;nested loops for 10x10 times</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">x</span> <span class="nv">below</span> <span class="mi">10</span>
+      <span class="nv">collect</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">y</span> <span class="nv">below</span> <span class="mi">10</span>
+                    <span class="nv">collect</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)))</span>
+<span class="c1">;track the index number of items in a list</span>
+<span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span>
+      <span class="nv">from</span> <span class="mi">0</span>
+      <span class="nv">for</span> <span class="nv">day</span>
+      <span class="nv">in</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">monday</span> <span class="nv">tuesday</span> <span class="nv">wednesday</span> <span class="nv">thursday</span> <span class="nv">friday</span> <span class="nv">saturday</span> <span class="nv">sunday</span><span class="p">)</span>
+      <span class="nv">collect</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">i</span> <span class="nv">day</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p>当然还有很多，这个命令异常灵活，以致于作者做了个<a href="http://landoflisp.com/">loop周期表</a>。</p>
+
+<h2 id="using-loop-to-evolve">Using Loop to Evolve</h2>
+
+<p>这个游戏看上去还挺轻松的，很有意思的“生命游戏”。不多说了，上码</p>
+
+<div class="highlight"><pre><code class="cl"><span class="c1">;;;The extent of the world</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*width*</span> <span class="mi">100</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*height*</span> <span class="mi">30</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*jungle*</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">45</span> <span class="mi">10</span> <span class="mi">10</span> <span class="mi">10</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*plant-energy*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="c1">;;;Growing plants in our world</span>
+<span class="c1">;;cons cells should be compared with equal</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*plants*</span> <span class="p">(</span><span class="nb">make-hash-table</span> <span class="ss">:test</span> <span class="nf">#&#39;</span><span class="nb">equal</span><span class="p">))</span>
+<span class="c1">;;Grow new plants</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">random-plant</span> <span class="p">(</span><span class="nv">left</span> <span class="nv">top</span> <span class="nv">width</span> <span class="nv">height</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">pos</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">left</span> <span class="p">(</span><span class="nb">random</span> <span class="nv">width</span><span class="p">))</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">top</span> <span class="p">(</span><span class="nb">random</span> <span class="nv">height</span><span class="p">)))))</span>
+    <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">pos</span> <span class="vg">*plants*</span><span class="p">)</span> <span class="no">t</span><span class="p">)))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">add-plants</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nv">random-plant</span> <span class="vg">*jungle*</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">random-plant</span> <span class="mi">0</span> <span class="mi">0</span> <span class="vg">*width*</span> <span class="vg">*height*</span><span class="p">))</span>
+<span class="c1">;;;Creating animals</span>
+<span class="p">(</span><span class="nb">defstruct</span> <span class="nv">animal</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">energy</span> <span class="nv">dir</span> <span class="nv">genes</span><span class="p">)</span>
+<span class="c1">;;x,y stand for the position</span>
+<span class="c1">;;energy represent its energy,when the energy exhausted,it will die</span>
+<span class="c1">;;dir is the direction it faced</span>
+<span class="c1">;;genes decide the direction it will choose</span>
+<span class="c1">;;Creating an animal in the center of the map</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*animals*</span>
+  <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nv">make-animal</span> <span class="ss">:x</span><span class="c1">;we only use list to traverse animal,</span>
+                     <span class="c1">;its efficient enough.</span>
+                     <span class="p">(</span><span class="nb">ash</span> <span class="vg">*width*</span> <span class="mi">-1</span><span class="p">)</span>
+                     <span class="ss">:y</span>
+                     <span class="p">(</span><span class="nb">ash</span> <span class="vg">*height*</span> <span class="mi">-1</span><span class="p">)</span>
+                     <span class="ss">:energy</span>
+                     <span class="mi">1000</span>
+                     <span class="ss">:dir</span>
+                     <span class="mi">0</span>
+                     <span class="ss">:genes</span>
+                     <span class="p">(</span><span class="nb">loop</span> <span class="nv">repeat</span> <span class="mi">8</span>
+                           <span class="c1">;collect is OK??</span>
+                           <span class="nv">collecting</span> <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">random</span> <span class="mi">10</span><span class="p">))))))</span>
+<span class="c1">;;;Handling animal motion</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">move</span> <span class="p">(</span><span class="nv">animal</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">dir</span> <span class="p">(</span><span class="nv">animal-dir</span> <span class="nv">animal</span><span class="p">))</span>
+        <span class="p">(</span><span class="nv">x</span> <span class="p">(</span><span class="nv">animal-x</span> <span class="nv">animal</span><span class="p">))</span>
+        <span class="p">(</span><span class="nv">y</span> <span class="p">(</span><span class="nv">animal-y</span> <span class="nv">animal</span><span class="p">)))</span>
+    <span class="c1">;如果达到*width*,置0</span>
+    <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nv">animal-x</span> <span class="nv">animal</span><span class="p">)</span> <span class="p">(</span><span class="nb">mod</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span>
+                                    <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">and</span> <span class="p">(</span><span class="nb">&gt;=</span> <span class="nv">dir</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">dir</span> <span class="mi">5</span><span class="p">))</span> <span class="mi">1</span><span class="p">)</span>
+                                          <span class="p">((</span><span class="nb">or</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">dir</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">dir</span> <span class="mi">5</span><span class="p">))</span> <span class="mi">0</span><span class="p">)</span>
+                                          <span class="p">(</span><span class="no">t</span> <span class="mi">-1</span><span class="p">))</span>
+                                    <span class="vg">*width*</span><span class="p">)</span>
+                                 <span class="vg">*width*</span><span class="p">))</span>
+    <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nv">animal-y</span> <span class="nv">animal</span><span class="p">)</span> <span class="p">(</span><span class="nb">mod</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">y</span>
+                                    <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">and</span> <span class="p">(</span><span class="nb">&gt;=</span> <span class="nv">dir</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">dir</span> <span class="mi">3</span><span class="p">))</span> <span class="mi">-1</span><span class="p">)</span>
+                                          <span class="p">((</span><span class="nb">and</span> <span class="p">(</span><span class="nb">&gt;=</span> <span class="nv">dir</span> <span class="mi">4</span><span class="p">)</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">dir</span> <span class="mi">7</span><span class="p">))</span> <span class="mi">1</span><span class="p">)</span>
+                                          <span class="p">(</span><span class="no">t</span> <span class="mi">0</span><span class="p">))</span>
+                                    <span class="vg">*height*</span><span class="p">)</span>
+                                 <span class="vg">*height*</span><span class="p">))</span>
+    <span class="p">(</span><span class="nb">decf</span> <span class="p">(</span><span class="nv">animal-energy</span> <span class="nv">animal</span><span class="p">))))</span>
+<span class="c1">;;;Handling animal turning</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">turn</span> <span class="p">(</span><span class="nv">animal</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="p">(</span><span class="nb">random</span> <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="p">(</span><span class="nv">animal-genes</span> <span class="nv">animal</span><span class="p">)))))</span>
+    <span class="c1">;;this was not easy to understand it,</span>
+    <span class="c1">;;当随机数落在哪个区间就哪个方向的递归描述</span>
+    <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">angle</span> <span class="p">(</span><span class="nv">genes</span> <span class="nv">x</span><span class="p">)</span>
+               <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">xnu</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">genes</span><span class="p">))))</span>
+                 <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">xnu</span> <span class="mi">0</span><span class="p">)</span>
+                   <span class="mi">0</span>
+                   <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nv">angle</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">genes</span><span class="p">)</span> <span class="nv">xnu</span><span class="p">))))))</span>
+      <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nv">animal-dir</span> <span class="nv">animal</span><span class="p">)</span>
+            <span class="p">(</span><span class="nb">mod</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nv">animal-dir</span> <span class="nv">animal</span><span class="p">)</span> <span class="p">(</span><span class="nv">angle</span> <span class="p">(</span><span class="nv">animal-genes</span> <span class="nv">animal</span><span class="p">)</span> <span class="nv">x</span><span class="p">))</span>
+              <span class="mi">8</span><span class="p">)))))</span>
+<span class="c1">;;;Handling animal eating</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">eat</span> <span class="p">(</span><span class="nv">animal</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">pos</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nv">animal-x</span> <span class="nv">animal</span><span class="p">)</span> <span class="p">(</span><span class="nv">animal-y</span> <span class="nv">animal</span><span class="p">))))</span>
+    <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">pos</span> <span class="vg">*plants*</span><span class="p">)</span>
+      <span class="p">(</span><span class="nb">incf</span> <span class="p">(</span><span class="nv">animal-energy</span> <span class="nv">animal</span><span class="p">)</span> <span class="vg">*plant-energy*</span><span class="p">)</span>
+      <span class="p">(</span><span class="nb">remhash</span> <span class="nv">pos</span> <span class="vg">*plants*</span><span class="p">))))</span>
+<span class="c1">;;;Handling animal reproduction</span>
+<span class="c1">;;定义繁殖时需要能量</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*reproduction-energy*</span> <span class="mi">200</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">reproduce</span> <span class="p">(</span><span class="nv">animal</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">e</span> <span class="p">(</span><span class="nv">animal-energy</span> <span class="nv">animal</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">&gt;=</span> <span class="nv">e</span> <span class="vg">*reproduction-energy*</span><span class="p">)</span>
+      <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nv">animal-energy</span> <span class="nv">animal</span><span class="p">)</span> <span class="p">(</span><span class="nb">ash</span> <span class="nv">e</span> <span class="mi">-1</span><span class="p">))</span>
+      <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">animal-nu</span> <span class="p">(</span><span class="nb">copy-structure</span> <span class="nv">animal</span><span class="p">))</span><span class="c1">;浅复制命令</span>
+            <span class="p">(</span><span class="nv">genes</span> <span class="p">(</span><span class="nb">copy-list</span> <span class="p">(</span><span class="nv">animal-genes</span> <span class="nv">animal</span><span class="p">)))</span>
+            <span class="p">(</span><span class="nv">mutation</span> <span class="p">(</span><span class="nb">random</span> <span class="mi">8</span><span class="p">)))</span>
+        <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">nth</span> <span class="nv">mutation</span> <span class="nv">genes</span><span class="p">)</span> 
+              <span class="p">(</span><span class="nb">max</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">nth</span> <span class="nv">mutation</span> <span class="nv">genes</span><span class="p">)</span> <span class="p">(</span><span class="nb">random</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">-1</span><span class="p">)))</span>
+<span class="c1">;This means the gene value will change plus or minus one, or</span>
+<span class="c1">;stay the same.</span>
+        <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nv">animal-genes</span> <span class="nv">animal-nu</span><span class="p">)</span> <span class="nv">genes</span><span class="p">)</span>
+        <span class="p">(</span><span class="nb">push</span> <span class="nv">animal-nu</span> <span class="vg">*animals*</span><span class="p">)))))</span>
+<span class="c1">;;;Simulating a day in our world</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">update-world</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*animals*</span> <span class="p">(</span><span class="nb">remove-if</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">animal</span><span class="p">)</span>
+                               <span class="p">(</span><span class="nb">&lt;=</span> <span class="p">(</span><span class="nv">animal-energy</span> <span class="nv">animal</span><span class="p">)</span> <span class="mi">0</span><span class="p">))</span>
+                             <span class="vg">*animals*</span><span class="p">))</span>
+  <span class="p">(</span><span class="nb">mapc</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">animal</span><span class="p">)</span>
+          <span class="p">(</span><span class="nv">turn</span> <span class="nv">animal</span><span class="p">)</span>
+          <span class="p">(</span><span class="nv">move</span> <span class="nv">animal</span><span class="p">)</span>
+          <span class="p">(</span><span class="nv">eat</span> <span class="nv">animal</span><span class="p">)</span>
+          <span class="p">(</span><span class="nv">reproduce</span> <span class="nv">animal</span><span class="p">))</span>
+        <span class="vg">*animals*</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">add-plants</span><span class="p">))</span>
+<span class="c1">;;;Drawing our world</span>
+<span class="c1">;;;This has low performance but will not matters</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">draw-world</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">y</span>
+        <span class="nv">below</span> <span class="vg">*height*</span>
+        <span class="nb">do</span> <span class="p">(</span><span class="k">progn</span> 
+             <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span><span class="c1">;outputs a newline only if the output-stream</span>
+             <span class="c1">;is not already at the start of a line</span>
+             <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;|&quot;</span><span class="p">)</span>
+             <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">x</span>
+                   <span class="nv">below</span> <span class="vg">*width*</span>
+                   <span class="nb">do</span> <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">some</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">animal</span><span class="p">)</span>
+                                     <span class="c1">;可能不止一个动物</span>
+                                            <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">=</span> <span class="p">(</span><span class="nv">animal-x</span> <span class="nv">animal</span><span class="p">)</span> <span class="nv">x</span><span class="p">)</span>
+                                                 <span class="p">(</span><span class="nb">=</span> <span class="p">(</span><span class="nv">animal-y</span> <span class="nv">animal</span><span class="p">)</span> <span class="nv">y</span><span class="p">)))</span>
+                                          <span class="vg">*animals*</span><span class="p">)</span>
+                                    <span class="sc">#\M</span><span class="p">)</span>
+                                   <span class="p">((</span><span class="nb">gethash</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="vg">*plants*</span><span class="p">)</span> <span class="sc">#\*</span><span class="p">)</span>
+                                   <span class="p">(</span><span class="no">t</span> <span class="sc">#\space</span><span class="p">))))</span>
+             <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;|&quot;</span><span class="p">))))</span>
+<span class="c1">;;;Creating a user interface</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">evolution</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nv">draw-world</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">str</span> <span class="p">(</span><span class="nb">read-line</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">equal</span> <span class="nv">str</span> <span class="s">&quot;quit&quot;</span><span class="p">)</span> <span class="p">())</span>
+<span class="c1">;Recall Conrad’s Rule of Thumb for Comparing Stuff</span>
+<span class="c1">;use eq for symbols</span>
+<span class="c1">;use equal for everything else</span>
+          <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="p">(</span><span class="nb">parse-integer</span> <span class="nv">str</span> <span class="ss">:junk-allowed</span> <span class="no">t</span><span class="p">)))</span>
+               <span class="p">(</span><span class="k">if</span> <span class="nv">x</span>
+                 <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span>
+                       <span class="nv">below</span> <span class="nv">x</span>
+                       <span class="nb">do</span> <span class="p">(</span><span class="nv">update-world</span><span class="p">)</span>
+                       <span class="k">if</span> <span class="p">(</span><span class="nb">zerop</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">i</span> <span class="mi">1000</span><span class="p">))</span>
+                       <span class="nb">do</span> <span class="p">(</span><span class="nb">princ</span> <span class="sc">#\.</span><span class="p">))</span>
+                 <span class="p">(</span><span class="nv">update-world</span><span class="p">))</span>
+               <span class="p">(</span><span class="nv">evolution</span><span class="p">))))))</span>
+</code></pre>
+</div>
+
+<p>这样开始模拟</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">evolution</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>回车看看，100次看看，5000000次看看，据作者说5million次sbcl几分钟就可以搞定。我相信我的计算机比作者那时候好，可是….</p>
+
+<div class="highlight"><pre><code class="cl"><span class="nv">Evaluation</span> <span class="nv">took:</span>
+  <span class="mf">789.430</span> <span class="nv">seconds</span> <span class="nv">of</span> <span class="nc">real</span> <span class="nb">time</span>
+  <span class="mf">459.846682</span> <span class="nv">seconds</span> <span class="nv">of</span> <span class="nv">total</span> <span class="nv">run</span> <span class="nb">time</span> <span class="p">(</span><span class="mf">456.986869</span> <span class="nv">user,</span> <span class="mf">2.859813</span> <span class="nv">system</span><span class="p">)</span>
+  <span class="nv">[</span> <span class="nv">Run</span> <span class="nv">times</span> <span class="nv">consist</span> <span class="nv">of</span> <span class="mf">18.864</span> <span class="nv">seconds</span> <span class="nv">GC</span> <span class="nv">time,</span> <span class="nb">and</span> <span class="mf">440.983</span> <span class="nv">seconds</span> <span class="nv">non-GC</span> <span class="nv">time.</span> <span class="nv">]</span>
+  <span class="nv">58.25%</span> <span class="nv">CPU</span>
+  <span class="mi">1</span><span class="o">,</span><span class="mi">785</span><span class="o">,</span><span class="mi">005</span><span class="o">,</span><span class="mi">533</span><span class="o">,</span><span class="mi">676</span> <span class="nv">processor</span> <span class="nv">cycles</span>
+  <span class="mi">125</span><span class="o">,</span><span class="mi">872</span><span class="o">,</span><span class="mi">778</span><span class="o">,</span><span class="mi">768</span> <span class="nv">bytes</span> <span class="nv">consed</span>
+</code></pre>
+</div>
+
+<p>什么叫手抖竟然开始打成了5billion.这时候科学计数法就发挥作用了，感谢自由建客。
+***
+Looks good however，</p>
+
+<p>M代表某无性生殖动物，<code>*</code>代表某随机生长植物</p>
+
+<p><img src="http://lhtlyybox.googlecode.com/files/%E6%8A%93%E5%9B%BE75.png" hight="200" width="400" alt="虚拟进化" /></p>
+
+<hr />
+
+<h2 id="section">写在最后</h2>
+
+<p>资源丰富区自然选择留下了那些逡巡不前的，资源短缺区留下了富于冒险的。</p>
+
+<p>之后有上网查查其它进化游戏，发现资源丰富时资源消耗小的被淘汰，资源缺乏时资源消耗大的被淘汰</p>
+
+<p>启发性的游戏啊</p>
+
+<p>最后看了个有关进化选择的视频，是某研究人员们通过进化设计人工大脑的，感觉很震惊。特别是看到最后对之失控，看到人工大脑进化出意想不到的特性时。</p>
+
+
+    
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/lisp/2012/05/03/the-orc-battle-game" title="The Orc Battle Game">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/lisp/2012/05/09/attack-of-the-robots" title="Attack of the Robots">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_container">
+    <a href="#" class="comment btn btn-primary" onclick="return false;">点击查看评论</a>
+    <div id="disqus_thread"></div>
+</div>
+<script type="text/javascript">
+var show_comments = function(){
+    var disqus_developer = 1;
+    var disqus_shortname = 'reverlandblog'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+};
+
+$(document).ready(function(){
+  $('#disqus_container>.comment').click(function(){
+    $(this).html('加载中……');
+	show_comments();
+	$(this).remove();
+  });
+});
+
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+
+  <div class="span3 pull-right">
+    <ul class="nav nav-list">
+      <li class="nav-header">分类</li>
+      
+       
+        
+        <li>
+        
+        <a href="/categories.html#linux-tech-ref">linux-tech <span>6</span></a>
+        </li>
+       
+        
+        <li class="active">
+        
+        <a href="/categories.html#lisp-ref">lisp <span>22</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#web-ref">web <span>2</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#reviews-ref">reviews <span>3</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Life-ref">Life <span>12</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#scheme-ref">scheme <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#art-ref">art <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#others-ref">others <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#math-ref">math <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#test-ref">test <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#python-ref">python <span>8</span></a>
+        </li>
+      
+      
+        <li class="nav-header">Tags</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#land-of-lisp-ref">land-of-lisp <span>20</span></a></li>
+    
+  
+
+
+
+      
+    </ul>
+  </div>
+</div>
+
+<!-- Gplus -->
+<!--script type="text/javascript">
+  window.___gcfg = {lang: 'zh-CN'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+
+      </div>
+
+      <footer>
+      <p>&copy; Reverland 2012 
+      with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+      and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+      </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+    <script type="text/javascript" src="/js/sd.js"></script>
+  </body>
+</html>
+

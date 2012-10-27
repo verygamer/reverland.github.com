@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Archlinux下合并pdf</title>
+    <meta name="description" content="一种简便的在linux下合并pdf的方法">
+    <meta name="author" content="Reverland">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/syntax.css" rel="stylesheet" type="text/css" media="all">
+
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <div style="display:none">
+      <!--cnzz-->
+      <script src="http://s22.cnzz.com/stat.php?id=4548201&web_id=4548201" language="JavaScript"></script>
+    </div>
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <!-- Update these with your own images
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+    
+    <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+	  /*showProcessingMessages: false,*/
+	  jax: ["input/TeX", "output/HTML-CSS"],
+	  TeX: {
+		TagSide: "left",
+		Macros: {
+		  /*RR: '{\\bf R}',
+		  bold: ['{\\bf #1}',1]*/
+		  sdash: '{|\\!\\!\\!\\sim}'
+		}
+	  },
+	  tex2jax: {
+		  inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+		  processEscapes: true
+	  }
+	});
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript"
+		src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+  </head>
+
+  <body>
+
+    <!--[if lt IE 8]><div style='border:1px solid #F7941D;background:#FEEFDA;text-align:center;clear:both;height:75px;position:relative;'><div style='position:absolute;right:3px;top:3px;font-family:courier new;font-weight:bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none";return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border:none;' alt='Close this notice'/></a></div><div style='width:640px;margin:0 auto;text-align:left;padding:0;overflow:hidden;color:black;'><div style='width:75px;float:left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div><div style='width:275px;float:left;font-family:Arial,sans-serif;'><div style='font-size:14px;font-weight:bold;margin-top:12px;'>You are using an outdated browser</div><div style='font-size:12px;margin-top:6px;line-height:12px;'>For a better experience using this site, please upgrade to a modern web browser.</div></div><div style='width:75px;float:left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border:none;' alt='Get Firefox 3.5'/></a></div><div style='width:75px;float:left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border:none;' alt='Get IE 8'/></a></div><div style='width:73px;float:left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border:none;' alt='Get Safari 4'/></a></div><div style='float:left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border:none;' alt='Get Google Chrome'/></a></div></div></div><![endif]-->
+
+
+    <div class="navbar" id="top-navbar">
+      <div class="navbar-inner">
+	<div class="container">
+	  <a class="brand" href="/">Reverland的行知阁</a>
+	  <ul class="nav">
+	    
+	    
+	    
+
+
+  
+    
+    	
+    	<li><a href="/about.html">关于</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/archive.html">归档</a></li>
+    	
+    
+  
+    
+    	
+    	<li><a href="/categories.html">分类</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/tags.html">标签</a></li>
+    	
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+	  </ul>
+	  <ul class="nav subscription pull-right" data-subscription="rss">
+	    <li>
+	    <a href="/atom.xml" rel="nofollow" title="subscribe via RSS">RSS</a>
+	    </li>
+	  </ul>
+	  <form class="navbar-search pull-right" method="get" action="http://www.google.com/search" target="google_window">
+	    <label for="g_search" class="hidden"></label>
+	    <input id="g_search" type="text" class="search-query" placeholder="Search..." name="q" />
+	    <input type="submit" name=”btnG” style="display:none" id="searchsubmit" value="Search" />
+	    <input type="hidden" name="ie" value="UTF-8" />
+	    <input type="hidden" name="oe" value="UTF-8" />
+	    <input type="hidden" name="hl" value="zh-CN" />
+	    <input type="hidden" name="domains" value="http://reverland.org" />
+	    <input type="hidden" name="sitesearch" value="http://reverland.org" />
+	  </form>
+	</div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div id="main-content" class="content">
+	
+<div class="page-header">
+    <h1>Archlinux下合并pdf <small><!--Supporting tagline--></small></h1>
+</div>
+
+<div class="row">
+  <div id="article_indent" class="span9 pull-left">
+    <div class="span3 article_published">发表于
+      <span class="date">28 May 2012</span>
+      <div class="article_gplus"><div class="g-plusone" data-size="small" data-annotation="none"></div></div>
+    </div>
+    <div class="clear"></div>
+    
+      
+<h2 id="linuxpdf">linux下合并pdf</h2>
+
+<p>写激光原理论文，老师给了个封面。需要将封面和内容弄到一个文件中。</p>
+
+<p>以前用过pdfmod什么的，结果发现我用XeLaTeX编译出来的是乱码。</p>
+
+<p>后来试过源里的pdfeditor，这个……kde下太难看了，功能倒挺强，看上去好复杂，点几下鼠标没弄懂，于是也放弃了。</p>
+
+<p>再后来听说了pdfjam，pdfsam，pdftk……</p>
+
+<p>多多少少有些洁癖好么，不喜欢一堆一堆的软件，有这么些时候命令很得心应手，像用ffmpeg转转视频格式啊，用sox转转音频格式啊。</p>
+
+<p>linux下总是有好工具的，有两种方法：</p>
+
+<ul>
+  <li>新建一个TeX文件，使用pdfpages宏包，这种方法可以指定页码。参见<a href="http://latex.yo2.cn/articles/tex-merg-pdf.html">用TeX合并pdf</a>。一定要用pdflatex编译。</li>
+  <li>使用ghostscript工具,一般这个都被pdf阅读器依赖的。参见<a href="http://latex.yo2.cn/articles/gs-pdfwrite.html">合并 ps/pdf 文件</a>。</li>
+</ul>
+
+<div class="highlight"><pre><code class="bash">gs -q -dNOPAUSE -dBATCH -sDEVICE<span class="o">=</span>pdfwrite -sOutputFile<span class="o">=</span>bar.pdf -f foo1.pdf foo2.pdf
+</code></pre>
+</div>
+
+<h2 id="section">之外的废话</h2>
+<p>这几天一直忙着复习，几天时间把一学期老师讲的东西预习一遍，然后就要吊儿郎当的开卷考试了。又有那激光原理期末大作业，我是当然要用LaTeX来写了，虽然不准备再研究这个，但用word总是让我有些无法忍受。</p>
+
+<p>上手才发现，东西基本都忘了。好久没用过基本的命令都忘的一干二净。还好有以前的自己做的模板，打开chinatex数学排版问题集边查边写，在开着vim-latex插件的手册随时查阅，实在不行还有google大神，总算最后凑合着写完了。</p>
+
+<p>自从见识到mathjax项目后，又在人大那群搞R的人的博客上听说用html做幻灯片的项目，我便日觉LaTeX将没什么前途了。上网还查到现在还有把自己简历写成html的，html前途光明的印象便越发深刻。虽然mathjax还有些问题，但不管是学术和非学术界，本地化的文档正在走向灭绝估计已成定论。</p>
+
+<p>因为这个网站的问题，看了点介绍html5的书，书中激情澎湃的介绍了html5的各种强大应用，栩栩如生的描绘出了一个属于网络的未来世界。看完之后，对LaTeX更没有热情了。</p>
+
+<p>但作业还是要写的，老师很体贴的只收pdf，不像上学期一样还肯收word文档了，也不像cpp老师一样只收word文档了。所以又复习了下LaTeX，还不忘最后加上proudly powered by LaTeX，虽然没什么意思。</p>
+
+<p>前几天一个学数学的同学找我帮他调教LaTeX，因为他们要发论文。模板多老我就不说了，中文断字都没做好，更纠结的是他们的文章，都是在word03和mathtype中写的，然后转成TeX……</p>
+
+<p>时光滚滚向前，我本以为世界进步地很快，然而它的惯性出乎意料的大。</p>
+
+
+    
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/Life/2012/05/26/" title="失望">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/lisp/2012/05/31/tail-call-optimization" title="Tail Call Optimization">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_container">
+    <a href="#" class="comment btn btn-primary" onclick="return false;">点击查看评论</a>
+    <div id="disqus_thread"></div>
+</div>
+<script type="text/javascript">
+var show_comments = function(){
+    var disqus_developer = 1;
+    var disqus_shortname = 'reverlandblog'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+};
+
+$(document).ready(function(){
+  $('#disqus_container>.comment').click(function(){
+    $(this).html('加载中……');
+	show_comments();
+	$(this).remove();
+  });
+});
+
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+
+  <div class="span3 pull-right">
+    <ul class="nav nav-list">
+      <li class="nav-header">分类</li>
+      
+       
+        
+        <li class="active">
+        
+        <a href="/categories.html#linux-tech-ref">linux-tech <span>6</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#lisp-ref">lisp <span>22</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#web-ref">web <span>2</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#reviews-ref">reviews <span>3</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Life-ref">Life <span>12</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#scheme-ref">scheme <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#art-ref">art <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#others-ref">others <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#math-ref">math <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#test-ref">test <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#python-ref">python <span>8</span></a>
+        </li>
+      
+      
+        <li class="nav-header">Tags</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#latex-ref">latex <span>2</span></a></li>
+    
+  
+
+
+
+      
+    </ul>
+  </div>
+</div>
+
+<!-- Gplus -->
+<!--script type="text/javascript">
+  window.___gcfg = {lang: 'zh-CN'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+
+      </div>
+
+      <footer>
+      <p>&copy; Reverland 2012 
+      with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+      and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+      </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+    <script type="text/javascript" src="/js/sd.js"></script>
+  </body>
+</html>
+

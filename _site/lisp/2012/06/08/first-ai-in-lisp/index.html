@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>First AI in lisp</title>
+    <meta name="description" content="用lisp实现一个简单的AI。">
+    <meta name="author" content="Reverland">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/css/syntax.css" rel="stylesheet" type="text/css" media="all">
+
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <div style="display:none">
+      <!--cnzz-->
+      <script src="http://s22.cnzz.com/stat.php?id=4548201&web_id=4548201" language="JavaScript"></script>
+    </div>
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <!-- Update these with your own images
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+    
+  </head>
+
+  <body>
+
+    <!--[if lt IE 8]><div style='border:1px solid #F7941D;background:#FEEFDA;text-align:center;clear:both;height:75px;position:relative;'><div style='position:absolute;right:3px;top:3px;font-family:courier new;font-weight:bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none";return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border:none;' alt='Close this notice'/></a></div><div style='width:640px;margin:0 auto;text-align:left;padding:0;overflow:hidden;color:black;'><div style='width:75px;float:left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div><div style='width:275px;float:left;font-family:Arial,sans-serif;'><div style='font-size:14px;font-weight:bold;margin-top:12px;'>You are using an outdated browser</div><div style='font-size:12px;margin-top:6px;line-height:12px;'>For a better experience using this site, please upgrade to a modern web browser.</div></div><div style='width:75px;float:left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border:none;' alt='Get Firefox 3.5'/></a></div><div style='width:75px;float:left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border:none;' alt='Get IE 8'/></a></div><div style='width:73px;float:left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border:none;' alt='Get Safari 4'/></a></div><div style='float:left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border:none;' alt='Get Google Chrome'/></a></div></div></div><![endif]-->
+
+
+    <div class="navbar" id="top-navbar">
+      <div class="navbar-inner">
+	<div class="container">
+	  <a class="brand" href="/">Reverland的行知阁</a>
+	  <ul class="nav">
+	    
+	    
+	    
+
+
+  
+    
+    	
+    	<li><a href="/about.html">关于</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/archive.html">归档</a></li>
+    	
+    
+  
+    
+    	
+    	<li><a href="/categories.html">分类</a></li>
+    	
+    
+  
+    
+  
+    
+    	
+    	<li><a href="/tags.html">标签</a></li>
+    	
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+	  </ul>
+	  <ul class="nav subscription pull-right" data-subscription="rss">
+	    <li>
+	    <a href="/atom.xml" rel="nofollow" title="subscribe via RSS">RSS</a>
+	    </li>
+	  </ul>
+	  <form class="navbar-search pull-right" method="get" action="http://www.google.com/search" target="google_window">
+	    <label for="g_search" class="hidden"></label>
+	    <input id="g_search" type="text" class="search-query" placeholder="Search..." name="q" />
+	    <input type="submit" name=”btnG” style="display:none" id="searchsubmit" value="Search" />
+	    <input type="hidden" name="ie" value="UTF-8" />
+	    <input type="hidden" name="oe" value="UTF-8" />
+	    <input type="hidden" name="hl" value="zh-CN" />
+	    <input type="hidden" name="domains" value="http://reverland.org" />
+	    <input type="hidden" name="sitesearch" value="http://reverland.org" />
+	  </form>
+	</div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div id="main-content" class="content">
+	
+<div class="page-header">
+    <h1>First AI in lisp <small><!--Supporting tagline--></small></h1>
+</div>
+
+<div class="row">
+  <div id="article_indent" class="span9 pull-left">
+    <div class="span3 article_published">发表于
+      <span class="date">08 June 2012</span>
+      <div class="article_gplus"><div class="g-plusone" data-size="small" data-annotation="none"></div></div>
+    </div>
+    <div class="clear"></div>
+    
+      
+<h2 id="section">创造一个智能的对手</h2>
+
+<p>我们的<a href="/lisp/2012/05/23/dice-of-doom/">Dice of Doom</a>游戏树代码有个分开的游戏树生成使向游戏引擎添加AI很容易。事实上，让我们跟着作者添加23行代码来实现AI！！</p>
+
+<p>让我们先看看AI如何决定移动：</p>
+
+<ul>
+  <li>查看每个可允许的移动</li>
+  <li>对每一步的后的board评分</li>
+  <li>选择分值最高的移动</li>
+</ul>
+
+<p>看起来很容易，那么怎么实现评分？如果一步后就赢了，很容易评分。如果不是的话怎么办？我们的移动将取决于对手的移动，为了不陷入不断考虑对手的境地中，提出一种算法。</p>
+
+<h2 id="section-1">最小最大算法</h2>
+
+<p>当赛场上只有两个玩家时，有这么个规则：对他人好的对我不好。这意味着我们可以采取如下模式决定对手的移动：</p>
+
+<ul>
+  <li>查看每个可行移动</li>
+  <li>对每一步后的board评分</li>
+  <li>选择最小的评分的移动</li>
+</ul>
+
+<p>综上，这就是最大最小算法。这很关键，结果是我们可以避免分别为自己和对手计算评分，然后向下搜索游戏树中好的移动变得更简单和更快。为了让算法成为代码，还需要做少许调整。</p>
+
+<h2 id="section-2">将最大最小算法转化为代码</h2>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">rate-position</span> <span class="p">(</span><span class="nv">tree</span> <span class="nv">player</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">moves</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))</span>
+    <span class="p">(</span><span class="k">if</span> <span class="nv">moves</span>
+      <span class="p">(</span><span class="nb">apply</span> <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">tree</span><span class="p">)</span> <span class="nv">player</span><span class="p">)</span>
+               <span class="nf">#&#39;</span><span class="nb">max</span>
+               <span class="nf">#&#39;</span><span class="nb">min</span><span class="p">)</span>
+             <span class="p">(</span><span class="nv">get-ratings</span> <span class="nv">tree</span> <span class="nv">player</span><span class="p">))</span>
+      <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">w</span> <span class="p">(</span><span class="nv">winners</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">))))</span>
+        <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">player</span> <span class="nv">w</span><span class="p">)</span>
+          <span class="p">(</span><span class="nb">/</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">w</span><span class="p">))</span>
+          <span class="mi">0</span><span class="p">)))))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">get-ratings</span> <span class="p">(</span><span class="nv">tree</span> <span class="nv">player</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">move</span><span class="p">)</span>
+            <span class="p">(</span><span class="nv">rate-position</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">move</span><span class="p">)</span> <span class="nv">player</span><span class="p">))</span>
+          <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))</span>
+</code></pre>
+</div>
+
+<h2 id="ai">创造一个有AI的游戏循环</h2>
+
+<p>先写个电脑处理函数，像我们的handle-human函数,首先找出每个移动的评分，然后选择评分最高的移动。</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">handle-computer</span> <span class="p">(</span><span class="nv">tree</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ratings</span> <span class="p">(</span><span class="nv">get-ratings</span> <span class="nv">tree</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">tree</span><span class="p">))))</span>
+    <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nb">nth</span> <span class="p">(</span><span class="nb">position</span> <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">max</span> <span class="nv">ratings</span><span class="p">)</span> <span class="nv">ratings</span><span class="p">)</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))))</span>
+</code></pre>
+</div>
+
+<p>最后，创造一个游戏环境即游戏循环</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">tree</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">print-info</span> <span class="nv">tree</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">null</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">))</span> <span class="p">(</span><span class="nv">announce-winner</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)))</span>
+        <span class="p">((</span><span class="nb">zerop</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">tree</span><span class="p">))</span> <span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">handle-human</span> <span class="nv">tree</span><span class="p">)))</span><span class="c1">;因为游戏中player1即代码0为人类玩家</span>
+        <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">handle-computer</span> <span class="nv">tree</span><span class="p">)))))</span>
+</code></pre>
+</div>
+
+<p>finished!!</p>
+
+<h2 id="vs">试试人类vs电脑游戏</h2>
+
+<p>在repl中输入</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">game-tree</span> <span class="p">(</span><span class="nv">gen-board</span><span class="p">)</span> <span class="mi">0</span> <span class="mi">0</span> <span class="no">t</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<h2 id="section-3">写在最后</h2>
+
+<p>终于考完试了，好久没看这本书。发现很多东西都生疏了，还好作者每次解释都很详细。这一章一看了好久，回头看看common lisp，东西真是相当之多……正好从图书馆找到HTDP的中文版，看完这本书全面转向scheme。</p>
+
+<p>最后引用首爱默生《人生苦旅》中的诗：</p>
+
+<div class="highlight"><pre><code class="bash">我们把美归于简单
+不含多余部分
+边界清晰
+与一切相关联
+是中庸之道
+</code></pre>
+</div>
+
+
+    
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/scheme/2012/06/05/scheme" title="Scheme初体验">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/art/2012/06/09/gimp" title="用gimp画了两幅画">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_container">
+    <a href="#" class="comment btn btn-primary" onclick="return false;">点击查看评论</a>
+    <div id="disqus_thread"></div>
+</div>
+<script type="text/javascript">
+var show_comments = function(){
+    var disqus_developer = 1;
+    var disqus_shortname = 'reverlandblog'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+};
+
+$(document).ready(function(){
+  $('#disqus_container>.comment').click(function(){
+    $(this).html('加载中……');
+	show_comments();
+	$(this).remove();
+  });
+});
+
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+
+  <div class="span3 pull-right">
+    <ul class="nav nav-list">
+      <li class="nav-header">分类</li>
+      
+       
+        
+        <li>
+        
+        <a href="/categories.html#linux-tech-ref">linux-tech <span>6</span></a>
+        </li>
+       
+        
+        <li class="active">
+        
+        <a href="/categories.html#lisp-ref">lisp <span>22</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#web-ref">web <span>2</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#reviews-ref">reviews <span>3</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#Life-ref">Life <span>12</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#scheme-ref">scheme <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#art-ref">art <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#others-ref">others <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#math-ref">math <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#test-ref">test <span>1</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#python-ref">python <span>8</span></a>
+        </li>
+      
+      
+        <li class="nav-header">Tags</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#land-of-lisp-ref">land-of-lisp <span>20</span></a></li>
+    
+  
+
+
+
+      
+    </ul>
+  </div>
+</div>
+
+<!-- Gplus -->
+<!--script type="text/javascript">
+  window.___gcfg = {lang: 'zh-CN'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+
+      </div>
+
+      <footer>
+      <p>&copy; Reverland 2012 
+      with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+      and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+      </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+    <script type="text/javascript" src="/js/sd.js"></script>
+  </body>
+</html>
+
