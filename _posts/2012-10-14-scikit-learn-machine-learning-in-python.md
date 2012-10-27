@@ -1,11 +1,7 @@
 ---
 layout: post
 title: "Scikit Learn: 在python中机器学习"
-<<<<<<< HEAD
 discription: "scipy lecture notes part last"
-=======
-discription: "scipy lecture notes part"
->>>>>>> 74e963624b510088f5287723e798d3db588315b4
 category: python
 tags: [scikit-learn, python]
 disqus: true
@@ -17,7 +13,7 @@ disqus: true
 <div markdown="1">
 ***Warning***
 
-警告：渣翻译，很多我自己都没看懂.但我会慢慢看慢慢修改，此文档维护中……
+警告：有些没能理解的句子，我以自己的理解意译。
 
 </div>
 {:.alert .alert-danger}
@@ -266,7 +262,6 @@ SVMs[^4]尝试构建一个两个类别的最大间隔超平面。它选择输入
     
     In [103]: lena_compressed.shape = lena.shape
 
-<<<<<<< HEAD
 译者注：想看效果？
 
     In [31]: import matplotlib.pyplot as plt
@@ -280,8 +275,6 @@ SVMs[^4]尝试构建一个两个类别的最大间隔超平面。它选择输入
 
 原图类似。
 
-=======
->>>>>>> 74e963624b510088f5287723e798d3db588315b4
 ![Image]
 
 ## 用主成分分析降维
@@ -312,6 +305,8 @@ PCA不仅在可视化高维数据集时非常有用。它可以用来作为帮�
 
 一个实例使用主成分分析来降维和支持向量机来分类进行人脸识别。
 
+译者注：让程序自动下载(确保联网，文件较大，要等待很久)或者手动下载[数据](http://vis-www.cs.umass.edu/lfw/lfw-funneled.tgz)并放到`./scikit_learn_data/lfw_home/`下。
+
     """
     Stripped-down version of the face recognition example by Olivier Grisel
     
@@ -321,7 +316,7 @@ PCA不仅在可视化高维数据集时非常有用。它可以用来作为帮�
     """
     import numpy as np
     import pylab as pl
-    from sklearn import cross_val, datasets, decomposition, svm
+    from sklearn import cross_validation, datasets, decomposition, svm
     
     # ..
     # .. load data ..
@@ -330,7 +325,7 @@ PCA不仅在可视化高维数据集时非常有用。它可以用来作为帮�
     lfw_people.data = lfw_people.data[perm]
     lfw_people.target = lfw_people.target[perm]
     faces = np.reshape(lfw_people.data, (lfw_people.target.shape[0], -1))
-    train, test = iter(cross_val.StratifiedKFold(lfw_people.target, k=4)).next()
+    train, test = iter(cross_validation.StratifiedKFold(lfw_people.target, k=4)).next()
     X_train, X_test = faces[train], faces[test]
     y_train, y_test = lfw_people.target[train], lfw_people.target[test]
     
@@ -416,7 +411,7 @@ PCA不仅在可视化高维数据集时非常有用。它可以用来作为帮�
 
 #### 格点搜索
 
-scikit-learn提供了一个对象，该对象给定数据，在拟合一个参数网格的估计器时计算分数，并且选择参数最大化交叉验证参数。这个对象在构建时采用一个估计器并且暴露一个估计器API：
+scikit-learn提供了一个对象，该对象给定数据，在拟合一个参数网格的估计器时计算分数，并且选择参数最大化交叉验证分数。这个对象在构建时采用一个估计器并且暴露一个估计器API：
 
     In [117]: from sklearn import svm, grid_search
     
@@ -476,11 +471,11 @@ scikit-learn提供了一个对象，该对象给定数据，在拟合一个参�
     In [132]: lasso.alpha 
     Out[132]: 0.013180196198701137
 
-这些估计器之间是相似的，以‘CV’为它们名字的后缀。
+这些估计器是相似的，以‘CV’为它们名字的后缀。
 
 **练习**
 
-对糖尿病数据集，找到最优的正则化参数alpha。
+对糖尿病数据集，找到最优的正则化参数alpha。(0.016249161908773888)
 
 ---
 
