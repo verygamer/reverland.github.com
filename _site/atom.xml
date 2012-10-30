@@ -4,7 +4,7 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org/atom.xml" rel="self"/>
  <link href="http://reverland.org"/>
- <updated>2012-10-27T22:40:38+08:00</updated>
+ <updated>2012-10-28T10:38:26+08:00</updated>
  <id>http://reverland.org</id>
  <author>
    <name>Reverland</name>
@@ -161,133 +161,133 @@ from scipy import stats  # 其它子模块相同
   &lt;li&gt;
     &lt;p&gt;导入和保存matlab文件:&lt;/p&gt;
 
-    &lt;p&gt;In [1]: from scipy import io as spio&lt;/p&gt;
-
-    &lt;p&gt;In [3]: import numpy as np&lt;/p&gt;
-
-    &lt;p&gt;In [4]: a = np.ones((3, 3))&lt;/p&gt;
-
-    &lt;p&gt;In [5]: spio.savemat(‘file.mat’, {‘a’: a}) # savemat expects a dictionary
-  /usr/lib/python2.7/site-packages/scipy/io/matlab/mio.py:266: FutureWarning: Using oned_as default value (‘column’) This will change to ‘row’ in future versions
-    oned_as=oned_as)&lt;/p&gt;
-
-    &lt;p&gt;In [6]: data = spio.loadmat(‘file.mat’, struct_as_record=True)&lt;/p&gt;
-
-    &lt;p&gt;In [7]: data[‘a’]
-  Out[7]: 
-  array([[ 1.,  1.,  1.],
-         [ 1.,  1.,  1.],
-         [ 1.,  1.,  1.]])&lt;/p&gt;
+    &lt;pre&gt;&lt;code&gt;In [1]: from scipy import io as spio
+  
+In [3]: import numpy as np
+  
+In [4]: a = np.ones((3, 3))
+  
+In [5]: spio.savemat('file.mat', {'a': a}) # savemat expects a dictionary
+/usr/lib/python2.7/site-packages/scipy/io/matlab/mio.py:266: FutureWarning: Using oned_as default value ('column') This will change to 'row' in future versions
+  oned_as=oned_as)
+  
+In [6]: data = spio.loadmat('file.mat', struct_as_record=True)
+  
+In [7]: data['a']
+Out[7]: 
+array([[ 1.,  1.,  1.],
+       [ 1.,  1.,  1.],
+       [ 1.,  1.,  1.]])
+&lt;/code&gt;&lt;/pre&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;读取图片：&lt;/p&gt;
 
-    &lt;p&gt;In [16]: from scipy import misc&lt;/p&gt;
-
-    &lt;p&gt;In [17]: misc.imread(‘scikit.png’)
-  Out[17]: 
-  array([[[255, 255, 255, 255],
-          [255, 255, 255, 255],
-          [255, 255, 255, 255],
-          …, 
-          [255, 255, 255, 255],
-          [255, 255, 255, 255],
-          [255, 255, 255, 255]],&lt;/p&gt;
-
-    &lt;pre&gt;&lt;code&gt;     [[255, 255, 255, 255],
-      [255, 255, 255, 255],
-      [255, 255, 255, 255],
-      ..., 
-      [255, 255, 255, 255],
-      [255, 255, 255, 255],
-      [255, 255, 255, 255]],
-
-     [[255, 255, 255, 255],
-      [255, 255, 255, 255],
-      [255, 255, 255, 255],
-      ..., 
-      [255, 255, 255, 255],
-      [255, 255, 255, 255],
-      [255, 255, 255, 255]],
-
-     ..., 
-     [[255, 255, 255, 255],
-      [255, 255, 255, 255],
-      [255, 255, 255, 255],
-      ..., 
-      [255, 255, 255, 255],
-      [255, 255, 255, 255],
-      [255, 255, 255, 255]],
-
-     [[255, 255, 255, 255],
-      [255, 255, 255, 255],
-      [255, 255, 255, 255],
-      ..., 
-      [255, 255, 255, 255],
-      [255, 255, 255, 255],
-      [255, 255, 255, 255]],
-
-     [[255, 255, 255, 255],
-      [255, 255, 255, 255],
-      [255, 255, 255, 255],
-      ..., 
-      [255, 255, 255, 255],
-      [255, 255, 255, 255],
-      [255, 255, 255, 255]]], dtype=uint8)
-&lt;/code&gt;&lt;/pre&gt;
-
-    &lt;p&gt;In [18]: import matplotlib.pyplot as plt&lt;/p&gt;
-
-    &lt;p&gt;In [19]: plt.imread(‘scikit.png’)
-  Out[19]: 
-  array([[[ 1.,  1.,  1.,  1.],
-          [ 1.,  1.,  1.,  1.],
-          [ 1.,  1.,  1.,  1.],
-          …, 
-          [ 1.,  1.,  1.,  1.],
-          [ 1.,  1.,  1.,  1.],
-          [ 1.,  1.,  1.,  1.]],&lt;/p&gt;
-
-    &lt;pre&gt;&lt;code&gt;     [[ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      ..., 
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.]],
-
-     [[ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      ..., 
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.]],
-
-     ..., 
-     [[ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      ..., 
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.]],
-
-     [[ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      ..., 
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.]],
-
-     [[ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      ..., 
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.],
-      [ 1.,  1.,  1.,  1.]]], dtype=float32)
+    &lt;pre&gt;&lt;code&gt;In [16]: from scipy import misc
+  
+In [17]: misc.imread('scikit.png')
+Out[17]: 
+array([[[255, 255, 255, 255],
+        [255, 255, 255, 255],
+        [255, 255, 255, 255],
+        ..., 
+        [255, 255, 255, 255],
+        [255, 255, 255, 255],
+        [255, 255, 255, 255]],
+  
+       [[255, 255, 255, 255],
+        [255, 255, 255, 255],
+        [255, 255, 255, 255],
+        ..., 
+        [255, 255, 255, 255],
+        [255, 255, 255, 255],
+        [255, 255, 255, 255]],
+  
+       [[255, 255, 255, 255],
+        [255, 255, 255, 255],
+        [255, 255, 255, 255],
+        ..., 
+        [255, 255, 255, 255],
+        [255, 255, 255, 255],
+        [255, 255, 255, 255]],
+  
+       ..., 
+       [[255, 255, 255, 255],
+        [255, 255, 255, 255],
+        [255, 255, 255, 255],
+        ..., 
+        [255, 255, 255, 255],
+        [255, 255, 255, 255],
+        [255, 255, 255, 255]],
+  
+       [[255, 255, 255, 255],
+        [255, 255, 255, 255],
+        [255, 255, 255, 255],
+        ..., 
+        [255, 255, 255, 255],
+        [255, 255, 255, 255],
+        [255, 255, 255, 255]],
+  
+       [[255, 255, 255, 255],
+        [255, 255, 255, 255],
+        [255, 255, 255, 255],
+        ..., 
+        [255, 255, 255, 255],
+        [255, 255, 255, 255],
+        [255, 255, 255, 255]]], dtype=uint8)
+  
+In [18]: import matplotlib.pyplot as plt
+  
+In [19]: plt.imread('scikit.png')
+Out[19]: 
+array([[[ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        ..., 
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.]],
+  
+       [[ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        ..., 
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.]],
+  
+       [[ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        ..., 
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.]],
+  
+       ..., 
+       [[ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        ..., 
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.]],
+  
+       [[ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        ..., 
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.]],
+  
+       [[ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        ..., 
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.],
+        [ 1.,  1.,  1.,  1.]]], dtype=float32)
 &lt;/code&gt;&lt;/pre&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -1288,7 +1288,15 @@ Out[190]: &amp;lt;matplotlib.image.AxesImage at 0xb2fdcd0&amp;gt;
 
 &lt;p&gt;练习：&lt;/p&gt;
 
-&lt;p&gt;建议的解决方案：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/intro/summary-exercises/stats-interpolate.html&quot;&gt;斯普罗站最大风速预测&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/intro/summary-exercises/optimize-fit.html&quot;&gt;非线性最小二乘拟合：地形雷达数据的点提取&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/intro/summary-exercises/image-processing.html&quot;&gt;图像处理应用：计数气泡和未融颗粒&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;建议的解：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/intro/summary-exercises/answers_image_processing.html&quot;&gt;图像处理练习解的示例:玻璃中的未融颗粒&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
 
@@ -1553,9 +1561,9 @@ In [11]: %timeit global a ; a *= 0
   
 in [12]: %timeit global a ; a = 0*a
 10 loops, best of 3: 54.3 ms per loop
- 
-**注意：**我们需要个`global a`让timeit工作，因为它被赋给a，因此将它视作一个局部变量。
 &lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;我们需要个&lt;code&gt;global a&lt;/code&gt;让timeit工作，因为它被赋给a，因此将它视作一个局部变量。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;善待内存：使用视图(views)而非拷贝(copies)&lt;/p&gt;
