@@ -10,7 +10,9 @@ http://reverland.org/atom.xml
 http://reverland.org/page2/index.html
 http://reverland.org/page3/index.html
 http://reverland.org/page4/index.html
+http://reverland.org/page5/index.html
 
+http://reverland.org/python/2012/11/12/numpyscipy
 http://reverland.org/python/2012/10/31/python
 http://reverland.org/python/2012/10/30/
 http://reverland.org/python/2012/10/22/scipy

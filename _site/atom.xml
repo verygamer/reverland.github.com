@@ -4,13 +4,821 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org/atom.xml" rel="self"/>
  <link href="http://reverland.org"/>
- <updated>2012-10-31T19:40:14+08:00</updated>
+ <updated>2012-11-16T14:45:08+08:00</updated>
  <id>http://reverland.org</id>
  <author>
    <name>Reverland</name>
    <email>lhtlyy@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>使用Numpy和Scipy处理图像</title>
+   <link href="http://reverland.org/python/2012/11/12/numpyscipy"/>
+   <updated>2012-11-12T00:00:00+08:00</updated>
+   <id>hhttp://reverland.org/python/2012/11/12/numpyscipy</id>
+   <content type="html">
+&lt;h1 id=&quot;image-manipulation-and-processing-using-numpy-and-scipy&quot;&gt;Image manipulation and processing using Numpy and Scipy&lt;/h1&gt;
+
+&lt;p&gt;翻译自：&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/index.html&quot;&gt;http://scipy-lectures.github.com/advanced/image_processing/index.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;作者：Emmanuelle Gouillart, Gaël Varoquaux&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;图像 = 2-D 数值数组
+
+(或者 3-D: CT, MRI, 2D + 时间; 4-D, ...)
+
+这里 图像 == Numpy数组 np.array
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这个教程中使用的工具：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;numpy：基本数组操作&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;scipy：&lt;code&gt;scipy.ndimage&lt;/code&gt;子模块致力于图像处理(n维图像)。参见&lt;a href=&quot;http://docs.scipy.org/doc/scipy/reference/tutorial/ndimage.html&quot;&gt;http://docs.scipy.org/doc/scipy/reference/tutorial/ndimage.html&lt;/a&gt;
+    from scipy import ndimage&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;一些例子用到了使用np.array的特殊的工具箱：
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;http://scikits-image.org/&quot;&gt;Scikit Image&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://scikit-learn.org/&quot;&gt;scikit-learn&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;图像中的常见问题有：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;输入/输出，呈现图像&lt;/li&gt;
+  &lt;li&gt;基本操作：裁剪、翻转、旋转……&lt;/li&gt;
+  &lt;li&gt;图像滤镜：消噪，锐化&lt;/li&gt;
+  &lt;li&gt;图像分割：不同对应对象的像素标记&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;更有力和完整的模块：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://opencv.willowgarage.com/documentation/python/cookbook.html&quot;&gt;OpenCV&lt;/a&gt; (Python绑定)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.cellprofiler.org/&quot;&gt;CellProfiler&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.itk.org/&quot;&gt;ITK&lt;/a&gt;,Python绑定&lt;/li&gt;
+  &lt;li&gt;更多……&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;目录&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#section&quot;&gt;打开和读写图像文件&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-1&quot;&gt;呈现图像&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-2&quot;&gt;基本操作&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-3&quot;&gt;统计信息&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-4&quot;&gt;几何转换&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-5&quot;&gt;图像滤镜&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-6&quot;&gt;模糊/平滑&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-7&quot;&gt;锐化&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-8&quot;&gt;消噪&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-9&quot;&gt;数学形态学&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-10&quot;&gt;特征提取&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-11&quot;&gt;边缘检测&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-12&quot;&gt;分割&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ndimagemeasurements&quot;&gt;测量对象属性：ndimage.measurements&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#footnotes&quot;&gt;Footnotes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;打开和读写图像文件&lt;/h2&gt;
+
+&lt;p&gt;将一个数组写入文件：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [1]: from scipy import misc
+
+In [2]: l = misc.lena()
+
+In [3]: misc.imsave('lena.png', l)  # uses the Image module (PIL)
+
+In [4]: import pylab as pl
+
+In [5]: pl.imshow(l)
+Out[5]: &amp;lt;matplotlib.image.AxesImage at 0x4118110&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;从一个图像文件创建数组：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [7]: lena = misc.imread('lena.png')
+
+In [8]: type(lena)
+Out[8]: numpy.ndarray
+
+In [9]: lena.shape, lena.dtype
+Out[9]: ((512, 512), dtype('uint8'))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;8位图像(0-255)的dtype是uint8&lt;/p&gt;
+
+&lt;p&gt;打开一个raw文件(相机， 3-D图像)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [10]: l.tofile('lena.raw')  # 创建一个raw文件
+
+In [14]: lena_from_raw = np.fromfile('lena.raw', dtype=np.int64)
+
+In [15]: lena_from_raw.shape
+Out[15]: (262144,)
+
+In [16]: lena_from_raw.shape = (512, 512)
+
+In [17]: import os
+
+In [18]: os.remove('lena.raw')
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;需要知道图像的shape和dtype(如何区分隔数据字节)&lt;/p&gt;
+
+&lt;p&gt;对于大数据，使用&lt;code&gt;np.memmap&lt;/code&gt;进行内存映射：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [21]: lena_memmap = np.memmap('lena.raw', dtype=np.int64, shape=(512,512))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;(数据从文件读取，而不是载入内存)&lt;/p&gt;
+
+&lt;p&gt;处理一个列表的图像文件：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [22]: for i in range(10):
+   ....:     im = np.random.random_integers(0, 255, 10000).reshape((100, 100))
+   ....:     misc.imsave('random_%02d.png' % i, im)
+   ....:     
+
+In [23]: from glob import glob
+
+In [24]: filelist = glob('random*.png')
+
+In [25]: filelist.sort()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;呈现图像&lt;/h2&gt;
+
+&lt;p&gt;使用&lt;code&gt;matplotlib&lt;/code&gt;和&lt;code&gt;imshow&lt;/code&gt;将图像呈现在matplotlib图像(figure)中：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [29]: l = misc.lena()
+
+In [30]: import matplotlib.pyplot as plt
+
+In [31]: plt.imshow(l, cmap=plt.cm.gray)
+Out[31]: &amp;lt;matplotlib.image.AxesImage at 0x4964990&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;通过设置最大最小之增加对比：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [33]: plt.imshow(l, cmap=plt.cm.gray, vmin=30, vmax=200)
+Out[33]: &amp;lt;matplotlib.image.AxesImage at 0x50cb790&amp;gt;
+
+In [34]: plt.axis('off')  # 移除axes和ticks
+Out[34]: (-0.5, 511.5, 511.5, -0.5)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;绘制等高线：&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ln[7]: plt.contour(l, [60, 211])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;更好地观察强度变化，使用&lt;code&gt;interpolate=‘nearest’&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [7]: plt.imshow(l[200:220, 200:220], cmap=plt.cm.gray)
+Out[7]: &amp;lt;matplotlib.image.AxesImage at 0x3bbe610&amp;gt;
+
+In [8]: plt.imshow(l[200:220, 200:220], cmap=plt.cm.gray, interpolation='nearest')
+Out[8]: &amp;lt;matplotlib.image.AxesImage at 0x3ed3250&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其它包有时使用图形工具箱来可视化(GTK，Qt)：&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [9]: import skimage.io as im_io
+
+In [21]: im_io.use_plugin('gtk', 'imshow')
+
+In [22]: im_io.imshow(l)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;3-D可视化：Mayavi&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;参见&lt;a href=&quot;http://scipy-lectures.github.com/advanced/3d_plotting/index.html#mayavi-label&quot;&gt;可用Mayavi进行3-D绘图&lt;/a&gt;和&lt;a href=&quot;http://scipy-lectures.github.com/advanced/3d_plotting/3d_plotting_functions.html#mayavi-voldata-label&quot;&gt;体积数据&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;图形平面工具&lt;/li&gt;
+  &lt;li&gt;等值面&lt;/li&gt;
+  &lt;li&gt;……&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;基本操作&lt;/h2&gt;
+
+&lt;p&gt;图像是数组：使用整个&lt;code&gt;numpy&lt;/code&gt;机理。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/axis_convention.png&quot; alt=&quot;basic&quot; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; lena = misc.lena()
+&amp;gt;&amp;gt;&amp;gt; lena[0, 40]
+166
+&amp;gt;&amp;gt;&amp;gt; # Slicing
+&amp;gt;&amp;gt;&amp;gt; lena[10:13, 20:23]
+array([[158, 156, 157],
+[157, 155, 155],
+[157, 157, 158]])
+&amp;gt;&amp;gt;&amp;gt; lena[100:120] = 255
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; lx, ly = lena.shape
+&amp;gt;&amp;gt;&amp;gt; X, Y = np.ogrid[0:lx, 0:ly]
+&amp;gt;&amp;gt;&amp;gt; mask = (X - lx/2)**2 + (Y - ly/2)**2 &amp;gt; lx*ly/4
+&amp;gt;&amp;gt;&amp;gt; # Masks
+&amp;gt;&amp;gt;&amp;gt; lena[mask] = 0
+&amp;gt;&amp;gt;&amp;gt; # Fancy indexing
+&amp;gt;&amp;gt;&amp;gt; lena[range(400), range(400)] = 255
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;统计信息&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; lena = scipy.lena()
+&amp;gt;&amp;gt;&amp;gt; lena.mean()
+124.04678344726562
+&amp;gt;&amp;gt;&amp;gt; lena.max(), lena.min()
+(245, 25)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;np.histogram&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;几何转换&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; lena = scipy.lena()
+&amp;gt;&amp;gt;&amp;gt; lx, ly = lena.shape
+&amp;gt;&amp;gt;&amp;gt; # Cropping
+&amp;gt;&amp;gt;&amp;gt; crop_lena = lena[lx/4:-lx/4, ly/4:-ly/4]
+&amp;gt;&amp;gt;&amp;gt; # up &amp;lt;-&amp;gt; down flip
+&amp;gt;&amp;gt;&amp;gt; flip_ud_lena = np.flipud(lena)
+&amp;gt;&amp;gt;&amp;gt; # rotation
+&amp;gt;&amp;gt;&amp;gt; rotate_lena = ndimage.rotate(lena, 45)
+&amp;gt;&amp;gt;&amp;gt; rotate_lena_noreshape = ndimage.rotate(lena, 45, reshape=False)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_geom_lena_1.png&quot; alt=&quot;Geometrical transformations&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_geom_lena.html#example-plot-geom-lena-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-5&quot;&gt;图像滤镜&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;局部滤镜&lt;/strong&gt;：用相邻像素值的函数替代当前像素的值。&lt;/p&gt;
+
+&lt;p&gt;相邻：方形(指定大小)，圆形， 或者更多复杂的_结构元素_。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-6&quot;&gt;模糊/平滑&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;scipy.ndimage&lt;/code&gt;中的_高斯滤镜_：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from scipy import misc
+&amp;gt;&amp;gt;&amp;gt; from scipy import ndimage
+&amp;gt;&amp;gt;&amp;gt; lena = misc.lena()
+&amp;gt;&amp;gt;&amp;gt; blurred_lena = ndimage.gaussian_filter(lena, sigma=3)
+&amp;gt;&amp;gt;&amp;gt; very_blurred = ndimage.gaussian_filter(lena, sigma=5)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;均匀滤镜&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; local_mean = ndimage.uniform_filter(lena, size=11)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_blur.html#example-plot-blur-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-7&quot;&gt;锐化&lt;/h3&gt;
+
+&lt;p&gt;锐化模糊图像：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from scipy import misc
+&amp;gt;&amp;gt;&amp;gt; lena = misc.lena()
+&amp;gt;&amp;gt;&amp;gt; blurred_l = ndimage.gaussian_filter(lena, 3)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;通过增加拉普拉斯近似增加边缘权重：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; filter_blurred_l = ndimage.gaussian_filter(blurred_l, 1)
+&amp;gt;&amp;gt;&amp;gt; alpha = 30
+&amp;gt;&amp;gt;&amp;gt; sharpened = blurred_l + alpha * (blurred_l - filter_blurred_l)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_sharpen_1.png&quot; alt=&quot;sharpen&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_sharpen.html#example-plot-sharpen-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-8&quot;&gt;消噪&lt;/h3&gt;
+
+&lt;p&gt;向lena增加噪声：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from scipy import misc
+&amp;gt;&amp;gt;&amp;gt; l = misc.lena()
+&amp;gt;&amp;gt;&amp;gt; l = l[230:310, 210:350]
+&amp;gt;&amp;gt;&amp;gt; noisy = l + 0.4*l.std()*np.random.random(l.shape)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;_高斯滤镜_平滑掉噪声……还有边缘：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; gauss_denoised = ndimage.gaussian_filter(noisy, 2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;大多局部线性各向同性滤镜都模糊图像(&lt;code&gt;ndimage.uniform_filter&lt;/code&gt;)&lt;/p&gt;
+
+&lt;p&gt;_中值滤镜_更好地保留边缘：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; med_denoised = ndimage.median_filter(noisy, 3)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_lena_denoise_1.png&quot; alt=&quot;guassian&amp;amp;median&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_lena_denoise.html#example-plot-lena-denoise-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;中值滤镜：对直边界效果更好(低曲率)：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; im = np.zeros((20, 20))
+&amp;gt;&amp;gt;&amp;gt; im[5:-5, 5:-5] = 1
+&amp;gt;&amp;gt;&amp;gt; im = ndimage.distance_transform_bf(im)
+&amp;gt;&amp;gt;&amp;gt; im_noise = im + 0.2*np.random.randn(*im.shape)
+&amp;gt;&amp;gt;&amp;gt; im_med = ndimage.median_filter(im_noise, 3)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_denoising_1.png&quot; alt=&quot;median&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_denoising.html#example-plot-denoising-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;其它排序滤波器：&lt;code&gt;ndimage.maximum_filter&lt;/code&gt;,&lt;code&gt;ndimage.percentile_filter&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;其它局部非线性滤波器：维纳滤波器(&lt;code&gt;scipy.signal.wiener&lt;/code&gt;)等&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;非局部滤波器&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;_总变差(TV)_消噪。找到新的图像让图像的总变差(正态L1梯度的积分)变得最小，当接近测量图像时：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; # from skimage.filter import tv_denoise
+&amp;gt;&amp;gt;&amp;gt; from tv_denoise import tv_denoise
+&amp;gt;&amp;gt;&amp;gt; tv_denoised = tv_denoise(noisy, weight=10)
+&amp;gt;&amp;gt;&amp;gt; # More denoising (to the expense of fidelity to data)
+&amp;gt;&amp;gt;&amp;gt; tv_denoised = tv_denoise(noisy, weight=50)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;总变差滤镜&lt;code&gt;tv_denoise&lt;/code&gt;可以从&lt;code&gt;skimage&lt;/code&gt;中获得，(文档:&lt;a href=&quot;http://scikit-image.org/docs/dev/api/skimage.filter.html#denoise-tv&quot;&gt;http://scikit-image.org/docs/dev/api/skimage.filter.html#denoise-tv&lt;/a&gt;)，但是为了方便我们在这个教程中作为一个_单独模块_导入。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_lena_tv_denoise_1.png&quot; alt=&quot;tv&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_lena_tv_denoise.html#example-plot-lena-tv-denoise-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-9&quot;&gt;数学形态学&lt;/h3&gt;
+
+&lt;p&gt;参见：&lt;a href=&quot;http://en.wikipedia.org/wiki/Mathematical_morphology&quot;&gt;http://en.wikipedia.org/wiki/Mathematical_morphology&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;结构元素&lt;/em&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; el = ndimage.generate_binary_structure(2, 1)
+&amp;gt;&amp;gt;&amp;gt; el
+array([[False,  True, False],
+       [ True,  True,  True],
+       [False,  True, False]], dtype=bool)
+&amp;gt;&amp;gt;&amp;gt; el.astype(np.int)
+array([[0, 1, 0],
+       [1, 1, 1],
+       [0, 1, 0]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;腐蚀&lt;/em&gt; = 最小化滤镜。用结构元素覆盖的像素的最小值替代一个像素值：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = np.zeros((7,7), dtype=np.int)
+&amp;gt;&amp;gt;&amp;gt; a[1:6, 2:5] = 1
+&amp;gt;&amp;gt;&amp;gt; a
+array([[0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 1, 1, 1, 0, 0],
+       [0, 0, 1, 1, 1, 0, 0],
+       [0, 0, 1, 1, 1, 0, 0],
+       [0, 0, 1, 1, 1, 0, 0],
+       [0, 0, 1, 1, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])
+&amp;gt;&amp;gt;&amp;gt; ndimage.binary_erosion(a).astype(a.dtype)
+array([[0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 1, 0, 0, 0],
+       [0, 0, 0, 1, 0, 0, 0],
+       [0, 0, 0, 1, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])
+&amp;gt;&amp;gt;&amp;gt; #Erosion removes objects smaller than the structure
+&amp;gt;&amp;gt;&amp;gt; ndimage.binary_erosion(a, structure=np.ones((5,5))).astype(a.dtype)
+array([[0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/morpho_mat.png&quot; alt=&quot;erosion&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;膨胀&lt;/em&gt;：最大化滤镜:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; a = np.zeros((5, 5))
+&amp;gt;&amp;gt;&amp;gt; a[2, 2] = 1
+&amp;gt;&amp;gt;&amp;gt; a
+array([[ 0.,  0.,  0.,  0.,  0.],
+       [ 0.,  0.,  0.,  0.,  0.],
+       [ 0.,  0.,  1.,  0.,  0.],
+       [ 0.,  0.,  0.,  0.,  0.],
+       [ 0.,  0.,  0.,  0.,  0.]])
+&amp;gt;&amp;gt;&amp;gt; ndimage.binary_dilation(a).astype(a.dtype)
+array([[ 0.,  0.,  0.,  0.,  0.],
+       [ 0.,  0.,  1.,  0.,  0.],
+       [ 0.,  1.,  1.,  1.,  0.],
+       [ 0.,  0.,  1.,  0.,  0.],
+       [ 0.,  0.,  0.,  0.,  0.]])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;对灰度值图像也有效：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; np.random.seed(2)
+&amp;gt;&amp;gt;&amp;gt; x, y = (63*np.random.random((2, 8))).astype(np.int)
+&amp;gt;&amp;gt;&amp;gt; im[x, y] = np.arange(8)
+
+&amp;gt;&amp;gt;&amp;gt; bigger_points = ndimage.grey_dilation(im, size=(5, 5), structure=np.ones((5, 5)))
+
+&amp;gt;&amp;gt;&amp;gt; square = np.zeros((16, 16))
+&amp;gt;&amp;gt;&amp;gt; square[4:-4, 4:-4] = 1
+&amp;gt;&amp;gt;&amp;gt; dist = ndimage.distance_transform_bf(square)
+&amp;gt;&amp;gt;&amp;gt; dilate_dist = ndimage.grey_dilation(dist, size=(3, 3), \
+...         structure=np.ones((3, 3)))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_greyscale_dilation.html&quot; alt=&quot;gray-delation&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_greyscale_dilation.html#example-plot-greyscale-dilation-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;开操作&lt;/em&gt;：腐蚀+膨胀：&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;应用&lt;/em&gt;：移除噪声&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; square = np.zeros((32, 32))
+&amp;gt;&amp;gt;&amp;gt; square[10:-10, 10:-10] = 1
+&amp;gt;&amp;gt;&amp;gt; np.random.seed(2)
+&amp;gt;&amp;gt;&amp;gt; x, y = (32*np.random.random((2, 20))).astype(np.int)
+&amp;gt;&amp;gt;&amp;gt; square[x, y] = 1
+
+&amp;gt;&amp;gt;&amp;gt; open_square = ndimage.binary_opening(square)
+
+&amp;gt;&amp;gt;&amp;gt; eroded_square = ndimage.binary_erosion(square)
+&amp;gt;&amp;gt;&amp;gt; reconstruction = ndimage.binary_propagation(eroded_square, mask=square)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_propagation_1.png&quot; alt=&quot;application&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_propagation.html#example-plot-propagation-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;闭操作&lt;/em&gt;：膨胀+腐蚀&lt;/p&gt;
+
+&lt;p&gt;许多其它数学分形：击中(hit)和击不中(miss)变换，tophat等等。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-10&quot;&gt;特征提取&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-11&quot;&gt;边缘检测&lt;/h3&gt;
+
+&lt;p&gt;合成数据：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; im = np.zeros((256, 256))
+&amp;gt;&amp;gt;&amp;gt; im[64:-64, 64:-64] = 1
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; im = ndimage.rotate(im, 15, mode='constant')
+&amp;gt;&amp;gt;&amp;gt; im = ndimage.gaussian_filter(im, 8)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用_梯度操作(Sobel)_来找到搞强度的变化：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sx = ndimage.sobel(im, axis=0, mode='constant')
+&amp;gt;&amp;gt;&amp;gt; sy = ndimage.sobel(im, axis=1, mode='constant')
+&amp;gt;&amp;gt;&amp;gt; sob = np.hypot(sx, sy)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_find_edges_1.png&quot; alt=&quot;sob&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_find_edges.html#example-plot-find-edges-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;canny滤镜&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Canny滤镜可以从&lt;code&gt;skimage&lt;/code&gt;中获取(&lt;a href=&quot;http://scikit-image.org/docs/dev/api/skimage.filter.html#canny&quot;&gt;文档&lt;/a&gt;)，但是为了方便我们在这个教程中作为一个_单独模块_导入：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; #from skimage.filter import canny
+&amp;gt;&amp;gt;&amp;gt; #or use module shipped with tutorial
+&amp;gt;&amp;gt;&amp;gt; im += 0.1*np.random.random(im.shape)
+&amp;gt;&amp;gt;&amp;gt; edges = canny(im, 1, 0.4, 0.2) # not enough smoothing
+&amp;gt;&amp;gt;&amp;gt; edges = canny(im, 3, 0.3, 0.2) # better parameters
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_canny_1.png&quot; alt=&quot;edge&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_canny.html#example-plot-canny-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;需要调整几个参数……过度拟合的风险&lt;/p&gt;
+
+&lt;h3 id=&quot;section-12&quot;&gt;分割&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;基于_直方图_的分割(没有空间信息)&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; n = 10
+&amp;gt;&amp;gt;&amp;gt; l = 256
+&amp;gt;&amp;gt;&amp;gt; im = np.zeros((l, l))
+&amp;gt;&amp;gt;&amp;gt; np.random.seed(1)
+&amp;gt;&amp;gt;&amp;gt; points = l*np.random.random((2, n**2))
+&amp;gt;&amp;gt;&amp;gt; im[(points[0]).astype(np.int), (points[1]).astype(np.int)] = 1
+&amp;gt;&amp;gt;&amp;gt; im = ndimage.gaussian_filter(im, sigma=l/(4.*n))
+  
+&amp;gt;&amp;gt;&amp;gt; mask = (im &amp;gt; im.mean()).astype(np.float)
+&amp;gt;&amp;gt;&amp;gt; mask += 0.1 * im
+&amp;gt;&amp;gt;&amp;gt; img = mask + 0.2*np.random.randn(*mask.shape)
+  
+&amp;gt;&amp;gt;&amp;gt; hist, bin_edges = np.histogram(img, bins=60)
+&amp;gt;&amp;gt;&amp;gt; bin_centers = 0.5*(bin_edges[:-1] + bin_edges[1:])
+  
+&amp;gt;&amp;gt;&amp;gt; binary_img = img &amp;gt; 0.5
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_histo_segmentation_1.png&quot; alt=&quot;segmente&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_histo_segmentation.html#example-plot-histo-segmentation-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;自动阈值：使用高斯混合模型：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; mask = (im &amp;gt; im.mean()).astype(np.float)
+&amp;gt;&amp;gt;&amp;gt; mask += 0.1 * im
+&amp;gt;&amp;gt;&amp;gt; img = mask + 0.3*np.random.randn(*mask.shape)
+
+&amp;gt;&amp;gt;&amp;gt; from sklearn.mixture import GMM
+&amp;gt;&amp;gt;&amp;gt; classif = GMM(n_components=2)
+&amp;gt;&amp;gt;&amp;gt; classif.fit(img.reshape((img.size, 1))) 
+GMM(...)
+
+&amp;gt;&amp;gt;&amp;gt; classif.means_
+array([[ 0.9353155 ],
+       [-0.02966039]])
+&amp;gt;&amp;gt;&amp;gt; np.sqrt(classif.covars_).ravel()
+array([ 0.35074631,  0.28225327])
+&amp;gt;&amp;gt;&amp;gt; classif.weights_
+array([ 0.40989799,  0.59010201])
+&amp;gt;&amp;gt;&amp;gt; threshold = np.mean(classif.means_)
+&amp;gt;&amp;gt;&amp;gt; binary_img = img &amp;gt; threshold
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/image_GMM.png&quot; alt=&quot;gauss-mixture&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;使用数学形态学来清理结果：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; # Remove small white regions
+&amp;gt;&amp;gt;&amp;gt; open_img = ndimage.binary_opening(binary_img)
+&amp;gt;&amp;gt;&amp;gt; # Remove small black hole
+&amp;gt;&amp;gt;&amp;gt; close_img = ndimage.binary_closing(open_img)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_clean_morpho_1.png&quot; alt=&quot;cleanup&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_clean_morpho.html#example-plot-clean-morpho-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;练习&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;参看重建(reconstruction)操作(腐蚀+传播(propagation))产生比开/闭操作更好的结果：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; eroded_img = ndimage.binary_erosion(binary_img)
+&amp;gt;&amp;gt;&amp;gt; reconstruct_img = ndimage.binary_propagation(eroded_img, mask=binary_img)
+&amp;gt;&amp;gt;&amp;gt; tmp = np.logical_not(reconstruct_img)
+&amp;gt;&amp;gt;&amp;gt; eroded_tmp = ndimage.binary_erosion(tmp)
+&amp;gt;&amp;gt;&amp;gt; reconstruct_final = np.logical_not(ndimage.binary_propagation(eroded_tmp, mask=tmp))
+&amp;gt;&amp;gt;&amp;gt; np.abs(mask - close_img).mean()
+0.014678955078125
+&amp;gt;&amp;gt;&amp;gt; np.abs(mask - reconstruct_final).mean()
+0.0042572021484375
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;练习&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;检查首次消噪步骤(中值滤波，总变差)如何更改直方图，并且查看是否基于直方图的分割更加精准了。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;_基于图像_的分割：使用空间信息&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from sklearn.feature_extraction import image
+&amp;gt;&amp;gt;&amp;gt; from sklearn.cluster import spectral_clustering
+  
+&amp;gt;&amp;gt;&amp;gt; l = 100
+&amp;gt;&amp;gt;&amp;gt; x, y = np.indices((l, l))
+  
+&amp;gt;&amp;gt;&amp;gt; center1 = (28, 24)
+&amp;gt;&amp;gt;&amp;gt; center2 = (40, 50)
+&amp;gt;&amp;gt;&amp;gt; center3 = (67, 58)
+&amp;gt;&amp;gt;&amp;gt; center4 = (24, 70)
+&amp;gt;&amp;gt;&amp;gt; radius1, radius2, radius3, radius4 = 16, 14, 15, 14
+  
+&amp;gt;&amp;gt;&amp;gt; circle1 = (x - center1[0])**2 + (y - center1[1])**2 &amp;lt; radius1**2
+&amp;gt;&amp;gt;&amp;gt; circle2 = (x - center2[0])**2 + (y - center2[1])**2 &amp;lt; radius2**2
+&amp;gt;&amp;gt;&amp;gt; circle3 = (x - center3[0])**2 + (y - center3[1])**2 &amp;lt; radius3**2
+&amp;gt;&amp;gt;&amp;gt; circle4 = (x - center4[0])**2 + (y - center4[1])**2 &amp;lt; radius4**2
+  
+&amp;gt;&amp;gt;&amp;gt; # 4 circles
+&amp;gt;&amp;gt;&amp;gt; img = circle1 + circle2 + circle3 + circle4
+&amp;gt;&amp;gt;&amp;gt; mask = img.astype(bool)
+&amp;gt;&amp;gt;&amp;gt; img = img.astype(float)
+  
+&amp;gt;&amp;gt;&amp;gt; img += 1 + 0.2*np.random.randn(*img.shape)
+&amp;gt;&amp;gt;&amp;gt; # Convert the image into a graph with the value of the gradient on
+&amp;gt;&amp;gt;&amp;gt; # the edges.
+&amp;gt;&amp;gt;&amp;gt; graph = image.img_to_graph(img, mask=mask)
+  
+&amp;gt;&amp;gt;&amp;gt; # Take a decreasing function of the gradient: we take it weakly
+&amp;gt;&amp;gt;&amp;gt; # dependant from the gradient the segmentation is close to a voronoi
+&amp;gt;&amp;gt;&amp;gt; graph.data = np.exp(-graph.data/graph.data.std())
+  
+&amp;gt;&amp;gt;&amp;gt; labels = spectral_clustering(graph, k=4, mode='arpack')
+&amp;gt;&amp;gt;&amp;gt; label_im = -np.ones(mask.shape)
+&amp;gt;&amp;gt;&amp;gt; label_im[mask] = labels
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/image_spectral_clustering.png&quot; alt=&quot;graph-base&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;ndimagemeasurements&quot;&gt;测量对象属性：ndimage.measurements&lt;/h2&gt;
+
+&lt;p&gt;合成数据：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; n = 10
+&amp;gt;&amp;gt;&amp;gt; l = 256
+&amp;gt;&amp;gt;&amp;gt; im = np.zeros((l, l))
+&amp;gt;&amp;gt;&amp;gt; points = l*np.random.random((2, n**2))
+&amp;gt;&amp;gt;&amp;gt; im[(points[0]).astype(np.int), (points[1]).astype(np.int)] = 1
+&amp;gt;&amp;gt;&amp;gt; im = ndimage.gaussian_filter(im, sigma=l/(4.*n))
+&amp;gt;&amp;gt;&amp;gt; mask = im &amp;gt; im.mean()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;连接成分分析&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;标记连接成分：&lt;code&gt;ndimage.label&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; label_im, nb_labels = ndimage.label(mask)
+&amp;gt;&amp;gt;&amp;gt; nb_labels # how many regions?
+23
+&amp;gt;&amp;gt;&amp;gt; plt.imshow(label_im)        
+&amp;lt;matplotlib.image.AxesImage object at ...&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_synthetic_data_1.png&quot; alt=&quot;label&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_synthetic_data.html#example-plot-synthetic-data-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;计算每个区域的尺寸，均值等等：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sizes = ndimage.sum(mask, label_im, range(nb_labels + 1))
+&amp;gt;&amp;gt;&amp;gt; mean_vals = ndimage.sum(im, label_im, range(1, nb_labels + 1))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;计算小的连接成分：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; mask_size = sizes &amp;lt; 1000
+&amp;gt;&amp;gt;&amp;gt; remove_pixel = mask_size[label_im]
+&amp;gt;&amp;gt;&amp;gt; remove_pixel.shape
+(256, 256)
+&amp;gt;&amp;gt;&amp;gt; label_im[remove_pixel] = 0
+&amp;gt;&amp;gt;&amp;gt; plt.imshow(label_im)        
+&amp;lt;matplotlib.image.AxesImage object at ...&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;现在使用&lt;code&gt;np.searchsorted&lt;/code&gt;重新分配标签：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; labels = np.unique(label_im)
+&amp;gt;&amp;gt;&amp;gt; label_im = np.searchsorted(labels, label_im)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_measure_data_1.png&quot; alt=&quot;reassign&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_measure_data.html#example-plot-measure-data-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;找到关注的封闭对象区域：&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; slice_x, slice_y = ndimage.find_objects(label_im==4)[0]
+&amp;gt;&amp;gt;&amp;gt; roi = im[slice_x, slice_y]
+&amp;gt;&amp;gt;&amp;gt; plt.imshow(roi)     
+&amp;lt;matplotlib.image.AxesImage object at ...&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_find_object_1.png&quot; alt=&quot;find&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_find_object.html#example-plot-find-object-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;其它空间测量：&lt;code&gt;ndiamge.center_of_mass&lt;/code&gt;,&lt;code&gt;ndimage.maximum_position&lt;/code&gt;等等。&lt;/p&gt;
+
+&lt;p&gt;可以在分割应用限制范围之外使用。&lt;/p&gt;
+
+&lt;p&gt;示例：块平均(block mean)：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;m scipy import misc
+&amp;gt;&amp;gt;&amp;gt; l = misc.lena()
+&amp;gt;&amp;gt;&amp;gt; sx, sy = l.shape
+&amp;gt;&amp;gt;&amp;gt; X, Y = np.ogrid[0:sx, 0:sy]
+&amp;gt;&amp;gt;&amp;gt; regions = sy/6 * (X/4) + Y/6  # note that we use broadcasting
+&amp;gt;&amp;gt;&amp;gt; block_mean = ndimage.mean(l, labels=regions, index=np.arange(1,
+...     regions.max() +1))
+&amp;gt;&amp;gt;&amp;gt; block_mean.shape = (sx/4, sy/6)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_block_mean_1.png&quot; alt=&quot;block mean&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_block_mean.html#example-plot-block-mean-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;当区域不是正则的&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;块状时，使用stride技巧更有效(&lt;a href=&quot;http://scipy-lectures.github.com/advanced/advanced_numpy/index.html#stride-manipulation-label&quot;&gt;示例：fake dimensions with strides&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;非正则空间(Non-regular-spaced)区块：径向平均：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; sx, sy = l.shape
+&amp;gt;&amp;gt;&amp;gt; X, Y = np.ogrid[0:sx, 0:sy]
+&amp;gt;&amp;gt;&amp;gt; r = np.hypot(X - sx/2, Y - sy/2)
+&amp;gt;&amp;gt;&amp;gt; rbin = (20* r/r.max()).astype(np.int)
+&amp;gt;&amp;gt;&amp;gt; radial_mean = ndimage.mean(l, labels=rbin, index=np.arange(1, rbin.max() +1))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_radial_mean_1.png&quot; alt=&quot;radial&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_radial_mean.html#example-plot-radial-mean-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;其它测量&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;相关函数，傅里叶/小波谱等。&lt;/p&gt;
+
+&lt;p&gt;一个使用数学形态学的例子：&lt;em&gt;粒度&lt;/em&gt;(&lt;a href=&quot;http://en.wikipedia.org/wiki/Granulometry_%28morphology%29&quot;&gt;http://en.wikipedia.org/wiki/Granulometry_%28morphology%29&lt;/a&gt;)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; def disk_structure(n):
+...     struct = np.zeros((2 * n + 1, 2 * n + 1))
+...     x, y = np.indices((2 * n + 1, 2 * n + 1))
+...     mask = (x - n)**2 + (y - n)**2 &amp;lt;= n**2
+...     struct[mask] = 1
+...     return struct.astype(np.bool)
+...
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; def granulometry(data, sizes=None):
+...     s = max(data.shape)
+...     if sizes == None:
+...         sizes = range(1, s/2, 2)
+...     granulo = [ndimage.binary_opening(data, \
+...         structure=disk_structure(n)).sum() for n in sizes]
+...     return granulo
+...
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; np.random.seed(1)
+&amp;gt;&amp;gt;&amp;gt; n = 10
+&amp;gt;&amp;gt;&amp;gt; l = 256
+&amp;gt;&amp;gt;&amp;gt; im = np.zeros((l, l))
+&amp;gt;&amp;gt;&amp;gt; points = l*np.random.random((2, n**2))
+&amp;gt;&amp;gt;&amp;gt; im[(points[0]).astype(np.int), (points[1]).astype(np.int)] = 1
+&amp;gt;&amp;gt;&amp;gt; im = ndimage.gaussian_filter(im, sigma=l/(4.*n))
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; mask = im &amp;gt; im.mean()
+&amp;gt;&amp;gt;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; granulo = granulometry(mask, sizes=np.arange(2, 19, 4))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://scipy-lectures.github.com/_images/plot_granulo_1.png&quot; alt=&quot;granulometry&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://scipy-lectures.github.com/advanced/image_processing/auto_examples/plot_granulo.html#example-plot-granulo-py&quot;&gt;示例源码&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;占位&lt;a href=&quot;#fnref:1&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;ValueError: can not convert int64 to uint8.&lt;a href=&quot;#fnref:2&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;根据以上操作剩下的区域选择区域，因为是随机生成可能结果不通，label_im==4未必留下来了。&lt;a href=&quot;#fnref:3&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:4&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Regular_space&quot;&gt;正则空间&lt;/a&gt;&lt;a href=&quot;#fnref:4&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</content>
+ </entry>
  
  <entry>
    <title>调试代码(Python)</title>
@@ -51,6 +859,20 @@
       &lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-4&quot;&gt;调试工作流&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#python&quot;&gt;使用Python调试器&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-5&quot;&gt;调用调试器&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#section-6&quot;&gt;尸检&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#section-7&quot;&gt;单步执行&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#section-8&quot;&gt;其它开始调试的方法&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#section-9&quot;&gt;调试器命令和交互&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#gdb&quot;&gt;使用gdb调试段错误&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#section-10&quot;&gt;总结练习&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#footnotes&quot;&gt;Footnotes&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;section-1&quot;&gt;避免错误&lt;/h2&gt;
@@ -175,6 +997,480 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;h2 id=&quot;section-4&quot;&gt;调试工作流&lt;/h2&gt;
+
+&lt;p&gt;你确实有个并不微不足道的bug，这时调试策略就关键了。这没有银色子弹。然而，策略有帮助：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;对调试一个给定的问题，最受欢迎的情况是当问题被隔离成少量几行的代码，在框架和应用之外，伴随的更改-运行-失败循环&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;让出错可靠。找到一个测试实例让代码每次都出错(fail)&lt;/li&gt;
+  &lt;li&gt;分解并且克服。一旦你有了一个失败测试实例，隔绝出错代码 。
+    &lt;ul&gt;
+      &lt;li&gt;哪个模块&lt;/li&gt;
+      &lt;li&gt;哪个函数&lt;/li&gt;
+      &lt;li&gt;哪行代码
+= &amp;gt; 隔离小块可再生错误：测试样例。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;一次更改一样东西，并且重新运行错误测试样例&lt;/li&gt;
+  &lt;li&gt;使用调试器来理解哪里出错了&lt;/li&gt;
+  &lt;li&gt;记笔记，保持耐心。这将花很久。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;一旦你已经完成这个过程：严格隔离一片再生bug的代码并使用这片代码修复它，向你的测试套件中添加相应的代码。&lt;/p&gt;
+
+&lt;h2 id=&quot;python&quot;&gt;使用Python调试器&lt;/h2&gt;
+
+&lt;p&gt;Python调试器，&lt;code&gt;pdb&lt;/code&gt;：&lt;a href=&quot;http://docs.python.org/library/pdb.html&quot;&gt;http://docs.python.org/library/pdb.html&lt;/a&gt;，允许你交互地检查你的代码。&lt;/p&gt;
+
+&lt;p&gt;具体来说它允许你：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;查看源代码&lt;/li&gt;
+  &lt;li&gt;向上或向下查看调用堆栈&lt;/li&gt;
+  &lt;li&gt;检查变量值&lt;/li&gt;
+  &lt;li&gt;更改变量值&lt;/li&gt;
+  &lt;li&gt;设置断点&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;print&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;是的，print确实可以作为一个调试工具。然而在运行时检查的话，使用调试器通常更有效率。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;调用调试器&lt;/h3&gt;
+
+&lt;p&gt;开启调试器的方法：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;尸检(post-mortem)，在模块错误后开启调试器&lt;/li&gt;
+  &lt;li&gt;用调试器运行模块&lt;/li&gt;
+  &lt;li&gt;在模块中调用调试器&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;section-6&quot;&gt;尸检&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;情形：&lt;/strong&gt;你使用ipython并且你获得一个回溯(traceback)。&lt;/p&gt;
+
+&lt;p&gt;现在让我们调试文件&lt;a href=&quot;http://scipy-lectures.github.com/_downloads/index_error.py&quot;&gt;index_error.py&lt;/a&gt;。当运行它时，一个&lt;code&gt;IndexError&lt;/code&gt;被引发。键入&lt;code&gt;%debug&lt;/code&gt;将进入调试器：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [1]: %run index_error.py
+---------------------------------------------------------------------------
+IndexError                                Traceback (most recent call last)
+/usr/lib/python2.7/site-packages/IPython/utils/py3compat.py in execfile(fname, *where)
+    176             else:
+    177                 filename = fname
+--&amp;gt; 178             __builtin__.execfile(filename, *where)
+
+/home/lyy/index_error.py in &amp;lt;module&amp;gt;()
+      6 
+      7 if __name__ == '__main__':
+----&amp;gt; 8     index_error()
+      9 
+
+/home/lyy/index_error.py in index_error()
+      3 def index_error():
+      4     lst = list('foobar')
+----&amp;gt; 5     print lst[len(lst)]
+      6 
+      7 if __name__ == '__main__':
+
+IndexError: list index out of range
+
+In [2]: %debug
+&amp;gt; /home/lyy/index_error.py(5)index_error()
+      4     lst = list('foobar')
+----&amp;gt; 5     print lst[len(lst)]
+      6 
+
+ipdb&amp;gt; list
+      1 &quot;&quot;&quot;Small snippet to raise an IndexError.&quot;&quot;&quot;
+      2 
+      3 def index_error():
+      4     lst = list('foobar')
+----&amp;gt; 5     print lst[len(lst)]
+      6 
+      7 if __name__ == '__main__':
+      8     index_error()
+      9 
+
+ipdb&amp;gt; len(lst)
+6
+ipdb&amp;gt; print lst[len(lst)-1]
+r
+ipdb&amp;gt; quit
+
+In [3]: 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;在IPython之外尸检&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;调试&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;在一些情形下你无法使用IPython，例如调试一个想要从命令行调用的脚本。这中情况下，你可以使用&lt;code&gt;python -m pdb script.py&lt;/code&gt;来调用脚本：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;lyy@arch ~ % python2 -m pdb index_error.py
+&amp;gt; /home/lyy/index_error.py(1)&amp;lt;module&amp;gt;()
+-&amp;gt; &quot;&quot;&quot;Small snippet to raise an IndexError.&quot;&quot;&quot;
+(Pdb) continue
+Traceback (most recent call last):
+  File &quot;/usr/lib/python2.7/pdb.py&quot;, line 1314, in main
+    pdb._runscript(mainpyfile)
+  File &quot;/usr/lib/python2.7/pdb.py&quot;, line 1233, in _runscript
+    self.run(statement)
+  File &quot;/usr/lib/python2.7/bdb.py&quot;, line 387, in run
+    exec cmd in globals, locals
+  File &quot;&amp;lt;string&amp;gt;&quot;, line 1, in &amp;lt;module&amp;gt;
+  File &quot;index_error.py&quot;, line 1, in &amp;lt;module&amp;gt;
+    &quot;&quot;&quot;Small snippet to raise an IndexError.&quot;&quot;&quot;
+  File &quot;index_error.py&quot;, line 5, in index_error
+    print lst[len(lst)]
+IndexError: list index out of range
+Uncaught exception. Entering post mortem debugging
+Running 'cont' or 'step' will restart the program
+&amp;gt; /home/lyy/index_error.py(5)index_error()
+-&amp;gt; print lst[len(lst)]
+(Pdb) print lst[len(lst)]
+*** IndexError: list index out of range
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;section-7&quot;&gt;单步执行&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;情形：&lt;/strong&gt;你相信在模块中存在一个bug但不确定在哪里。&lt;/p&gt;
+
+&lt;p&gt;例如我们尝试调试&lt;a href=&quot;http://scipy-lectures.github.com/_downloads/wiener_filtering.py&quot;&gt;wiener_filtering.py&lt;/a&gt;。确实代码运行了，但是滤波效果并不好。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;用调试器运行脚本：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt;In [1]: %run -d wiener_filtering.py
+*** Blank or comment
+*** Blank or comment
+*** Blank or comment
+Breakpoint 1 at /home/lyy/wiener_filtering.py:4
+NOTE: Enter 'c' at the ipdb&amp;gt;  prompt to start your script.
+&amp;gt; &amp;lt;string&amp;gt;(1)&amp;lt;module&amp;gt;()
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;进入&lt;a href=&quot;http://scipy-lectures.github.com/_downloads/wiener_filtering.py&quot;&gt;wiener_filtering.py&lt;/a&gt;并且在34行设置断点：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt;ipdb&amp;gt; n
+&amp;gt; /home/lyy/wiener_filtering.py(4)&amp;lt;module&amp;gt;()
+      3 
+1---&amp;gt; 4 import numpy as np
+      5 import scipy as sp
+
+ipdb&amp;gt; b 34
+Breakpoint 2 at /home/lyy/wiener_filtering.py:34
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;用&lt;code&gt;c(out(inue))&lt;/code&gt;继续执行到下一个断点:&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ipdb&amp;gt; c
+&amp;gt; /home/lyy/wiener_filtering.py(34)iterated_wiener()
+     33     “””
+2–&amp;gt; 34     noisy_img = noisy_img
+     35     denoised_img = local_mean(noisy_img, size=size)&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;用&lt;code&gt;n(ext)&lt;/code&gt;和&lt;code&gt;s(tep)&lt;/code&gt;回到代码：&lt;code&gt;next&lt;/code&gt;跳到当前执行文本的下一个语句，而&lt;code&gt;step&lt;/code&gt;将穿越执行文本，也就是，可以深入探索函数调用：&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; rel=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt;ipdb&amp;gt; s
+&amp;gt; /home/lyy/wiener_filtering.py(35)iterated_wiener()
+2    34     noisy_img = noisy_img
+---&amp;gt; 35     denoised_img = local_mean(noisy_img, size=size)
+     36     l_var = local_var(noisy_img, size=size)
+  
+ipdb&amp;gt; n
+&amp;gt; /home/lyy/wiener_filtering.py(36)iterated_wiener()
+     35     denoised_img = local_mean(noisy_img, size=size)
+---&amp;gt; 36     l_var = local_var(noisy_img, size=size)
+     37     for i in range(3):
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;执行几行然后探索局部变量：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt;ipdb&amp;gt; n
+&amp;gt; /home/lyy/wiener_filtering.py(37)iterated_wiener()
+     36     l_var = local_var(noisy_img, size=size)
+---&amp;gt; 37     for i in range(3):
+     38         res = noisy_img - denoised_img
+  
+ipdb&amp;gt; print l_var
+[[5868 5379 5316 ..., 5071 4799 5149]
+ [5013  363  437 ...,  346  262 4355]
+ [5379  410  344 ...,  392  604 3377]
+ ..., 
+ [ 435  362  308 ...,  275  198 1632]
+ [ 548  392  290 ...,  248  263 1653]
+ [ 466  789  736 ..., 1835 1725 1940]]
+ipdb&amp;gt; print l_var.min()
+0
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Oh,亲爱的，除了整数什么也没有，还有0变动。这就是我们的bug所在，我们在做整数算术。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;引发数值错误例外&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;当我们运行&lt;a href=&quot;http://scipy-lectures.github.com/_downloads/wiener_filtering.py&quot;&gt;wiener_filtering.py&lt;/a&gt;文件时，以下警告被引发(raise)：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [1]: %run wiener_filtering.py
+wiener_filtering.py:40: RuntimeWarning: divide by zero encountered in divide
+  noise_level = (1 - noise/l_var )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们可以将这些警告转化为例外(exception)，这让我们能对它们尸检调试，并且迅速找到我们的问题：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [2]: np.seterr(all='raise')
+Out[2]: {'divide': 'warn', 'invalid': 'warn', 'over': 'warn', 'under': 'ignore'}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;section-8&quot;&gt;其它开始调试的方法&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;引发一个例外作为”可怜的”断点&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;如果你发现几下行号设置断点很无聊，你可以简单地在你想要检查的地方引发一个例外，使用ipython的&lt;code&gt;%debug&lt;/code&gt;。注意在这种情况下你不能step和continue执行。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;使用nosetests调试测试失败&lt;/p&gt;
+
+    &lt;p&gt;你可以运行&lt;code&gt;nosetests --pdb&lt;/code&gt;对例外(exception)尸检调试，并且&lt;code&gt;nosetests --pdb-failure&lt;/code&gt;使用调试器来检查测试失败。&lt;/p&gt;
+
+    &lt;p&gt;另外，你可以通过安装nose插件&lt;a href=&quot;http://pypi.python.org/pypi/ipdbplugin&quot;&gt;ipdbplugin&lt;/a&gt;，在nose中使用IPython调试接口。你可以传递&lt;code&gt;--ipdb&lt;/code&gt;和&lt;code&gt;--ipdb-failure&lt;/code&gt;选项给nosetests。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;显式调用调试器&lt;/p&gt;
+
+    &lt;p&gt;在你想要调试的地方放入以下一行：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt;import pdb; pdb.set_trace()
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;font color=&quot;red&quot;&gt;警告：当运行&lt;code&gt;nosetests&lt;/code&gt;时，输出被捕捉，并且因此似乎调试器不工作了。只要加上&lt;code&gt;-s&lt;/code&gt;标志运行nosetests&lt;/font&gt;
+
+&lt;p&gt;&lt;strong&gt;图形化调试器&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;为了单步执行和检查变量，你也许觉得用图形化的调试器如&lt;a href=&quot;http://winpdb.org/&quot;&gt;winpdb&lt;/a&gt;更加方便。&lt;/p&gt;
+
+&lt;p&gt;另外，&lt;a href=&quot;http://pypi.python.org/pypi/pudb&quot;&gt;pudb&lt;/a&gt;是一个很棒的半图形化调试器，它在终端里有一个文字用户界面。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-9&quot;&gt;调试器命令和交互&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;命令&lt;/th&gt;
+      &lt;th&gt;作用&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;l(list)&lt;/td&gt;
+      &lt;td&gt;列出当前运行的代码&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;u(p)&lt;/td&gt;
+      &lt;td&gt;上一个调用堆栈&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;d(own)&lt;/td&gt;
+      &lt;td&gt;下一个调用堆栈&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;n(ext)&lt;/td&gt;
+      &lt;td&gt;执行下一行(不到新的函数)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;s(tep)&lt;/td&gt;
+      &lt;td&gt;执行下一个语句(到新的函数)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;bt&lt;/td&gt;
+      &lt;td&gt;打印调用堆栈&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;a&lt;/td&gt;
+      &lt;td&gt;打印局部变量&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;!command&lt;/td&gt;
+      &lt;td&gt;执行特定的_Python_命令(相对于pdb命令)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;警告：Debugger 命令不是Python代码&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;你不能想当然的命名一个变量。例如，例如，如果在其中，你不能在当前情形下覆盖用同名变量:&lt;em&gt;当在调试器中敲代码时，使用不同的名字而不是你的局部变量&lt;/em&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;gdb&quot;&gt;使用gdb调试段错误&lt;/h2&gt;
+
+&lt;p&gt;如果你有一个段错误，你不能通过pdb调试它，因为它会让Python解释器在进入调试器之前崩溃。同样，如果你在Python中嵌入的C代码有bug，pdb也没用。对这种情况我们使用在linux上可用的gnu调试器&lt;a href=&quot;http://www.gnu.org/s/gdb/&quot;&gt;gdb&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;在我们用gdb之前，让我们向它添加一些Python特有的工具。对此我们向我们的_gdbinit_添加一些宏。宏优化的选择依赖于你的Python版本和gdb版本。我已经在&lt;a href=&quot;http://scipy-lectures.github.com/_downloads/gdbinit&quot;&gt;gdbinit&lt;/a&gt;里添加了一个简化的版本，但是请自由地阅读&lt;a href=&quot;http://wiki.python.org/moin/DebuggingWithGdb&quot;&gt;DebuggingWithGdb&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;为用gdb调试脚本&lt;a href=&quot;http://scipy-lectures.github.com/_downloads/segfault.py&quot;&gt;segfault.py&lt;/a&gt;，我们可以在gdb中如下运行：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ gdb python
+...
+(gdb) run segfault.py
+Starting program: /usr/bin/python segfault.py
+[Thread debugging using libthread_db enabled]
+
+Program received signal SIGSEGV, Segmentation fault.
+_strided_byte_copy (dst=0x8537478 &quot;\360\343G&quot;, outstrides=4, src=
+    0x86c0690 &amp;lt;Address 0x86c0690 out of bounds&amp;gt;, instrides=32, N=3,
+    elsize=4)
+        at numpy/core/src/multiarray/ctors.c:365
+365            _FAST_MOVE(Int32);
+(gdb)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们得到一个段错误，并且gdb事后在C级别的堆栈中(不是python调用堆栈)捕捉到了它。我们可以使用使用gdb的命令调试C调用堆栈：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(gdb) up
+#1  0x004af4f5 in _copy_from_same_shape (dest=&amp;lt;value optimized out&amp;gt;,
+    src=&amp;lt;value optimized out&amp;gt;, myfunc=0x496780 &amp;lt;_strided_byte_copy&amp;gt;,
+    swap=0)
+at numpy/core/src/multiarray/ctors.c:748
+748         myfunc(dit-&amp;gt;dataptr, dest-&amp;gt;strides[maxaxis],
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如你所见，现在我们在numpy的C代码中。我们想要知道什么Python代码触发了这个段错误，因此我们向上查看堆栈直到我们发现Python执行循环：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(gdb) up
+#8  0x080ddd23 in call_function (f=
+    Frame 0x85371ec, for file /home/varoquau/usr/lib/python2.6/site-packages/numpy/core/arrayprint.py, line 156, in _leading_trailing (a=&amp;lt;numpy.ndarray at remote 0x85371b0&amp;gt;, _nc=&amp;lt;module at remote 0xb7f93a64&amp;gt;), throwflag=0)
+    at ../Python/ceval.c:3750
+3750    ../Python/ceval.c: No such file or directory.
+        in ../Python/ceval.c
+
+(gdb) up
+#9  PyEval_EvalFrameEx (f=
+    Frame 0x85371ec, for file /home/varoquau/usr/lib/python2.6/site-packages/numpy/core/arrayprint.py, line 156, in _leading_trailing (a=&amp;lt;numpy.ndarray at remote 0x85371b0&amp;gt;, _nc=&amp;lt;module at remote 0xb7f93a64&amp;gt;), throwflag=0)
+    at ../Python/ceval.c:2412
+2412    in ../Python/ceval.c
+(gdb)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;一旦我们在python执行循环中时，我们可以使用特殊的python帮助函数。例如我们找到相应的Python代码：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(gdb) pyframe
+/home/varoquau/usr/lib/python2.6/site-packages/numpy/core/arrayprint.py (158): _leading_trailing
+(gdb)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这是numpy的代码，我们需要向上直到找到我们自己写的代码：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(gdb) up
+...
+(gdb) up
+#34 0x080dc97a in PyEval_EvalFrameEx (f=
+    Frame 0x82f064c, for file segfault.py, line 11, in print_big_array (small_array=&amp;lt;numpy.ndarray at remote 0x853ecf0&amp;gt;, big_array=&amp;lt;numpy.ndarray at remote 0x853ed20&amp;gt;), throwflag=0) at ../Python/ceval.c:1630
+1630    ../Python/ceval.c: No such file or directory.
+        in ../Python/ceval.c
+(gdb) pyframe
+segfault.py (12): print_big_array
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;相应的代码是：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;def print_big_array(small_array):
+    big_array = make_big_array(small_array)
+    print big_array[-10:]
+    return big_array
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;所以当打印&lt;code&gt;big_array[-10:]&lt;/code&gt;时发生段错误。原因很简单，&lt;code&gt;big-array&lt;/code&gt;的末尾被分配到程序内存之外了。&lt;sup id=&quot;fnref:5&quot;&gt;&lt;a href=&quot;#fn:5&quot; rel=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;在gdbinit中定义的专用于python的命令，请阅读这个文件。&lt;sup id=&quot;fnref:6&quot;&gt;&lt;a href=&quot;#fn:6&quot; rel=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-10&quot;&gt;总结练习&lt;/h2&gt;
+
+&lt;p&gt;以下脚本清晰易读，它致力于解决数值计算感兴趣的实际问题。但是它不能工作。你能调试它吗？&lt;/p&gt;
+
+&lt;p&gt;Python源码&lt;a href=&quot;http://scipy-lectures.github.com/_downloads/to_debug.py&quot;&gt;to_debug.py&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&quot;&quot;&quot;
+A script to compare different root-finding algorithms.
+
+This version of the script is buggy and does not execute. It is your task
+to find an fix these bugs.
+
+The output of the script sould look like:
+
+    Benching 1D root-finder optimizers from scipy.optimize:
+                brenth:   604678 total function calls
+                brentq:   594454 total function calls
+                ridder:   778394 total function calls
+                bisect:  2148380 total function calls
+&quot;&quot;&quot;
+from itertools import product
+
+import numpy as np
+from scipy import optimize
+
+FUNCTIONS = (np.tan,  # Dilating map
+             np.tanh, # Contracting map
+             lambda x: x**3 + 1e-4*x, # Almost null gradient at the root
+             lambda x: x+np.sin(2*x), # Non monotonous function
+             lambda x: 1.1*x+np.sin(4*x), # Fonction with several local maxima
+            )
+
+OPTIMIZERS = (optimize.brenth, optimize.brentq, optimize.ridder,
+              optimize.bisect)
+
+
+def apply_optimizer(optimizer, func, a, b):
+    &quot;&quot;&quot; Return the number of function calls given an root-finding optimizer, 
+        a function and upper and lower bounds.
+    &quot;&quot;&quot;
+    return optimizer(func, a, b, full_output=True)[1].function_calls,
+
+
+def bench_optimizer(optimizer, param_grid):
+    &quot;&quot;&quot; Find roots for all the functions, and upper and lower bounds
+        given and return the total number of function calls.
+    &quot;&quot;&quot;
+    return sum(apply_optimizer(optimizer, func, a, b)
+               for func, a, b in param_grid)
+
+
+def compare_optimizers(optimizers):
+    &quot;&quot;&quot; Compare all the optimizers given on a grid of a few different
+        functions all admitting a signle root in zero and a upper and
+        lower bounds.
+    &quot;&quot;&quot;
+    random_a = -1.3 + np.random.random(size=100)
+    random_b =   .3 + np.random.random(size=100)
+    param_grid = product(FUNCTIONS, random_a, random_b)
+    print &quot;Benching 1D root-finder optimizers from scipy.optimize:&quot;
+    for optimizer in OPTIMIZERS:
+        print '% 20s: % 8i total function calls' % (
+                    optimizer.__name__, 
+                    bench_optimizer(optimizer, param_grid)
+                )
+
+
+if __name__ == '__main__':
+    compare_optimizers(OPTIMIZERS)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
+
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:1&quot;&gt;
@@ -182,6 +1478,18 @@
     &lt;/li&gt;
     &lt;li id=&quot;fn:2&quot;&gt;
       &lt;p&gt;关于插件的安装，我更倾向于pathogen&lt;a href=&quot;#fnref:2&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;这词……&lt;a href=&quot;#fnref:3&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:4&quot;&gt;
+      &lt;p&gt;区别在于step停在函数调用，next立即执行函数调用&lt;a href=&quot;#fnref:4&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:5&quot;&gt;
+      &lt;p&gt;也许你得将shape从20000改的大点，2e5或更大。&lt;a href=&quot;#fnref:5&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:6&quot;&gt;
+      &lt;p&gt;提醒下，在gdb7或更高版本中，不再单独需要gdbinit文件。另外，要完成用gdb对python程序的调试，我想你的python程序都应该用&lt;code&gt;-g&lt;/code&gt;来编译。&lt;a href=&quot;#fnref:6&quot; rel=&quot;reference&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
