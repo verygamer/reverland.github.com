@@ -24,6 +24,7 @@ disqus: true
 
 - numpy：基本数组操作
 - scipy：`scipy.ndimage`子模块致力于图像处理(n维图像)。参见[http://docs.scipy.org/doc/scipy/reference/tutorial/ndimage.html](http://docs.scipy.org/doc/scipy/reference/tutorial/ndimage.html)
+
       from scipy import ndimage
 
 - 一些例子用到了使用np.array的特殊的工具箱：
