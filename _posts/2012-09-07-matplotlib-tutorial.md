@@ -427,7 +427,7 @@ _Note:这一段很绕，我不知道该怎么翻译好。在matplotlib中axes容
 
 [![reguler plots](http://www.loria.fr/~rougier/teaching/matplotlib/figures/quiver_ex.png)](http://www.loria.fr/~rougier/teaching/matplotlib/scripts/quiver_ex.py)
 
-从以下代码开始，尝试生成上边的图形，添加标签和红色条形。
+从以下代码开始，尝试生成上边的图形，注意色彩和方向。
 
     from pylab import *
     

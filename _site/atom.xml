@@ -4,13 +4,359 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org/atom.xml" rel="self"/>
  <link href="http://reverland.org"/>
- <updated>2012-11-16T14:45:08+08:00</updated>
+ <updated>2012-11-19T22:12:03+08:00</updated>
  <id>http://reverland.org</id>
  <author>
    <name>Reverland</name>
    <email>lhtlyy@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Flask驱动的静态站点生成器(译)</title>
+   <link href="http://reverland.org/python/2012/11/19/flask"/>
+   <updated>2012-11-19T00:00:00+08:00</updated>
+   <id>hhttp://reverland.org/python/2012/11/19/flask</id>
+   <content type="html">
+&lt;p&gt;翻译自：&lt;a href=&quot;https://nicolas.perriault.net/code/2012/dead-easy-yet-powerful-static-website-generator-with-flask/&quot;&gt;Dead easy yet powerful static website generator with Flask&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;纯意译……以下是正文，和jekyll很像的感觉，哈？34行代码完成一个静态站点生成器。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;我想将我的在线身份统合到一个单独的托管地方很久了，因此有了你现在浏览的这个网站。我也寻找一个静态网站架构有段时间了，尝试了许多但一个也不中意。这真令人沮丧。&lt;/p&gt;
+
+&lt;p&gt;然后遇到&lt;a href=&quot;https://twitter.com/#!/mitsuhiko/statuses/166570613295689728&quot;&gt;Armin Ronacher的这个tweet&lt;/a&gt;：&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet tw-align-center&quot;&gt;
+    &lt;p&gt;Frozen-Flask is really, really useful. Should have used that earlier.&lt;/p&gt;&amp;mdash; Armin Ronacher (@mitsuhiko) &lt;a href=&quot;https://twitter.com/mitsuhiko/status/166570613295689728&quot; data-datetime=&quot;2012-02-06T17:15:03+00:00&quot;&gt;February 6, 2012&lt;/a&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://lucumr.pocoo.org/&quot;&gt;Armin&lt;/a&gt;是&lt;a href=&quot;http://flask.pocoo.org/&quot;&gt;Flask&lt;/a&gt;这个Python微框架的作者，我喜欢flask的简洁。所以这个tweet一个机灵，我便开始探索&lt;a href=&quot;http://packages.python.org/Frozen-Flask/&quot;&gt;Frozen-Flask&lt;/a&gt;的玩法。&lt;/p&gt;
+
+&lt;p&gt;Frozen-Flask将Flask应用_冻结_成静态文件，这样你能够高速而无痛地部署它们。再佐以&lt;a href=&quot;http://packages.python.org/Flask-FlatPages/&quot;&gt;Flask-FlatPages&lt;/a&gt;，你获得了完美的生成静态站点工具集，这个站点将有所以你使用框架能得到的特性。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;酷的urls和简单的路径管理&lt;/li&gt;
+  &lt;li&gt;强大的模板&lt;/li&gt;
+  &lt;li&gt;本地动态服务&lt;/li&gt;
+  &lt;li&gt;静态版本管理&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;第一轮：项目搭建&lt;/h2&gt;
+
+&lt;p&gt;在新文件夹中创建个新的&lt;a href=&quot;http://pypi.python.org/pypi/virtualenv&quot;&gt;virtualenv&lt;/a&gt;，使用&lt;a href=&quot;http://pypi.python.org/pypi/pip&quot;&gt;pip&lt;/a&gt;安装必要的包：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mkdir sample_project &amp;amp;&amp;amp; cd !$
+$ mkvirtualenv --no-site-packages `pwd`/env
+$ source env/bin/activate
+$ pip install Flask Frozen-Flask Flask-FlatPages
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;写我们第一个版本的&lt;code&gt;sitebuilder.py&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;from flask import Flask
+app = Flask(__name__)
+
+@app.route(&quot;/&quot;)
+def index():
+    return &quot;Hello World!&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(port=8000)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;运行它;你应该看到类似：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ python sitebuilder.py 
+ * Running on http://127.0.0.1:8000/ 
+ * Restarting with reloader
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;用浏览器打开_http://:127.0.0.1:8000_看是否正常。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;又一轮：添加纯文本页面&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://packages.python.org/Flask-FlatPages/&quot;&gt;Flask-FlatPages&lt;/a&gt;为你的Flask应用提供一套页面。相对动态页面从关系数据库构建，静态页面是从纯文本文件构建。&lt;/p&gt;
+
+&lt;p&gt;在你的项目跟文件夹下创建一个&lt;code&gt;pages/&lt;/code&gt;目录，新建一个&lt;code&gt;hello-wolrd.md&lt;/code&gt;扔进去：&lt;/p&gt;
+
+&lt;p&gt;$ mkdir pages
+$ vi pages/hello-world.md&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;hello-world.md&lt;/code&gt;文件：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;title: Hello World
+date: 2012-03-04
+
+**Hello World**, from a *page*!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如你所见你可以在页面内容中写入&lt;a href=&quot;/404&quot;&gt;Markdown&lt;/a&gt;。所以让我们重新写我们的应用来为通过文件名为任何纯文本提供服务。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;from flask import Flask
+from flask_flatpages import FlatPages
+
+DEBUG = True
+FLATPAGES_AUTO_RELOAD = DEBUG
+FLATPAGES_EXTENSION = '.md'
+
+app = Flask(__name__)
+app.config.from_object(__name__)
+pages = FlatPages(app)
+
+@app.route('/')
+def index():
+    return &quot;Hello World&quot;
+
+@app.route('/&amp;lt;path:path&amp;gt;/')
+def page(path):
+    return pages.get_or_404(path).html
+
+if __name__ == '__main__':
+    app.run(port=8000)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;现在访问&lt;code&gt;http://127.0.0.1:8000/hello-world/&lt;/code&gt;将呈现渲染后的纯文本。注意通过page对象获得html属性markdown源码被转换成html。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;又一轮：添加模板&lt;/h2&gt;
+
+&lt;p&gt;flask使用&lt;a href=&quot;http://jinja.pocoo.org/docs/&quot;&gt;jinja2&lt;/a&gt;模板引擎，让我们创建一些模板来装饰页面。首先在项目根目录下创建一个&lt;code&gt;templates&lt;/code&gt;文件夹：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mkdir templates
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在&lt;code&gt;templates/base.html&lt;/code&gt;中创建基本布局：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;!doctype html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;meta charset=&quot;utf-8&quot;&amp;gt;
+    &amp;lt;title&amp;gt;My site&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+    &amp;lt;h1&amp;gt;&amp;lt;a href=&quot;&quot;&amp;gt;My site&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
+{% block content %}
+    &amp;lt;p&amp;gt;Default content to be displayed&amp;lt;/p&amp;gt;
+{% endblock content %}
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注意&lt;code&gt;url_for()&lt;/code&gt;这个模板函数，这是我们使用Flask和Jinjia2生成url的方式。&lt;/p&gt;
+
+&lt;p&gt;现在用&lt;code&gt;page.html&lt;/code&gt;模板来填充页面内容的布局：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{% extends %}
+
+{% block content %}
+    &amp;lt;h2&amp;gt;Flask驱动的静态站点生成器(译)&amp;lt;/h2&amp;gt;
+    
+{% endblock content %}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们的应用现在应该是：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;from flask import Flask, render_template
+from flask_flatpages import FlatPages
+
+DEBUG = True
+FLATPAGES_AUTO_RELOAD = DEBUG
+FLATPAGES_EXTENSION = '.md'
+
+app = Flask(__name__)
+app.config.from_object(__name__)
+pages = FlatPages(app)
+
+@app.route('/')
+def index():
+    return &quot;Hello World&quot;
+
+@app.route('/&amp;lt;path:path&amp;gt;/')
+def page(path):
+    page = pages.get_or_404(path)
+    return render_template('page.html', page=page)
+
+if __name__ == '__main__':
+    app.run(port=8000)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;见鬼，我们刚刚做了什么？&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;创建了一个应用的模板;一个通用布局(base.html)和一个页面模板(page.html)&lt;/li&gt;
+  &lt;li&gt;我们使用&lt;code&gt;render_template&lt;/code&gt;函数对页面用页面模板装饰。&lt;/li&gt;
+  &lt;li&gt;页面模板扩展基本模板来避免在每个页面都复制粘帖相同的内容。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;又一轮：在主页呈现页面列表&lt;/h2&gt;
+
+&lt;p&gt;现在我们的主页弱爆了。我们让它列出所有存在的页面。&lt;/p&gt;
+
+&lt;p&gt;创建一个&lt;code&gt;templates/index.html&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{% extends %}
+
+{% block content %}
+    &amp;lt;h2&amp;gt;List of stuff&amp;lt;/h2&amp;gt;
+    &amp;lt;ul&amp;gt;
+    {% for page in pages %}
+        &amp;lt;li&amp;gt;
+            &amp;lt;a href=&quot;&quot;&amp;gt;Flask驱动的静态站点生成器(译)&amp;lt;/a&amp;gt;
+        &amp;lt;/li&amp;gt;
+    {% else %}
+        &amp;lt;li&amp;gt;No stuff.&amp;lt;/li&amp;gt;
+    {% endfor %}
+    &amp;lt;/ul&amp;gt;
+{% endblock content %}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;随意地创建更多纯文本页面，就像我们创建&lt;code&gt;hello-world.md&lt;/code&gt;一样，将文件保存在&lt;code&gt;pages/&lt;/code&gt;目录下，使用&lt;code&gt;.md&lt;/code&gt;扩展名。&lt;/p&gt;
+
+&lt;p&gt;我们应用中的&lt;code&gt;index()&lt;/code&gt;路径现在应该这样：&lt;/p&gt;
+
+&lt;p&gt;重载主页，页面列表将呈现。真他妈简单。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;又一轮：给页面添加元数据&lt;/h2&gt;
+
+&lt;p&gt;Flask-FlatPages允许像我们创建和&lt;code&gt;hello-world.md&lt;/code&gt;的标题和日期一样添加元数据，并且通过&lt;code&gt;page.meta&lt;/code&gt;来存取它们，获得看上去蠢蠢的python字典。真令人吃惊，不是吗？&lt;/p&gt;
+
+&lt;p&gt;让我们假设想要给页面添加标签，我们的&lt;code&gt;hello-world.md&lt;/code&gt;将变成：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;title: Hello World
+date: 2012-03-04
+tags: [general, awesome, stuff]
+
+**Hello World**, from a *page*!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;元数据用&lt;a href=&quot;http://yaml.org/&quot;&gt;YAML&lt;/a&gt;描述，因此你能够使用字符串、布尔、整数、浮点、列表、甚至字典，它们将转换成Python相应的内在等价物。&lt;/p&gt;
+
+&lt;p&gt;我们将使用两个包含共享部分的不同的模板来列出普通页面和标签页面，&lt;code&gt;index.html&lt;/code&gt;现在应该是：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{% extends %}
+
+{% block content %}
+    &amp;lt;h2&amp;gt;List of stuff&amp;lt;/h2&amp;gt;
+    {% with pages=pages  %}
+        {% include %}
+    {% endwith %}
+{% endblock content %}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;创建&lt;code&gt;tag.html&lt;/code&gt;模板，它将用来呈现标签页面列表：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{% extends %}
+
+{% block content %}
+    &amp;lt;h2&amp;gt;List of stuff tagged &amp;lt;em&amp;gt;&amp;lt;/em&amp;gt;&amp;lt;/h2&amp;gt;
+    {% with pages=pages  %}
+        {% include %}
+    {% endwith %}
+{% endblock content %}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;新建的&lt;code&gt;_list.html&lt;/code&gt;模板应该包含：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;ul&amp;gt;
+{% for page in pages %}
+    &amp;lt;li&amp;gt;
+        &amp;lt;a href=&quot;&quot;&amp;gt;Flask驱动的静态站点生成器(译)&amp;lt;/a&amp;gt;
+    {% if page.meta.tags|length %}
+        | Tagged:
+        {% for page_tag in page.meta.tags %}
+            &amp;lt;a href=&quot;&quot;&amp;gt;&amp;lt;/a&amp;gt;
+        {% endfor %}
+    {% endif %}
+    &amp;lt;/li&amp;gt;
+{% else %}
+    &amp;lt;li&amp;gt;No page.&amp;lt;/li&amp;gt;
+{% endfor %}
+&amp;lt;/ul&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;向应用中添加新的tag路径，使用新的&lt;code&gt;tag.html&lt;/code&gt;模板：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@app.route('/tag/&amp;lt;string:tag&amp;gt;/')
+def tag(tag):
+    tagged = [p for p in pages if tag in p.meta.get('tags', [])]
+    return render_template('tag.html', pages=tagged, tag=tag)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注：若你之前不喜欢python的&lt;a href=&quot;http://www.network-theory.co.uk/docs/pytut/ListComprehensions.html&quot;&gt;列表推导式&lt;/a&gt;，现在你会了。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-5&quot;&gt;又一轮：生成静态页面&lt;/h2&gt;
+
+&lt;p&gt;好的，现在我们只要有一个动态网站，为存储在文件系统上的纯文本页面提供服务：废话。但是我们当然不是Flask应用而是一堆静态文件，省去了任何应用服务器。&lt;/p&gt;
+
+&lt;p&gt;来进入Frozen-Flask。它的使用真他妈简单：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import sys
+
+from flask import Flask, render_template
+from flask_flatpages import FlatPages
+from flask_frozen import Freezer
+
+DEBUG = True
+FLATPAGES_AUTO_RELOAD = DEBUG
+FLATPAGES_EXTENSION = '.md'
+
+app = Flask(__name__)
+app.config.from_object(__name__)
+pages = FlatPages(app)
+freezer = Freezer(app)
+
+@app.route('/')
+def index():
+    return render_template('index.html', pages=pages)
+
+@app.route('/tag/&amp;lt;string:tag&amp;gt;/')
+def tag(tag):
+    tagged = [p for p in pages if tag in p.meta.get('tags', [])]
+    return render_template('tag.html', pages=tagged, tag=tag)
+
+@app.route('/&amp;lt;path:path&amp;gt;/')
+def page(path):
+    page = pages.get_or_404(path)
+    return render_template('page.html', page=page)
+
+if __name__ == '__main__':
+    if len(sys.argv) &amp;gt; 1 and sys.argv[1] == &quot;build&quot;:
+        freezer.freeze()
+    else:
+        app.run(port=8000)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后运行：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ python sitebuilder.py build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;打开构建文件夹键入如下命令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ tree
+.
+├── hello-world
+│   └── index.html
+├── index.html
+└── tag
+    ├── awesome
+    │   └── index.html
+    ├── general
+    │   └── index.html
+    └── stuff
+        └── index.html
+
+5 directories, 5 files
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;section-6&quot;&gt;想法：吓坏了&lt;/h2&gt;
+
+&lt;p&gt;你现在能部署&lt;code&gt;build&lt;/code&gt;目录下的任何文件到任何能托管静态文件的地方了，而你仅仅用34行Python代码就完成了……不错吧？&lt;/p&gt;
+
+&lt;p&gt;当然，现在的版本弱爆了，你能一点一点的为它添加各种特性了。&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>使用Numpy和Scipy处理图像</title>
@@ -36,8 +382,10 @@
 &lt;ul&gt;
   &lt;li&gt;numpy：基本数组操作&lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;scipy：&lt;code&gt;scipy.ndimage&lt;/code&gt;子模块致力于图像处理(n维图像)。参见&lt;a href=&quot;http://docs.scipy.org/doc/scipy/reference/tutorial/ndimage.html&quot;&gt;http://docs.scipy.org/doc/scipy/reference/tutorial/ndimage.html&lt;/a&gt;
-    from scipy import ndimage&lt;/p&gt;
+    &lt;p&gt;scipy：&lt;code&gt;scipy.ndimage&lt;/code&gt;子模块致力于图像处理(n维图像)。参见&lt;a href=&quot;http://docs.scipy.org/doc/scipy/reference/tutorial/ndimage.html&quot;&gt;http://docs.scipy.org/doc/scipy/reference/tutorial/ndimage.html&lt;/a&gt;&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt;from scipy import ndimage
+&lt;/code&gt;&lt;/pre&gt;
   &lt;/li&gt;
   &lt;li&gt;一些例子用到了使用np.array的特殊的工具箱：
     &lt;ul&gt;
@@ -4994,7 +5342,7 @@ pie(Z), show()
 
 &lt;p&gt;&lt;a href=&quot;http://www.loria.fr/~rougier/teaching/matplotlib/scripts/quiver_ex.py&quot;&gt;&lt;img src=&quot;http://www.loria.fr/~rougier/teaching/matplotlib/figures/quiver_ex.png&quot; alt=&quot;reguler plots&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;从以下代码开始，尝试生成上边的图形，添加标签和红色条形。&lt;/p&gt;
+&lt;p&gt;从以下代码开始，尝试生成上边的图形，注意色彩和方向。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;from pylab import *
 
