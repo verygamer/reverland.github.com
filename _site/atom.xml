@@ -4,13 +4,174 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org/atom.xml" rel="self"/>
  <link href="http://reverland.org"/>
- <updated>2012-11-19T22:12:03+08:00</updated>
+ <updated>2012-12-12T21:07:05+08:00</updated>
  <id>http://reverland.org</id>
  <author>
    <name>Reverland</name>
    <email>lhtlyy@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>python小练习：网络视频下载</title>
+   <link href="http://reverland.org/python/2012/12/02/python"/>
+   <updated>2012-12-02T00:00:00+08:00</updated>
+   <id>hhttp://reverland.org/python/2012/12/02/python</id>
+   <content type="html">
+&lt;h1 id=&quot;python&quot;&gt;python小练习：网络视频下载&lt;/h1&gt;
+
+&lt;p&gt;互联网上有很多视频网站，提供大量视频。可是大多都要求你使用它提供的专有软件才能下载，或者根本没提供下载的地方。在linux下怎么办？总是有办法的。浏览器扩展,&lt;a href=&quot;https://github.com/soimort/you-get/tree/master/you_get&quot;&gt;you-get&lt;/a&gt;，直接从硕鼠解析出地址自己下载……&lt;/p&gt;
+
+&lt;p&gt;这不是重点，重点是：自己动手玩一玩。
+- 顺便学习下几个python标准库：&lt;code&gt;urllib&lt;/code&gt;、&lt;code&gt;urllib2&lt;/code&gt;、&lt;code&gt;re&lt;/code&gt;。
+- 初步学习http报头知识
+Extra bonus:
+- flv文件结构&lt;/p&gt;
+
+&lt;p&gt;都是随便看看。&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;下载视频&lt;/h2&gt;
+
+&lt;p&gt;简单起见，直接从&lt;a href=&quot;http://www.flvcd.com/index.htm&quot;&gt;硕鼠&lt;/a&gt;抓取地址。&lt;/p&gt;
+
+&lt;p&gt;首先我们随便找一个视频地址，比如来自sina的&lt;a href=&quot;http://video.sina.com.cn/v/b/56925622-2257301331.html&quot;&gt;憨豆特工&lt;/a&gt;。我们把地址用硕鼠解析出来看看：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://fmn.rrfmn.com/fmn058/20121202/2100/original_jaVP_5b4d00008fb1125d.jpg&quot; alt=&quot;硕鼠&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;哇哦，一个电影被分成15个文件了。&lt;/p&gt;
+
+&lt;p&gt;我们接下来要做的就是抓取这十五个视频的地址并把他们下载下来。&lt;/p&gt;
+
+&lt;p&gt;也许，用正则是个不错的办法。查看该页面源码，可以找到这样的内容：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;input type=&quot;hidden&quot; name=&quot;inf&quot; value=&quot;&amp;lt;R&amp;gt;憨豆特工
+&amp;lt;T&amp;gt;0
+&amp;lt;F&amp;gt;http://video.sina.com.cn/v/b/56925622-2257301331.html
+&amp;lt;QX&amp;gt;normal
+&amp;lt;$&amp;gt;
+&amp;lt;N&amp;gt;憨豆特工-0001
+&amp;lt;P&amp;gt;新浪网
+&amp;lt;U&amp;gt;http://edge.v.iask.com/56926940.hlv?KID=sina,viask&amp;amp;Expires=1354550400&amp;amp;ssig=0G8Acouy32
+&amp;lt;X&amp;gt;0001
+&amp;lt;C&amp;gt;aHR0cDovL3YuaWFzay5jb20vdl9wbGF5LnBocD92aWQ9NTY5MjU2MjItMjI1NzMwMTMzMSZyPXZpZGVvLnNpbmEuY29tLmNu
+&amp;lt;EXPLODEID&amp;gt;1
+&amp;lt;&amp;amp;&amp;gt;
+&amp;lt;$&amp;gt;
+&amp;lt;N&amp;gt;憨豆特工-0002
+&amp;lt;P&amp;gt;新浪网
+&amp;lt;U&amp;gt;http://edge.v.iask.com/56921791.hlv?KID=sina,viask&amp;amp;Expires=1354550400&amp;amp;ssig=aDBPWf%2B2YH
+&amp;lt;X&amp;gt;0001
+&amp;lt;C&amp;gt;aHR0cDovL3YuaWFzay5jb20vdl9wbGF5LnBocD92aWQ9NTY5MjU2MjItMjI1NzMwMTMzMSZyPXZpZGVvLnNpbmEuY29tLmNu
+&amp;lt;EXPLODEID&amp;gt;2
+&amp;lt;&amp;amp;&amp;gt;
+&amp;lt;$&amp;gt;
+&amp;lt;N&amp;gt;憨豆特工-0003
+&amp;lt;P&amp;gt;新浪网
+......
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;显然，&lt;code&gt;&amp;lt;N&amp;gt;&lt;/code&gt;后面是片名而&lt;code&gt;&amp;lt;U&amp;gt;&lt;/code&gt;后面是地址。&lt;/p&gt;
+
+&lt;p&gt;另外，我们观察一下硕鼠当前页面的url地址。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;http://www.flvcd.com/parse.php?kw=http%3A%2F%2Fvideo.sina.com.cn%2Fv%2Fb%2F56925622-2257301331.html
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;显然，kw参数后面是之前sina视频页面地址，只不过已经经过转码处理。&lt;/p&gt;
+
+&lt;p&gt;至此，足够我们用python来完成这一切了。&lt;/p&gt;
+
+&lt;p&gt;打开ipython：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [1]: import urllib
+
+In [2]: import urllib2
+
+In [3]: videourl = 'http://video.sina.com.cn/v/b/56925622-2257301331.html' 
+
+In [4]: url = 'http://www.flvcd.com/parse.php?kw=' + urllib.quote(videourl)
+
+In [5]: req = urllib2.Request(url);
+
+In [6]: req.add_header('host', 'www.flvcd.com');
+
+In [7]: res = urllib2.urlopen(req)
+
+In [8]: html = res.read()
+
+In [9]: print unicode(html,'gbk') # 注意硕鼠的页面编码是charset=GB2312
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;至此，我们完成了从硕鼠读取整个网页的操作。并把读取的内容保存在html中。&lt;/p&gt;
+
+&lt;p&gt;接下来开始抓地址，根据之前的观察，很容易通过正则表达式完成：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [13]: import re
+
+In [14]: pattern = re.compile('&amp;lt;input\s+type=&quot;hidden&quot;\s+name=&quot;inf&quot;\s+value=&quot;([^&quot;]+)')
+
+In [15]: match = pattern.search(html)
+
+In [16]: urls = match.group(1)
+
+In [17]: urls = unicode(urls, 'gbk')
+
+In [18]: urlpattern = re.compile('&amp;lt;[NU]&amp;gt;(.+)')
+
+In [19]: result = urlpattern.findall(urls)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;至此，&lt;code&gt;&amp;lt;N&amp;gt;&lt;/code&gt;和&lt;code&gt;&amp;lt;U&amp;gt;&lt;/code&gt;后面的文件名和地址都被以列表的形式保存在result中了。我们可以遍历它来完成下载：&lt;/p&gt;
+
+&lt;p&gt;先简单处理下，以文件名-地址成对保存：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [28]: data = [result[i:i+2] for i in range(0, len(result), 2)]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后遍历下载：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;In [32]: for k, v in enumerate(data):                   
+    print '  &amp;gt;downloading Block %.2d ...' % (k+1,) 
+    urllib.urlretrieve(v[1], v[0] + '.flv') 
+    print '  downloaded Block.%.2d completely&amp;lt;' % (k+1,)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后？等着……目前的下载器相当简陋，木有进度条，木有断点……&lt;/p&gt;
+
+&lt;p&gt;之后就是合并flv的问题了。&lt;/p&gt;
+
+&lt;h2 id=&quot;flv&quot;&gt;合并flv文件&lt;/h2&gt;
+
+&lt;p&gt;简单起见，直接用这里&lt;a href=&quot;https://github.com/soimort/you-get/blob/master/you_get/processor/join_flv.py&quot;&gt;join_flv.py&lt;/a&gt;来完成。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;python2 join_flv.py -o out.flv flv1.flv flv2.flv ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果你想深入了解flv文件结构，参考further reading部分和flv文件&lt;a href=&quot;http://download.macromedia.com/f4v/video_file_format_spec_v10_1.pdf&quot;&gt;规范&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://fmn.rrimg.com/fmn062/20121203/1830/original_yzzH_5943000093b01191.jpg&quot; alt=&quot;flash-data&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;practice&quot;&gt;Practice&lt;/h2&gt;
+
+&lt;p&gt;抓取这里的视频。并按名称保存他们:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://class.coursera.org/ml/lecture/preview&quot;&gt;https://class.coursera.org/ml/lecture/preview&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://v.163.com/special/opencourse/machinelearning.html&quot;&gt;http://v.163.com/special/opencourse/machinelearning.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;作为正则和urllib、urllib2的练习。&lt;/p&gt;
+
+&lt;h2 id=&quot;further-reading&quot;&gt;Further Reading&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/-Wind/archive/2012/01/30/dov.html&quot;&gt;在线视频下载(Using Python / Bash / C / Reguar Expressions)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.oschina.net/code/snippet_107925_16025&quot;&gt;flv文件详解&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://blog.sina.com.cn/s/blog_48f93b530100eyoe.html&quot;&gt;FLV文件格式解析&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/soimort/you-get/blob/master/you_get/processor/join_flv.py&quot;&gt;you-get&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Flask驱动的静态站点生成器(译)</title>
