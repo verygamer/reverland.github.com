@@ -140,124 +140,25 @@
 
 <p>先加载我们之前的游戏<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
 
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">load</span> <span class="s">&quot;dice-v3&quot;</span><span class="p">)</span><span class="c1">;</span>
-</code></pre>
-</div>
-
 <h3 id="section">增加玩家数</h3>
 
 <p>因为我们之前的架构，增加玩家数很简单。为了增加玩家数后计算机能反应敏捷，让它变“傻”一点。</p>
-
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*num-players*</span> <span class="mi">4</span><span class="p">)</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*die-colors*</span> <span class="o">&#39;</span><span class="p">((</span><span class="mi">255</span> <span class="mi">63</span> <span class="mi">63</span><span class="p">)</span> <span class="p">(</span><span class="mi">63</span> <span class="mi">63</span> <span class="mi">255</span><span class="p">)</span> <span class="p">(</span><span class="mi">63</span> <span class="mi">255</span> <span class="mi">63</span><span class="p">)</span> <span class="p">(</span><span class="mi">255</span> <span class="mi">63</span> <span class="mi">255</span><span class="p">)))</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*max-dice*</span> <span class="mi">5</span><span class="p">)</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*ai-level*</span> <span class="mi">2</span><span class="p">)</span>
-</code></pre>
-</div>
 
 <h3 id="section-1">建立概率节点</h3>
 
 <p>我们本质上是向游戏树中加入几率节点，先升级attacking-moves函数，增加个board-attack-fail分支。</p>
 
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">attacking-moves</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">cur-player</span> <span class="nv">spare-dice</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">player</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
-             <span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">board</span> <span class="nv">pos</span><span class="p">)))</span>
-           <span class="p">(</span><span class="nv">dice</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
-             <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">board</span> <span class="nv">pos</span><span class="p">))))</span>
-    <span class="p">(</span><span class="nv">lazy-mapcan</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">src</span><span class="p">)</span>
-                   <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nv">player</span> <span class="nv">src</span><span class="p">)</span> <span class="nv">cur-player</span><span class="p">)</span>
-                     <span class="p">(</span><span class="nv">lazy-mapcan</span>
-                       <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">dst</span><span class="p">)</span>
-                         <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nv">player</span> <span class="nv">dst</span><span class="p">)</span> <span class="nv">cur-player</span><span class="p">))</span>
-                                  <span class="p">(</span><span class="nb">&gt;</span> <span class="p">(</span><span class="nv">dice</span> <span class="nv">src</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
-                           <span class="p">(</span><span class="nv">make-lazy</span> <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">src</span> <span class="nv">dst</span><span class="p">)</span>
-                                                  <span class="p">(</span><span class="nv">game-tree</span> <span class="p">(</span><span class="nv">board-attack</span> <span class="nv">board</span> <span class="nv">cur-player</span> <span class="nv">src</span> <span class="nv">dst</span> <span class="p">(</span><span class="nv">dice</span> <span class="nv">src</span><span class="p">))</span>
-                                                             <span class="nv">cur-player</span>
-                                                             <span class="p">(</span><span class="nb">+</span> <span class="nv">spare-dice</span> <span class="p">(</span><span class="nv">dice</span> <span class="nv">dst</span><span class="p">))</span>
-                                                             <span class="no">nil</span><span class="p">)</span>
-                                                  <span class="p">(</span><span class="nv">game-tree</span> <span class="p">(</span><span class="nv">board-attack-fail</span> <span class="nv">board</span> <span class="nv">cur-player</span> <span class="nv">src</span> <span class="nv">dst</span> <span class="p">(</span><span class="nv">dice</span> <span class="nv">src</span><span class="p">))</span>
-                                                             <span class="nv">cur-player</span>
-                                                             <span class="p">(</span><span class="nb">+</span> <span class="nv">spare-dice</span> <span class="p">(</span><span class="nv">dice</span> <span class="nv">dst</span><span class="p">))</span>
-                                                             <span class="no">nil</span><span class="p">))))</span>
-                           <span class="p">(</span><span class="nv">lazy-nil</span><span class="p">)))</span>
-                       <span class="p">(</span><span class="nv">make-lazy</span> <span class="p">(</span><span class="nv">neighbors</span> <span class="nv">src</span><span class="p">)))</span>
-                     <span class="p">(</span><span class="nv">lazy-nil</span><span class="p">)))</span>
-                 <span class="p">(</span><span class="nv">make-lazy</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">n</span> <span class="nv">below</span> <span class="vg">*board-hexnum*</span>
-                                  <span class="nv">collect</span> <span class="nv">n</span><span class="p">)))))</span>
-</code></pre>
-</div>
-
 <p>board-attack-fail函数遍历所有位置。如果这个位置是攻击方就只能留下一个骰子</p>
-
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">board-attack-fail</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">player</span> <span class="nv">src</span> <span class="nv">dst</span> <span class="nv">dice</span><span class="p">)</span>
-  <span class="p">(</span><span class="nv">board-array</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">pos</span> <span class="nv">from</span> <span class="mi">0</span>
-                     <span class="nv">for</span> <span class="nv">hex</span> <span class="nv">across</span> <span class="nv">board</span>
-                     <span class="nv">collect</span> <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eq</span> <span class="nv">pos</span> <span class="nv">src</span><span class="p">)</span>
-                               <span class="p">(</span><span class="nb">list</span> <span class="nv">player</span> <span class="mi">1</span><span class="p">)</span>
-                               <span class="nv">hex</span><span class="p">))))</span>
-</code></pre>
-</div>
 
 <h3 id="section-2">让骰子滚动起来</h3>
 
 <p>一下程序让一堆骰子滚动起来，并判断谁赢了</p>
 
-<div class="highlight"><pre><code class="cl"><span class="c1">;rolling the dice</span>
-<span class="p">(</span><span class="nb">defun</span> <span class="nv">roll-dice</span> <span class="p">(</span><span class="nv">dice-num</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">total</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">repeat</span> <span class="nv">dice-num</span>
-                     <span class="nv">sum</span> <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">random</span> <span class="mi">6</span><span class="p">)))))</span>
-    <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
-    <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;On ~a dice rolled ~a. &quot;</span> <span class="nv">dice-num</span> <span class="nv">total</span><span class="p">)</span>
-    <span class="nv">total</span><span class="p">))</span>
-<span class="p">(</span><span class="nb">defun</span> <span class="nv">roll-against</span> <span class="p">(</span><span class="nv">src-dice</span> <span class="nv">dst-dice</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">&gt;</span> <span class="p">(</span><span class="nv">roll-dice</span> <span class="nv">src-dice</span><span class="p">)</span> <span class="p">(</span><span class="nv">roll-dice</span> <span class="nv">dst-dice</span><span class="p">)))</span>
-</code></pre>
-</div>
-
 <p>我们还需要在游戏引擎中调用让骰子滚动的代码,选出正确的子树</p>
-
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">pick-chance-branch</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">move</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">dice</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
-             <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">board</span> <span class="nv">pos</span><span class="p">))))</span>
-    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">path</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">move</span><span class="p">)))</span>
-      <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">path</span><span class="p">)</span> <span class="p">(</span><span class="nv">roll-against</span> <span class="p">(</span><span class="nv">dice</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">path</span><span class="p">))</span>
-                                        <span class="p">(</span><span class="nv">dice</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">path</span><span class="p">))))</span>
-        <span class="p">(</span><span class="nb">cadr</span> <span class="nv">move</span><span class="p">)</span>
-        <span class="p">(</span><span class="nb">caddr</span> <span class="nv">move</span><span class="p">)))))</span>
-</code></pre>
-</div>
 
 <p>更新handle-computer函数让它调用选择几率分支的函数</p>
 
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">handle-human</span> <span class="p">(</span><span class="nv">tree</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;choose your move:&quot;</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">moves</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))</span>
-    <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">print-moves</span> <span class="p">(</span><span class="nv">moves</span> <span class="nv">n</span><span class="p">)</span>
-               <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nv">lazy-null</span> <span class="nv">moves</span><span class="p">)</span>
-                 <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">move</span> <span class="p">(</span><span class="nv">lazy-car</span> <span class="nv">moves</span><span class="p">))</span>
-                        <span class="p">(</span><span class="nv">action</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">move</span><span class="p">)))</span>
-                   <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
-                   <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~a. &quot;</span> <span class="nv">n</span><span class="p">)</span>
-                   <span class="p">(</span><span class="k">if</span> <span class="nv">action</span>
-                     <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~a -&gt; ~a&quot;</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">action</span><span class="p">)</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">action</span><span class="p">))</span>
-                     <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;end turn&quot;</span><span class="p">)))</span>
-                 <span class="p">(</span><span class="nv">print-moves</span> <span class="p">(</span><span class="nv">lazy-cdr</span> <span class="nv">moves</span><span class="p">)</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">n</span><span class="p">)))))</span>
-      <span class="p">(</span><span class="nv">print-moves</span> <span class="nv">moves</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
-    <span class="p">(</span><span class="nv">pick-chance-branch</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)</span> <span class="p">(</span><span class="nv">lazy-nth</span> <span class="p">(</span><span class="nb">1-</span> <span class="p">(</span><span class="nb">read</span><span class="p">))</span> <span class="nv">moves</span><span class="p">))))</span>
-</code></pre>
-</div>
-
 <p>同样我们可以处理handle-computer函数</p>
-
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">handle-computer</span> <span class="p">(</span><span class="nv">tree</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ratings</span> <span class="p">(</span><span class="nv">get-ratings</span> <span class="p">(</span><span class="nv">limit-tree-depth</span> <span class="nv">tree</span> <span class="vg">*ai-level*</span><span class="p">)</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">tree</span><span class="p">))))</span>
-    <span class="p">(</span><span class="nv">pick-chance-branch</span>
-      <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)</span>
-      <span class="p">(</span><span class="nv">lazy-nth</span> <span class="p">(</span><span class="nb">position</span> <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">max</span> <span class="nv">ratings</span><span class="p">)</span> <span class="nv">ratings</span><span class="p">)</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))))</span>
-</code></pre>
-</div>
 
 <h3 id="ai">升级AI</h3>
 
@@ -316,44 +217,7 @@
 
 <p>现在把这个概率交给计算机，更新get-ratings函数,给评分加权</p>
 
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-ratings</span> <span class="p">(</span><span class="nv">tree</span> <span class="nv">player</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">board</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)))</span>
-    <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">dice</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
-               <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">board</span> <span class="nv">pos</span><span class="p">))))</span>
-      <span class="p">(</span><span class="nv">take-all</span> <span class="p">(</span><span class="nv">lazy-mapcar</span>
-                  <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">move</span><span class="p">)</span>
-                    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">path</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">move</span><span class="p">)))</span>
-                      <span class="p">(</span><span class="k">if</span> <span class="nv">path</span>
-                        <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">src</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">path</span><span class="p">))</span>
-                               <span class="p">(</span><span class="nv">dst</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">path</span><span class="p">))</span>
-                               <span class="p">(</span><span class="nv">odds</span> <span class="p">(</span><span class="nb">aref</span> <span class="p">(</span><span class="nb">aref</span> <span class="vg">*dice-odds*</span>
-                                                 <span class="p">(</span><span class="nb">1-</span> <span class="p">(</span><span class="nv">dice</span> <span class="nv">dst</span><span class="p">)))</span>
-                                           <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nv">dice</span> <span class="nv">src</span><span class="p">)</span> <span class="mi">2</span><span class="p">))))</span>
-                          <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">odds</span> <span class="p">(</span><span class="nv">rate-position</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">move</span><span class="p">)</span> <span class="nv">player</span><span class="p">))</span>
-                             <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nb">-</span> <span class="mi">1</span> <span class="nv">odds</span><span class="p">)</span> <span class="p">(</span><span class="nv">rate-position</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">move</span><span class="p">)</span>
-                                                          <span class="nv">player</span><span class="p">))))</span>
-                        <span class="p">(</span><span class="nv">rate-position</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">move</span><span class="p">)</span> <span class="nv">player</span><span class="p">))))</span>
-                  <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">))))))</span>
-</code></pre>
-</div>
-
 <p>为了让修剪游戏树的函数能工作，还需要做些修改让它能处理新的游戏树。同时为了简化不再使用alpha-beta算法。</p>
-
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">limit-tree-depth</span> <span class="p">(</span><span class="nv">tree</span> <span class="nv">depth</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">tree</span><span class="p">)</span>
-        <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)</span>
-        <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">zerop</span> <span class="nv">depth</span><span class="p">)</span>
-          <span class="p">(</span><span class="nv">lazy-nil</span><span class="p">)</span>
-          <span class="p">(</span><span class="nv">lazy-mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">move</span><span class="p">)</span>
-                         <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">move</span><span class="p">)</span>
-                               <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span>
-                                         <span class="p">(</span><span class="nv">limit-tree-depth</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">depth</span><span class="p">)))</span>
-                                       <span class="p">(</span><span class="nb">cdr</span> <span class="nv">move</span><span class="p">))))</span>
-                       <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))))</span>
-<span class="c1">;We mapcar across the tail of each move, so trimming is performed on</span>
-<span class="c1">;both branches of any chance nodes.</span>
-</code></pre>
-</div>
 
 <h3 id="section-3">改进增援方案</h3>
 
@@ -361,55 +225,9 @@
 
 <p>回想我们之前在<a href="http://reverland.org/Tech/2012/05/01/grand-theft-wumpus/">wumpus游戏</a>里写过的相似函数</p>
 
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-connected</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">player</span> <span class="nv">pos</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">check-pos</span> <span class="p">(</span><span class="nv">pos</span> <span class="nv">visited</span><span class="p">)</span>
-             <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">board</span> <span class="nv">pos</span><span class="p">))</span> <span class="nv">player</span><span class="p">)</span>
-                      <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">pos</span> <span class="nv">visited</span><span class="p">)))</span>
-               <span class="p">(</span><span class="nv">check-neighbors</span> <span class="p">(</span><span class="nv">neighbors</span> <span class="nv">pos</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">pos</span> <span class="nv">visited</span><span class="p">))</span>
-               <span class="nv">visited</span><span class="p">))</span>
-           <span class="p">(</span><span class="nv">check-neighbors</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">visited</span><span class="p">)</span>
-             <span class="p">(</span><span class="k">if</span> <span class="nv">lst</span>
-               <span class="p">(</span><span class="nv">check-neighbors</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nv">check-pos</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span> <span class="nv">visited</span><span class="p">))</span>
-               <span class="nv">visited</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nv">check-pos</span> <span class="nv">pos</span> <span class="o">&#39;</span><span class="p">())))</span>
-</code></pre>
-</div>
-
 <p>获得最大的集群,最后添加援军，注意，spare-dice仍然作为参数传递但已经不再被add-new-dice使用了。</p>
 
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">largest-cluster-size</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">player</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">f</span> <span class="p">(</span><span class="nv">pos</span> <span class="nv">visited</span> <span class="nv">best</span><span class="p">)</span>
-             <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">pos</span> <span class="vg">*board-hexnum*</span><span class="p">)</span>
-               <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">board</span> <span class="nv">pos</span><span class="p">))</span> <span class="nv">player</span><span class="p">)</span>
-                        <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">pos</span> <span class="nv">visited</span><span class="p">)))</span>
-                 <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">cluster</span> <span class="p">(</span><span class="nv">get-connected</span> <span class="nv">board</span> <span class="nv">player</span> <span class="nv">pos</span><span class="p">))</span>
-                        <span class="p">(</span><span class="nv">size</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">cluster</span><span class="p">)))</span>
-                   <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="nv">size</span> <span class="nv">best</span><span class="p">)</span>
-                     <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">pos</span><span class="p">)</span> <span class="p">(</span><span class="nb">append</span> <span class="nv">cluster</span> <span class="nv">visited</span><span class="p">)</span> <span class="nv">size</span><span class="p">)</span>
-                     <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">pos</span><span class="p">)</span> <span class="p">(</span><span class="nb">append</span> <span class="nv">cluster</span> <span class="nv">visited</span><span class="p">)</span> <span class="nv">best</span><span class="p">)))</span>
-                 <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">pos</span><span class="p">)</span> <span class="nv">visited</span> <span class="nv">best</span><span class="p">))</span>
-               <span class="nv">best</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nv">f</span> <span class="mi">0</span> <span class="o">&#39;</span><span class="p">()</span> <span class="mi">0</span><span class="p">)))</span>
-<span class="p">(</span><span class="nb">defun</span> <span class="nv">add-new-dice</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">player</span> <span class="nv">spare-dice</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">f</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">n</span><span class="p">)</span>
-             <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">zerop</span> <span class="nv">n</span><span class="p">)</span> <span class="nv">lst</span><span class="p">)</span>
-                   <span class="p">((</span><span class="nb">null</span> <span class="nv">lst</span><span class="p">)</span> <span class="no">nil</span><span class="p">)</span>
-                   <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">cur-player</span> <span class="p">(</span><span class="nb">caar</span> <span class="nv">lst</span><span class="p">))</span>
-                            <span class="p">(</span><span class="nv">cur-dice</span> <span class="p">(</span><span class="nb">cadar</span> <span class="nv">lst</span><span class="p">)))</span>
-                        <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">eq</span> <span class="nv">cur-player</span> <span class="nv">player</span><span class="p">)</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">cur-dice</span> <span class="vg">*max-dice*</span><span class="p">))</span>
-                          <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">cur-player</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">cur-dice</span><span class="p">))</span>
-                                <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">n</span><span class="p">)))</span>
-                          <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="nv">n</span><span class="p">))))))))</span>
-    <span class="p">(</span><span class="nv">board-array</span> <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">coerce</span> <span class="nv">board</span> <span class="ss">&#39;list</span><span class="p">)</span>
-                   <span class="p">(</span><span class="nv">largest-cluster-size</span> <span class="nv">board</span> <span class="nv">player</span><span class="p">)))))</span>
-</code></pre>
-</div>
-
 <p>享受你的劳动成果吧</p>
-
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">serve</span> <span class="nf">#&#39;</span><span class="nv">dod-request-handleer</span><span class="p">)</span>
-</code></pre>
-</div>
 
 <h2 id="section-4">疑问</h2>
 
@@ -486,7 +304,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#linux-tech-ref">linux-tech <span>6</span></a>
+        <a href="/categories.html#linux-tech-ref">linux-tech <span>7</span></a>
         </li>
        
         

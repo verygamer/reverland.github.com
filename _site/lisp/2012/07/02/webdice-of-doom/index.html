@@ -135,191 +135,32 @@
 <p>毋庸置疑，所有游戏界面要用svg画出来，于是我们之前写得 <a href="/lisp/2012/06/16/dsl/">svg库</a> 要派上用场了。什么？已经没有了？那么从该书主页上下载 <a href="http://landoflisp.com/source.html">svg.lisp</a>.</p>
 <p>由于要创建个基于web的应用程序，之前的 <a href="/lisp/2012/05/12/web-server-written-in-lisp/">webserver</a> 也需要加载。</p>
 <p>当然还有我们的游戏新引擎 <a href="/lisp/2012/06/29/dice-of-doom-v2/">Dice of Doom v2</a></p>
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">cd</span> <span class="s">&quot;~/Documents/lisp&quot;</span><span class="p">)</span> 
-<span class="p">(</span><span class="nb">load</span> <span class="s">&quot;dice_of_doom_v2&quot;</span><span class="p">)</span>
-<span class="p">(</span><span class="nb">load</span> <span class="s">&quot;webserver&quot;</span><span class="p">)</span>
-<span class="p">(</span><span class="nb">load</span> <span class="s">&quot;svg.lisp&quot;</span><span class="p">)</span>
-</code></pre>
-</div>
-<p>然后需要先设定一些常数</p>
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*board-width*</span> <span class="mi">900</span><span class="p">)</span><span class="c1">;面板宽度</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*board-height*</span> <span class="mi">500</span><span class="p">)</span><span class="c1">;面板高度</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*board-scale*</span> <span class="mi">64</span><span class="p">)</span><span class="c1">;面板缩放比例</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*top-offset*</span> <span class="mi">3</span><span class="p">)</span><span class="c1">;两摞起来的骰子相对位移</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*dice-scale*</span> <span class="mi">40</span><span class="p">)</span><span class="c1">;骰子缩放比例</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*dot-size*</span> <span class="mf">0.05</span><span class="p">)</span><span class="c1">;骰子上点的大小</span>
-</code></pre>
-</div>
-<p>接下来画骰子</p>
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">draw-die-svg</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">y</span> <span class="nv">col</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">calc-pt</span> <span class="p">(</span><span class="nv">pt</span><span class="p">)</span>
-             <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*dice-scale*</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">pt</span><span class="p">)))</span>
-                   <span class="p">(</span><span class="nb">+</span> <span class="nv">y</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*dice-scale*</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">pt</span><span class="p">)))))</span>
-           <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nv">pol</span> <span class="nv">col</span><span class="p">)</span>
-             <span class="p">(</span><span class="nv">polygon</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nv">calc-pt</span> <span class="nv">pol</span><span class="p">)</span> <span class="nv">col</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nv">f</span> <span class="o">&#39;</span><span class="p">((</span><span class="mi">0</span> <span class="o">.</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">(</span><span class="mf">-0.6</span> <span class="o">.</span> <span class="mf">-0.75</span><span class="p">)</span> <span class="p">(</span><span class="mi">0</span> <span class="o">.</span> <span class="mf">-0.5</span><span class="p">)</span> <span class="p">(</span><span class="mf">0.6</span> <span class="o">.</span> <span class="mf">-0.75</span><span class="p">))</span>
-       <span class="p">(</span><span class="nv">brightness</span> <span class="nv">col</span> <span class="mi">40</span><span class="p">))</span>
-    <span class="p">(</span><span class="nv">f</span> <span class="o">&#39;</span><span class="p">((</span><span class="mi">0</span> <span class="o">.</span> <span class="mf">-0.5</span><span class="p">)</span> <span class="p">(</span><span class="mf">-0.6</span> <span class="o">.</span> <span class="mf">-0.75</span><span class="p">)</span> <span class="p">(</span><span class="mf">-0.6</span> <span class="o">.</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="mi">0</span> <span class="o">.</span> <span class="mf">0.25</span><span class="p">))</span>
-       <span class="nv">col</span><span class="p">)</span>
-    <span class="p">(</span><span class="nv">f</span> <span class="o">&#39;</span><span class="p">((</span><span class="mi">0</span> <span class="o">.</span> <span class="mf">-0.5</span><span class="p">)</span> <span class="p">(</span><span class="mf">0.6</span> <span class="o">.</span> <span class="mf">-0.75</span><span class="p">)</span> <span class="p">(</span><span class="mf">0.6</span> <span class="o">.</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="mi">0</span> <span class="o">.</span> <span class="mf">0.25</span><span class="p">))</span>
-       <span class="p">(</span><span class="nv">brightness</span> <span class="nv">col</span> <span class="mi">-40</span><span class="p">))</span>
-    <span class="p">(</span><span class="nb">mapc</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
-            <span class="p">(</span><span class="nv">polygon</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">xx</span> <span class="nv">yy</span><span class="p">)</span>
-                               <span class="p">(</span><span class="nv">calc-pt</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">xx</span> <span class="vg">*dot-size*</span><span class="p">))</span>
-                                              <span class="p">(</span><span class="nb">+</span> <span class="nv">y</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">yy</span> <span class="vg">*dot-size*</span><span class="p">)))))</span>
-                             <span class="o">&#39;</span><span class="p">(</span><span class="mi">-1</span> <span class="mi">-1</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
-                             <span class="o">&#39;</span><span class="p">(</span><span class="mi">-1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">-1</span><span class="p">))</span>
-                     <span class="o">&#39;</span><span class="p">(</span><span class="mi">255</span> <span class="mi">255</span> <span class="mi">255</span><span class="p">)))</span>
-          <span class="o">&#39;</span><span class="p">(</span><span class="mf">-0.05</span> <span class="mf">0.125</span> <span class="mf">0.3</span> <span class="mf">-0.3</span> <span class="mf">-0.125</span> <span class="mf">0.05</span> <span class="mf">0.2</span> <span class="mf">0.2</span> <span class="mf">0.45</span> <span class="mf">0.45</span> <span class="mf">-0.45</span> <span class="mf">-0.2</span><span class="p">)</span>
-          <span class="o">&#39;</span><span class="p">(</span><span class="mf">-0.875</span> <span class="mf">-0.80</span> <span class="mf">-0.725</span> <span class="mf">-0.775</span> <span class="mf">-0.70</span> <span class="mf">-0.625</span> <span class="mf">-0.35</span> <span class="mf">-0.05</span> <span class="mf">-0.45</span> <span class="mf">-0.15</span> <span class="mf">-0.45</span> <span class="mf">-0.05</span><span class="p">))))</span>
-<span class="c1">;(with-open-file (*standard-output* &quot;die.svg&quot; :direction :output :if-exists :supersede) (svg 100 100 (draw-die-svg 50 50 &#39;(255 0 0)))) </span>
-</code></pre>
-</div>
-<p>再画一小块面板</p>
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">draw-tile-svg</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">y</span> <span class="nv">pos</span> <span class="nv">hex</span> <span class="nv">xx</span> <span class="nv">yy</span> <span class="nv">col</span> <span class="nv">chosen-tile</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">z</span> <span class="nv">below</span> <span class="mi">2</span>
-        <span class="nb">do</span> <span class="p">(</span><span class="nv">polygon</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">pt</span><span class="p">)</span>
-                              <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">xx</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*board-scale*</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">pt</span><span class="p">)))</span>
-                                    <span class="p">(</span><span class="nb">+</span> <span class="nv">yy</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*board-scale*</span>
-                                             <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">pt</span><span class="p">)</span> <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nb">-</span> <span class="mi">1</span> <span class="nv">z</span><span class="p">)</span> <span class="mf">0.1</span><span class="p">))))))</span>
-                            <span class="o">&#39;</span><span class="p">((</span><span class="mi">-1</span> <span class="o">.</span> <span class="mf">-0.2</span><span class="p">)</span> <span class="p">(</span><span class="mi">0</span> <span class="o">.</span> <span class="mf">-0.5</span><span class="p">)</span> <span class="p">(</span><span class="mi">1</span> <span class="o">.</span> <span class="mf">-0.2</span><span class="p">)</span>
-                                          <span class="p">(</span><span class="mi">1</span> <span class="o">.</span> <span class="mf">0.2</span><span class="p">)</span> <span class="p">(</span><span class="mi">0</span> <span class="o">.</span> <span class="mf">0.5</span><span class="p">)</span> <span class="p">(</span><span class="mi">-1</span> <span class="o">.</span> <span class="mf">0.2</span><span class="p">)))</span>
-                    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eql</span> <span class="nv">pos</span> <span class="nv">chosen-tile</span><span class="p">)</span>
-                      <span class="p">(</span><span class="nv">brightness</span> <span class="nv">col</span> <span class="mi">100</span><span class="p">)</span>
-                      <span class="nv">col</span><span class="p">)))</span>
-  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">z</span> <span class="nv">below</span> <span class="p">(</span><span class="nb">second</span> <span class="nv">hex</span><span class="p">)</span>
-        <span class="nb">do</span> <span class="p">(</span><span class="nv">draw-die-svg</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">xx</span>
-                            <span class="p">(</span><span class="nb">*</span> <span class="vg">*dice-scale*</span>
-                               <span class="mf">0.3</span>
-                               <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">oddp</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">z</span><span class="p">))</span>
-                                 <span class="mf">-0.3</span>
-                                 <span class="mf">0.3</span><span class="p">)))</span>
-                         <span class="p">(</span><span class="nb">-</span> <span class="nv">yy</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*dice-scale*</span> <span class="nv">z</span> <span class="mf">0.8</span><span class="p">))</span> <span class="nv">col</span><span class="p">)))</span>
+</notextile>
 
-<span class="c1">;(with-open-file (*standard-output* &quot;tile.svg&quot; :direction :output) (svg 300 300 (draw-tile-svg 0 0 0 &#39;(0 3) 100 150 &#39;(255 0 0) nil)))</span>
-</code></pre>
-</div>
-<p>接下来是整个面板</p>
-<div class="highlight"><pre><code class="cl"><span class="c1">;Draw the Board</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*die-colors*</span> <span class="o">&#39;</span><span class="p">((</span><span class="mi">255</span> <span class="mi">63</span> <span class="mi">63</span><span class="p">)</span> <span class="p">(</span><span class="mi">63</span> <span class="mi">63</span> <span class="mi">255</span><span class="p">)))</span>
-<span class="p">(</span><span class="nb">defun</span> <span class="nv">draw-board-svg</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">chosen-tile</span> <span class="nv">legal-tiles</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">y</span> <span class="nv">below</span> <span class="vg">*board-size*</span>
-        <span class="nb">do</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">x</span> <span class="nv">below</span> <span class="vg">*board-size*</span>
-                 <span class="nv">for</span> <span class="nv">pos</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*board-size*</span> <span class="nv">y</span><span class="p">))</span>
-                 <span class="nv">for</span> <span class="nv">hex</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">board</span> <span class="nv">pos</span><span class="p">)</span>
-                 <span class="nv">for</span> <span class="nv">xx</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*board-scale*</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">2</span> <span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="nb">-</span> <span class="vg">*board-size*</span> <span class="nv">y</span><span class="p">)))</span>
-                 <span class="nv">for</span> <span class="nv">yy</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*board-scale*</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">y</span> <span class="mf">0.7</span><span class="p">)</span> <span class="vg">*top-offset*</span><span class="p">))</span>
-                 <span class="nv">for</span> <span class="nv">col</span> <span class="nb">=</span> <span class="p">(</span><span class="nv">brightness</span> <span class="p">(</span><span class="nb">nth</span> <span class="p">(</span><span class="nb">first</span> <span class="nv">hex</span><span class="p">)</span> <span class="vg">*die-colors*</span><span class="p">)</span>
-                                       <span class="p">(</span><span class="nb">*</span> <span class="mi">-15</span> <span class="p">(</span><span class="nb">-</span> <span class="vg">*board-size*</span> <span class="nv">y</span><span class="p">)))</span>
-                 <span class="nb">do</span> <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">pos</span> <span class="nv">legal-tiles</span><span class="p">)</span>
-                      <span class="p">(</span><span class="nv">tag</span> <span class="nv">g</span> <span class="p">()</span>
-                        <span class="p">(</span><span class="nv">tag</span> <span class="nv">a</span> <span class="p">(</span><span class="s">&quot;xlink:href&quot;</span> <span class="p">(</span><span class="nv">make-game-link</span> <span class="nv">pos</span><span class="p">))</span>
-                          <span class="p">(</span><span class="nv">draw-tile-svg</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">pos</span> <span class="nv">hex</span> <span class="nv">xx</span> <span class="nv">yy</span> <span class="nv">col</span> <span class="nv">chosen-tile</span><span class="p">)))</span>
-                      <span class="p">(</span><span class="nv">draw-tile-svg</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">pos</span> <span class="nv">hex</span> <span class="nv">xx</span> <span class="nv">yy</span> <span class="nv">col</span> <span class="nv">chosen-tile</span><span class="p">)))))</span>
-<span class="p">(</span><span class="nb">defun</span> <span class="nv">make-game-link</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="s">&quot;/game.html?chosen=~a&quot;</span> <span class="nv">pos</span><span class="p">))</span>
-<span class="c1">;(with-open-file (*standard-output* &quot;board.svg&quot; :direction :output :if-exists :supersede) (svg *board-width* *board-height* (draw-board-svg (gen-board) nil nil)))</span>
-</code></pre>
-</div>
-<p>这有个问题，之前我们svg宏不是像上文中那样定义的，svg宏需要稍加修改，具体参见本书的 <a href="http://landoflisp.com/errata.html">errata</a></p>
-<h2>建立Web服务器</h2>
-<p>先写游戏的驱动</p>
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*cur-game-tree*</span> <span class="no">nil</span><span class="p">)</span><span class="c1">;初始化当前游戏树</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*from-tile*</span> <span class="no">nil</span><span class="p">)</span><span class="c1">;选择的一片面板</span>
+然后需要先设定一些常数
 
-<span class="p">(</span><span class="nb">defun</span> <span class="nv">dod-request-handler</span> <span class="p">(</span><span class="nv">path</span> <span class="nv">header</span> <span class="nv">params</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">equal</span> <span class="nv">path</span> <span class="s">&quot;game.html&quot;</span><span class="p">)</span>
-    <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;HTTP/1.1 200 OK</span>
+<notextile><p>接下来画骰子</p>
+</notextile>
 
-<span class="s">                  &lt;!doctype html&gt;</span>
-<span class="s">                  &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&quot;</span><span class="p">)</span>
-           <span class="p">(</span><span class="nv">tag</span> <span class="nv">center</span> <span class="p">()</span>
-             <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Welcome to DICE OF DOOM!&quot;</span><span class="p">)</span>
-             <span class="p">(</span><span class="nv">tag</span> <span class="nv">br</span> <span class="p">())</span>
-             <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">chosen</span> <span class="p">(</span><span class="nb">assoc</span> <span class="ss">&#39;chosen</span> <span class="nv">params</span><span class="p">)))</span>
-               <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nb">not</span> <span class="vg">*cur-game-tree*</span><span class="p">)</span> <span class="p">(</span><span class="nb">not</span> <span class="nv">chosen</span><span class="p">))</span>
-                 <span class="p">(</span><span class="nb">setf</span> <span class="nv">chosen</span> <span class="no">nil</span><span class="p">)</span>
-                 <span class="p">(</span><span class="nv">web-initialize</span><span class="p">))</span>
-               <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nv">lazy-null</span> <span class="p">(</span><span class="nb">caddr</span> <span class="vg">*cur-game-tree*</span><span class="p">))</span>
-                      <span class="p">(</span><span class="nv">web-announce-winner</span> <span class="p">(</span><span class="nb">cadr</span> <span class="vg">*cur-game-tree*</span><span class="p">)))</span>
-                     <span class="p">((</span><span class="nb">zerop</span> <span class="p">(</span><span class="nb">car</span> <span class="vg">*cur-game-tree*</span><span class="p">))</span>
-                      <span class="p">(</span><span class="nv">web-handle-human</span>
-                        <span class="p">(</span><span class="nb">when</span> <span class="nv">chosen</span>
-                          <span class="p">(</span><span class="nb">read-from-string</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">chosen</span><span class="p">)))))</span>
-                     <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nv">web-handle-computer</span><span class="p">))))</span>
-             <span class="p">(</span><span class="nv">tag</span> <span class="nv">br</span> <span class="p">())</span>
-             <span class="p">(</span><span class="nv">draw-dod-page</span> <span class="vg">*cur-game-tree*</span> <span class="vg">*from-tile*</span><span class="p">))</span>
-           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="p">))</span> 
-    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Sorry... I don&#39;t know that page.&quot;</span><span class="p">)))</span>
-</code></pre>
-</div>
-<p>在这里我稍作修改，更改了服务器返回给浏览器的信息，使它更加符合标准能在firefox12中运行正常。</p>
+再画一小块面板
+
+<notextile><p>接下来是整个面板</p>
+</notextile>
+
+这有个问题，之前我们svg宏不是像上文中那样定义的，svg宏需要稍加修改，具体参见本书的 "errata":http://landoflisp.com/errata.html
+
+h2. 建立Web服务器
+
+先写游戏的驱动
+
+<notextile><p>在这里我稍作修改，更改了服务器返回给浏览器的信息，使它更加符合标准能在firefox12中运行正常。</p>
 <p>我们只做了一个超级简化的服务器，功能弱爆了，但作者许诺能在最后一章很轻易的扩展。之后我们处理些基于webserver的函数</p>
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">web-initialize</span> <span class="p">()</span>
-  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*from-tile*</span> <span class="no">nil</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*cur-game-tree*</span> <span class="p">(</span><span class="nv">game-tree</span> <span class="p">(</span><span class="nv">gen-board</span><span class="p">)</span> <span class="mi">0</span> <span class="mi">0</span> <span class="no">t</span><span class="p">)))</span>
-<span class="c1">;宣布胜者web version</span>
-<span class="p">(</span><span class="nb">defun</span> <span class="nv">web-announce-winner</span> <span class="p">(</span><span class="nv">board</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">w</span> <span class="p">(</span><span class="nv">winners</span> <span class="nv">board</span><span class="p">)))</span>
-    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">w</span> <span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
-      <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;The game is a tie between ~a&quot;</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nv">player-letter</span> <span class="nv">w</span><span class="p">))</span>
-      <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;The winner is ~a&quot;</span> <span class="p">(</span><span class="nv">player-letter</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">w</span><span class="p">)))))</span>
-  <span class="p">(</span><span class="nv">tag</span> <span class="nv">a</span> <span class="p">(</span><span class="nv">href</span> <span class="s">&quot;game.html&quot;</span><span class="p">)</span>
-    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot; play again&quot;</span><span class="p">)))</span>
-<span class="c1">;处理人类玩家</span>
-<span class="p">(</span><span class="nb">defun</span> <span class="nv">web-handle-human</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">not</span> <span class="nv">pos</span><span class="p">)</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Please choose a hex to move from:&quot;</span><span class="p">))</span>
-        <span class="p">((</span><span class="nb">eq</span> <span class="nv">pos</span> <span class="ss">&#39;pass</span><span class="p">)</span> <span class="p">(</span><span class="nb">setf</span> <span class="vg">*cur-game-tree*</span>
-                              <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nv">lazy-car</span> <span class="p">(</span><span class="nb">caddr</span> <span class="vg">*cur-game-tree*</span><span class="p">))))</span>
-                        <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Your reinforcements have been placed.&quot;</span><span class="p">)</span>
-                        <span class="p">(</span><span class="nv">tag</span> <span class="nv">a</span> <span class="p">(</span><span class="nv">href</span> <span class="p">(</span><span class="nv">make-game-link</span> <span class="no">nil</span><span class="p">))</span>
-                          <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;continue&quot;</span><span class="p">)))</span>
-        <span class="p">((</span><span class="nb">not</span> <span class="vg">*from-tile*</span><span class="p">)</span> <span class="p">(</span><span class="nb">setf</span> <span class="vg">*from-tile*</span> <span class="nv">pos</span><span class="p">)</span>
-                           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Now choose a destination:&quot;</span><span class="p">))</span>
-        <span class="p">((</span><span class="nb">eq</span> <span class="nv">pos</span> <span class="vg">*from-tile*</span><span class="p">)</span> <span class="p">(</span><span class="nb">setf</span> <span class="vg">*from-tile*</span> <span class="no">nil</span><span class="p">)</span>
-                              <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Move cancelled.&quot;</span><span class="p">))</span>
-        <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nb">setf</span> <span class="vg">*cur-game-tree*</span>
-                 <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nv">lazy-find-if</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">move</span><span class="p">)</span>
-                                       <span class="p">(</span><span class="nb">equal</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">move</span><span class="p">)</span>
-                                              <span class="p">(</span><span class="nb">list</span> <span class="vg">*from-tile*</span> <span class="nv">pos</span><span class="p">)))</span>
-                                     <span class="p">(</span><span class="nb">caddr</span> <span class="vg">*cur-game-tree*</span><span class="p">))))</span>
-           <span class="p">(</span><span class="nb">setf</span> <span class="vg">*from-tile*</span> <span class="no">nil</span><span class="p">)</span>
-           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;You may now &quot;</span><span class="p">)</span>
-           <span class="p">(</span><span class="nv">tag</span> <span class="nv">a</span> <span class="p">(</span><span class="nv">href</span> <span class="p">(</span><span class="nv">make-game-link</span> <span class="ss">&#39;pass</span><span class="p">))</span>
-             <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;pass&quot;</span><span class="p">))</span>
-           <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot; or make another move:&quot;</span><span class="p">))))</span>
-<span class="c1">;处理计算机玩家</span>
-<span class="p">(</span><span class="nb">defun</span> <span class="nv">web-handle-computer</span> <span class="p">()</span>
-  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*cur-game-tree*</span> <span class="p">(</span><span class="nv">handle-computer</span> <span class="vg">*cur-game-tree*</span><span class="p">))</span>
-  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;The computer has moved. &quot;</span><span class="p">)</span>
-  <span class="p">(</span><span class="nv">tag</span> <span class="nv">script</span> <span class="p">()</span>
-    <span class="p">(</span><span class="nb">princ</span>
-      <span class="s">&quot;window.setTimeout(&#39;window.location=\&quot;game.html?chosen=NIL\&quot;&#39;,3000)&quot;</span><span class="p">)))</span><span class="c1">;javascript，改成3秒了，感觉5秒在我这里太慢了</span>
-</code></pre>
-</div>
-<p>然后在html中绘制svg游戏面板时有些tweak，首先是svg，你遵照之前errata提到的修正svg宏后才能正常显示，否则只显示一小块或完全看不到时可别吃惊。另外是作者定义两次点击同一片游戏面板代表取消，但它的legal-tile（合法面板）中却没有包含本身，以致于不能正常取消选中。我做了如下修改，把当前选中的游戏面板添加进合法面板中。</p>
-<div class="highlight"><pre><code class="cl"><span class="c1">;caXXXXXXXdr……以后我要用firstsecond改写</span>
-<span class="p">(</span><span class="nb">defun</span> <span class="nv">draw-dod-page</span> <span class="p">(</span><span class="nv">tree</span> <span class="nv">selected-tile</span><span class="p">)</span>
-  <span class="p">(</span><span class="nv">svg</span> <span class="vg">*board-width*</span> <span class="c1">;svg要更改！！</span>
-       <span class="vg">*board-height*</span> 
-       <span class="p">(</span><span class="nv">draw-board-svg</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)</span>
-                       <span class="nv">selected-tile</span>
-                       <span class="p">(</span><span class="nb">cons</span> <span class="nv">selected-tile</span><span class="c1">;what I add </span>
-                             <span class="p">(</span><span class="nv">take-all</span> <span class="p">(</span><span class="k">if</span> <span class="nv">selected-tile</span>
-                                   <span class="p">(</span><span class="nv">lazy-mapcar</span>
-                                     <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">move</span><span class="p">)</span>
-                                       <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">eql</span> <span class="p">(</span><span class="nb">caar</span> <span class="nv">move</span><span class="p">)</span>
-                                                  <span class="nv">selected-tile</span><span class="p">)</span>
-                                         <span class="p">(</span><span class="nb">cadar</span> <span class="nv">move</span><span class="p">)))</span>
-                                     <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">))</span>
-                                   <span class="p">(</span><span class="nv">lazy-mapcar</span> <span class="nf">#&#39;</span><span class="nb">caar</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">))))))))</span>
-</code></pre>
-</div>
-<p>然后很显然，enjoy我们基于网络的游戏吧</p>
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">serve</span> <span class="nf">#&#39;</span><span class="nv">dod-request-handler</span><span class="p">)</span>
-</code></pre>
-</div>
+</notextile>
+
+然后在html中绘制svg游戏面板时有些tweak，首先是svg，你遵照之前errata提到的修正svg宏后才能正常显示，否则只显示一小块或完全看不到时可别吃惊。另外是作者定义两次点击同一片游戏面板代表取消，但它的legal-tile（合法面板）中却没有包含本身，以致于不能正常取消选中。我做了如下修改，把当前选中的游戏面板添加进合法面板中。
+
+<notextile><p>然后很显然，enjoy我们基于网络的游戏吧</p>
+<p></notextile></p>
 <hr />
 <h2>游戏截图</h2>
 <p>截个图看看效果</p>
@@ -383,7 +224,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#linux-tech-ref">linux-tech <span>6</span></a>
+        <a href="/categories.html#linux-tech-ref">linux-tech <span>7</span></a>
         </li>
        
         

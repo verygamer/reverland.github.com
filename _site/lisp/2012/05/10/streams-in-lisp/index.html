@@ -142,66 +142,6 @@
 
 <p>下面是使用stream的一些例子</p>
 
-<div class="highlight"><pre><code class="cl"><span class="c1">;;在做图的那部分已经见识过了</span>
-<span class="c1">;;to see if we have a valid output stream</span>
-<span class="p">(</span><span class="nb">output-stream-p</span> <span class="vg">*standard-output*</span><span class="p">)</span> 
-<span class="c1">;;write a chracter to stream</span>
-<span class="p">(</span><span class="nb">write-char</span> <span class="sc">#\x</span> <span class="vg">*standard-output*</span><span class="p">)</span>
-
-<span class="c1">;;to see if we have a valid stream</span>
-<span class="p">(</span><span class="nb">input-stream-p</span> <span class="vg">*standard-input*</span><span class="p">)</span>
-<span class="c1">;;pop an item off the stream</span>
-<span class="p">(</span><span class="nb">read-char</span> <span class="vg">*standard-input*</span><span class="p">)</span>
-<span class="c1">;123</span>
-<span class="c1">;\#1</span>
-<span class="c1">;;reading and printing can be used too</span>
-<span class="c1">;;;reading and writing with files</span>
-<span class="p">(</span><span class="nb">with-open-file</span> <span class="p">(</span><span class="nv">my-stream</span> <span class="s">&quot;data.txt&quot;</span> <span class="ss">:direction</span> <span class="ss">:output</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">print</span> <span class="s">&quot;my data&quot;</span> <span class="nv">my-stream</span><span class="p">))</span>
-<span class="p">(</span><span class="nb">with-open-file</span> <span class="p">(</span><span class="nv">my-stream</span> <span class="s">&quot;data.txt&quot;</span> <span class="ss">:direction</span> <span class="ss">:input</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">read</span> <span class="nv">my-stream</span><span class="p">))</span>
-<span class="c1">;;;some more complicated examples using print and read</span>
-<span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">animal-noises</span> <span class="o">&#39;</span><span class="p">((</span><span class="nv">dog</span> <span class="o">.</span> <span class="nv">woof</span><span class="p">)</span>
-                       <span class="p">(</span><span class="nv">cat</span> <span class="o">.</span> <span class="nv">meow</span><span class="p">))))</span>
-  <span class="p">(</span><span class="nb">with-open-file</span> <span class="p">(</span><span class="nv">my-stream</span> <span class="s">&quot;animal-noises.txt&quot;</span> <span class="ss">:direction</span> <span class="ss">:output</span><span class="p">)</span>
-    <span class="p">(</span><span class="nb">print</span> <span class="nv">animal-noises</span> <span class="nv">my-stream</span><span class="p">)))</span>
-<span class="p">(</span><span class="nb">with-open-file</span> <span class="p">(</span><span class="nv">my-stream</span> <span class="s">&quot;animal-noises.txt&quot;</span> <span class="ss">:direction</span> <span class="ss">:input</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">read</span> <span class="nv">my-stream</span><span class="p">))</span>
-<span class="c1">;;if exists</span>
-<span class="p">(</span><span class="nb">with-open-file</span> <span class="p">(</span><span class="nv">my-stream</span> <span class="s">&quot;data.txt&quot;</span> <span class="ss">:direction</span> <span class="ss">:output</span> <span class="ss">:if-exists</span> <span class="ss">:error</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">print</span> <span class="s">&quot;my data&quot;</span> <span class="nv">my-stream</span><span class="p">))</span> 
-<span class="p">(</span><span class="nb">with-open-file</span> <span class="p">(</span><span class="nv">my-stream</span> <span class="s">&quot;data.txt&quot;</span> <span class="ss">:direction</span> <span class="ss">:output</span> <span class="ss">:if-exists</span> <span class="ss">:supersede</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">print</span> <span class="s">&quot;my data&quot;</span> <span class="nv">my-stream</span><span class="p">))</span>
-<span class="c1">;;stream over a socket</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="nv">my-socket</span> <span class="p">(</span><span class="nv">socket-server</span> <span class="mi">4321</span><span class="p">))</span> <span class="c1">;ON THE SERVER</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="nv">my-stream</span> <span class="p">(</span><span class="nv">socket-accept</span> <span class="nv">my-socket</span><span class="p">))</span> <span class="c1">;ON THE SERVER</span>
-<span class="c1">;;It&#39;s a bidirectional stream</span>
-<span class="c1">;;princ may cause strange things</span>
-<span class="p">(</span><span class="nb">print</span> <span class="s">&quot;Yo Server!&quot;</span> <span class="nv">my-stream</span><span class="p">)</span> <span class="c1">;ON THE CLIENT</span>
-<span class="p">(</span><span class="nb">read</span> <span class="nv">my-stream</span><span class="p">)</span> <span class="c1">;ON THE SERVER</span>
-<span class="p">(</span><span class="nb">print</span> <span class="s">&quot;What up, Client!&quot;</span> <span class="nv">my-stream</span><span class="p">)</span> <span class="c1">;ON THE SERVER</span>
-<span class="p">(</span><span class="nb">read</span> <span class="nv">my-stream</span><span class="p">)</span> <span class="c1">;ON THE CLIENT</span>
-<span class="c1">;;tidying up after ourselves</span>
-<span class="p">(</span><span class="nb">close</span> <span class="nv">my-stream</span><span class="p">)</span> <span class="c1">;ON BOTH</span>
-<span class="p">(</span><span class="nv">socket-server-close</span> <span class="nv">my-socket</span><span class="p">)</span> <span class="c1">;ON THE SERVER</span>
-<span class="c1">;;;String Streams: The Oddball Type</span>
-<span class="c1">;;;They are useful for debugging, </span>
-<span class="c1">;;;as well as for creating complex strings efficiently.</span>
-<span class="p">(</span><span class="nb">defparameter</span> <span class="nv">foo</span> <span class="p">(</span><span class="nb">make-string-output-stream</span><span class="p">))</span>
-<span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;This will go into foo. &quot;</span> <span class="nv">foo</span><span class="p">)</span>
-<span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;This will also go into foo. &quot;</span> <span class="nv">foo</span><span class="p">)</span>
-<span class="p">(</span><span class="nb">get-output-stream-string</span> <span class="nv">foo</span><span class="p">)</span>
-<span class="c1">;;with-output-to-string</span>
-<span class="p">(</span><span class="nb">with-output-to-string</span> <span class="p">(</span><span class="vg">*standard-output*</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;the sum of &quot;</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">princ</span> <span class="mi">5</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot; and &quot;</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">princ</span> <span class="mi">2</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot; is &quot;</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">2</span> <span class="mi">5</span><span class="p">)))</span>
-</code></pre>
-</div>
-
 <p>正如你所见，我们之前用过这些流，来完成与外界资源的交互。</p>
 
 <h2 id="section">学习到这些命令</h2>
@@ -283,7 +223,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#linux-tech-ref">linux-tech <span>6</span></a>
+        <a href="/categories.html#linux-tech-ref">linux-tech <span>7</span></a>
         </li>
        
         

@@ -135,19 +135,7 @@
 
 <p>首先我的系统配置情况:</p>
 
-<div class="highlight"><pre><code class="bash">Distributor ID: Arch i686 
-Description:    a little light distro
-</code></pre>
-</div>
-
 <p>使用的arch源中的texlive2011,直接用pacman安装，建议把相关包都安上，不占多少空间。如果要详细了解请见<a href="https://wiki.archlinux.org/index.php/TeXLive_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29">这里</a> ,又是我译的…英文版的都不只多久没更新了，不过可以参考。我安装的如下：</p>
-
-<div class="highlight"><pre><code class="bash">texlive-bin 2011.3-1.2 
-texlive-core 2011.24722-1 
-texlive-langcjk 2011.24689-1 
-texlive-latexextra 2011.24718-1 
-</code></pre>
-</div>
 
 <p>因为我用的是xelatex，所以直接生成的就是pdf文件，也就是这个原因，我才花时间折腾vim-latex-suite和okular，目前Linux下似乎也就是okular支持反向搜索…
 安装vim-latex过程不细述。别忘了更改ctex字体配置文件,使楷体和仿宋的名称是你系统上的名称。</p>
@@ -164,23 +152,7 @@ texlive-latexextra 2011.24718-1
 
 <p>在~/.vim/ftplugin/latex-suit/texrc中找到:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="k">if </span>has<span class="o">(</span><span class="s1">&#39;macunix&#39;</span><span class="o">)</span>
-   TexLet g:Tex_DefaultTargetFormat <span class="c"># &#39;pdf&#39;</span>
-<span class="k">else   </span>
-<span class="k">   </span>TexLet g:Tex_DefaultTargetFormat <span class="c"># &#39;dvi&#39;</span>
-endif
-</code></pre>
-</div>
-
 <p>修改为：</p>
-
-<div class="highlight"><pre><code class="bash"><span class="k">if </span>has<span class="o">(</span><span class="s1">&#39;macunix&#39;</span><span class="o">)</span>
-   TexLet g:Tex_DefaultTargetFormat <span class="c"># &#39;pdf&#39;</span>
-<span class="k">else   </span>
-<span class="k">   </span>TexLet g:Tex_DefaultTargetFormat <span class="c"># &#39;pdf&#39;</span>
-endif
-</code></pre>
-</div>
 
 <p>这个变量告诉latex-suite，你需要的目标文件是pdf</p>
 
@@ -188,36 +160,13 @@ endif
 
 <p>同样在texrc文件中找到：</p>
 
-<div class="highlight"><pre><code class="bash">TexLet g:Tex_CompileRule_pdf <span class="c"># &#39;pdflatex -interaction#nonstopmode $*&#39;</span>
-</code></pre>
-</div>
-
 <p>修改为：</p>
-
-<div class="highlight"><pre><code class="bash">TexLet g:Tex_CompileRule_pdf <span class="c"># &#39;xelatex --src-specials -interaction#nonstopmode $*&#39;</span>
-</code></pre>
-</div>
 
 <p>这样，你用来编译pdf的命令就有xelatex来负责了，同时也指定了前向搜索所必备的一个参数：<code>--src-specials</code></p>
 
 <h4 id="pdf-1">修改默认pdf浏览器</h4>
 
 <p>继续在texrc修改latex-suite默认为各种文件调用的浏览器，找到相应部分修改成以下模样。</p>
-
-<div class="highlight"><pre><code class="bash">TexLet g:Tex_UseEditorSettingInDVIViewer <span class="c"># 1</span>
-</code></pre>
-</div>
-
-<div class="highlight"><pre><code class="bash"><span class="k">if </span>executable<span class="o">(</span><span class="s1">&#39;xdg-open&#39;</span><span class="o">)</span>
-   TexLet g:Tex_ViewRule_ps <span class="c"># &#39;okular&#39;</span>
-   TexLet g:Tex_ViewRule_pdf <span class="c"># &#39;okular&#39;</span>
-   TexLet g:Tex_ViewRule_dvi <span class="c"># &#39;okular&#39;</span>
-<span class="k">else</span>
-<span class="k">   </span>TexLet g:Tex_ViewRule_ps <span class="c"># &#39;okular&#39;</span>
-   TexLet g:Tex_ViewRule_pdf <span class="c"># &#39;okular&#39;</span>
-   TexLet g:Tex_ViewRule_dvi <span class="c"># &#39;okular&#39;</span>
-</code></pre>
-</div>
 
 <p>经过这一步，latex-suite在浏览pdf，dvi，ps的时候都会调用okular.</p>
 
@@ -226,37 +175,16 @@ endif
 <p>修改~/.vim/ftplugin/latex-suit/compiler.vim，让latex-suite能够以正确的参数在前向搜索和普通模式下打开生成的pdf文件：
 找到相应部分做如下修改</p>
 
-<div class="highlight"><pre><code class="bash"><span class="s2">&quot; We&#39;re either UNIX or Mac and using a UNIX-type viewer</span>
-
-<span class="s2">&quot;</span> Check <span class="k">for </span>the special DVI viewers first
-.................
-elseif <span class="o">(</span>viewer <span class="c">## &quot;okular&quot;)</span>
-  <span class="nb">let </span>execString <span class="c"># &#39;silent! !okular --unique &#39;.mainfnameRoot.&#39;.pdf\#src:&#39;.line(&#39;.&#39;).expand(&quot;%&quot;)</span>
-</code></pre>
-</div>
-
 <h4 id="section-2">设置反向搜索</h4>
 
 <pre><code>警告！文件名和路径中不要有空格和汉字 打开okular，菜单：setting&gt;&gt;configure okular&gt;&gt;Editor属性页 把里面的Editor下拉到Custom Text Editor，然后在Command:一栏输入：
 </code></pre>
 
-<div class="highlight"><pre><code class="bash">    gvim -c <span class="s2">&quot;:RemoteOpen +%l %f&quot;</span>
-</code></pre>
-</div>
-
 <p>注意，系统要有gvim…</p>
 
 <p>然后在你的tex源文件的preamble部分，加入：</p>
 
-<div class="highlight"><pre><code class="bash">    <span class="se">\s</span>ynctex#1
-</code></pre>
-</div>
-
 <p>大功告成啦，重新用\ll编译一遍你的源文件，然后\ls前向搜索，最后在pdf中想要反向搜索的地方按：</p>
-
-<div class="highlight"><pre><code class="bash">    Shift+鼠标左键
-</code></pre>
-</div>
 
 <p>就会自动的重定位到gvim中源码对应的地方，不过记住，不要开多个gvim，否则很可能用错误的gvim打开源码，然后就会提示交换文件已经存在之类. </p>
 
@@ -334,7 +262,7 @@ $(document).ready(function(){
         
         <li class="active">
         
-        <a href="/categories.html#linux-tech-ref">linux-tech <span>6</span></a>
+        <a href="/categories.html#linux-tech-ref">linux-tech <span>7</span></a>
         </li>
        
         
