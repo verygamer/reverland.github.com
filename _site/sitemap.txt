@@ -1,6 +1,7 @@
 
 http://reverland.org/about.html
 http://reverland.org/index.html
+http://reverland.org/a.post
 http://reverland.org/archive.html
 http://reverland.org/categories.html
 http://reverland.org/sitemap.txt
@@ -12,6 +13,8 @@ http://reverland.org/page3/index.html
 http://reverland.org/page4/index.html
 http://reverland.org/page5/index.html
 
+http://reverland.org/python/2013/01/28/visualize-your-shell-history
+http://reverland.org/reviews/2013/01/26/data-analysis-with-open-source-tools
 http://reverland.org/linux-tech/2013/01/13/moving-to-gentoo
 http://reverland.org/Life/2013/01/06/summary-and-prospect-in-2012
 http://reverland.org/python/2012/12/02/python

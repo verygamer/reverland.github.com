@@ -59,6 +59,8 @@
     
   
     
+  
+    
     	
     	<li><a href="/archive.html">归档</a></li>
     	
@@ -142,6 +144,112 @@
 <h2 id="lisp-1">可视化lisp数据</h2>
 
 <p>用graphviz把lisp中数据可视化的方法，代码如下：</p>
+
+<div class="highlight"><pre><code class="cl"><span class="c1">;;切换到工作目录</span>
+<span class="p">(</span><span class="nv">cd</span> <span class="s">&quot;/home/reverland/Documents/lisp/&quot;</span><span class="p">)</span>
+<span class="c1">;;;有向图</span>
+<span class="c1">;;定义节点及描述</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*wizard-nodes*</span> <span class="o">&#39;</span><span class="p">((</span><span class="nv">living-room</span> <span class="p">(</span><span class="nv">you</span> <span class="nv">are</span> <span class="nv">in</span> <span class="k">the</span> <span class="nv">living-room.</span>
+					     <span class="nv">a</span> <span class="nv">wizard</span> <span class="nv">is</span> <span class="nv">snoring</span> <span class="nv">loudly</span> <span class="nv">on</span> <span class="k">the</span> <span class="nv">couch.</span><span class="p">))</span>
+			       <span class="p">(</span><span class="nv">garden</span> <span class="p">(</span><span class="nv">you</span> <span class="nv">are</span> <span class="nv">in</span> <span class="nv">a</span> <span class="nv">beautiful</span> <span class="nv">garden.</span>
+					<span class="nv">w</span>
+				       <span class="p">)</span>
+				<span class="p">(</span><span class="nv">attic</span> <span class="p">(</span><span class="nv">you</span> <span class="nv">are</span> <span class="nv">in</span> <span class="k">the</span> <span class="nv">attic.</span> <span class="nv">there</span>
+					<span class="nv">is</span> <span class="nv">a</span> <span class="nv">giant</span> <span class="nv">welding</span> <span class="nv">torch</span> <span class="nv">in</span> <span class="k">the</span> <span class="nv">corner.</span><span class="p">)))))</span>
+<span class="c1">;;定义节点与边</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*wizard-edges*</span> <span class="o">&#39;</span><span class="p">((</span><span class="nv">living-room</span> <span class="p">(</span><span class="nv">garden</span> <span class="nv">west</span> <span class="nv">door</span><span class="p">)</span>
+				<span class="p">(</span><span class="nv">attic</span> <span class="nv">upstairs</span> <span class="nv">ladder</span><span class="p">))</span>
+			       <span class="p">(</span><span class="nv">garden</span> <span class="p">(</span><span class="nv">living-room</span> <span class="nv">east</span> <span class="nv">door</span><span class="p">))</span>
+			       <span class="p">(</span><span class="nv">attic</span> <span class="p">(</span><span class="nv">living-room</span> <span class="nv">downstairs</span> <span class="nv">ladder</span><span class="p">))))</span>
+  <span class="c1">;;转换名函数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">dot-name</span> <span class="p">(</span><span class="nb">exp</span><span class="p">)</span>
+ <span class="p">(</span><span class="nb">substitute-if</span> <span class="sc">#\_</span> <span class="p">(</span><span class="nb">complement</span> <span class="nf">#&#39;</span><span class="nb">alphanumericp</span><span class="p">)</span> <span class="p">(</span><span class="nb">prin1-to-string</span> <span class="nb">exp</span><span class="p">)))</span>
+  <span class="c1">;将非字母数字的字符转化为下划线 </span>
+  <span class="c1">;;定义标签长度</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*max-label-length*</span> <span class="mi">30</span><span class="p">)</span>
+  <span class="c1">;;处理位置描述</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">dot-label</span> <span class="p">(</span><span class="nb">exp</span><span class="p">)</span>
+ <span class="p">(</span><span class="k">if</span> <span class="nb">exp</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">s</span> <span class="p">(</span><span class="nb">write-to-string</span> <span class="nb">exp</span> <span class="ss">:pretty</span> <span class="no">nil</span><span class="p">)))</span><span class="c1">; :pretty防止换行或加入tab</span>
+   <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">s</span><span class="p">)</span> <span class="vg">*max-label-length*</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">concatenate</span> <span class="ss">&#39;string</span> 
+     <span class="p">(</span><span class="nb">subseq</span> <span class="nv">s</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">-</span> <span class="vg">*max-label-length*</span> <span class="mi">3</span><span class="p">))</span> <span class="s">&quot;...&quot;</span><span class="p">)</span>
+    <span class="c1">;如果标签长度比最长值长，将超长的替换成...</span>
+    <span class="nv">s</span><span class="p">))</span>
+  <span class="s">&quot;&quot;</span><span class="p">))</span><span class="c1">;strange,why not nil?</span>
+  <span class="c1">;;定义节点和标签函数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">nodes-&gt;dot</span> <span class="p">(</span><span class="nv">nodes</span><span class="p">)</span>
+ <span class="p">(</span><span class="nb">mapc</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">node</span><span class="p">)</span><span class="c1">;mapc不返回列表</span>
+	<span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+	<span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">dot-name</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">node</span><span class="p">)))</span>
+	<span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;[label=\&quot;&quot;</span><span class="p">)</span>
+	<span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">dot-label</span> <span class="nv">node</span><span class="p">))</span>
+	<span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;\&quot;];&quot;</span><span class="p">))</span>
+  <span class="nv">nodes</span><span class="p">))</span>
+  <span class="c1">;;定义遍历edges中每个元素，再对每个元素进行遍历</span>
+  <span class="p">(</span><span class="nb">defun</span> <span class="nv">edges-&gt;dot</span> <span class="p">(</span><span class="nv">edges</span><span class="p">)</span>
+   <span class="p">(</span><span class="nb">mapc</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">node</span><span class="p">)</span>
+	  <span class="p">(</span><span class="nb">mapc</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">edge</span><span class="p">)</span>
+		 <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+		 <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">dot-name</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">node</span><span class="p">)))</span>
+		 <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;-&gt;&quot;</span><span class="p">)</span>
+		 <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">dot-name</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">edge</span><span class="p">)))</span>
+		 <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;[label=\&quot;&quot;</span><span class="p">)</span>
+		 <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">dot-label</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">edge</span><span class="p">)))</span>
+		 <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;\&quot;];&quot;</span><span class="p">))</span>
+	   <span class="p">(</span><span class="nb">cdr</span> <span class="nv">node</span><span class="p">)))</span>
+    <span class="nv">edges</span><span class="p">))</span>
+  <span class="c1">;;生成dot文件内容</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">graph-&gt;dot</span> <span class="p">(</span><span class="nv">nodes</span> <span class="nv">edges</span><span class="p">)</span>
+ <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;digraph{&quot;</span><span class="p">)</span>
+ <span class="p">(</span><span class="nv">nodes-&gt;dot</span> <span class="nv">nodes</span><span class="p">)</span>
+ <span class="p">(</span><span class="nv">edges-&gt;dot</span> <span class="nv">edges</span><span class="p">)</span>
+ <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;}&quot;</span><span class="p">))</span>
+  <span class="c1">;;接受一个trunk，得到trunk的输出而非函数的值</span>
+  <span class="c1">;;to keep this dot-&gt;png function as reusable as possible, the graph-&gt;dot</span>
+  <span class="c1">;;function isn’t called directly. Instead, we write dot-&gt;png to accept a thunk</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">dot-&gt;png</span> <span class="p">(</span><span class="nv">fname</span> <span class="nv">thunk</span><span class="p">)</span>
+ <span class="p">(</span><span class="nb">with-open-file</span> <span class="p">(</span><span class="vg">*standard-output*</span><span class="c1">;类比与let</span>
+		  <span class="nv">fname</span> <span class="c1">;输入到fname文件</span>
+		  <span class="ss">:direction</span> <span class="ss">:output</span><span class="c1">;keyword symbol即本身,方向输出</span>
+		  <span class="ss">:if-exists</span> <span class="ss">:supersede</span><span class="p">)</span><span class="c1">;如果存在覆盖</span>
+  <span class="p">(</span><span class="nb">funcall</span> <span class="nv">thunk</span><span class="p">))</span><span class="c1">;nully function</span>
+ <span class="p">(</span><span class="nv">ext:shell</span> <span class="p">(</span><span class="nb">concatenate</span> <span class="ss">&#39;string</span> <span class="s">&quot;dot -Tpng -O &quot;</span> <span class="nv">fname</span><span class="p">)))</span>
+<span class="c1">;it&#39;s an O actually!it&#39;s not zero!</span>
+<span class="c1">;;最后一步</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">graph-&gt;png</span> <span class="p">(</span><span class="nv">fname</span> <span class="nv">nodes</span> <span class="nv">edges</span><span class="p">)</span>
+ <span class="p">(</span><span class="nv">dot-&gt;png</span> <span class="nv">fname</span>
+  <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span><span class="c1">;relay funcion</span>
+   <span class="p">(</span><span class="nv">graph-&gt;dot</span> <span class="nv">nodes</span> <span class="nv">edges</span><span class="p">))))</span><span class="c1">;which is the trunk,I am not clear.</span>
+  <span class="c1">;;最后执行</span>
+  <span class="p">(</span><span class="nv">graph-&gt;png</span> <span class="s">&quot;wizard.dot&quot;</span> <span class="vg">*wizard-nodes*</span> <span class="vg">*wizard-edges*</span><span class="p">)</span>
+  <span class="c1">;;;无方向图</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">uedges-&gt;dot</span> <span class="p">(</span><span class="nv">edges</span><span class="p">)</span>
+ <span class="p">(</span><span class="nb">maplist</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span><span class="c1">;遍历剩下的元素</span>
+	   <span class="p">(</span><span class="nb">mapc</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">edge</span><span class="p">)</span>
+		  <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nb">assoc</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">edge</span><span class="p">)</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">))</span><span class="c1">;除非以下不再出现这个位置</span>
+		   <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+		   <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">dot-name</span> <span class="p">(</span><span class="nb">caar</span> <span class="nv">lst</span><span class="p">)))</span>
+		   <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;--&quot;</span><span class="p">)</span>
+		   <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">dot-name</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">edge</span><span class="p">)))</span>
+		   <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;[label=\&quot;&quot;</span><span class="p">)</span>
+		   <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nv">dot-label</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">edge</span><span class="p">)))</span>
+		   <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;\&quot;];&quot;</span><span class="p">)))</span>
+	    <span class="p">(</span><span class="nb">cdar</span> <span class="nv">lst</span><span class="p">)))</span>
+  <span class="nv">edges</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">ugraph-&gt;dot</span> <span class="p">(</span><span class="nv">nodes</span> <span class="nv">edges</span><span class="p">)</span>
+ <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;graph{&quot;</span><span class="p">)</span>
+ <span class="p">(</span><span class="nv">nodes-&gt;dot</span> <span class="nv">nodes</span><span class="p">)</span>
+ <span class="p">(</span><span class="nv">uedges-&gt;dot</span> <span class="nv">edges</span><span class="p">)</span>
+ <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;}&quot;</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">ugraph-&gt;png</span> <span class="p">(</span><span class="nv">fname</span> <span class="nv">nodes</span> <span class="nv">edges</span><span class="p">)</span>
+ <span class="p">(</span><span class="nv">dot-&gt;png</span> <span class="nv">fname</span>
+  <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span>
+   <span class="p">(</span><span class="nv">ugraph-&gt;dot</span> <span class="nv">nodes</span> <span class="nv">edges</span><span class="p">))))</span>
+  <span class="c1">;;执行命令</span>
+  <span class="p">(</span><span class="nv">ugraph-&gt;png</span> <span class="s">&quot;uwizard.dot&quot;</span> <span class="vg">*wizard-nodes*</span> <span class="vg">*wizard-edges*</span><span class="p">)</span>
+</code></pre>
+</div>
 
 <p>结合上回处理文本，觉得lisp在处理列表和文本时挺方便，虽然没有正则什么的。然后学习到lisp和unix环境交互还是比较方便的。</p>
 
@@ -246,7 +354,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#reviews-ref">reviews <span>3</span></a>
+        <a href="/categories.html#reviews-ref">reviews <span>4</span></a>
         </li>
        
         
@@ -288,7 +396,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#python-ref">python <span>13</span></a>
+        <a href="/categories.html#python-ref">python <span>14</span></a>
         </li>
       
       

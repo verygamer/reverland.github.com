@@ -59,6 +59,8 @@
     
   
     
+  
+    
     	
     	<li><a href="/archive.html">归档</a></li>
     	
@@ -157,7 +159,176 @@
 
 <h3 id="section-2">然后是漫长的源码……</h3>
 
+<div class="highlight"><pre><code class="cl"><span class="c1">;;Defining Some Global Variables</span>
+<span class="c1">;玩家数二</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*num-players*</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1">;一个六边形最多3个骰子</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*max-dice*</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*board-size*</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1">;2x2的board</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*board-hexnum*</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*board-size*</span> <span class="vg">*board-size*</span><span class="p">))</span>
+<span class="c1">;clean</span>
+<span class="c1">;将list转化为array，为今后优化做准备</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">board-array</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">make-array</span> <span class="vg">*board-hexnum*</span> <span class="ss">:initial-contents</span> <span class="nv">lst</span><span class="p">))</span>
+<span class="c1">;dirty</span>
+<span class="c1">;生成随机的玩家分布和力量</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">gen-board</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nv">board-array</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">n</span> <span class="nv">below</span> <span class="vg">*board-hexnum*</span>
+                     <span class="nv">collect</span> <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">random</span> <span class="vg">*num-players*</span><span class="p">)</span>
+                                   <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">random</span> <span class="vg">*max-dice*</span><span class="p">))))))</span>
+<span class="c1">;clean</span>
+<span class="c1">;将玩家名由数字转换成字母</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">player-letter</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">code-char</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">97</span> <span class="nv">n</span><span class="p">)))</span>
+<span class="c1">;dirty</span>
+<span class="c1">;通过两层循环控制输出，绘制board</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">draw-board</span> <span class="p">(</span><span class="nv">board</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">y</span> <span class="nv">below</span> <span class="vg">*board-size*</span>
+        <span class="nb">do</span> <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+                  <span class="p">(</span><span class="nb">loop</span> <span class="nv">repeat</span> <span class="p">(</span><span class="nb">-</span> <span class="vg">*board-size*</span> <span class="nv">y</span><span class="p">)</span>
+                        <span class="nb">do</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot; &quot;</span><span class="p">))</span>
+                  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">x</span> <span class="nv">below</span> <span class="vg">*board-size*</span>
+                        <span class="nv">for</span> <span class="nv">hex</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">board</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*board-size*</span> <span class="nv">y</span><span class="p">)))</span>
+                        <span class="nb">do</span> <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~a-~a &quot;</span> <span class="p">(</span><span class="nv">player-letter</span> <span class="p">(</span><span class="nb">first</span> <span class="nv">hex</span><span class="p">))</span>
+                                   <span class="p">(</span><span class="nb">second</span> <span class="nv">hex</span><span class="p">))))))</span>
+<span class="c1">;;;Decoupling Dice of Doom’s Rules from the Rest of the Game</span>
+<span class="c1">;;Generating a Game Tree</span>
+<span class="c1">;clean</span>
+<span class="c1">;产生一个game-tree，形如(player board (moves))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">game-tree</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">player</span> <span class="nv">spare-dice</span> <span class="nv">first-move</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">list</span> <span class="nv">player</span>
+        <span class="nv">board</span>
+        <span class="p">(</span><span class="nv">add-passing-move</span> <span class="nv">board</span>
+                          <span class="nv">player</span>
+                          <span class="nv">spare-dice</span>
+                          <span class="nv">first-move</span>
+                          <span class="p">(</span><span class="nv">attacking-moves</span> <span class="nv">board</span> <span class="nv">player</span> <span class="nv">spare-dice</span><span class="p">))))</span>
+<span class="c1">;;Calculating Passing Moves</span>
+<span class="c1">;clean</span>
+<span class="c1">;如果是第一次移动则返回原tree的moves，如果不是则添加nil表示</span>
+<span class="c1">;无法移动，并递归调用game-tree添加玩家移动树</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">add-passing-move</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">player</span> <span class="nv">spare-dice</span> <span class="nv">first-move</span> <span class="nv">moves</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">if</span> <span class="nv">first-move</span>
+    <span class="nv">moves</span>
+    <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">list</span> <span class="no">nil</span>
+                <span class="p">(</span><span class="nv">game-tree</span> <span class="p">(</span><span class="nv">add-new-dice</span> <span class="nv">board</span> <span class="nv">player</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">spare-dice</span><span class="p">))</span>
+                           <span class="p">(</span><span class="nb">mod</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">player</span><span class="p">)</span> <span class="vg">*num-players*</span><span class="p">)</span>
+                           <span class="mi">0</span>
+                           <span class="no">t</span><span class="p">))</span>
+          <span class="nv">moves</span><span class="p">)))</span>
+<span class="c1">;clean</span>
+<span class="c1">;Calculating Attacking Moves</span>
+<span class="c1">;生成攻击可行的攻击game-tree中的moves</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">attacking-moves</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">cur-player</span> <span class="nv">spare-dice</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">player</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
+             <span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">board</span> <span class="nv">pos</span><span class="p">)))</span>
+           <span class="p">(</span><span class="nv">dice</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
+             <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">board</span> <span class="nv">pos</span><span class="p">))))</span>
+    <span class="p">(</span><span class="nb">mapcan</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">src</span><span class="p">)</span>
+              <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nv">player</span> <span class="nv">src</span><span class="p">)</span> <span class="nv">cur-player</span><span class="p">)</span>
+                <span class="p">(</span><span class="nb">mapcan</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">dst</span><span class="p">)</span>
+                          <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nv">player</span> <span class="nv">dst</span><span class="p">)</span> <span class="nv">cur-player</span><span class="p">))</span>
+                                     <span class="p">(</span><span class="nb">&gt;</span> <span class="p">(</span><span class="nv">dice</span> <span class="nv">src</span><span class="p">)</span> <span class="p">(</span><span class="nv">dice</span> <span class="nv">dst</span><span class="p">)))</span>
+                            <span class="p">(</span><span class="nb">list</span>
+                              <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">src</span> <span class="nv">dst</span><span class="p">)</span>
+                                    <span class="p">(</span><span class="nv">game-tree</span> <span class="p">(</span><span class="nv">board-attack</span> <span class="nv">board</span> <span class="nv">cur-player</span> <span class="nv">src</span> <span class="nv">dst</span> <span class="p">(</span><span class="nv">dice</span> <span class="nv">src</span><span class="p">))</span>
+                                               <span class="nv">cur-player</span>
+                                               <span class="p">(</span><span class="nb">+</span> <span class="nv">spare-dice</span> <span class="p">(</span><span class="nv">dice</span> <span class="nv">dst</span><span class="p">))</span>
+                                               <span class="no">nil</span><span class="p">)))))</span>
+                        <span class="p">(</span><span class="nv">neighbors</span> <span class="nv">src</span><span class="p">))))</span>
+            <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">n</span> <span class="nv">below</span> <span class="vg">*board-hexnum*</span>
+              <span class="nv">collect</span> <span class="nv">n</span><span class="p">))))</span>
+<span class="c1">;Finding the Neighbors</span>
+<span class="c1">;clean</span>
+<span class="c1">;返回邻近的pos列表</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">neighbors</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">up</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">pos</span> <span class="vg">*board-size*</span><span class="p">))</span>
+        <span class="p">(</span><span class="nv">down</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">pos</span> <span class="vg">*board-size*</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">p</span> <span class="nv">in</span> <span class="p">(</span><span class="nb">append</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">up</span> <span class="nv">down</span><span class="p">)</span>
+                           <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nb">zerop</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">pos</span> <span class="vg">*board-size*</span><span class="p">))</span>
+                             <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">up</span><span class="p">)</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">pos</span><span class="p">)))</span>
+                           <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nb">zerop</span> <span class="p">(</span><span class="nb">mod</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">pos</span><span class="p">)</span> <span class="vg">*board-size*</span><span class="p">))</span>
+                             <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">pos</span><span class="p">)</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">down</span><span class="p">))))</span>
+          <span class="nb">when</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">&gt;=</span> <span class="nv">p</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">p</span> <span class="vg">*board-hexnum*</span><span class="p">))</span>
+          <span class="nv">collect</span> <span class="nv">p</span><span class="p">)))</span>
+<span class="c1">;Attacking</span>
+<span class="c1">;clean</span>
+<span class="c1">;生成attack后的board</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">board-attack</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">player</span> <span class="nv">src</span> <span class="nv">dst</span> <span class="nv">dice</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">board-array</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">pos</span><span class="c1">;第一个for为位置</span>
+                     <span class="nv">for</span> <span class="nv">hex</span> <span class="nv">across</span> <span class="nv">board</span><span class="c1">;数组用across</span>
+                     <span class="nv">collect</span> <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">eq</span> <span class="nv">pos</span> <span class="nv">src</span><span class="p">)</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">player</span> <span class="mi">1</span><span class="p">))</span>
+                                   <span class="p">((</span><span class="nb">eq</span> <span class="nv">pos</span> <span class="nv">dst</span><span class="p">)</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">player</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">dice</span><span class="p">)))</span>
+                                   <span class="p">(</span><span class="no">t</span> <span class="nv">hex</span><span class="p">)))))</span>
+<span class="c1">;Reinforcements</span>
+<span class="c1">;clean</span>
+<span class="c1">;根据spare-dice添加骰子,返回新的board（数组）</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">add-new-dice</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">player</span> <span class="nv">spare-dice</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">f</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">n</span><span class="p">)</span>
+             <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">null</span> <span class="nv">lst</span><span class="p">)</span> <span class="no">nil</span><span class="p">)</span>
+                   <span class="p">((</span><span class="nb">zerop</span> <span class="nv">n</span><span class="p">)</span> <span class="nv">lst</span><span class="p">)</span>
+                   <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">cur-player</span> <span class="p">(</span><span class="nb">caar</span> <span class="nv">lst</span><span class="p">))</span>
+                            <span class="p">(</span><span class="nv">cur-dice</span> <span class="p">(</span><span class="nb">cadar</span> <span class="nv">lst</span><span class="p">)))</span>
+                        <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">eq</span> <span class="nv">cur-player</span> <span class="nv">player</span><span class="p">)</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">cur-dice</span> <span class="vg">*max-dice*</span><span class="p">))</span>
+                          <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">cur-player</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">cur-dice</span><span class="p">))</span>
+                                <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">n</span><span class="p">)))</span>
+                          <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="nv">n</span><span class="p">))))))))</span>
+    <span class="p">(</span><span class="nv">board-array</span> <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">coerce</span> <span class="nv">board</span> <span class="ss">&#39;list</span><span class="p">)</span> <span class="nv">spare-dice</span><span class="p">))))</span>
+<span class="c1">;;Playing Dice of Doom Against Another Human</span>
+<span class="c1">;The Main Loop</span>
+<span class="c1">;dirty</span>
+<span class="c1">;人人对战主函数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">play-vs-human</span> <span class="p">(</span><span class="nv">tree</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">print-info</span> <span class="nv">tree</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)</span>
+    <span class="p">(</span><span class="nv">play-vs-human</span> <span class="p">(</span><span class="nv">handle-human</span> <span class="nv">tree</span><span class="p">))</span>
+    <span class="p">(</span><span class="nv">announce-winner</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">))))</span>
+<span class="c1">;Giving Information About the State of the Game</span>
+<span class="c1">;dirty</span>
+<span class="c1">;打印当前信息，包括当前玩家和board</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">print-info</span> <span class="p">(</span><span class="nv">tree</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;current player = ~a&quot;</span> <span class="p">(</span><span class="nv">player-letter</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">tree</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nv">draw-board</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)))</span>
+<span class="c1">;Handling Input from Human Players</span>
+<span class="c1">;dirty</span>
+<span class="c1">;处理人的行动的函数，根据人的输入返回不同move的子树</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">handle-human</span> <span class="p">(</span><span class="nv">tree</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;choose your move:&quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">moves</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">move</span> <span class="nv">in</span> <span class="nv">moves</span>
+          <span class="nv">for</span> <span class="nv">n</span> <span class="nv">from</span> <span class="mi">1</span>
+          <span class="nb">do</span> <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">action</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">move</span><span class="p">)))</span>
+               <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+               <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~a. &quot;</span> <span class="nv">n</span><span class="p">)</span>
+               <span class="p">(</span><span class="k">if</span> <span class="nv">action</span>
+                 <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;~a -&gt; ~a&quot;</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">action</span><span class="p">)</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">action</span><span class="p">))</span>
+                 <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;end turn&quot;</span><span class="p">))))</span>
+    <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nb">nth</span> <span class="p">(</span><span class="nb">1-</span> <span class="p">(</span><span class="nb">read</span><span class="p">))</span> <span class="nv">moves</span><span class="p">))))</span>
+
+<span class="c1">;Determining the Winner</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">winners</span> <span class="p">(</span><span class="nv">board</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">tally</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">hex</span> <span class="nv">across</span> <span class="nv">board</span>
+                      <span class="nv">collect</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">hex</span><span class="p">)))</span>
+         <span class="p">(</span><span class="nv">totals</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">player</span><span class="p">)</span>
+                           <span class="p">(</span><span class="nb">cons</span> <span class="nv">player</span> <span class="p">(</span><span class="nb">count</span> <span class="nv">player</span> <span class="nv">tally</span><span class="p">)))</span>
+                         <span class="p">(</span><span class="nb">remove-duplicates</span> <span class="nv">tally</span><span class="p">)))</span>
+         <span class="p">(</span><span class="nv">best</span> <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">max</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nb">cdr</span> <span class="nv">totals</span><span class="p">))))</span>
+    <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nb">car</span>
+            <span class="p">(</span><span class="nb">remove-if</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span>
+                         <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">x</span><span class="p">)</span> <span class="nv">best</span><span class="p">)))</span>
+                       <span class="nv">totals</span><span class="p">))))</span>
+</code></pre>
+</div>
+
 <p>现在可以试试新游戏：</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">play-vs-human</span> <span class="p">(</span><span class="nv">game-tree</span> <span class="p">(</span><span class="nv">gen-board</span><span class="p">)</span> <span class="mi">0</span> <span class="mi">0</span> <span class="no">t</span><span class="p">))</span>
+</code></pre>
+</div>
 
 <p>其中0代表玩家0,第二个0代表刚开始获得的骰子为0,t代表第一次移动。</p>
 
@@ -247,7 +418,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#reviews-ref">reviews <span>3</span></a>
+        <a href="/categories.html#reviews-ref">reviews <span>4</span></a>
         </li>
        
         
@@ -289,7 +460,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#python-ref">python <span>13</span></a>
+        <a href="/categories.html#python-ref">python <span>14</span></a>
         </li>
       
       

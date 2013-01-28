@@ -59,6 +59,8 @@
     
   
     
+  
+    
     	
     	<li><a href="/archive.html">归档</a></li>
     	
@@ -148,6 +150,11 @@
 proxy=127.0.0.1:1998
 在gitconfig中写入</p>
 
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>http<span class="o">]</span>
+    <span class="nv">proxy</span> <span class="o">=</span> http://127.0.0.1:1998
+</code></pre>
+</div>
+
 <p>然后参见文档开始安装就是，我比较悲催，开始不知道可以这样做。直接hack rvm那个安装脚本才搞定</p>
 
 <h4 id="ruby-1">ruby环境搭建</h4>
@@ -156,9 +163,22 @@ proxy=127.0.0.1:1998
 
 <p>装好rvm后，使用ruby1.9.2</p>
 
+<div class="highlight"><pre><code class="bash">rvm install 1.9.2 <span class="o">&amp;&amp;</span> rvm use 1.9.2
+</code></pre>
+</div>
+
 <p>使用taobao的gem源</p>
 
+<div class="highlight"><pre><code class="bash">gem sources -remove http://rubygem.org/ 
+gem sources -a http://ruby.taobao.org/ --http-proxy http://127.0.0.1:1998
+</code></pre>
+</div>
+
 <p>安装对应的jekyll</p>
+
+<div class="highlight"><pre><code class="bash">gem install --http-proxy http://127.0.0.1:1998 jekyll 
+</code></pre>
+</div>
 
 <p>其它和官方文档就没什么区别了。</p>
 
@@ -175,6 +195,11 @@ proxy=127.0.0.1:1998
 <h4 id="section-4">语法高亮</h4>
 
 <p>之前我是用pygments解决的，没有按官方文档来，因为装python2-pygments后才有pygmentize命令…</p>
+
+<div class="highlight"><pre><code class="bash">sudo pacman -S python2-pygments
+pygmentize -S default -f html &gt; ~css/pygments.css
+</code></pre>
+</div>
 
 <p>后来发现还是syntaxhighlighter好看，于是把vimwiki那一大堆东西迁移过来了。结果搞的网页加载很慢，效果虽好很久出不来，所以先改会pygments</p>
 
@@ -286,7 +311,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#reviews-ref">reviews <span>3</span></a>
+        <a href="/categories.html#reviews-ref">reviews <span>4</span></a>
         </li>
        
         
@@ -328,7 +353,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#python-ref">python <span>13</span></a>
+        <a href="/categories.html#python-ref">python <span>14</span></a>
         </li>
       
       

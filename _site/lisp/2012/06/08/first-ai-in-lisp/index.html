@@ -59,6 +59,8 @@
     
   
     
+  
+    
     	
     	<li><a href="/archive.html">归档</a></li>
     	
@@ -158,11 +160,43 @@
 
 <h2 id="section-2">将最大最小算法转化为代码</h2>
 
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">rate-position</span> <span class="p">(</span><span class="nv">tree</span> <span class="nv">player</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">moves</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))</span>
+    <span class="p">(</span><span class="k">if</span> <span class="nv">moves</span>
+      <span class="p">(</span><span class="nb">apply</span> <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">tree</span><span class="p">)</span> <span class="nv">player</span><span class="p">)</span>
+               <span class="nf">#&#39;</span><span class="nb">max</span>
+               <span class="nf">#&#39;</span><span class="nb">min</span><span class="p">)</span>
+             <span class="p">(</span><span class="nv">get-ratings</span> <span class="nv">tree</span> <span class="nv">player</span><span class="p">))</span>
+      <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">w</span> <span class="p">(</span><span class="nv">winners</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">))))</span>
+        <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">player</span> <span class="nv">w</span><span class="p">)</span>
+          <span class="p">(</span><span class="nb">/</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">w</span><span class="p">))</span>
+          <span class="mi">0</span><span class="p">)))))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">get-ratings</span> <span class="p">(</span><span class="nv">tree</span> <span class="nv">player</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">move</span><span class="p">)</span>
+            <span class="p">(</span><span class="nv">rate-position</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">move</span><span class="p">)</span> <span class="nv">player</span><span class="p">))</span>
+          <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))</span>
+</code></pre>
+</div>
+
 <h2 id="ai">创造一个有AI的游戏循环</h2>
 
 <p>先写个电脑处理函数，像我们的handle-human函数,首先找出每个移动的评分，然后选择评分最高的移动。</p>
 
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">handle-computer</span> <span class="p">(</span><span class="nv">tree</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ratings</span> <span class="p">(</span><span class="nv">get-ratings</span> <span class="nv">tree</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">tree</span><span class="p">))))</span>
+    <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nb">nth</span> <span class="p">(</span><span class="nb">position</span> <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">max</span> <span class="nv">ratings</span><span class="p">)</span> <span class="nv">ratings</span><span class="p">)</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))))</span>
+</code></pre>
+</div>
+
 <p>最后，创造一个游戏环境即游戏循环</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">tree</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">print-info</span> <span class="nv">tree</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">null</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">))</span> <span class="p">(</span><span class="nv">announce-winner</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)))</span>
+        <span class="p">((</span><span class="nb">zerop</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">tree</span><span class="p">))</span> <span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">handle-human</span> <span class="nv">tree</span><span class="p">)))</span><span class="c1">;因为游戏中player1即代码0为人类玩家</span>
+        <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">handle-computer</span> <span class="nv">tree</span><span class="p">)))))</span>
+</code></pre>
+</div>
 
 <p>finished!!</p>
 
@@ -170,11 +204,23 @@
 
 <p>在repl中输入</p>
 
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">game-tree</span> <span class="p">(</span><span class="nv">gen-board</span><span class="p">)</span> <span class="mi">0</span> <span class="mi">0</span> <span class="no">t</span><span class="p">))</span>
+</code></pre>
+</div>
+
 <h2 id="section-3">写在最后</h2>
 
 <p>终于考完试了，好久没看这本书。发现很多东西都生疏了，还好作者每次解释都很详细。这一章一看了好久，回头看看common lisp，东西真是相当之多……正好从图书馆找到HTDP的中文版，看完这本书全面转向scheme。</p>
 
 <p>最后引用首爱默生《人生苦旅》中的诗：</p>
+
+<div class="highlight"><pre><code class="bash">我们把美归于简单
+不含多余部分
+边界清晰
+与一切相关联
+是中庸之道
+</code></pre>
+</div>
 
 
     
@@ -254,7 +300,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#reviews-ref">reviews <span>3</span></a>
+        <a href="/categories.html#reviews-ref">reviews <span>4</span></a>
         </li>
        
         
@@ -296,7 +342,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#python-ref">python <span>13</span></a>
+        <a href="/categories.html#python-ref">python <span>14</span></a>
         </li>
       
       

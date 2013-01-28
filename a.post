@@ -1,0 +1,139 @@
+---
+layout: post
+title: "Visualize your shell history"
+discription: "making tag cloud using python"
+category: python
+tags: [python]
+disqus: true
+---
+{% include JB/setup %}
+
+# Visualize Shell History
+
+注：代码写得很烂，不过感觉挺好玩所以写在这里。
+
+曾经在linux用户中流行这么一个命令
+
+     ~ ⮀ history | awk '{CMD[$2]++;count++;} END { for (a in CMD )print CMD[ a ]" " CMD[ a ]/count*100 "% " a }' | grep -v "./" | column -c3 -s " " -t |sort -nr | nl | head -n20 
+         1  852  24.3012%    sudo
+         2  376  10.7245%    pacman
+         3  163  4.64917%    vim
+         4  133  3.7935%     tsocks
+         5  101  2.88078%    cd
+         6  95   2.70964%    kill
+         7  88   2.50998%    eix
+         8  70   1.99658%    python2
+         9  70   1.99658%    emerge
+         10  69   1.96805%    ls
+         11  63   1.79692%    git
+         12  54   1.54022%    gcc
+         13  51   1.45465%    pip2
+         14  39   1.11238%    python
+         15  37   1.05533%    pip
+         16  37   1.05533%    nmap
+         17  35   0.998289%   su
+         18  32   0.912721%   xrandr
+         19  31   0.884199%   rvm
+         20  27   0.770108%   ssh
+
+多cool的一个命令……我完全看不懂awk啥的……几天前看[The practice of computing using python](http://book.douban.com/subject/4606883/)，上面讲到简单的文本处理和标签云，便想到把shell history用标签云的方式可视化出来。就是这样，我啥也不会。
+
+先把shell历史定向到一个文件中吧，或者把zsh\_history啥复制下
+
+    history > hist.txt
+
+然后如何可视化呢？抱着有需求先搜寻有没有开源实现的想法找到了[pytagcloud](https://pypi.python.org/pypi/pytagcloud)，稍加调整，生成的标签云相当漂亮：
+
+![tagcloud](http://sdrv.ms/X6Icjw)
+
+oops!好大两个“异常词”，这么说一看我就是sudo党了，而且是经常滚的arch党……
+
+为了看清更多细节，反映更多客观事实把这两个词去掉
+
+![tagcloud2]()
+
+看上去好多了………
+
+pytagcloud还提供生成html数据的函数，你可以在线看看效果：
+
+![](https://www.atizo.com/docs/labs/cloud.html)
+
+## 自己动手
+
+其实自己实现类似的效果很简单，关键是，有更好的灵活性和中文支持，我不知道怎么让pytagcloud支持中文……
+
+### 文本处理
+
+我们刚才保存的hits文件是这样的：
+
+    2480  pacman -Ss synap
+    2481  sudo pacman -S synaptiks
+    2482  synaptiks
+    2483  pypy
+    2484  vim pypy.py
+    2485  pypy pypy.py
+    2486  pip2 freeze
+    2487  pip2 freeze|grep flask
+    2488  pip2 install Flask
+    2489  pip2 install --upgrade Flask 
+
+显然我们只要每行第二个词就行,这个任务很简单，我选择将所有命令合并成一个大字符串，因为之后对中文有些想法：
+
+    def cmd2string(filename):
+        '''accept the filename and return the string of cmd'''
+        chist = []
+    
+        # Open the file and store the history in chist
+        with open(filename, 'r') as f:
+            chist = f.readlines()
+            # print chist
+    
+        for i in range(len(chist)):
+            chist[i] = chist[i].split()
+            chist[i] = chist[i][1]
+        ss = ''
+        for w in chist:
+            if w != 'sudo' and w != 'pacman':
+                ss = ss + ' ' + w
+    
+        return ss
+
+接着将字符串转换成字典，单词为键，出现次数为值：
+
+    def string2dict(string, dic):
+        """split a string into a dict record its frequent"""
+        wl = string.split()
+        for w in wl:
+            if w == '\n':  # 因为后来我看到中文分词结果中有\n...
+                continue
+            if w not in dic:
+                dic[w] = 1
+            else:
+                dic[w] += 1
+        return dic
+
+接下来的两个函数来自之前我提到的那本书，稍微改动下让它在firefox18下正常并且更改为随机的字体色彩和黑色背景。
+
+这两个函数的含义是不言自明的，必要的html/css知识是需要的。[^1]
+
+def makeHTMLbox(body, width):
+    """takes one long string of words and a width(px) then put them in an HTML box"""
+    boxStr = """<div style=\"width: %spx;background-color: rgb(0, 0, 0);border: 1px 
+grey solid
+    """
+    return boxStr % (str(width), body)
+
+
+def makeHTMLword(body, fontsize):
+    """take words and fontsize, and create an HTML word in that fontsize."""
+    #num = str(random.randint(0,255))
+    # return random color for every tags
+    color = 'rgb(%s, %s, %s)' % (str(random.randint(0, 255)), str(random.randint(0, 
+255)), str
+    # get the html data
+    wordStr = '<span style=\"font-size:%spx;color:%s;float:left;\">%s</span>'
+    return wordStr % (str(fontsize), color, body)
+
+## Footnotes
+
+[^1]:抱歉……我忘记python怎么将长行划分了`\` or `\\`?

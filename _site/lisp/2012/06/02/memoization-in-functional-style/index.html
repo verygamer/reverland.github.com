@@ -59,6 +59,8 @@
     
   
     
+  
+    
     	
     	<li><a href="/archive.html">归档</a></li>
     	
@@ -142,6 +144,14 @@
 
 <p>正如你所记得的，neighbors函数重复检查board的所有边。然而board的形状比赛中从来不变化，这个函数的结果不会变化！</p>
 
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">old-neighbors</span> <span class="p">(</span><span class="nb">symbol-function</span> <span class="ss">&#39;neighbors</span><span class="p">))</span>
+      <span class="p">(</span><span class="nv">previous</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nb">defun</span> <span class="nv">neighbors</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">pos</span> <span class="nv">previous</span><span class="p">)</span>
+        <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">pos</span> <span class="nv">previous</span><span class="p">)</span> <span class="p">(</span><span class="nb">funcall</span> <span class="nv">old-neighbors</span> <span class="nv">pos</span><span class="p">)))))</span>
+</code></pre>
+</div>
+
 <p>首先我们把老的neighbors函数保存在局部变量old-neighbors中。symbol-function命令仅仅取得绑在这个符号上的函数。</p>
 
 <p>接下来，我们定义一个局部变量previous，用来存放所有先前的参数和结果。</p>
@@ -154,12 +164,32 @@
 
 <p>game tree的生成是整个程序最大的开销，可以这样优化。</p>
 
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">old-game-tree</span> <span class="p">(</span><span class="nb">symbol-function</span> <span class="ss">&#39;game-tree</span><span class="p">))</span>
+      <span class="p">(</span><span class="nv">previous</span> <span class="p">(</span><span class="nb">make-hash-table</span> <span class="ss">:test</span> <span class="nf">#&#39;</span><span class="nb">equalp</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nb">defun</span> <span class="nv">game-tree</span> <span class="p">(</span><span class="k">&amp;rest</span> <span class="nb">rest</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nb">rest</span> <span class="nv">previous</span><span class="p">)</span>
+       <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nb">rest</span> <span class="nv">previous</span><span class="p">)</span> <span class="p">(</span><span class="nb">apply</span> <span class="nv">old-game-tree</span> <span class="nb">rest</span><span class="p">)))))</span>
+</code></pre>
+</div>
+
 <p>因为哈希表中的对象是array，所以我们用<code>equalp</code>代替<code>eql</code>。<code>&amp;rest</code>接受任意数量参数。</p>
 
 <h3 id="rate-position">记忆rate-position函数</h3>
 
 <p>这是用lisp实现人工智能中minmax算法中的一个函数，我好像还没纪录人工智能那部分。
 如下：</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">old-rate-position</span> <span class="p">(</span><span class="nb">symbol-function</span> <span class="ss">&#39;rate-position</span><span class="p">))</span>
+      <span class="p">(</span><span class="nv">previous</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nb">defun</span> <span class="nv">rate-position</span> <span class="p">(</span><span class="nv">tree</span> <span class="nv">player</span><span class="p">)</span>
+    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">tab</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">player</span> <span class="nv">previous</span><span class="p">)))</span>
+      <span class="p">(</span><span class="nb">unless</span> <span class="nv">tab</span>
+        <span class="p">(</span><span class="nb">setf</span> <span class="nv">tab</span> <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">player</span> <span class="nv">previous</span><span class="p">)</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">))))</span>
+      <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">tree</span> <span class="nv">tab</span><span class="p">)</span>
+          <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">tree</span> <span class="nv">tab</span><span class="p">)</span>
+                <span class="p">(</span><span class="nb">funcall</span> <span class="nv">old-rate-position</span> <span class="nv">tree</span> <span class="nv">player</span><span class="p">))))))</span>
+</code></pre>
+</div>
 
 <p>我们需要做些特殊的东西，因为传递进rate-position中的参数。游戏树将非常之大，所以我们必定不要用equal或相似的这种比较大列表相当慢的函数来比较一个游戏树，取而代之，我们用eql，因此我们分开处理函数的两个参数，通过内嵌哈希表实现。</p>
 
@@ -253,7 +283,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#reviews-ref">reviews <span>3</span></a>
+        <a href="/categories.html#reviews-ref">reviews <span>4</span></a>
         </li>
        
         
@@ -295,7 +325,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#python-ref">python <span>13</span></a>
+        <a href="/categories.html#python-ref">python <span>14</span></a>
         </li>
       
       

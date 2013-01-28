@@ -209,7 +209,7 @@ Cpu信息,这就是传说中的*i3* XD
 
 > This means that when you use genkernel to build your kernel, your system will generally detect all your hardware at boot-time, just like our Installation CD does.
 
-于是我sb的以为会生成个和ubuntu或arch一样的通用内核，实际上竟然不完全是。不知道是chroot原因还是什么，RTC支持没有编译(hwclock),无线网卡驱动没有编译(ath9k)，如果你要用vbox，这个支持也要编译上(iommu)。
+于是我sb的以为会生成个和ubuntu或arch一样的通用内核，实际上竟然不完全是。[^1]不知道是chroot原因还是什么，RTC支持没有编译(hwclock),无线网卡驱动没有编译(ath9k)，如果你要用vbox，这个支持也要编译上(iommu)。
 
 我觉得最sb的在于，我以为genkernel会自动读取当前目录的配置……各位看官引以为戒，使用软件前认真看手册，不要*自以为是*。
 
@@ -314,7 +314,7 @@ Others:
 
 [C] overlay 更换现有输入法？*注意ICU*，暂时不更改了
 
-[X] 片轮少女
+[X] 片轮少女[^2]
 
 [X] 是否换闭源驱动 是 logo去掉
 
@@ -352,3 +352,8 @@ Mon 14 Jan 2013 12:30:54 AM CST
 - firefox编译时直接卡爆，不过最后还是编译好了
 - gvim和fcitx要加上gtk选项，不然gvim就一个默认的wx界面，fcitx无法在gtk程序中使用
 - 非系统级python模块使用virtualenv+pip
+
+## Footnotes
+
+[^1]:问题在于，我是chroot环境过去的，而BT5启动时并没能很好的探测硬件，比如每次启动BT5时间都不对。genkernel貌似需要启动时探测的信息。后来在贴吧看到，都是lspci看硬件然后直接把硬件+gentoo上google搜的……
+[^2]:悲了个摧的，不能读取我以前的存档……

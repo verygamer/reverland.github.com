@@ -59,6 +59,8 @@
     
   
     
+  
+    
     	
     	<li><a href="/archive.html">归档</a></li>
     	
@@ -147,9 +149,141 @@
 
 <p>猜数的小游戏，不解释。</p>
 
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">guess-my-number</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">ash</span> <span class="p">(</span><span class="nb">+</span> <span class="vg">*big*</span> <span class="vg">*small*</span><span class="p">)</span> <span class="mi">-1</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">bigger</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*small*</span> <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nv">guess-my-number</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nv">guess-my-number</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">smaller</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">setf</span> <span class="vg">*big*</span> <span class="p">(</span><span class="nb">1-</span> <span class="p">(</span><span class="nv">guess-my-number</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nv">guess-my-number</span><span class="p">))</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">start-over</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*small*</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*big*</span> <span class="mi">100</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">guess-my-number</span><span class="p">))</span>
+</code></pre>
+</div>
+
 <h2 id="section-1">一个简单的文本游戏引擎</h2>
 
+<div class="highlight"><pre><code class="cl"><span class="c1">;;定义节点及描述</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*nodes*</span> <span class="o">&#39;</span><span class="p">((</span><span class="nv">living-room</span> <span class="p">(</span><span class="nv">you</span> <span class="nv">are</span> <span class="nv">in</span> <span class="k">the</span> <span class="nv">living-room.</span>
+                                          <span class="nv">a</span> <span class="nv">wizard</span> <span class="nv">is</span> <span class="nv">snoring</span> <span class="nv">loudly</span> <span class="nv">on</span> <span class="k">the</span> <span class="nv">couch.</span><span class="p">))</span>
+                        <span class="p">(</span><span class="nv">garden</span> <span class="p">(</span><span class="nv">you</span> <span class="nv">are</span> <span class="nv">in</span> <span class="nv">a</span> <span class="nv">beautiful</span> <span class="nv">garden.</span>
+                                     <span class="nv">there</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">well</span> <span class="nv">in</span> <span class="nv">front</span> <span class="nv">of</span> <span class="nv">you.</span><span class="p">))</span>
+                        <span class="p">(</span><span class="nv">attic</span> <span class="p">(</span><span class="nv">you</span> <span class="nv">are</span> <span class="nv">in</span> <span class="k">the</span> <span class="nv">attic.</span>
+                                    <span class="nv">there</span> <span class="nv">is</span> <span class="nv">a</span> <span class="nv">giant</span> <span class="nv">welding</span> <span class="nv">torch</span> <span class="nv">in</span> <span class="k">the</span> <span class="nv">corner.</span><span class="p">))))</span>
+<span class="c1">;;定义描述效应位置的函数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">describe-location</span> <span class="p">(</span><span class="nv">location</span> <span class="nv">nodes</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nb">assoc</span> <span class="nv">location</span> <span class="nv">nodes</span><span class="p">)))</span>
+<span class="c1">;;定义节点-路径</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*edges*</span> <span class="o">&#39;</span><span class="p">((</span><span class="nv">living-room</span> <span class="p">(</span><span class="nv">garden</span> <span class="nv">west</span> <span class="nv">door</span><span class="p">)</span>
+                                     <span class="p">(</span><span class="nv">attic</span> <span class="nv">upstairs</span> <span class="nv">ladder</span><span class="p">))</span>
+                        <span class="p">(</span><span class="nv">garden</span> <span class="p">(</span><span class="nv">living-room</span> <span class="nv">east</span> <span class="nv">door</span><span class="p">))</span>
+                        <span class="p">(</span><span class="nv">attic</span> <span class="p">(</span><span class="nv">living-room</span> <span class="nv">downstairs</span> <span class="nv">ladder</span><span class="p">))))</span>
+<span class="c1">;;定义描述路径函数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">describe-path</span> <span class="p">(</span><span class="nv">edge</span><span class="p">)</span>
+  <span class="o">`</span><span class="p">(</span><span class="nv">there</span> <span class="nv">is</span> <span class="nv">a</span> <span class="o">,</span><span class="p">(</span><span class="nb">caddr</span> <span class="nv">edge</span><span class="p">)</span> <span class="nv">going</span> <span class="o">,</span><span class="p">(</span><span class="nb">cadr</span> <span class="nv">edge</span><span class="p">)</span> <span class="nv">from</span> <span class="nv">here.</span><span class="p">))</span>
+<span class="c1">;;定义描述对应位置路径的函数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">describe-paths</span> <span class="p">(</span><span class="nv">location</span> <span class="nv">edges</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">append</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nv">describe-path</span> <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">assoc</span> <span class="nv">location</span> <span class="nv">edges</span><span class="p">)))))</span>
+<span class="c1">;;定义物品列表</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*objects*</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">whiskey</span> <span class="nv">bucket</span> <span class="nv">frog</span> <span class="nv">chain</span><span class="p">))</span>
+<span class="c1">;;物品-位置对，hash？</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*object-locations*</span> <span class="o">&#39;</span><span class="p">((</span><span class="nv">whiskey</span> <span class="nv">living-room</span><span class="p">)</span>
+                                   <span class="p">(</span><span class="nv">bucket</span> <span class="nv">living-room</span><span class="p">)</span>
+                                   <span class="p">(</span><span class="nv">chain</span> <span class="nv">garden</span><span class="p">)</span>
+                                   <span class="p">(</span><span class="nv">frog</span> <span class="nv">garden</span><span class="p">)))</span>
+<span class="c1">;;得到相应位置物品列表</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">objects-at</span> <span class="p">(</span><span class="nv">loc</span> <span class="nv">objs</span> <span class="nv">obj-locs</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">at-loc-p</span> <span class="p">(</span><span class="nv">obj</span><span class="p">)</span>
+             <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nb">assoc</span> <span class="nv">obj</span> <span class="nv">obj-locs</span><span class="p">))</span> <span class="nv">loc</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">remove-if-not</span> <span class="nf">#&#39;</span><span class="nv">at-loc-p</span> <span class="nv">objs</span><span class="p">)))</span>
+<span class="c1">;;描述相应位置物品</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">describe-objects</span> <span class="p">(</span><span class="nv">loc</span> <span class="nv">objs</span> <span class="nv">obj-loc</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">describe-obj</span> <span class="p">(</span><span class="nv">obj</span><span class="p">)</span>
+             <span class="o">`</span><span class="p">(</span><span class="nv">you</span> <span class="nv">see</span> <span class="nv">a</span> <span class="o">,</span><span class="nv">obj</span> <span class="nv">on</span> <span class="k">the</span> <span class="nv">floor.</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">append</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nv">describe-obj</span> <span class="p">(</span><span class="nv">objects-at</span> <span class="nv">loc</span> <span class="nv">objs</span> <span class="nv">obj-loc</span><span class="p">)))))</span>
+<span class="c1">;;给定初始位置</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*location*</span> <span class="ss">&#39;living-room</span><span class="p">)</span>
+<span class="c1">;;定义查看函数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">look</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">append</span> <span class="p">(</span><span class="nv">describe-location</span> <span class="vg">*location*</span> <span class="vg">*nodes*</span><span class="p">)</span>
+          <span class="p">(</span><span class="nv">describe-paths</span> <span class="vg">*location*</span> <span class="vg">*edges*</span><span class="p">)</span>
+          <span class="p">(</span><span class="nv">describe-objects</span> <span class="vg">*location*</span> <span class="vg">*objects*</span> <span class="vg">*object-locations*</span><span class="p">)))</span>
+<span class="c1">;;定义行走函数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">walk</span> <span class="p">(</span><span class="nv">direction</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">next</span> <span class="p">(</span><span class="nb">find</span> <span class="nv">direction</span>
+                    <span class="p">(</span><span class="nb">cdr</span> <span class="p">(</span><span class="nb">assoc</span> <span class="vg">*location*</span> <span class="vg">*edges*</span><span class="p">))</span>
+                    <span class="ss">:key</span> <span class="nf">#&#39;</span><span class="nb">cadr</span><span class="p">)))</span>
+    <span class="p">(</span><span class="k">if</span> <span class="nv">next</span>
+      <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">setf</span> <span class="vg">*location*</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">next</span><span class="p">))</span>
+             <span class="p">(</span><span class="nv">look</span><span class="p">))</span>
+      <span class="o">&#39;</span><span class="p">(</span><span class="nv">you</span> <span class="nv">cannot</span> <span class="k">go</span> <span class="nv">that</span> <span class="nv">way.</span><span class="p">))))</span>
+<span class="c1">;;定义拾起函数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">pickup</span> <span class="p">(</span><span class="nv">object</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">member</span> <span class="nv">object</span>
+                 <span class="p">(</span><span class="nv">objects-at</span> <span class="vg">*location*</span> <span class="vg">*objects*</span> <span class="vg">*object-locations*</span><span class="p">))</span>
+         <span class="p">(</span><span class="nb">push</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">object</span> <span class="ss">&#39;body</span><span class="p">)</span> <span class="vg">*object-locations*</span><span class="p">)</span>
+         <span class="o">`</span><span class="p">(</span><span class="nv">you</span> <span class="nv">are</span> <span class="nv">now</span> <span class="nv">carrying</span> <span class="k">the</span> <span class="o">,</span><span class="nv">object</span><span class="p">))</span>
+        <span class="p">(</span><span class="no">t</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">you</span> <span class="nv">cannot</span> <span class="nb">get</span> <span class="nv">that.</span><span class="p">))))</span>
+<span class="c1">;;查看现有物品的函数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">inventory</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">cons</span> <span class="ss">&#39;items-</span> <span class="p">(</span><span class="nv">objects-at</span> <span class="ss">&#39;body</span> <span class="vg">*objects*</span> <span class="vg">*object-locations*</span><span class="p">)))</span>
+<span class="c1">;;登入界面</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">say-hello</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Please type your name:&quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">name</span> <span class="p">(</span><span class="nb">read-line</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Nice to meet you, &quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">princ</span> <span class="nv">name</span><span class="p">)))</span>
+<span class="c1">;;自定义repl</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">game-repl</span> <span class="p">()</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">cmd</span> <span class="p">(</span><span class="nv">game-read</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">unless</span> <span class="p">(</span><span class="nb">eq</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">cmd</span><span class="p">)</span> <span class="ss">&#39;quit</span><span class="p">)</span>
+      <span class="p">(</span><span class="nv">game-print</span> <span class="p">(</span><span class="nv">game-eval</span> <span class="nv">cmd</span><span class="p">))</span>
+      <span class="p">(</span><span class="nv">game-repl</span><span class="p">))))</span>
+<span class="c1">;;自定义的read</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">game-read</span> <span class="p">()</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">cmd</span> <span class="p">(</span><span class="nb">read-from-string</span>
+               <span class="p">(</span><span class="nb">concatenate</span> <span class="ss">&#39;string</span> <span class="s">&quot;(&quot;</span> <span class="p">(</span><span class="nb">read-line</span><span class="p">)</span> <span class="s">&quot;)&quot;</span><span class="p">))))</span>
+    <span class="p">(</span><span class="k">flet</span> <span class="p">((</span><span class="nv">quote-it</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span>
+             <span class="p">(</span><span class="nb">list</span> <span class="ss">&#39;quote</span> <span class="nv">x</span><span class="p">)))</span>
+      <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">cmd</span><span class="p">)</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nv">quote-it</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">cmd</span><span class="p">))))))</span>
+<span class="c1">;;给定可执行命令</span>
+<span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*allowed-commands*</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">look</span> <span class="nv">walk</span> <span class="nv">pickup</span> <span class="nv">inventory</span><span class="p">))</span>
+<span class="c1">;;自定义eval</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">game-eval</span> <span class="p">(</span><span class="nv">sexp</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">member</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">sexp</span><span class="p">)</span> <span class="vg">*allowed-commands*</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">eval</span> <span class="nv">sexp</span><span class="p">)</span>
+    <span class="o">&#39;</span><span class="p">(</span><span class="nv">i</span> <span class="nb">do</span> <span class="nb">not</span> <span class="nv">know</span> <span class="nv">that</span> <span class="nv">command.</span><span class="p">)))</span>
+<span class="c1">;;转换字符列表大小写函数</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">tweak-text</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">caps</span> <span class="nv">lit</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">when</span> <span class="nv">lst</span>
+    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">item</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">))</span>
+          <span class="p">(</span><span class="nb">rest</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))</span>
+      <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">eq</span> <span class="nv">item</span> <span class="sc">#\space</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">item</span> <span class="p">(</span><span class="nv">tweak-text</span> <span class="nb">rest</span> <span class="nv">caps</span> <span class="nv">lit</span><span class="p">)))</span>
+            <span class="p">((</span><span class="nb">member</span> <span class="nv">item</span> <span class="o">&#39;</span><span class="p">(</span><span class="sc">#\!</span> <span class="sc">#\?</span> <span class="sc">#\.</span><span class="p">))</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">item</span> <span class="p">(</span><span class="nv">tweak-text</span> <span class="nb">rest</span> <span class="no">t</span> <span class="nv">lit</span><span class="p">)))</span>
+            <span class="p">((</span><span class="nb">eq</span> <span class="nv">item</span> <span class="sc">#\&quot;</span><span class="p">)</span> <span class="p">(</span><span class="nv">tweak-text</span> <span class="nb">rest</span> <span class="nv">caps</span> <span class="p">(</span><span class="nb">not</span> <span class="nv">lit</span><span class="p">)))</span>
+            <span class="p">(</span><span class="nv">lit</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">item</span> <span class="p">(</span><span class="nv">tweak-text</span> <span class="nb">rest</span> <span class="no">nil</span> <span class="nv">lit</span><span class="p">)))</span>
+            <span class="p">((</span><span class="nb">or</span> <span class="nv">caps</span> <span class="nv">lit</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">char-upcase</span> <span class="nv">item</span><span class="p">)</span> <span class="p">(</span><span class="nv">tweak-text</span> <span class="nb">rest</span> <span class="no">nil</span> <span class="nv">lit</span><span class="p">)))</span>
+            <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">char-downcase</span> <span class="nv">item</span><span class="p">)</span> <span class="p">(</span><span class="nv">tweak-text</span> <span class="nb">rest</span> <span class="no">nil</span> <span class="no">nil</span><span class="p">)))))))</span>
+<span class="c1">;;自定义print</span>
+<span class="p">(</span><span class="nb">defun</span> <span class="nv">game-print</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">princ</span> <span class="p">(</span><span class="nb">coerce</span> <span class="p">(</span><span class="nv">tweak-text</span> <span class="p">(</span><span class="nb">coerce</span> <span class="p">(</span><span class="nb">string-trim</span> <span class="s">&quot;() &quot;</span>
+                                                  <span class="p">(</span><span class="nb">prin1-to-string</span> <span class="nv">lst</span><span class="p">))</span>
+                                     <span class="ss">&#39;list</span><span class="p">)</span>
+                             <span class="no">t</span>
+                             <span class="no">nil</span><span class="p">)</span>
+                 <span class="ss">&#39;string</span><span class="p">))</span>
+  <span class="p">(</span><span class="nb">fresh-line</span><span class="p">))</span>
+</code></pre>
+</div>
+
 <p>然后测试游戏引擎，在repl中输入</p>
+
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">game-repl</span><span class="p">)</span>
+</code></pre>
+</div>
 
 <p>首先让我惊异的就repl可以自定义,还有那个quasiquote很好用。</p>
 
@@ -260,7 +394,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#reviews-ref">reviews <span>3</span></a>
+        <a href="/categories.html#reviews-ref">reviews <span>4</span></a>
         </li>
        
         
@@ -302,7 +436,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#python-ref">python <span>13</span></a>
+        <a href="/categories.html#python-ref">python <span>14</span></a>
         </li>
       
       

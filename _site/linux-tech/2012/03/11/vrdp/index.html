@@ -59,6 +59,8 @@
     
   
     
+  
+    
     	
     	<li><a href="/archive.html">归档</a></li>
     	
@@ -133,16 +135,36 @@
 
 <p>先确定vbox版本</p>
 
+<div class="highlight"><pre><code class="bash">vboxmanage -v
+</code></pre>
+</div>
+
 <p>先到官网下载对应的extpack，然后运行(以4.0.8为例)</p>
+
+<div class="highlight"><pre><code class="bash">sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.0.8-71778.vbox-extpack
+</code></pre>
+</div>
 
 <h2 id="vrdp-1">使用vrdp功能</h2>
 <p>后台运行虚拟机系统（如xp）</p>
 
+<div class="highlight"><pre><code class="bash">vboxheadless -s xp
+</code></pre>
+</div>
+
 <p>最后返回一行</p>
+
+<div class="highlight"><pre><code class="bash">VRDE server is listening on port 3389.
+</code></pre>
+</div>
 
 <p>打开rdp软件比如说krdc连接宿主机ip+3389(默认)</p>
 
 <p>如果在本机桥接vbox仿问虚拟机可以桥接，需要加载相应模块。</p>
+
+<div class="highlight"><pre><code class="bash">modprobe vboxnetflt
+</code></pre>
+</div>
 
 <hr />
 
@@ -231,7 +253,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#reviews-ref">reviews <span>3</span></a>
+        <a href="/categories.html#reviews-ref">reviews <span>4</span></a>
         </li>
        
         
@@ -273,7 +295,7 @@ $(document).ready(function(){
         
         <li>
         
-        <a href="/categories.html#python-ref">python <span>13</span></a>
+        <a href="/categories.html#python-ref">python <span>14</span></a>
         </li>
       
       
