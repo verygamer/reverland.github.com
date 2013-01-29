@@ -90,7 +90,7 @@ Cpu信息,这就是传说中的*i3* XD
     LABEL gentoo
     MENU LABEL Gentoo Linux
     KERNEL /boot/kernel-genkernel-x86_64-3.6.11-gentoo
-    APPEND initrd=/boot/initramfs-genkernel-x86_64-3.6.11-gentoo root=/dev/sda3
+    APPEND initrd=/boot/initramfs-genkernel-x86_64-3.6.11-gentoo root=/dev/sda3 acpi_osi=Linux acpi_backlight=vendor
 
 然后重启……无法载入root，进入某个rescue shell内，什么神shell什么命令都没用。
 
@@ -113,7 +113,7 @@ Cpu信息,这就是传说中的*i3* XD
 
 等开源驱动装好，kdebase-startkde装好之后，重liveusb环境重启，擦……奇葩的分辨率……然后又开始查怎么调分辨率。
 
-然后从开源到闭源，发现闭源不能调亮度，再加上没有kms很不爽，又转到开源。对这款机器来说，估计nvidia-bl驱动你也可以调亮度，不过我没试过。我只是把闭源驱动生成的xorg.conf改了改扔给了开源驱动：
+然后从开源到闭源，发现闭源不能调亮度，再加上没有kms很不爽，又转到开源。对这款机器来说，估计nvidia-bl驱动你也可以调亮度，不过我没试过。我只是把闭源驱动生成的xorg.conf改了改扔给了开源驱动[^3]：
 
 
      ⚡ root@gentoo ⮀ ~ ⮀ cat /etc/X11/xorg.conf 
@@ -288,7 +288,7 @@ Sun 13 Jan 2013 12:52:51 AM CST
 
 [X] 触摸板不起作用。synaptics
 
-[X] 亮度无法调节（kde电源管理工具,and powermanage）开源可以闭源不行,acpid acpi Option依然无力
+[X] 亮度无法调节（kde电源管理工具,and powermanage）开源可以闭源不行,acpid acpi Option依然无力[^4]
 
 [X] dolphin，okular，gwenview等常用工具没装
 
@@ -357,3 +357,5 @@ Mon 14 Jan 2013 12:30:54 AM CST
 
 [^1]:问题在于，我是chroot环境过去的，而BT5启动时并没能很好的探测硬件，比如每次启动BT5时间都不对。genkernel貌似需要启动时探测的信息。后来在贴吧看到，都是lspci看硬件然后直接把硬件+gentoo上google搜的……
 [^2]:悲了个摧的，不能读取我以前的存档……
+[^3]:这个配置文件触摸板不能单击，要改什么，反正我后来用synaptiks设置了。
+[^4]: 后来发现acpi没用，powerdevil就够用了。另为唤醒后亮度失控的问题找到解决方法了arch的wiki，在内核启动行加上`acpi_osi=Linux acpi_backlight=vendor`
