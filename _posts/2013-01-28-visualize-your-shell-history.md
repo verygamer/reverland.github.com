@@ -50,7 +50,7 @@ oops!好大两个“异常词”，这么说一看我就是sudo党了，而且�
 
 为了看清更多细节，反映更多客观事实把这两个词去掉
 
-<iframe src="https://skydrive.live.com/embed?cid=6328070E636BA49B&resid=6328070E636BA49B%21120&authkey=AGJEuW9irdMRN9o" width="318" height="162" frameborder="0" scrolling="no"></iframe>
+<iframe src="https://skydrive.live.com/embed?cid=6328070E636BA49B&resid=6328070E636BA49B%21121&authkey=AOLuu-QJ8tQGBv8" width="319" height="256" frameborder="0" scrolling="no"></iframe>
 
 看上去好多了………
 
