@@ -4,7 +4,7 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org/atom.xml" rel="self"/>
  <link href="http://reverland.org"/>
- <updated>2013-01-28T16:41:58+08:00</updated>
+ <updated>2013-01-28T21:32:23+08:00</updated>
  <id>http://reverland.org</id>
  <author>
    <name>Reverland</name>
@@ -74,6 +74,15 @@
 
 &lt;p&gt;其实自己实现类似的效果很简单，关键是，有更好的灵活性和中文支持，我不知道怎么让pytagcloud支持中文……&lt;/p&gt;
 
+&lt;p&gt;先给出以下要用的控制图像或html大小的参数，需要多次调整来探索。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;boxsize = 600
+basescale = 10
+fontScale = 0.5
+omitnumber = 5
+omitlen = 0
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h3 id=&quot;section-1&quot;&gt;文本处理&lt;/h3&gt;
 
 &lt;p&gt;我们刚才保存的hits文件是这样的：&lt;/p&gt;
@@ -131,22 +140,24 @@
 
 &lt;p&gt;这两个函数的含义是不言自明的，必要的html/css知识是需要的。&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;p&gt;def makeHTMLbox(body, width):
-    “&quot;”takes one long string of words and a width(px) then put them in an HTML box”””
-    boxStr = “”“&amp;lt;div style=&quot;width: %spx;background-color: rgb(0, 0, 0);border: 1px grey solid;text-align: center; overflow: hidden;&quot;&amp;gt;%s&amp;lt;/div&amp;gt;
-    “””
-    return boxStr % (str(width), body)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def makeHTMLbox(body, width):
+    &quot;&quot;&quot;takes one long string of words and a width(px) then put them in an HTML box&quot;&quot;&quot;
+    boxStr = &quot;&quot;&quot;&amp;lt;div style=\&quot;width: %spx;background-color: rgb(0, 0, 0);border: 1px grey solid;text-align: center; overflow: hidden;\&quot;&amp;gt;%s&amp;lt;/div&amp;gt;
+    &quot;&quot;&quot;
+    return boxStr % (str(width), body)
 
-&lt;p&gt;def makeHTMLword(body, fontsize):
-    “&quot;”take words and fontsize, and create an HTML word in that fontsize.”””
+
+def makeHTMLword(body, fontsize):
+    &quot;&quot;&quot;take words and fontsize, and create an HTML word in that fontsize.&quot;&quot;&quot;
     #num = str(random.randint(0,255))
     # return random color for every tags
-    color = ‘rgb(%s, %s, %s)’ % (str(random.randint(0, 255)), str(random.randint(0, 255)), str(random.randint(0, 255)))
+    color = 'rgb(%s, %s, %s)' % (str(random.randint(0, 255)), str(random.randint(0, 255)), str(random.randint(0, 255)))
     # get the html data
-    wordStr = ‘&amp;lt;span style=&quot;font-size:%spx;color:%s;float:left;&quot;&amp;gt;%s&amp;lt;/span&amp;gt;’
-    return wordStr % (str(fontsize), color, body)&lt;/p&gt;
+    wordStr = '&amp;lt;span style=\&quot;font-size:%spx;color:%s;float:left;\&quot;&amp;gt;%s&amp;lt;/span&amp;gt;'
+    return wordStr % (str(fontsize), color, body)
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;It’s time to get the proper html files of the tag cloud!&lt;/p&gt;
+&lt;p&gt;Now, it’s time to get the proper html files of the tag cloud!&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;# get the html data first
 wd = {}
@@ -315,7 +326,7 @@ problem-solving attitudes).&lt;/p&gt;
 
 &lt;p&gt;不妨试试，你会爱上这种文化。&lt;/p&gt;
 
-&lt;p&gt;最后顺便说下，不要以为开源社区没做出来什么，世界上百分之九十的超级计算机的系统、大部分服务器的系统、许多数据库系统、多如繁星的网站框架和应用，最棒的博客系统、最棒的浏览器，最棒的编辑器，优秀的排版系统，优秀的统计环境和无处不在的计算机语言。&lt;/p&gt;
+&lt;p&gt;最后顺便说下，开源社区创造了很多很棒的东西，越是重要的东西越默默无闻，然而不可或缺。&lt;/p&gt;
 
 &lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
 

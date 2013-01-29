@@ -1,7 +1,6 @@
 
 http://reverland.org/about.html
 http://reverland.org/index.html
-http://reverland.org/a.post
 http://reverland.org/archive.html
 http://reverland.org/categories.html
 http://reverland.org/sitemap.txt
