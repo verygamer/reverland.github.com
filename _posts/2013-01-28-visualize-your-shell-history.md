@@ -56,7 +56,7 @@ oops!好大两个“异常词”，这么说一看我就是sudo党了，而且�
 
 pytagcloud还提供生成html数据的函数，你可以在线看看效果：
 
-![](https://www.atizo.com/docs/labs/cloud.html)
+[Demo](https://www.atizo.com/docs/labs/cloud.html)
 
 ## 自己动手
 
