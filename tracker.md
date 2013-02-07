@@ -40,9 +40,9 @@ I think it's a good idea to track your ideas.
 
 [status flag]|description|time to start|time of start|time to end|time of end|more information.s
 
-[M]|Visulize social network of renren|01302013|02012013|02022013|02022013| Need Summarise, pure python implemention，data analysis.
+[F]|Visulize social network of renren|20130130|20130201|20130202|20130205| Need Summarise, pure python implemention，data analysis.
 
-[P]|CAPTCHA recognition|02032013||||
+[P]|CAPTCHA recognition|20130203|20130206|||
 
 [P]|3-D picture by gimp|||||
 
