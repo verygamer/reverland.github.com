@@ -10,7 +10,7 @@ disqus: true
 
 # Visualize Shell History
 
-注：代码写得很烂，不过感觉挺好玩所以写在这里。欢迎各路大牛指教。完整代码见[github/reverland/scripts/tagcloud.py](https://github.com/reverland/scripts/blob/master/tagcloud.py)
+注：代码写得很烂，不过感觉挺好玩所以写在这里。欢迎各路大牛指教。完整代码见[github/reverland/scripts/tagcloud.py](https://github.com/reverland/scripts/blob/master/python/tagcloud.py)
 
 曾经在linux用户中流行这么一个命令
 

@@ -22,7 +22,7 @@ disqus: true
 
 作为菜鸟深知代码写得不怎么样，写在这里，希望没什么基础的人都能体会到其中我所感受到的乐趣*Happy hacking*，也欢迎各路高手大牛不吝赐教。
 
-完整代码见[github/reverland/scripts/renren.py](https://github.com/reverland/scripts/blob/master/renren.py)
+完整代码见[github/reverland/scripts/renren.py](https://github.com/reverland/scripts/blob/master/python/renren.py)
 
 ## 必要条件
 
