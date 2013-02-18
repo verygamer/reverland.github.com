@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "追踪"
+title: "IdeaTracker"
 group: navigation
 disqus: true
 ---
@@ -38,15 +38,18 @@ I think it's a good idea to track your ideas.
 
 ## Content
 
-[status flag]|description|time to start|time of start|time to end|time of end|more information.s
+[status flag]|description|time to start|time of start|time to end|time of end|more informations.
 
-[F]|Visulize social network of renren|20130130|20130201|20130202|20130205| Need Summarise, pure python implemention，data analysis.
+[F]|Visulize social network of renren|20130130|20130201|20130202|20130205|
 
-[P]|CAPTCHA recognition|20130203|20130206|||
+[M]|CAPTCHA recognition|20130203|20130206|20130207|20130209|based on crop and distance， BP Network.Need summarize.
 
-[P]|3-D picture by gimp|||||
+[M]|3-D picture by gimp|20130212||||If I have time
 
+[F]|Scratch photos from renren|20130208|20130208|20130208|20130218|
 
+[F]|A photomosaic generator in chao style|20130213|20130213|20130215|20130218|poor performance however
 
+[P]|A time ticker with notify shell script|20130219||20130219||
 
-
+[P]|friends distribution with basemap|20130220||20130225||

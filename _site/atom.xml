@@ -4,13 +4,30 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org/atom.xml" rel="self"/>
  <link href="http://reverland.org"/>
- <updated>2013-02-07T11:42:43+08:00</updated>
+ <updated>2013-02-18T15:41:07+08:00</updated>
  <id>http://reverland.org</id>
  <author>
    <name>Reverland</name>
    <email>lhtlyy@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>python小练习：识别验证码</title>
+   <link href="http://reverland.org/python/2013/02/12/decode-captcha"/>
+   <updated>2013-02-12T00:00:00+08:00</updated>
+   <id>hhttp://reverland.org/python/2013/02/12/decode-captcha</id>
+   <content type="html">
+&lt;h1 id=&quot;section&quot;&gt;识别验证码&lt;/h1&gt;
+
+&lt;p&gt;前几天模拟登录人人抓取好友登录信息，&lt;/p&gt;
+
+&lt;p&gt;验证码(Completely Automated Public Turing test to tell Computers and Humans Apart)，常用于网站反spam。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/69/Captcha.jpg&quot; alt=&quot;captcha example&quot; /&gt;&lt;/p&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>Python小练习：可视化人人好友关系</title>
@@ -42,7 +59,7 @@
 
 &lt;p&gt;作为菜鸟深知代码写得不怎么样，写在这里，希望没什么基础的人都能体会到其中我所感受到的乐趣&lt;em&gt;Happy hacking&lt;/em&gt;，也欢迎各路高手大牛不吝赐教。&lt;/p&gt;
 
-&lt;p&gt;完整代码见&lt;a href=&quot;https://github.com/reverland/scripts/blob/master/renren.py&quot;&gt;github/reverland/scripts/renren.py&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;完整代码见&lt;a href=&quot;https://github.com/reverland/scripts/blob/master/python/renren.py&quot;&gt;github/reverland/scripts/renren.py&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;section-1&quot;&gt;必要条件&lt;/h2&gt;
 
@@ -332,7 +349,7 @@
    <content type="html">
 &lt;h1 id=&quot;visualize-shell-history&quot;&gt;Visualize Shell History&lt;/h1&gt;
 
-&lt;p&gt;注：代码写得很烂，不过感觉挺好玩所以写在这里。欢迎各路大牛指教。完整代码见&lt;a href=&quot;https://github.com/reverland/scripts/blob/master/tagcloud.py&quot;&gt;github/reverland/scripts/tagcloud.py&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;注：代码写得很烂，不过感觉挺好玩所以写在这里。欢迎各路大牛指教。完整代码见&lt;a href=&quot;https://github.com/reverland/scripts/blob/master/python/tagcloud.py&quot;&gt;github/reverland/scripts/tagcloud.py&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;曾经在linux用户中流行这么一个命令&lt;/p&gt;
 

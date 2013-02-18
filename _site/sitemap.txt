@@ -13,6 +13,7 @@ http://reverland.org/page3/index.html
 http://reverland.org/page4/index.html
 http://reverland.org/page5/index.html
 
+http://reverland.org/python/2013/02/12/decode-captcha
 http://reverland.org/python/2013/02/05/visualize-the-friendship-of-renren
 http://reverland.org/python/2013/01/28/visualize-your-shell-history
 http://reverland.org/reviews/2013/01/26/data-analysis-with-open-source-tools
