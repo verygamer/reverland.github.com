@@ -16,6 +16,8 @@ disqus: true
 
 Several weeks ago, I saw a poster of presidential campaign for Obama, in which Obama's portrait was made up of many voter's photos. It really attracted me, somedays later, I want to make one myself.
 
+The completed code host [here](http://github.com/reverland/scripts/blob/master/python/yapmg.py). It is much more functional than object-oriented...
+
 ## Search the Internet
 
 First of all, I searched the Google to find out how others achieve it, then I found many interesting implement and post on it.Along with them, there are pretty demos around.One of the demo of [Foto-Mosaik-Edda](http://www.fmedda.com/en/mosaic/chaos) striked me.It declaims as follows in their site:
