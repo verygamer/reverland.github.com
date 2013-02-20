@@ -4,7 +4,7 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org/atom.xml" rel="self"/>
  <link href="http://reverland.org"/>
- <updated>2013-02-19T14:00:32+08:00</updated>
+ <updated>2013-02-20T11:47:01+08:00</updated>
  <id>http://reverland.org</id>
  <author>
    <name>Reverland</name>
@@ -27,6 +27,8 @@
 &lt;/blockquote&gt;
 
 &lt;p&gt;Several weeks ago, I saw a poster of presidential campaign for Obama, in which Obama’s portrait was made up of many voter’s photos. It really attracted me, somedays later, I want to make one myself.&lt;/p&gt;
+
+&lt;p&gt;The completed code host &lt;a href=&quot;http://github.com/reverland/scripts/blob/master/python/yapmg.py&quot;&gt;here&lt;/a&gt;. It is much more functional than object-oriented…&lt;/p&gt;
 
 &lt;h2 id=&quot;search-the-internet&quot;&gt;Search the Internet&lt;/h2&gt;
 
