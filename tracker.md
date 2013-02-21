@@ -52,4 +52,6 @@ I think it's a good idea to track your ideas.
 
 [P]|A time ticker with notify shell script|20130219||20130219||
 
-[P]|friends distribution with basemap|20130220||20130225||
+[M]|friends distribution with basemap|20130220||20130225||For ip distribution
+
+{% include JB/comments %}
