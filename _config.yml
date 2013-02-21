@@ -10,6 +10,7 @@ markdown: kramdown
 kramdown:
   toc_levels: 2..6
 paginate : 15
+safe: true
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
@@ -130,4 +131,3 @@ JB :
   #   ./_includes/custom/[HELPER]
   # where [HELPER] is the name of the helper you are overriding.
   
-site.safe: true
