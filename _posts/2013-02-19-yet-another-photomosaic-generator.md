@@ -10,6 +10,8 @@ disqus: true
 
 # Yet Another PhotoMosaic Generator
 
+Update: Mon 25 Feb 2013 11:38:47 AM CST add classic style. More refer to [github](https://github.com/reverland/scripts/blob/master/python/yapmg.py)
+
 > Python是面向对象的？没有对象面向毛对象。
 > 
 > ——Anonymous
@@ -313,7 +315,7 @@ if __name__ == '__main__':
 
 Do you like it?
 
-[Demo](https://1a1rrq.sn2.livefilestore.com/y1p7DQkSgKd5dLtkOiUXpx6ACTajjZYAMtiwrPn3jkW3AzQrvwl9Ao76dCvM6bLWoa8nBKIxqQzGlXC1_ARqTVU2XJgVTkOjaCG/xxx.png?psid=1)
+![Demo](https://1a1rrq.sn2.livefilestore.com/y1p7DQkSgKd5dLtkOiUXpx6ACTajjZYAMtiwrPn3jkW3AzQrvwl9Ao76dCvM6bLWoa8nBKIxqQzGlXC1_ARqTVU2XJgVTkOjaCG/xxx.png?psid=1)
 
 **Can you see it?**
 
