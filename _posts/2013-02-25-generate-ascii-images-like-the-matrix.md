@@ -10,6 +10,8 @@ disqus: true
 
 # Generate Ascii Image Like the Matrix
 
+Inspired by [this online image to text converter](http://www.text-image.com/index.html) and [this post on Oschina](http://my.oschina.net/sosofy/blog/109259)
+
 script hosts at [github](https://github.com/reverland/scripts). Poor hack, Any advice is welcomed.
 
 Edit: Oooops, Demo sucks on my site, it's perfect if you generate an alone html file.[look here](http://reverland.org/matrix_demo.html) and [here](http://reverland.org/ascii_demo.html)
