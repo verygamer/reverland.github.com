@@ -6,5 +6,5 @@ echo ">>pushing to github"
 git push master master # github
 echo ">>github pushed"
 echo ">>pushing to phoenixzsec"
-git push publish master # @phoenixzsec
+git push phoenix master # @phoenixzsec
 echo ">>phoenixzsec pushed"
