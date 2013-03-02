@@ -1,7 +1,6 @@
 ---
 layout: page
 title: "IdeaTracker"
-group: navigation
 disqus: true
 ---
 {% include JB/setup %}
