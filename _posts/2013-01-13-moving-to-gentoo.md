@@ -343,6 +343,10 @@ Mon 14 Jan 2013 12:30:54 AM CST
 
 [X]hwclock 内核RTC支持
 
+Sun 03 Mar 2013 11:47:18 AM CST
+
+[X]重新配置内核，添加摄像头支持
+
 ### 附录三——经验教训
 
 - sb一样上来emerge vim...openbox+xterm听雨都显示不了汉字.So,先打造个可以上网的环境再说
