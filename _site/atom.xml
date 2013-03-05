@@ -4,7 +4,7 @@
  <title>Reverland的行知阁</title>
  <link href="http://reverland.org/atom.xml" rel="self"/>
  <link href="http://reverland.org"/>
- <updated>2013-03-03T12:50:27+08:00</updated>
+ <updated>2013-03-05T14:29:22+08:00</updated>
  <id>http://reverland.org</id>
  <author>
    <name>Reverland</name>
@@ -13,12 +13,12 @@
 
  
  <entry>
-   <title>Python小练习:导弹仿真</title>
+   <title>Python小练习:追踪导弹仿真</title>
    <link href="http://reverland.org/python/2013/03/02/python"/>
    <updated>2013-03-02T00:00:00+08:00</updated>
    <id>hhttp://reverland.org/python/2013/03/02/python</id>
    <content type="html">
-&lt;h1 id=&quot;python&quot;&gt;Python小练习：导弹仿真&lt;/h1&gt;
+&lt;h1 id=&quot;python&quot;&gt;Python小练习：追踪导弹仿真&lt;/h1&gt;
 
 &lt;p&gt;警告：浏览器可能不支持html嵌入标签，那么很抱歉什么视频也看不到。建议使用最新稳定版的firefox/chromium&lt;/p&gt;
 

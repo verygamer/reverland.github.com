@@ -159,6 +159,7 @@ ul.index_posts>li {
 .index_excerpt {
 	float: left;
 	margin: 5px 10px 0;
+	color: rgb(255, 255, 255);
 }
 #aside {
 	padding: 19px 0;

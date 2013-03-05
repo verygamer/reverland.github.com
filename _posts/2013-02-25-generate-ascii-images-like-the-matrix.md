@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Generate Ascii Images Like the Matrix"
-discription: "A script to get Matrix-like ascii image"
+excerpt: "A script to get Matrix-like ascii image"
 category: python 
 tags: [python]
 disqus: true

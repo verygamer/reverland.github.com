@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "To Be An Epicurean"
-discription: "Why we comes here?我们为何而活。"
+excerpt: "Why we comes here?我们为何而活。"
 category: Life
 tags: [Life]
 disqus: true

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Python小练习：可视化人人好友关系"
-discription: "A step-by-step tutorial on how to visualize your social network of Renren"
+excerpt: "A step-by-step tutorial on how to visualize your social network of Renren"
 category: python
 tags: [python, networkx, web]
 disqus: true

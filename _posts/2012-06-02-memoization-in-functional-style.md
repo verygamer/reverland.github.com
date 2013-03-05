@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Memoization in Functional Style"
-description: "函数式语言一种优化方法"
+excerpt: "函数式语言一种优化方法"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

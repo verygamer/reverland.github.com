@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Grand Theft Wumpus"
-description: "一个lisp游戏————The most violent programming example ever put into a textbook"
+excerpt: "一个lisp游戏————The most violent programming example ever put into a textbook"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

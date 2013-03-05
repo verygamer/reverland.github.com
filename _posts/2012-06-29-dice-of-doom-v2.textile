@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Dice of Doom v2"
-description: "关于Dice of Doom游戏的第二个版本优化，实用惰性求值方法和搜索树修剪算法"
+excerpt: "关于Dice of Doom游戏的第二个版本优化，实用惰性求值方法和搜索树修剪算法"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

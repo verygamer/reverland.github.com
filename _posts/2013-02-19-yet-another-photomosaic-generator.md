@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Yet Another PhotoMosaic Generator"
-discription: "Writen by python, implement chaos style"
+excerpt: "Writen by python, implement chaos style"
 category: python
 tags: [python, PIL]
 disqus: true

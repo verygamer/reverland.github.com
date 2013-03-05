@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "SymPy Tutorial(译)"
-discription: "翻译sympy tutorial"
+excerpt: "翻译sympy tutorial"
 category: python
 tags: [python]
 disqus: true

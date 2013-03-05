@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "使用Numpy和Scipy处理图像"
-discription: "scipy lecture notes"
+excerpt: "scipy lecture notes"
 category: python
 tags: [scipy-lecture-notes, python]
 disqus: true

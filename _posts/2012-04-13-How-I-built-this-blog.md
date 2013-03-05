@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "How I built this blog"
-description: "Simply record what I've done to built up the blog.a non-official document to replenish the official one"
+excerpt: "Simply record what I've done to built up the blog.a non-official document to replenish the official one"
 category: web
 tags: [jekyll]
 disqus: true

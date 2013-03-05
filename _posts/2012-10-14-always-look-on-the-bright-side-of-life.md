@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Always Look on the Bright Side of Life"
-discription: "some thoughts"
+excerpt: "some thoughts"
 category: Life
 tags: [Life]
 disqus: true

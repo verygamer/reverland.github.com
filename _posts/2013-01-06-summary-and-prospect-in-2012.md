@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "总结和展望之2012"
-discription: "Summary of 2011 and plans for the future"
+excerpt: "Summary of 2011 and plans for the future"
 category: Life
 tags: [Life]
 disqus: true

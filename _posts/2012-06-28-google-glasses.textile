@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Google glasses"
-description: "google眼镜"
+excerpt: "google眼镜"
 category: others
 tags: [google]
 disqus: true

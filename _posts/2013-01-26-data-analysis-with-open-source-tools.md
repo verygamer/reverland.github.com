@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Data Analysis with Open Source Tools"
-discription: "书评,不仅仅是书评"
+excerpt: "书评,不仅仅是书评"
 category: reviews
 tags: [books]
 disqus: true

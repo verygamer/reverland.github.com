@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Dice of Doom v4"
-discription: "最终版的Dice of Doom" 
+excerpt: "最终版的Dice of Doom" 
 category: lisp
 tags: [land-of-lisp]
 disqus: true

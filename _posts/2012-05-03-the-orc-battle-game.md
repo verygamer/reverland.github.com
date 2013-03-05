@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The Orc Battle Game"
-description: "Yet another game written by lisp"
+excerpt: "Yet another game written by lisp"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Streams in Lisp"
-description: "clisp中的stream"
+excerpt: "clisp中的stream"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

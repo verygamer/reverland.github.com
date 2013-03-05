@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "惰性求值"
-description: "在common lisp完成一套惰性求值函数库。"
+excerpt: "在common lisp完成一套惰性求值函数库。"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

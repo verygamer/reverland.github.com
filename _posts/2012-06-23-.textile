@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "宽容"
-description: "房龙《宽容》读书笔记"
+excerpt: "房龙《宽容》读书笔记"
 category: reviews
 tags: [books]
 disqus: true

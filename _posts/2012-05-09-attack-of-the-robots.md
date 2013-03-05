@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Attack of the Robots"
-description: "Yet another robots game written with loop and format"
+excerpt: "Yet another robots game written with loop and format"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

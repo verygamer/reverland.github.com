@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "传说中的DSL"
-description: "Domain-Specific Languages in Common Lisp"
+excerpt: "Domain-Specific Languages in Common Lisp"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

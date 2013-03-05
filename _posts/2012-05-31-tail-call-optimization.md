@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Tail Call Optimization"
-description: "Tail call optimization in lisp interpreter"
+excerpt: "Tail call optimization in lisp interpreter"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

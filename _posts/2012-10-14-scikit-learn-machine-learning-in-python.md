@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Scikit Learn: 在python中机器学习"
-discription: "scipy lecture notes part last"
+excerpt: "scipy lecture notes part last"
 category: python
 tags: [scikit-learn, python]
 disqus: true

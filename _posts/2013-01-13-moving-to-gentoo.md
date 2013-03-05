@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Hello, Gentoo"
-discription: "Moving to gentoo"
+excerpt: "Moving to gentoo"
 category: linux-tech
 tags: [linux]
 disqus: true

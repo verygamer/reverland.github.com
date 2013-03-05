@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Using Loop To Evolve"
-description: "Something like life game."
+excerpt: "Something like life game."
 category: lisp 
 tags: [land-of-lisp]
 disqus: true

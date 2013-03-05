@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Visualize tree like data in Lisp"
-description: "list的一些特殊列表及使用开源工具graphivz来可视化树状数据"
+excerpt: "list的一些特殊列表及使用开源工具graphivz来可视化树状数据"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

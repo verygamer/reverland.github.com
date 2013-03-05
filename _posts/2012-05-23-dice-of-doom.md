@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Dice of Doom"
-description: "A game engine written in the functional style"
+excerpt: "A game engine written in the functional style"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

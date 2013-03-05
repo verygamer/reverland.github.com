@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Visualize your shell history"
-discription: "making tag cloud using python"
+excerpt: "making tag cloud using python"
 category: python
 tags: [python]
 disqus: true

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Lisp Web Server"
-description: "A very simple web server written in lisp"
+excerpt: "A very simple web server written in lisp"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

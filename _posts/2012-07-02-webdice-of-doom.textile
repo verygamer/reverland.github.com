@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "基于web的Dice of Doom"
-description: "基于web的Dice of Doom游戏，html5版"
+excerpt: "基于web的Dice of Doom游戏，html5版"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

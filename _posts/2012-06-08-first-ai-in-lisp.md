@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "First AI in lisp"
-description: "用lisp实现一个简单的AI。"
+excerpt: "用lisp实现一个简单的AI。"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

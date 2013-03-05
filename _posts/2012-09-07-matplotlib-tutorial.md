@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Matplotlib Tutorial(译)"
-discription: "Nicolas P. Rougier - Euroscipy 2012"
+excerpt: "Nicolas P. Rougier - Euroscipy 2012"
 category: python
 tags: [matplotlib, python]
 disqus: true

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Macro in lisp"
-description: "简要介绍lisp中宏的使用"
+excerpt: "简要介绍lisp中宏的使用"
 category: lisp
 tags: [land-of-lisp]
 disqus: true

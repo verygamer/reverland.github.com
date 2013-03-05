@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "land of lisp读书笔记"
-discription: "总结我的land of lisp之旅"
+excerpt: "总结我的land of lisp之旅"
 category: lisp
 tags: [land-of-lisp]
 disqus: true
