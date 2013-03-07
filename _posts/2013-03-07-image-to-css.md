@@ -77,9 +77,9 @@ if __name__ == '__main__':
 
 ## Demo
 
-<a onclick="document.getElementById('typediv1').style.display='block';">点击显示图像</a>
+<a onclick="document.getElementById('img').style.display='block';">点击显示图像</a>
 
-<div style="height: 300px;">
+<div style="height: 250px;display: none" id="img">
 <div style="
 position: absolute;
 box-shadow:
@@ -105640,3 +105640,9 @@ box-shadow:
 464px 226px 0px 1px rgb(254, 254, 254);
 " id="typediv1"></div>
 </div>
+
+## 意义？
+
+意义在于可能你会死机= =
+
+尝试复制看看？
