@@ -212,13 +212,13 @@ Python中对迭代器的支持无处不在：标准库中的所有序列和无�
     >>> it.close()
     --closing--
 
-**注意：** `next`还是`__next__`?
+**注意： `next`还是`__next__`?**
 
-在Python 2.x中，接受下一个值的迭代器方法是`next`，它通过全局函数`next`显式调用，意即它应该调用`__next__`。就像全局函数`iter`调用`__iter__`。这种不一致在Python 3.x中被修复，`it.next`变成了`it.__next__`。对于其它生成器方法——`send`和`throw`情况更加复杂，因为它们不被解释器隐式调用。然而，有建议语法扩展让`continue`带一个将被传递给循环迭代器中`send`的参数。如果这个扩展被接受，可能`gen.send`会变成`gen.__send__`。最后一个生成器方法`close`显然被不正确的命名了，因为它已经被隐式调用。
+**在Python 2.x中，接受下一个值的迭代器方法是`next`，它通过全局函数`next`显式调用，意即它应该调用`__next__`。就像全局函数`iter`调用`__iter__`。这种不一致在Python 3.x中被修复，`it.next`变成了`it.__next__`。对于其它生成器方法——`send`和`throw`情况更加复杂，因为它们不被解释器隐式调用。然而，有建议语法扩展让`continue`带一个将被传递给循环迭代器中`send`的参数。如果这个扩展被接受，可能`gen.send`会变成`gen.__send__`。最后一个生成器方法`close`显然被不正确的命名了，因为它已经被隐式调用。**
 
 ### 链式生成器
 
-**注意：** 这是[PEP 380](http://www.python.org/dev/peps/pep-0380)的预览(还未被实现，但已经被Python3.3接受)[^2]
+**注意： 这是[PEP 380](http://www.python.org/dev/peps/pep-0380)的预览(还未被实现，但已经被Python3.3接受)[^2]**
 
 比如说我们正写一个生成器，我们想要yield一个第二个生成器——一个子生成器(subgenerator)——生成的数。如果仅考虑产生(yield)的值，通过循环可以不费力的完成：
 
@@ -234,13 +234,180 @@ Python中对迭代器的支持无处不在：标准库中的所有序列和无�
 
 ## 装饰器
 
+> Summary
+> 
+> This amazing feature appeared in the language almost apologetically and with concern that it might not be that useful.
+> 
+>	Bruce Eckel — An Introduction to Python Decorators
+
+因为函数或类都是对象，它们也能被四处传递。它们又是可变对象，可以被更改。在函数或类对象创建后但绑定到名字前更改之的行为为装饰(decorator)。[^4]
+
+“装饰器”后隐藏了两种意思——一是函数起了装饰作用，例如，执行真正的工作，另一个是依附于装饰器语法的表达式，例如，at符号和装饰函数的名称。
+
+函数可以通过函数装饰器语法装饰：
+
+    @decorator             # ②
+    def function():        # ①
+        pass
+
+- 函数以标准方式定义。①
+- 以`@`做为定义为装饰器函数前缀的表达式②。在 @ 后的部分必须是简单的表达式，通常只是函数或类的名字。这一部分先求值，在下面的定义的函数准备好后，装饰器被新定义的函数对象作为单个参数调用。装饰器返回的值附着到被装饰的函数名。
+
+装饰器可以应用到函数和类上。对类语义很明晰——类定义被当作参数来调用装饰器，无论返回什么都赋给被装饰的名字。
+
+在装饰器语法实现前([PEP 318](http://www.python.org/dev/peps/pep-0318))，通过将函数和类对象赋给临时变量然后显式调用装饰器然后将返回值赋给函数名，可以完成同样的事。这似乎要打更多的字，也确实装饰器函数名用了两次同时临时变量要用至少三次，很容易出错。以上实例相当于：
+
+    def function():                  # ①
+        pass
+    function = decorator(function)   # ②
+
+装饰器可以堆栈(stacked)——应用的顺序是从底到上或从里到外。就是说最初的函数被当作第一次参数器的参数，无论返回什么都被作为第二个装饰器的参数……无论最后一个装饰器返回什么都被依附到最初函数的名下。
+
+装饰器语法因其可读性被选择。因为装饰器在函数头部前被指定，显然不是函数体的一部分，它只能对整个函数起作用。以@为前缀的表达式又让它明显到不容忽视(根据PEP叫在您脸上……：）)。当多个装饰器被应用时，每个放在不同的行非常易于阅读。
+
 ### 代替和调整原始对象
+
+装饰器可以或者返回相同的函数或类对象或者返回完全不同的对象。第一种情况中，装饰器利用函数或类对象是可变的添加属性，例如向类添加文档字符串(docstring).装饰器甚至可以在不改变对象的情况下做有用的事，例如在全局注册表中注册装饰的类。在第二种情况中，简直无所不能：当什么不同的东西取代了被装饰的类或函数，新对象可以完全不同。然而这不是装饰器的目的：它们意在改变装饰对象而非做不可预料的事。因此当一个函数在装饰时被完全替代成不同的函数时，新函数通常在一些准备工作后调用原始函数。同样，当一个类被装饰成一个新类时，新类通常源于被装饰类。当装饰器的目的是“每次都”做什么，像记录每次对被装饰函数的调用，只有第二类装饰器可用。另一方面，如果第一类足够了，最好使用它因为更简单。[^3]
 
 ### 实现类和函数装饰器
 
+对装饰器惟一的要求是它能够单参数调用。这意味着装饰器可以作为常规函数或带有`__call__`方法的类的实现，理论上，甚至lambda函数也行。
+
+让我们比较函数和类方法。装饰器表达式(@后部分)可以只是名字。只有名字的方法很好(打字少，看起来整洁等)，但是只有当无需用参数定制装饰器时才可能。被写作函数的装饰器可以用以下两种方式：
+
+    >>> def simple_decorator(function):
+    ...   print "doing decoration"
+    ...   return function
+    >>> @simple_decorator
+    ... def function():
+    ...   print "inside function"
+    doing decoration
+    >>> function()
+    inside function
+
+
+    >>> def decorator_with_arguments(arg):
+    ...   print "defining the decorator"
+    ...   def _decorator(function):
+    ...       # in this inner function, arg is available too
+    ...       print "doing decoration,", arg
+    ...       return function
+    ...   return _decorator
+    >>> @decorator_with_arguments("abc")
+    ... def function():
+    ...   print "inside function"
+    defining the decorator
+    doing decoration, abc
+    >>> function()
+    inside function
+
+这两个装饰器属于返回被装饰函数的类别。如果它们想返回新的函数，需要额外的嵌套，最糟的情况下，需要三层嵌套。
+
+    >>> def replacing_decorator_with_args(arg):
+    ...   print "defining the decorator"
+    ...   def _decorator(function):
+    ...       # in this inner function, arg is available too
+    ...       print "doing decoration,", arg
+    ...       def _wrapper(*args, **kwargs):
+    ...           print "inside wrapper,", args, kwargs
+    ...           return function(*args, **kwargs)
+    ...       return _wrapper
+    ...   return _decorator
+    >>> @replacing_decorator_with_args("abc")
+    ... def function(*args, **kwargs):
+    ...     print "inside function,", args, kwargs
+    ...     return 14
+    defining the decorator
+    doing decoration, abc
+    >>> function(11, 12)
+    inside wrapper, (11, 12) {}
+    inside function, (11, 12) {}
+    14
+
+`_wrapper`函数被定义为接受所有位置和关键字参数。通常我们不知道哪些参数被装饰函数会接受，所以wrapper将所有东西都创递给被装饰函数。一个不幸的结果就是显式参数很迷惑人。
+
+相比定义为函数的装饰器，定义为类的复杂装饰器更简单。当对象被创建，`__init__`方法仅仅允许返回`None`，创建的对象类型不能更改。这意味着当装饰器被定义为类时，使用无参数的形式没什么意义：最终被装饰的对象只是装饰类的一个实例而已，被构建器(constructor)调用返回，并不非常有用。讨论在装饰表达式中给出参数的基于类的装饰器，`__init__`方法被用来构建装饰器。
+
+    >>> class decorator_class(object):
+    ...   def __init__(self, arg):
+    ...       # this method is called in the decorator expression
+    ...       print "in decorator init,", arg
+    ...       self.arg = arg
+    ...   def __call__(self, function):
+    ...       # this method is called to do the job
+    ...       print "in decorator call,", self.arg
+    ...       return function
+    >>> deco_instance = decorator_class('foo')
+    in decorator init, foo
+    >>> @deco_instance
+    ... def function(*args, **kwargs):
+    ...   print "in function,", args, kwargs
+    in decorator call, foo
+    >>> function()
+    in function, () {}
+
+相对于正常规则([PEP 8](http://www.python.org/dev/peps/pep-0008))由类写成的装饰器表现得更像函数，因此它们的名字以小写字母开始。
+
+事实上，创建一个仅返回被装饰函数的新类没什么意义。对象应该有状态，这种装饰器在装饰器返回新对象时更有用。
+
+    >>> class replacing_decorator_class(object):
+    ...   def __init__(self, arg):
+    ...       # this method is called in the decorator expression
+    ...       print "in decorator init,", arg
+    ...       self.arg = arg
+    ...   def __call__(self, function):
+    ...       # this method is called to do the job
+    ...       print "in decorator call,", self.arg
+    ...       self.function = function
+    ...       return self._wrapper
+    ...   def _wrapper(self, *args, **kwargs):
+    ...       print "in the wrapper,", args, kwargs
+    ...       return self.function(*args, **kwargs)
+    >>> deco_instance = replacing_decorator_class('foo')
+    in decorator init, foo
+    >>> @deco_instance
+    ... def function(*args, **kwargs):
+    ...   print "in function,", args, kwargs
+    in decorator call, foo
+    >>> function(11, 12)
+    in the wrapper, (11, 12) {}
+    in function, (11, 12) {}
+
+像这样的装饰器可以做任何事，因为它能改变被装饰函数对象和参数，调用被装饰函数或不调用，最后改变返回值。
+
 ### 复制原始函数的文档字符串和其它属性
 
+当新函数被返回代替装饰前的函数时，不幸的是原函数的函数名，文档字符串和参数列表都丢失了。这些属性可以部分通过设置`__doc__`(文档字符串)，`__module__`和`__name__`(函数的全称)、`__annotations__`(Python 3中关于参数和返回值的额外信息)移植到新函数上，这些工作可通过`functools.update_wrapper`自动完成。
+
+    >>> import functools
+    >>> def better_replacing_decorator_with_args(arg):
+    ...   print "defining the decorator"
+    ...   def _decorator(function):
+    ...       print "doing decoration,", arg
+    ...       def _wrapper(*args, **kwargs):
+    ...           print "inside wrapper,", args, kwargs
+    ...           return function(*args, **kwargs)
+    ...       return functools.update_wrapper(_wrapper, function)
+    ...   return _decorator
+    >>> @better_replacing_decorator_with_args("abc")
+    ... def function():
+    ...     "extensive documentation"
+    ...     print "inside function"
+    ...     return 14
+    defining the decorator
+    doing decoration, abc
+    >>> function                           
+    <function function at 0x...>
+    >>> print function.__doc__
+    extensive documentation
+
+一件重要的东西是从可迁移属性列表中所缺少的：参数列表。参数的默认值可以通过`__defaults__`、`__kwdefaults__`属性更改，但是不幸的是参数列表本身不能被设置为属性。这意味着`help(function)`将显式无用的参数列表，使使用者迷惑不已。一个解决此问题有效但是丑陋的方式是使用`eval`动态创建wrapper。可以使用外部`external`模块自动实现。它提供了对`decorator`装饰器的支持，该装饰器接受wrapper并将之转换成保留函数签名的装饰器。
+
+综上，装饰器应该总是使用`functools.update_wrapper`或者其它方式赋值函数属性。
+
 ### 标准库中的示例
+
+
 
 ### 函数的废弃
 
@@ -262,3 +429,5 @@ Python中对迭代器的支持无处不在：标准库中的所有序列和无�
 
 [^1]:就像CPU工作一样，中断时保存断点，最后又恢复。
 [^2]:好吧它已经发布了= =，虽然在大多linux发行版中还是2.x和3.2。
+[^3]:看糊涂了吧，我也糊涂了……
+[^4]：[装饰器和函数式编程](http://youngsterxyf.github.com/2013/01/04/Decorators-and-Functional-Python/)

@@ -13,6 +13,8 @@ http://reverland.org/page3/index.html
 http://reverland.org/page4/index.html
 http://reverland.org/page5/index.html
 
+http://reverland.org/python/2013/03/13/advanced-python-constructs
+http://reverland.org/linux-tech/2013/03/11/quickstart-ebuild-guide
 http://reverland.org/python/2013/03/07/image-to-css
 http://reverland.org/python/2013/03/02/python
 http://reverland.org/python/2013/02/25/generate-ascii-images-like-the-matrix

@@ -32,7 +32,6 @@ html, body {
 
 /* The white background content wrapper */
 .content {
-	background-color: #748c73;
 	padding: 20px;
 	margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
 	_margin: 0;
@@ -46,7 +45,6 @@ html, body {
 
 /* Page header tweaks */
 .page-header {
-	background-color: #015b4e;
 	padding: 20px 20px 10px;
 	margin: -20px -20px 20px;
 }
@@ -120,7 +118,7 @@ html, body {
 .article_published {
 	margin: 0 0 18px 10px;
 	font-size: 0.8em;
-	color: #afd700;
+	color: #686868;
 }
 .article_gplus {
 	height: 1.2em;
@@ -159,7 +157,6 @@ ul.index_posts>li {
 .index_excerpt {
 	float: left;
 	margin: 5px 10px 0;
-	color: rgb(255, 255, 255);
 }
 #aside {
 	padding: 19px 0;
@@ -198,8 +195,8 @@ li.gplus_status {
 	overflow: hidden;
     background-image: url("../images/logo.jpg");
 	margin: -10px auto 10px;
-	width: 860px;
-	height: 120px;
+	width: 100%;
+	height: 100px;
 }
 
 .clear {
@@ -224,7 +221,7 @@ p.dsq-widget-meta {
 
 ul.nav-list>li>a>span {
 	font-size: 0.8em;
-	color: #99cc99;
+	color: #686868;
 }
 
 #encrypted {
@@ -235,7 +232,7 @@ ul.nav-list>li>a>span {
 	margin-left: -15px;
 }
 em{
-	color:yellow;
+	background-color: #c9c4ff;
 	font-style:normal;
 }
 a.external {

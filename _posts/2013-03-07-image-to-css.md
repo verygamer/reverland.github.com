@@ -10,7 +10,7 @@ disqus: true
 
 # Image to CSS
 
-Warning： 我警告过了，浏览器弱爆了的就不要点开了= =。内存太小了就慎重打开= =
+**Warning： 我警告过了，浏览器弱爆了的就不要点开了= =。内存太小了就慎重打开= =**
 
 眼残，竟然看到这种奇葩的[演示](http://runjs.cn/detail/ruahzjkh)
 
