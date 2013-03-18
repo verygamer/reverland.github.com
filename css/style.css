@@ -132,14 +132,14 @@ html, body {
 	margin-left: 25px;
 }
 #index_line {
-	border-bottom: 3px solid #EBEDED;
+	border-bottom: 3px dotted #EEEEEE;
 	margin: 5px 0 10px 20px;
 }
 ul.index_posts {
 	list-style-type: none;
 }
 ul.index_posts>li {
-	border-bottom: 2px solid #EBEDED;
+	border-bottom: 2px solid #f5f5f5;
 	overflow: hidden;
 }
 .index_intro {
