@@ -12,6 +12,9 @@ http://reverland.org/page2/index.html
 http://reverland.org/page3/index.html
 http://reverland.org/page4/index.html
 http://reverland.org/page5/index.html
+http://reverland.org/page6/index.html
+http://reverland.org/page7/index.html
+http://reverland.org/page8/index.html
 
 http://reverland.org/python/2013/03/13/advanced-python-constructs
 http://reverland.org/linux-tech/2013/03/11/quickstart-ebuild-guide

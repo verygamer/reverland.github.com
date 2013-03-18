@@ -9,7 +9,7 @@ markdown: kramdown
 #rdiscount
 kramdown:
   toc_levels: 2..6
-paginate : 15
+paginate : 10
 safe: true
 
 # Themes are encouraged to use these universal variables 

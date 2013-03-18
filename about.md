@@ -35,7 +35,7 @@ I just wanna to say to others:
 
 特别感谢[skydark](http://blog.skydark.info/)同学，直接可耻地从那里把东西扒过来的……
 
-主题来自[bootswatch](http://bootswatch.com/)
+主题由[Bootstrap Magic](http://pikock.github.com/bootstrap-magic/)自动生成 + 手动修正。
 
 ## Visitors
 
