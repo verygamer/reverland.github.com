@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Quickstart Ebuild Guide"
-excerpt: "快速Ebuild向导，翻译自http://devmanual.gentoo.org/quickstart/index.html"
+excerpt: "其实吧，本来想给friture打包的，最后发现不会用这东西……快速Ebuild向导，翻译自http://devmanual.gentoo.org/quickstart/index.html"
 category: linux-tech
 tags: [gentoo]
 disqus: true
