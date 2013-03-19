@@ -3,7 +3,7 @@ layout: post
 title: "Advanced Python Constructs(译)"
 excerpt: "翻译自scipy lecture notes，又手贱翻译东西了= =，虽然一如既往的渣……"
 category: python
-tags: [python， scipy-lecture-notes]
+tags: [python, scipy-lecture-notes]
 disqus: true
 ---
 {% include JB/setup %}
@@ -34,11 +34,11 @@ disqus: true
 
 ### 迭代器
 
-> **Simplicity**
+> **简单**
 > 
-> Duplication of effort is wasteful, and replacing the various home-grown approaches with a standard feature usually ends up making things more readable, and interoperable as well.
+> 重复工作是浪费，将不同“土生土长”的方法替换为标准特性换来的是更加易于阅读和操作。
 > 
->     Guido van Rossum — [Adding Optional Static Typing to Python](http://www.artima.com/weblogs/viewpost.jsp?thread=86641)
+> Guido van Rossum — [Adding Optional Static Typing to Python](http://www.artima.com/weblogs/viewpost.jsp?thread=86641)
 
 
 
@@ -119,11 +119,11 @@ set(['a', 'c', 'b'])
 
 ### 生成器
 
-> **Generators**
+> **生成器**
 > 
-> A generator is a function that produces a sequence of results instead of a single value.
+> 生成器是产生一列结果而不是单一值的函数。
 > 
->     David Beazley — [A Curious Course on Coroutines and Concurrency](http://www.dabeaz.com/coroutines/)
+> David Beazley — [A Curious Course on Coroutines and Concurrency](http://www.dabeaz.com/coroutines/)
 
 第三种创建迭代对象的方式是调用生成器函数。一个 _生成器(generator)_ 是包含关键字`yield`的函数。值得注意，仅仅是这个关键字的出现完全改变了函数的本质：`yield`语句不必引发(invoke)，甚至不必可接触。但让函数变成了生成器。当一个函数被调用时，其中的指令被执行。而当一个生成器被调用时，执行在其中第一条指令之前停止。生成器的调用创建依附于迭代协议的生成器对象。就像常规函数一样，允许并发和递归调用。
 
@@ -256,9 +256,9 @@ yield from some_other_generator()
 
 ## 装饰器
 
-> Summary
+> **总结**
 > 
-> This amazing feature appeared in the language almost apologetically and with concern that it might not be that useful.
+> 这个语言中令人激动的特性几乎充满歉意的，考虑到它可能没这么有用。
 > 
 >	Bruce Eckel — An Introduction to Python Decorators
 
