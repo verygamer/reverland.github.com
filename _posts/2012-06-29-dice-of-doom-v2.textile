@@ -25,12 +25,14 @@ h2. Dice of Doom v2
 (load "dice_of_doom_v1.lisp")
 (load "lazy.lisp")
 {% endhighlight %}
+
 然后先把游戏board扩大到4x4。
 
 {% highlight cl%}
 (defparameter *board-size* 4)
 (defparameter *board-hexnum* (* *board-size* *board-size*))
 {% endhighlight %}
+
 下面把Dice of Doom游戏全面lazy化吧
 
 {% highlight cl%}
@@ -73,6 +75,7 @@ h2. Dice of Doom v2
       (make-lazy (loop for n below *board-hexnum*
                        collect n)))))
 {% endhighlight %}
+
 注意lazy-mapcan要求被创建的列表是惰性的，现在你知道htdp标明每个函数输入输出的习惯多好了吧……
 
 lazy化handle-human函数和play-vs-human函数
@@ -101,6 +104,7 @@ lazy化handle-human函数和play-vs-human函数
     (play-vs-human (handle-human tree))
     (announce-winner (cadr tree))))
 {% endhighlight %}
+
 现在你可以试试人人对战了，速度不错。
 
 h2. 让AI运行在更大的游戏区域
@@ -131,6 +135,7 @@ h2. 让AI运行在更大的游戏区域
         ((zerop (car tree)) (play-vs-computer (handle-human tree)))
         (t (play-vs-computer (handle-computer tree)))))
 {% endhighlight %}
+
 我没看懂……已经深深迷失在car cadr caddr的海洋之中，总之它限制了AI的思考深度，让它把评分限制在4步之内。[2]
 
 h3. 启发算法[3]
@@ -160,6 +165,7 @@ h3. 启发算法[3]
                (when (and (not (eq player nplayer)) (> ndice dice))
                  (return t))))))
 {% endhighlight %}
+
 有意思的是，关于启发式作者这么说：在开发这个例子时，我模拟了使用不同版本score-board的各种对手，这个版本效果很好，开发启发式算法不是什么科学。囧～
 
 惰性化get-ratings和rate-position函数
@@ -178,11 +184,13 @@ h3. 启发算法[3]
              (get-ratings tree player))
       (score-board (cadr tree) player))))
 {% endhighlight %}
+
 现在可以试试和计算机过招了。
 
 {% highlight cl%}
 (play-vs-computer (game-tree (gen-board) 0 0 t))
 {% endhighlight %}
+
 据说先行者有优势，计算机大概有3/4的几率获胜。
 
 h3. alpha-beta 算法[4]
@@ -234,6 +242,7 @@ alpha-beta算法是把已知的一定更差的子树从决策树中剪掉的算�
                                          lower-limit)))
       (score-board (cadr tree) player))))
 {% endhighlight %}
+
 这三个函数怎么实现及实现什么……不知道，深感自己英语不行啊，大段大段看完不知道在讲什么，哪天有兴致了对照对弈程序基本技术再看吧……I am confused now.[6]
 
 改进我们的handle-computer函数
@@ -246,12 +255,14 @@ alpha-beta算法是把已知的一定更差的子树从决策树中剪掉的算�
                                      most-negative-fixnum)))
     (cadr (lazy-nth (position (apply #'max ratings) ratings) (caddr tree)))))
 {% endhighlight %}
+
 现在把游戏面板扩大到5x5
 
 {% highlight cl%}
 (defparameter *board-size* 5)
 (defparameter *board-hexnum* (* *board-size* *board-size*))
 {% endhighlight %}
+
 由于我们记忆化的原因，之前的4x4面板会被缓存。为了修正这个问题重新定义neighbors函数即可。
 
 实验新的经过改进的游戏

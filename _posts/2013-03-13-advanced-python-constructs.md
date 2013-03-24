@@ -311,10 +311,7 @@ function = decorator(function)   # ②
 doing decoration
 >>> function()
 inside function
-{% endhighlight %}
 
-
-{% highlight python %}
 >>> def decorator_with_arguments(arg):
 ...   print "defining the decorator"
 ...   def _decorator(function):
@@ -449,18 +446,18 @@ extensive documentation
 
 - `classmethod`让一个方法变成“类方法”，即它能够无需创建实例调用。当一个常规方法被调用时，解释器插入实例对象作为第一个参数`self`。当类方法被调用时，类本身被给做第一个参数，一般叫`cls`。
 
-  类方法也能通过类命名空间读取，所以它们不必污染模块命名空间。类方法可用来提供替代的构建器(constructor):
+    类方法也能通过类命名空间读取，所以它们不必污染模块命名空间。类方法可用来提供替代的构建器(constructor):
 
-  {% highlight python %}
-  class Array(object):
-      def __init__(self, data):
-          self.data = data
-  
-      @classmethod
-      def fromfile(cls, file):
-          data = numpy.load(file)
-          return cls(data)
-  {% endhighlight %}
+    {% highlight python %}
+    class Array(object):
+        def __init__(self, data):
+            self.data = data
+    
+        @classmethod
+        def fromfile(cls, file):
+            data = numpy.load(file)
+            return cls(data)
+    {% endhighlight %}
   
   这比用一大堆标记的`__init__`简单多了。
 
@@ -468,80 +465,80 @@ extensive documentation
 
 - `property`是对getter和setter问题Python风格的答案。通过`property`装饰的方法变成在属性存取时自动调用的getter。
 
-  {% highlight python %}
-  >>> class A(object):
-  ...   @property
-  ...   def a(self):
-  ...     "an important attribute"
-  ...     return "a value"
-  >>> A.a                                   
-  <property object at 0x...>
-  >>> A().a
-  'a value'
-  {% endhighlight %}
+    {% highlight python %}
+    >>> class A(object):
+    ...   @property
+    ...   def a(self):
+    ...     "an important attribute"
+    ...     return "a value"
+    >>> A.a                                   
+    <property object at 0x...>
+    >>> A().a
+    'a value'
+    {% endhighlight %}
 
-  例如`A.a`是只读属性，它已经有文档了：`help(A)`包含从getter方法获取的属性`a`的文档字符串。将`a`定义为property使它能够直接被计算，并且产生只读的副作用，因为没有定义任何setter。
+    例如`A.a`是只读属性，它已经有文档了：`help(A)`包含从getter方法获取的属性`a`的文档字符串。将`a`定义为property使它能够直接被计算，并且产生只读的副作用，因为没有定义任何setter。
   
-  为了得到setter和getter，显然需要两个方法。从Python 2.6开始首选以下语法：
+    为了得到setter和getter，显然需要两个方法。从Python 2.6开始首选以下语法：
   
-  {% highlight python %}
-  class Rectangle(object):
-      def __init__(self, edge):
-          self.edge = edge
+    {% highlight python %}
+    class Rectangle(object):
+        def __init__(self, edge):
+            self.edge = edge
+    
+        @property
+        def area(self):
+            """Computed area.
+    
+            Setting this updates the edge length to the proper value.
+            """
+            return self.edge**2
+    
+        @area.setter
+        def area(self, area):
+            self.edge = area ** 0.5
+    {% endhighlight %}
   
-      @property
-      def area(self):
-          """Computed area.
+    通过`property`装饰器取代带一个属性(property)对象的getter方法，以上代码起作用。这个对象反过来有三个可用于装饰器的方法`getter`、`setter`和`deleter`。它们的作用就是设定属性对象的getter、setter和deleter(被存储为`fget`、`fset`和`fdel`属性(attributes))。当创建对象时，getter可以像上例一样设定。当定义setter时，我们已经在`area`中有property对象，可以通过`setter`方法向它添加setter，一切都在创建类时完成。
   
-          Setting this updates the edge length to the proper value.
-          """
-          return self.edge**2
+    之后，当类实例创建后，property对象和特殊。当解释器执行属性存取、赋值或删除时，其执行被下放给property对象的方法。
   
-      @area.setter
-      def area(self, area):
-          self.edge = area ** 0.5
-  {% endhighlight %}
+    为了让一切一清二楚[^5]，让我们定义一个“调试”例子：
   
-  通过`property`装饰器取代带一个属性(property)对象的getter方法，以上代码起作用。这个对象反过来有三个可用于装饰器的方法`getter`、`setter`和`deleter`。它们的作用就是设定属性对象的getter、setter和deleter(被存储为`fget`、`fset`和`fdel`属性(attributes))。当创建对象时，getter可以像上例一样设定。当定义setter时，我们已经在`area`中有property对象，可以通过`setter`方法向它添加setter，一切都在创建类时完成。
+    {% highlight python %}
+    >>> class D(object):
+    ...    @property
+    ...    def a(self):
+    ...      print "getting", 1
+    ...      return 1
+    ...    @a.setter
+    ...    def a(self, value):
+    ...      print "setting", value
+    ...    @a.deleter
+    ...    def a(self):
+    ...      print "deleting"
+    >>> D.a                                    
+    <property object at 0x...>
+    >>> D.a.fget                               
+    <function a at 0x...>
+    >>> D.a.fset                               
+    <function a at 0x...>
+    >>> D.a.fdel                               
+    <function a at 0x...>
+    >>> d = D()               # ... varies, this is not the same `a` function
+    >>> d.a
+    getting 1
+    1
+    >>> d.a = 2
+    setting 2
+    >>> del d.a
+    deleting
+    >>> d.a
+    getting 1
+    1
+    {% endhighlight %}
   
-  之后，当类实例创建后，property对象和特殊。当解释器执行属性存取、赋值或删除时，其执行被下放给property对象的方法。
-  
-  为了让一切一清二楚[^5]，让我们定义一个“调试”例子：
-  
-  {% highlight python %}
-  >>> class D(object):
-  ...    @property
-  ...    def a(self):
-  ...      print "getting", 1
-  ...      return 1
-  ...    @a.setter
-  ...    def a(self, value):
-  ...      print "setting", value
-  ...    @a.deleter
-  ...    def a(self):
-  ...      print "deleting"
-  >>> D.a                                    
-  <property object at 0x...>
-  >>> D.a.fget                               
-  <function a at 0x...>
-  >>> D.a.fset                               
-  <function a at 0x...>
-  >>> D.a.fdel                               
-  <function a at 0x...>
-  >>> d = D()               # ... varies, this is not the same `a` function
-  >>> d.a
-  getting 1
-  1
-  >>> d.a = 2
-  setting 2
-  >>> del d.a
-  deleting
-  >>> d.a
-  getting 1
-  1
-  {% endhighlight %}
-  
-  属性(property)是对装饰器语法的一点扩展。使用装饰器的一大前提——命名不重复——被违反了，但是目前没什么更好的发明。为getter，setter和deleter方法使用相同的名字还是个好的风格。
+    属性(property)是对装饰器语法的一点扩展。使用装饰器的一大前提——命名不重复——被违反了，但是目前没什么更好的发明。为getter，setter和deleter方法使用相同的名字还是个好的风格。
 
 一些其它更新的例子包括：
 

@@ -11,15 +11,18 @@ disqus: true
 ## 什么是尾递归
 
 尾递归作为一种函数式编程优化方法。为了理解这个奇怪的名字，看下面这个计算列表长度函数的例子:
+
 {% highlight cl%}
 (defun my-length (lst)
   (if lst
       (1+ (my-length (cdr lst)))
       0))
 {% endhighlight %}
+
 首先，它会检查列表是否是空的，如果不是，它递归地调用自身计算剩下列表的长度并加上1,如果是空的则返回0.
 
 结果是这个函数相当没有效率…………我们可以试试一个“大列表”：
+
 {% highlight cl%}
 (defparameter *biglist* (loop for i below 100000 collect 'x))
 {% endhighlight %}

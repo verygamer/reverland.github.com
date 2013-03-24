@@ -255,7 +255,9 @@ disqus: true
                       (princ new-pos)
                       (handle-new-place nil new-pos nil))))))
 {% endhighlight %}
+
 当然，你可以参照第一章定义自己的interface
+
 {% highlight cl %}
 (defun game-start ()
   (let ((cmd (my-read)))
@@ -274,18 +276,25 @@ disqus: true
     (eval sexp)
     '(i do not know that command.)))
 {% endhighlight %}
+
 在终端中启动clisp，并且加载你的这些代码。
+
 {% highlight cl %}
 (load "/path/to/wumpus.lisp")
 {% endhighlight %}
+
 输入如下命令进入游戏环境：
+
 {% highlight bash %}
 (game-start)
 {% endhighlight %}
+
 没有提示，加个sayhello可能更好，但我们开始新游戏吧
+
 {% highlight bash %}
 new-game
 {% endhighlight %}
+
 用konqureror打开生成的png文件known-city.png，一遍walk/charge一边按住F5疯狂刷新吧。
 
 ***

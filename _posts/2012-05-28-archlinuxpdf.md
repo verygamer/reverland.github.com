@@ -25,15 +25,17 @@ linux下总是有好工具的，有两种方法：
 
 - 新建一个TeX文件，使用pdfpages宏包，这种方法可以指定页码。参见[用TeX合并pdf][1]。一定要用pdflatex编译。
 - 使用ghostscript工具,一般这个都被pdf阅读器依赖的。参见[合并 ps/pdf 文件][2]。
-{% highlight bash%}
-gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=bar.pdf -f foo1.pdf foo2.pdf
-{% endhighlight %}
+
+        {% highlight bash%}
+        gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=bar.pdf -f foo1.pdf foo2.pdf
+        {% endhighlight %}
 
 [1]: http://latex.yo2.cn/articles/tex-merg-pdf.html
 
 [2]: http://latex.yo2.cn/articles/gs-pdfwrite.html
 
 ##之外的废话
+
 这几天一直忙着复习，几天时间把一学期老师讲的东西预习一遍，然后就要吊儿郎当的开卷考试了。又有那激光原理期末大作业，我是当然要用LaTeX来写了，虽然不准备再研究这个，但用word总是让我有些无法忍受。
 
 上手才发现，东西基本都忘了。好久没用过基本的命令都忘的一干二净。还好有以前的自己做的模板，打开chinatex数学排版问题集边查边写，在开着vim-latex插件的手册随时查阅，实在不行还有google大神，总算最后凑合着写完了。

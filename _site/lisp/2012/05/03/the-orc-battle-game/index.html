@@ -53,12 +53,6 @@
     
   
     
-    	
-    	<li><a href="/about.html">About</a></li>
-    	
-    
-  
-    
   
     
     	
@@ -144,14 +138,12 @@
 
 <div class="highlight"><pre><code class="bash">Think of the Babel fish in the Hitchhiker’s Guide to the Galaxy trilogy—something 
 so impossibly useful that it really has no business existing in the first place.
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>现在知道land of lisp的作者为什么把common lisp比作狼狗，为什么说cl强大了。支持list也就算了，支持个array、hash table、OOp、范型(generic)什么乱七八糟一堆其它语言中各种强大的东西，这么逆天的东西根本就不该存在！不过作为代价，丧失了一种纯粹的美。</p>
 
 <div class="highlight"><pre><code class="cl"><span class="nv">lisp</span> <span class="nv">is</span> <span class="nv">symmetry,while</span> <span class="nv">common</span> <span class="nv">lisp</span> <span class="nv">is</span> <span class="nv">powerful.</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <h3 id="arrays">Arrays</h3>
 
@@ -188,8 +180,7 @@ so impossibly useful that it really has no business existing in the first place.
 <span class="p">(</span><span class="nb">setf</span> <span class="vg">*edge-num*</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="p">(</span><span class="nb">setf</span> <span class="vg">*node-num*</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="p">(</span><span class="nb">time</span> <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">i</span> <span class="mi">100</span><span class="p">)</span> <span class="p">(</span><span class="nv">get-connected</span> <span class="mi">1</span> <span class="p">(</span><span class="nv">make-edge-list</span><span class="p">))))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>好吧，我花的时间：</p>
 
@@ -199,8 +190,7 @@ so impossibly useful that it really has no business existing in the first place.
 <span class="nv">Space:</span> <span class="mi">75275184</span> <span class="nv">Bytes</span>
 <span class="nv">GC:</span> <span class="mi">65</span><span class="o">,</span> <span class="nv">GC</span> <span class="nv">time:</span> <span class="mf">0.43664</span> <span class="nv">sec.</span>
 <span class="no">NIL</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>下面我们更改之前的wumpus游戏。</p>
 
@@ -227,8 +217,7 @@ so impossibly useful that it really has no business existing in the first place.
 <span class="c1">;;看看运行时间</span>
 <span class="p">(</span><span class="nb">time</span> <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">i</span> <span class="mi">100</span><span class="p">)</span>
         <span class="p">(</span><span class="nv">get-connected-hash</span> <span class="mi">1</span> <span class="p">(</span><span class="nv">hash-edges</span> <span class="p">(</span><span class="nv">make-edge-list</span><span class="p">)))))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>很显然，效率高多了：</p>
 
@@ -239,8 +228,7 @@ so impossibly useful that it really has no business existing in the first place.
 <span class="nv">Space:</span> <span class="mi">64337496</span> <span class="nv">Bytes</span>
 <span class="nv">GC:</span> <span class="mi">56</span><span class="o">,</span> <span class="nv">GC</span> <span class="nv">time:</span> <span class="mf">0.366641</span> <span class="nv">sec.</span>
 <span class="no">NIL</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <h3 id="structures">Structures</h3>
 
@@ -260,16 +248,14 @@ so impossibly useful that it really has no business existing in the first place.
 <span class="c1">;#S(person :name &quot;rob&quot; :age 35 :waist-size 32 :favorite-color &quot;blue&quot;)</span>
 <span class="p">(</span><span class="nv">person-age</span> <span class="vg">*bob*</span><span class="p">)</span><span class="c1">;自动生成person-age函数</span>
 <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nv">person-age</span> <span class="vg">*bob*</span><span class="p">)</span> <span class="mi">36</span><span class="p">)</span><span class="c1">;generical programming</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>也可以直接这样：</p>
 
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*that-guy*</span> <span class="l-Other">#S</span><span class="p">(</span><span class="nv">person</span> <span class="ss">:name</span> <span class="s">&quot;rob&quot;</span> <span class="ss">:age</span> <span class="mi">35</span> <span class="ss">:waist-size</span> <span class="mi">32</span>
                                    <span class="ss">:favorite-color</span> <span class="s">&quot;blue&quot;</span><span class="p">))</span>
 <span class="p">(</span><span class="nb">print</span> <span class="vg">*that-guy*</span><span class="p">)</span> 
-</code></pre>
-</div>
+</code></pre></div>
 
 <h3 id="generical-programming">Generical Programming</h3>
 
@@ -507,14 +493,12 @@ so impossibly useful that it really has no business existing in the first place.
            <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;A brigand cuts your arm with his whip, taking off 2</span>
 <span class="s">                  strength points! &quot;</span><span class="p">)</span>
            <span class="p">(</span><span class="nb">decf</span> <span class="vg">*player-strength*</span> <span class="mi">2</span><span class="p">)))))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>然后这样开始游戏</p>
 
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">orc-battle</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>不过游戏参数貌似设置的不太好，我基本是出来被秒的！！</p>
 
@@ -638,6 +622,12 @@ $(document).ready(function(){
         <li>
         
         <a href="/categories.html#python-ref">python <span>20</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#phase unwrapping-ref">phase unwrapping <span>1</span></a>
         </li>
       
       

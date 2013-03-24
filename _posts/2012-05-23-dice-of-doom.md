@@ -203,6 +203,7 @@ disqus: true
 {% highlight cl %}
 (play-vs-human (game-tree (gen-board) 0 0 t))
 {% endhighlight %}
+
 其中0代表玩家0,第二个0代表刚开始获得的骰子为0,t代表第一次移动。
 
 ##写在最后

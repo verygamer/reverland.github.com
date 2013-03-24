@@ -53,12 +53,6 @@
     
   
     
-    	
-    	<li><a href="/about.html">About</a></li>
-    	
-    
-  
-    
   
     
     	
@@ -156,14 +150,12 @@ Accept-Language: zh-cn,zh;q<span class="o">=</span>0.8,en-us;q<span class="o">=<
 Accept-Encoding: gzip, deflate
 DNT: 1
 Connection: keep-alive
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>其中第一行中间是url，说到url，如果url是这样</p>
 
 <div class="highlight"><pre><code class="bash">/greeting?name<span class="o">=</span>bob
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>？后面的称作参数</p>
 
@@ -183,8 +175,7 @@ Connection: keep-alive
 Content-Length: 39
 
 <span class="nv">userid</span><span class="o">=</span>foo&amp;password<span class="o">=</span>supersecretpassword
-</code></pre>
-</div>
+</code></pre></div>
 
 <h2 id="lisp">如何以lisp的方式处理</h2>
 
@@ -312,8 +303,7 @@ Content-Length: 39
 <span class="s">&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;Nice to meet you, ~a!&lt;/body&gt;&lt;/html&gt;&quot;</span>
 <span class="p">(</span><span class="nb">cdr</span> <span class="nv">name</span><span class="p">))))</span>
 <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Sorry... I don&#39;t know that page.&quot;</span><span class="p">)))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <h2 id="section-1">学到的命令</h2>
 
@@ -339,8 +329,7 @@ Content-Length: 39
 <p>其二是照书上源码和网上提供的源码返回给浏览器的是plain text而非解析为html，经参照服务器返回信息添加上</p>
 
 <div class="highlight"><pre><code class="bash">HTTP/1.1 200 OK
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>同时保证html5标准，不要漏掉一大堆head、body、html标签。</p>
 
@@ -351,8 +340,7 @@ Content-Length: 39
 <p>如果webserver不能正常工作，可以用telnet来测试。</p>
 
 <div class="highlight"><pre><code class="bash">telnet 127.0.0.1 8080
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>最后对Purity和liuto的解惑与帮助致以诚挚谢意。</p>
 
@@ -477,6 +465,12 @@ $(document).ready(function(){
         <li>
         
         <a href="/categories.html#python-ref">python <span>20</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#phase unwrapping-ref">phase unwrapping <span>1</span></a>
         </li>
       
       

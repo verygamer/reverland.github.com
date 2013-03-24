@@ -53,12 +53,6 @@
     
   
     
-    	
-    	<li><a href="/about.html">About</a></li>
-    	
-    
-  
-    
   
     
     	
@@ -149,8 +143,7 @@
 <p>先加载我们之前的游戏<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
 
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">load</span> <span class="s">&quot;dice-v3&quot;</span><span class="p">)</span><span class="c1">;</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <h3 id="section">增加玩家数</h3>
 
@@ -160,8 +153,7 @@
 <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*die-colors*</span> <span class="o">&#39;</span><span class="p">((</span><span class="mi">255</span> <span class="mi">63</span> <span class="mi">63</span><span class="p">)</span> <span class="p">(</span><span class="mi">63</span> <span class="mi">63</span> <span class="mi">255</span><span class="p">)</span> <span class="p">(</span><span class="mi">63</span> <span class="mi">255</span> <span class="mi">63</span><span class="p">)</span> <span class="p">(</span><span class="mi">255</span> <span class="mi">63</span> <span class="mi">255</span><span class="p">)))</span>
 <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*max-dice*</span> <span class="mi">5</span><span class="p">)</span>
 <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*ai-level*</span> <span class="mi">2</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <h3 id="section-1">建立概率节点</h3>
 
@@ -192,8 +184,7 @@
                      <span class="p">(</span><span class="nv">lazy-nil</span><span class="p">)))</span>
                  <span class="p">(</span><span class="nv">make-lazy</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">n</span> <span class="nv">below</span> <span class="vg">*board-hexnum*</span>
                                   <span class="nv">collect</span> <span class="nv">n</span><span class="p">)))))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>board-attack-fail函数遍历所有位置。如果这个位置是攻击方就只能留下一个骰子</p>
 
@@ -203,8 +194,7 @@
                      <span class="nv">collect</span> <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eq</span> <span class="nv">pos</span> <span class="nv">src</span><span class="p">)</span>
                                <span class="p">(</span><span class="nb">list</span> <span class="nv">player</span> <span class="mi">1</span><span class="p">)</span>
                                <span class="nv">hex</span><span class="p">))))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <h3 id="section-2">让骰子滚动起来</h3>
 
@@ -219,8 +209,7 @@
     <span class="nv">total</span><span class="p">))</span>
 <span class="p">(</span><span class="nb">defun</span> <span class="nv">roll-against</span> <span class="p">(</span><span class="nv">src-dice</span> <span class="nv">dst-dice</span><span class="p">)</span>
   <span class="p">(</span><span class="nb">&gt;</span> <span class="p">(</span><span class="nv">roll-dice</span> <span class="nv">src-dice</span><span class="p">)</span> <span class="p">(</span><span class="nv">roll-dice</span> <span class="nv">dst-dice</span><span class="p">)))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>我们还需要在游戏引擎中调用让骰子滚动的代码,选出正确的子树</p>
 
@@ -232,8 +221,7 @@
                                         <span class="p">(</span><span class="nv">dice</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">path</span><span class="p">))))</span>
         <span class="p">(</span><span class="nb">cadr</span> <span class="nv">move</span><span class="p">)</span>
         <span class="p">(</span><span class="nb">caddr</span> <span class="nv">move</span><span class="p">)))))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>更新handle-computer函数让它调用选择几率分支的函数</p>
 
@@ -254,8 +242,7 @@
       <span class="p">(</span><span class="nv">print-moves</span> <span class="nv">moves</span> <span class="mi">1</span><span class="p">))</span>
     <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
     <span class="p">(</span><span class="nv">pick-chance-branch</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)</span> <span class="p">(</span><span class="nv">lazy-nth</span> <span class="p">(</span><span class="nb">1-</span> <span class="p">(</span><span class="nb">read</span><span class="p">))</span> <span class="nv">moves</span><span class="p">))))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>同样我们可以处理handle-computer函数</p>
 
@@ -264,8 +251,7 @@
     <span class="p">(</span><span class="nv">pick-chance-branch</span>
       <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)</span>
       <span class="p">(</span><span class="nv">lazy-nth</span> <span class="p">(</span><span class="nb">position</span> <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">max</span> <span class="nv">ratings</span><span class="p">)</span> <span class="nv">ratings</span><span class="p">)</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <h3 id="ai">升级AI</h3>
 
@@ -342,8 +328,7 @@
                                                           <span class="nv">player</span><span class="p">))))</span>
                         <span class="p">(</span><span class="nv">rate-position</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">move</span><span class="p">)</span> <span class="nv">player</span><span class="p">))))</span>
                   <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">))))))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>为了让修剪游戏树的函数能工作，还需要做些修改让它能处理新的游戏树。同时为了简化不再使用alpha-beta算法。</p>
 
@@ -360,8 +345,7 @@
                        <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))))</span>
 <span class="c1">;We mapcar across the tail of each move, so trimming is performed on</span>
 <span class="c1">;both branches of any chance nodes.</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <h3 id="section-3">改进增援方案</h3>
 
@@ -380,8 +364,7 @@
                <span class="p">(</span><span class="nv">check-neighbors</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nv">check-pos</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span> <span class="nv">visited</span><span class="p">))</span>
                <span class="nv">visited</span><span class="p">)))</span>
     <span class="p">(</span><span class="nv">check-pos</span> <span class="nv">pos</span> <span class="o">&#39;</span><span class="p">())))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>获得最大的集群,最后添加援军，注意，spare-dice仍然作为参数传递但已经不再被add-new-dice使用了。</p>
 
@@ -410,14 +393,12 @@
                           <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="nv">n</span><span class="p">))))))))</span>
     <span class="p">(</span><span class="nv">board-array</span> <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">coerce</span> <span class="nv">board</span> <span class="ss">&#39;list</span><span class="p">)</span>
                    <span class="p">(</span><span class="nv">largest-cluster-size</span> <span class="nv">board</span> <span class="nv">player</span><span class="p">)))))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>享受你的劳动成果吧</p>
 
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">serve</span> <span class="nf">#&#39;</span><span class="nv">dod-request-handleer</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <h2 id="section-4">疑问</h2>
 
@@ -555,6 +536,12 @@ $(document).ready(function(){
         <li>
         
         <a href="/categories.html#python-ref">python <span>20</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#phase unwrapping-ref">phase unwrapping <span>1</span></a>
         </li>
       
       

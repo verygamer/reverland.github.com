@@ -12,10 +12,12 @@ disqus: true
 ### 准备工作 
 
 首先我的系统配置情况:
+
 {% highlight bash %}
 Distributor ID: Arch i686 
 Description:    a little light distro
 {% endhighlight %}
+
 使用的arch源中的texlive2011,直接用pacman安装，建议把相关包都安上，不占多少空间。如果要详细了解请见[这里](https://wiki.archlinux.org/index.php/TeXLive_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29) ,又是我译的...英文版的都不只多久没更新了，不过可以参考。我安装的如下：
 
 {% highlight bash %}
@@ -116,16 +118,21 @@ elseif (viewer ## "okular")
     警告！文件名和路径中不要有空格和汉字
 打开okular，菜单：setting>>configure okular>>Editor属性页
 把里面的Editor下拉到Custom Text Editor，然后在Command:一栏输入：
+
 {% highlight bash %}
     gvim -c ":RemoteOpen +%l %f"
 {% endhighlight %}
+
 注意，系统要有gvim...
  
 然后在你的tex源文件的preamble部分，加入：
+
 {% highlight bash %}
     \synctex#1
 {% endhighlight %}
+
 大功告成啦，重新用\ll编译一遍你的源文件，然后\ls前向搜索，最后在pdf中想要反向搜索的地方按：
+
 {% highlight bash %}
     Shift+鼠标左键
 {% endhighlight %}

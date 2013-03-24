@@ -53,12 +53,6 @@
     
   
     
-    	
-    	<li><a href="/about.html">About</a></li>
-    	
-    
-  
-    
   
     
     	
@@ -156,43 +150,39 @@
   <li>注意自己python版本.arch用户得手动把<code>swank.py</code>这个文件的标识行中<code>python</code>改成<code>python2</code>.或者在<code>vimrc</code>中指定</li>
 </ul>
 
-<div class="highlight"><pre><code class="bash">   <span class="nb">let </span>g:slimv_python <span class="c"># &#39;python2&#39;</span>
-   
-</code></pre>
-</div>
+<div class="highlight"><pre><code class="bash">    <span class="nb">let </span>g:slimv_python <span class="c"># &#39;python2&#39;</span>
+    
+</code></pre></div>
 
 <ul>
   <li>一般slimv会自动搜索你的lisp实现。比如我是clisp，也可以手动指定，在vimrc中：</li>
 </ul>
 
-<div class="highlight"><pre><code class="bash">   <span class="nb">let </span>g:slimv_impl <span class="c"># &#39;clisp&#39;</span>
-   
+<div class="highlight"><pre><code class="bash">    <span class="nb">let </span>g:slimv_impl <span class="c"># &#39;clisp&#39;</span>
+    
+</code></pre></div>
+
+<pre><code>详见手册。 * 确保你有`xterm`，虽然手册没说，但这个很重要。请先
 </code></pre>
-</div>
 
-<p>详见手册。
-* 确保你有<code>xterm</code>，虽然手册没说，但这个很重要。请先</p>
+<div class="highlight"><pre><code class="bash">    <span class="nb">echo </span>g:slimv_swank_cmd
+    
+</code></pre></div>
 
-<div class="highlight"><pre><code class="bash">   <span class="nb">echo </span>g:slimv_swank_cmd
-   
+<pre><code>可以看到
 </code></pre>
-</div>
 
-<p>可以看到</p>
-
-<div class="highlight"><pre><code class="bash">  ! xterm -iconic -e <span class="s2">&quot;clisp&quot;</span> -i <span class="s2">&quot;/home/lyy/.vim/bundle/slimv/slime/start-swank.lisp&quot;</span> &amp;
-  
-</code></pre>
-</div>
+<div class="highlight"><pre><code class="bash">    ! xterm -iconic -e <span class="s2">&quot;clisp&quot;</span> -i <span class="s2">&quot;/home/lyy/.vim/bundle/slimv/slime/start-swank.lisp&quot;</span> &amp;
+    
+</code></pre></div>
 
 <ul>
   <li>使用本地hyperspec(lisp手册一类的东西,可以在lispworks上下载或在线使用……名字真奇怪)在vimrc中写入</li>
 </ul>
 
-<div class="highlight"><pre><code class="bash">   <span class="nb">let </span>g:slimv_clhs_root <span class="o">=</span> <span class="s2">&quot;path/to/HyperSpec/Body/&quot;</span>
-   
-</code></pre>
-</div>
+<div class="highlight"><pre><code class="bash">    <span class="nb">let </span>g:slimv_clhs_root <span class="o">=</span> <span class="s2">&quot;path/to/HyperSpec/Body/&quot;</span>
+    
+</code></pre></div>
 
 <ul>
   <li>如果有什么问题，请参看手册。</li>
@@ -325,6 +315,12 @@ $(document).ready(function(){
         <li>
         
         <a href="/categories.html#python-ref">python <span>20</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#phase unwrapping-ref">phase unwrapping <span>1</span></a>
         </li>
       
       

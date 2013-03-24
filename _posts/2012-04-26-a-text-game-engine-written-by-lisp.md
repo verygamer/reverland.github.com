@@ -24,6 +24,7 @@ disqus: true
 ## 第一个游戏
 
 猜数的小游戏，不解释。
+
 {% highlight cl %}
 (defun guess-my-number ()
   (ash (+ *big* *small*) -1))
@@ -154,7 +155,9 @@ disqus: true
   (fresh-line))
 
 {% endhighlight %}
+
 然后测试游戏引擎，在repl中输入
+
 {% highlight cl %}
 (game-repl)
 {% endhighlight %}

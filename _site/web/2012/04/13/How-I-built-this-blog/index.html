@@ -53,12 +53,6 @@
     
   
     
-    	
-    	<li><a href="/about.html">About</a></li>
-    	
-    
-  
-    
   
     
     	
@@ -151,15 +145,16 @@
 
 <h4 id="section-2">设置代理</h4>
 
-<p>安装rvm，如果网络良好完全没问题。由于我在学校内使用的是sogou代理，而export http_proxy之流的命令偏偏不顶事，后来发现git和curl的网络链接根本就不继承shell环境的代理。
-为了装上rvm，先在curlrc中写入
-proxy=127.0.0.1:1998
-在gitconfig中写入</p>
+<p>安装rvm，如果网络良好完全没问题。由于我在学校内使用的是sogou代理，而export http_proxy之流的命令偏偏不顶事，后来发现git和curl的网络链接根本就不继承shell环境的代理。</p>
+
+<p>为了装上rvm，先在curlrc中写入</p>
+
+<pre><code>proxy=127.0.0.1:1998 在gitconfig中写入
+</code></pre>
 
 <div class="highlight"><pre><code class="bash"><span class="o">[</span>http<span class="o">]</span>
     <span class="nv">proxy</span> <span class="o">=</span> http://127.0.0.1:1998
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>然后参见文档开始安装就是，我比较悲催，开始不知道可以这样做。直接hack rvm那个安装脚本才搞定</p>
 
@@ -170,21 +165,18 @@ proxy=127.0.0.1:1998
 <p>装好rvm后，使用ruby1.9.2</p>
 
 <div class="highlight"><pre><code class="bash">rvm install 1.9.2 <span class="o">&amp;&amp;</span> rvm use 1.9.2
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>使用taobao的gem源</p>
 
 <div class="highlight"><pre><code class="bash">gem sources -remove http://rubygem.org/ 
 gem sources -a http://ruby.taobao.org/ --http-proxy http://127.0.0.1:1998
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>安装对应的jekyll</p>
 
 <div class="highlight"><pre><code class="bash">gem install --http-proxy http://127.0.0.1:1998 jekyll 
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>其它和官方文档就没什么区别了。</p>
 
@@ -204,8 +196,7 @@ gem sources -a http://ruby.taobao.org/ --http-proxy http://127.0.0.1:1998
 
 <div class="highlight"><pre><code class="bash">sudo pacman -S python2-pygments
 pygmentize -S default -f html &gt; ~css/pygments.css
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>后来发现还是syntaxhighlighter好看，于是把vimwiki那一大堆东西迁移过来了。结果搞的网页加载很慢，效果虽好很久出不来，所以先改会pygments</p>
 
@@ -360,6 +351,12 @@ $(document).ready(function(){
         <li>
         
         <a href="/categories.html#python-ref">python <span>20</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#phase unwrapping-ref">phase unwrapping <span>1</span></a>
         </li>
       
       

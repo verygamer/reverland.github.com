@@ -13,6 +13,7 @@ disqus: true
 format又是一个在common lisp中灵活“过头”，争议超多的一个宏。它十分强大。
 
 基本用法如下
+
 {% highlight cl %}
 (princ (reverse (format nil "Add onion rings for only ~$ dollars more!" 1.5))) 
 ;;;Control sequences for printing lisp values
@@ -107,6 +108,7 @@ format又是一个在common lisp中灵活“过头”，争议超多的一个宏
 (format t "|~{~<|~%|~,33:;~2d ~>~}|"
         (loop for x below 100 collect x))
 {% endhighlight %}
+
 可以看到，format的参数多的……而且像perl一样有很多“奇怪”的符号。
 
 ## Attack by robots

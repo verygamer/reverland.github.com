@@ -47,12 +47,14 @@ game tree的生成是整个程序最大的开销，可以这样优化。
     (or (gethash rest previous)
        (setf (gethash rest previous) (apply old-game-tree rest)))))
 {% endhighlight %}
+
 因为哈希表中的对象是array，所以我们用`equalp`代替`eql`。`&rest`接受任意数量参数。
 
 ###记忆rate-position函数
 
 这是用lisp实现人工智能中minmax算法中的一个函数，我好像还没纪录人工智能那部分。
 如下：
+
 {% highlight cl%}
 (let ((old-rate-position (symbol-function 'rate-position))
       (previous (make-hash-table)))
@@ -64,6 +66,7 @@ game tree的生成是整个程序最大的开销，可以这样优化。
           (setf (gethash tree tab)
                 (funcall old-rate-position tree player))))))
 {% endhighlight %}
+
 我们需要做些特殊的东西，因为传递进rate-position中的参数。游戏树将非常之大，所以我们必定不要用equal或相似的这种比较大列表相当慢的函数来比较一个游戏树，取而代之，我们用eql，因此我们分开处理函数的两个参数，通过内嵌哈希表实现。
 
 首先创建一个用eql比较的外部哈希表，然后定义一个tab变量在外部哈希表中查找我们的其中一个参数player，获取内部hash表。如果外部没查找到，我们建一个空的内建哈希表，用同样的键保存在外部哈希表中，剩下的例子和先前一样，除了我们使用内嵌哈希表，把tree这个参数作为键值。

@@ -53,12 +53,6 @@
     
   
     
-    	
-    	<li><a href="/about.html">About</a></li>
-    	
-    
-  
-    
   
     
     	
@@ -175,14 +169,10 @@ distribution <span class="k">for </span>more information.
   <span class="o">====</span> quicklisp quickstart <span class="nv">loaded</span> <span class="o">====</span>
 
     To <span class="k">continue</span>, evaluate: <span class="o">(</span>quicklisp-quickstart:install<span class="o">)</span>
-</code></pre>
-</div>
-<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">quicklisp-quickstart:install</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">quicklisp-quickstart:install</span><span class="p">)</span>
 <span class="p">(</span><span class="nv">ql:add-to-init-file</span><span class="p">)</span>
 <span class="p">(</span><span class="nv">ql:quickload</span> <span class="s">&quot;quicklisp-slime-helper&quot;</span><span class="p">)</span>
-</code></pre>
-</div>
-<h3>创建应用程序</h3>
+</code></pre></div><h3>创建应用程序</h3>
 <p>载入Emacs并键入<esc> x slime <enter>。你现在应该可以看到REPL——一个交互的lisp提示符。</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">ql:quickload</span> <span class="s">&quot;cl-project&quot;</span><span class="p">)</span>
 <span class="p">(</span><span class="nv">cl-project:make-project</span> <span class="l-Other">#p&quot;myapp&quot;</span>
@@ -191,19 +181,13 @@ distribution <span class="k">for </span>more information.
   <span class="ss">:license</span> <span class="s">&quot;BSD or whatever&quot;</span><span class="p">)</span>
 <span class="p">(</span><span class="nv">ql:quickload</span> <span class="s">&quot;myapp&quot;</span><span class="p">)</span>
 <span class="p">(</span><span class="nb">in-package</span> <span class="ss">:myapp</span><span class="p">)</span>
-</code></pre>
-</div>
-<p>现在在Emacs有scratch标签的窗口键入<esc> x cd <enter> myapp <enter> 紧接着输入 <control>x <control>f src/myapp.lisp <enter> 。你应该拥有了一个为准备极棒的编码新建立的myapp.lisp文件。</p>
+</code></pre></div><p>现在在Emacs有scratch标签的窗口键入<esc> x cd <enter> myapp <enter> 紧接着输入 <control>x <control>f src/myapp.lisp <enter> 。你应该拥有了一个为准备极棒的编码新建立的myapp.lisp文件。</p>
 <p>让我们继续添加一些东西然后试试结果</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">hello-world</span> <span class="p">()</span>
   <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;Hello world.~%&quot;</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>现在我们可以把我们的更改注入REPL，通过把光标放到最后一行并键入<control>c <control>c。通过切换到REPL键入以下内容执行我们的新函数：</p>
+</code></pre></div><p>现在我们可以把我们的更改注入REPL，通过把光标放到最后一行并键入<control>c <control>c。通过切换到REPL键入以下内容执行我们的新函数：</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">hello-world</span><span class="p">)</span>
-</code></pre>
-</div>
-<p>恭喜你！你在通过 Common Lisp 编程</p>
+</code></pre></div><p>恭喜你！你在通过 Common Lisp 编程</p>
 <h3>重启Emacs后加载你的应用<sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup></h3>
 <p>CL-Project 在运行时更改了当前路径，使得第一次加载你的应用很简单。</p>
 <p>你有3种方法把应用放到你的加载路径：</p>
@@ -220,20 +204,14 @@ distribution <span class="k">for </span>more information.
 <span class="p">(</span><span class="nb">defun</span> <span class="nv">main</span> <span class="p">(</span><span class="nv">args</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">hello-world</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">cl-user::quit</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>你将需要下载 <a href="http://www.xach.com/lisp/buildapp/">buildapp工具</a> ，指导在它的网站上。</p>
+</code></pre></div><p>你将需要下载 <a href="http://www.xach.com/lisp/buildapp/">buildapp工具</a> ，指导在它的网站上。</p>
 <p>现在从你的myapp目录我们可以在命令行运行buildapp去编译你的程序！</p>
 <div class="highlight"><pre><code class="bash">buildapp --asdf-tree <span class="nv">$HOME</span>/quicklisp/dists/quicklisp/software <span class="se">\</span>
   --load-system myapp --entry myapp:main --output hello
-</code></pre>
-</div>
-<p>在程序所在目录运行你的程序</p>
+</code></pre></div><p>在程序所在目录运行你的程序</p>
 <div class="highlight"><pre><code class="bash"><span class="nv">$ </span>./hello
 Hello World.
-</code></pre>
-</div>
-<h2>下一步是什么？</h2>
+</code></pre></div><h2>下一步是什么？</h2>
 <p><a href="http://www.gigamonkeys.com/book/">实用Common Lisp编程</a> <sup class="footnote" id="fnr4"><a href="#fn4">4</a></sup>很好的介绍Common Lisp的书。是我看的第一本对该语言介绍的书。</p>
 <p><a href="http://www.cs.cmu.edu/Groups/AI/html/cltl/cltl2.html">Common Lisp the Language,2nd Edition</a> Common Lisp的权威书籍</p>
 <p><a href="http://www.paulgraham.com/onlisp.html">On Lisp</a> <sup class="footnote" id="fnr5"><a href="#fn5">5</a></sup>提供全面的高级Lisp技术</p>
@@ -390,6 +368,12 @@ $(document).ready(function(){
         <li>
         
         <a href="/categories.html#python-ref">python <span>20</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#phase unwrapping-ref">phase unwrapping <span>1</span></a>
         </li>
       
       

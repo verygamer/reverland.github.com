@@ -65,11 +65,13 @@ h2. 生成svg文件
           ,@body
           (print-tag ',name nil t)))
 {% endhighlight %}
+
 很好的实现了以上要求，可以展开看看：
 
 {% highlight cl%}
 (macroexpand '(tag mytag (color 'blue height (+ 4 5))))
 {% endhighlight %}
+
 可以看看如何实现嵌套的：
 
 {% highlight cl%}
@@ -77,6 +79,7 @@ h2. 生成svg文件
   (tag first_inner_tag ())
   (tag second_inner_tag ()))
 {% endhighlight %}
+
 我们还可以用来生成html
 
 {% highlight cl%}
@@ -84,6 +87,7 @@ h2. 生成svg文件
   (tag body ()
     (princ "Hello World!")))
 {% endhighlight %}
+
 html的标签是特定的，我们还能为特定的html标签编写宏：
 
 {% highlight cl%}
@@ -95,6 +99,7 @@ html的标签是特定的，我们还能为特定的html标签编写宏：
      ,@body))
 (html (body (princ "Hi boys")))
 {% endhighlight %}
+
 好了，不跑题了，开始写生成svg的宏
 
 {% highlight cl%}
@@ -104,6 +109,7 @@ html的标签是特定的，我们还能为特定的html标签编写宏：
              "xmlns:xlink" "http://www.w3.org/1999/xlink");链接
         ,@body))
 {% endhighlight %}
+
 写一个函数专门加深色彩，方便我们绘图
 
 {% highlight cl%}
@@ -113,6 +119,7 @@ html的标签是特定的，我们还能为特定的html标签编写宏：
           col))
 (brightness '(255 0 0) -100)
 {% endhighlight %}
+
 使用一个svg样式函数生成颜色属性，边比内部颜色深.注意～{和～}可以起遍历的作用。
 
 {% highlight cl%}
@@ -122,6 +129,7 @@ html的标签是特定的，我们还能为特定的html标签编写宏：
           (append color;边界比内部颜色更深
                   (brightness color -100))))
 {% endhighlight %}
+
 于是得到生成圆的一个函数
 
 {% highlight cl%}
@@ -131,12 +139,14 @@ html的标签是特定的，我们还能为特定的html标签编写宏：
                   r radius
                   style (svg-style color))))
 {% endhighlight %}
+
 最后可以简单的得到svg文件
 
 {% highlight cl%}
 (svg (circle '(50 .50) 50 '(255 0 0))
      (circle '(100 . 100) 50 '(0 0 255)))
 {% endhighlight %}
+
 还可以写些更复杂的svg例子，比如一个多边形
 
 {% highlight cl%}
@@ -149,6 +159,7 @@ html的标签是特定的，我们还能为特定的html标签编写宏：
                                        points))
                        style (svg-style color))))
 {% endhighlight %}
+
 写个random-walk函数，我想读者应该知道是干什么的
 
 {% highlight cl%}
@@ -161,6 +172,7 @@ html的标签是特定的，我们还能为特定的html标签编写宏：
                        (1- length)))))
 (random-walk 100 10);测试
 {% endhighlight %}
+
 写进一个文件
 
 {% highlight cl%}
@@ -176,6 +188,7 @@ html的标签是特定的，我们还能为特定的html标签编写宏：
                          (loop repeat 3
                                collect (random 256))))))
 {% endhighlight %}
+
 用你的浏览器打开random_walk.svg看看吧，生成大概这样的图像:
 "random_walk":/images/random_walk.svg
 
@@ -187,6 +200,7 @@ h2. 对先前的游戏进行dsl
 ;Creating Custom Game Commands for Wizard's Adventure Game
 (load "wizards_game")
 {% endhighlight %}
+
 添加两个命令，一个把链条和篮子焊接在一起，另一个用焊好的篮子从井里打水。
 
 {% highlight cl%}
@@ -222,6 +236,7 @@ h2. 对先前的游戏进行dsl
     '(you cannot dunk like that.)))
 (pushnew 'dunk *allowed-commands*)
 {% endhighlight %}
+
 发现没？这两种命令很相似，我们来dsl,重新用我们的宏来重新添加上两个命令，另为我们还添加了一个更复杂的命令splash，把水泼到巫师脸上……
 
 {% highlight cl%}
@@ -257,6 +272,7 @@ h2. 对先前的游戏进行dsl
         (t '(the wizard awakens from his slumber and greets you warmly.
                  he hands you the magic low-carb donut- you win! the end.))))
 {% endhighlight %}
+
 试试我们的新游戏，很棒不是？
 
 {% highlight cl%}

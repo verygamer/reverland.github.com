@@ -453,22 +453,22 @@ Canny滤镜可以从`skimage`中获取([文档](http://scikit-image.org/docs/dev
 
 - 基于_直方图_的分割(没有空间信息)
 
-      >>> n = 10
-      >>> l = 256
-      >>> im = np.zeros((l, l))
-      >>> np.random.seed(1)
-      >>> points = l*np.random.random((2, n**2))
-      >>> im[(points[0]).astype(np.int), (points[1]).astype(np.int)] = 1
-      >>> im = ndimage.gaussian_filter(im, sigma=l/(4.*n))
-      
-      >>> mask = (im > im.mean()).astype(np.float)
-      >>> mask += 0.1 * im
-      >>> img = mask + 0.2*np.random.randn(*mask.shape)
-      
-      >>> hist, bin_edges = np.histogram(img, bins=60)
-      >>> bin_centers = 0.5*(bin_edges[:-1] + bin_edges[1:])
-      
-      >>> binary_img = img > 0.5
+        >>> n = 10
+        >>> l = 256
+        >>> im = np.zeros((l, l))
+        >>> np.random.seed(1)
+        >>> points = l*np.random.random((2, n**2))
+        >>> im[(points[0]).astype(np.int), (points[1]).astype(np.int)] = 1
+        >>> im = ndimage.gaussian_filter(im, sigma=l/(4.*n))
+        
+        >>> mask = (im > im.mean()).astype(np.float)
+        >>> mask += 0.1 * im
+        >>> img = mask + 0.2*np.random.randn(*mask.shape)
+        
+        >>> hist, bin_edges = np.histogram(img, bins=60)
+        >>> bin_centers = 0.5*(bin_edges[:-1] + bin_edges[1:])
+        
+        >>> binary_img = img > 0.5
 
 ![segmente](http://scipy-lectures.github.com/_images/plot_histo_segmentation_1.png)
 
@@ -528,40 +528,40 @@ Canny滤镜可以从`skimage`中获取([文档](http://scikit-image.org/docs/dev
 
 - _基于图像_的分割：使用空间信息
 
-      >>> from sklearn.feature_extraction import image
-      >>> from sklearn.cluster import spectral_clustering
-      
-      >>> l = 100
-      >>> x, y = np.indices((l, l))
-      
-      >>> center1 = (28, 24)
-      >>> center2 = (40, 50)
-      >>> center3 = (67, 58)
-      >>> center4 = (24, 70)
-      >>> radius1, radius2, radius3, radius4 = 16, 14, 15, 14
-      
-      >>> circle1 = (x - center1[0])**2 + (y - center1[1])**2 < radius1**2
-      >>> circle2 = (x - center2[0])**2 + (y - center2[1])**2 < radius2**2
-      >>> circle3 = (x - center3[0])**2 + (y - center3[1])**2 < radius3**2
-      >>> circle4 = (x - center4[0])**2 + (y - center4[1])**2 < radius4**2
-      
-      >>> # 4 circles
-      >>> img = circle1 + circle2 + circle3 + circle4
-      >>> mask = img.astype(bool)
-      >>> img = img.astype(float)
-      
-      >>> img += 1 + 0.2*np.random.randn(*img.shape)
-      >>> # Convert the image into a graph with the value of the gradient on
-      >>> # the edges.
-      >>> graph = image.img_to_graph(img, mask=mask)
-      
-      >>> # Take a decreasing function of the gradient: we take it weakly
-      >>> # dependant from the gradient the segmentation is close to a voronoi
-      >>> graph.data = np.exp(-graph.data/graph.data.std())
-      
-      >>> labels = spectral_clustering(graph, k=4, mode='arpack')
-      >>> label_im = -np.ones(mask.shape)
-      >>> label_im[mask] = labels
+        >>> from sklearn.feature_extraction import image
+        >>> from sklearn.cluster import spectral_clustering
+        
+        >>> l = 100
+        >>> x, y = np.indices((l, l))
+        
+        >>> center1 = (28, 24)
+        >>> center2 = (40, 50)
+        >>> center3 = (67, 58)
+        >>> center4 = (24, 70)
+        >>> radius1, radius2, radius3, radius4 = 16, 14, 15, 14
+        
+        >>> circle1 = (x - center1[0])**2 + (y - center1[1])**2 < radius1**2
+        >>> circle2 = (x - center2[0])**2 + (y - center2[1])**2 < radius2**2
+        >>> circle3 = (x - center3[0])**2 + (y - center3[1])**2 < radius3**2
+        >>> circle4 = (x - center4[0])**2 + (y - center4[1])**2 < radius4**2
+        
+        >>> # 4 circles
+        >>> img = circle1 + circle2 + circle3 + circle4
+        >>> mask = img.astype(bool)
+        >>> img = img.astype(float)
+        
+        >>> img += 1 + 0.2*np.random.randn(*img.shape)
+        >>> # Convert the image into a graph with the value of the gradient on
+        >>> # the edges.
+        >>> graph = image.img_to_graph(img, mask=mask)
+        
+        >>> # Take a decreasing function of the gradient: we take it weakly
+        >>> # dependant from the gradient the segmentation is close to a voronoi
+        >>> graph.data = np.exp(-graph.data/graph.data.std())
+        
+        >>> labels = spectral_clustering(graph, k=4, mode='arpack')
+        >>> label_im = -np.ones(mask.shape)
+        >>> label_im[mask] = labels
 
 ![graph-base](http://scipy-lectures.github.com/_images/image_spectral_clustering.png)
 
@@ -581,13 +581,13 @@ Canny滤镜可以从`skimage`中获取([文档](http://scikit-image.org/docs/dev
 
 - _连接成分分析_
 
-标记连接成分：`ndimage.label`
+    标记连接成分：`ndimage.label`
 
-    >>> label_im, nb_labels = ndimage.label(mask)
-    >>> nb_labels # how many regions?
-    23
-    >>> plt.imshow(label_im)        
-    <matplotlib.image.AxesImage object at ...>
+        >>> label_im, nb_labels = ndimage.label(mask)
+        >>> nb_labels # how many regions?
+        23
+        >>> plt.imshow(label_im)        
+        <matplotlib.image.AxesImage object at ...>
 
 ![label](http://scipy-lectures.github.com/_images/plot_synthetic_data_1.png)
 

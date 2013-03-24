@@ -74,6 +74,7 @@ distribution for more information.
     To continue, evaluate: (quicklisp-quickstart:install)
 {% endhighlight %}
 
+
 {% highlight cl%}
 (quicklisp-quickstart:install)
 (ql:add-to-init-file)
@@ -93,6 +94,7 @@ h3. 创建应用程序
 (ql:quickload "myapp")
 (in-package :myapp)
 {% endhighlight %}
+
 现在在Emacs有scratch标签的窗口键入<esc> x cd <enter> myapp <enter> 紧接着输入 <control>x <control>f src/myapp.lisp <enter> 。你应该拥有了一个为准备极棒的编码新建立的myapp.lisp文件。
 
 让我们继续添加一些东西然后试试结果
@@ -101,11 +103,13 @@ h3. 创建应用程序
 (defun hello-world ()
   (format t "Hello world.~%"))
 {% endhighlight %}
+
 现在我们可以把我们的更改注入REPL，通过把光标放到最后一行并键入<control>c <control>c。通过切换到REPL键入以下内容执行我们的新函数：
 
 {% highlight cl%}
 (hello-world)
 {% endhighlight %}
+
 恭喜你！你在通过 Common Lisp 编程
 
 h3. 重启Emacs后加载你的应用[3]
@@ -133,6 +137,7 @@ h3. 创建可执行文件
   (hello-world)
   (cl-user::quit))
 {% endhighlight %}
+
 你将需要下载 "buildapp工具":buildapp ，指导在它的网站上。
 
 现在从你的myapp目录我们可以在命令行运行buildapp去编译你的程序！
@@ -141,6 +146,7 @@ h3. 创建可执行文件
 buildapp --asdf-tree $HOME/quicklisp/dists/quicklisp/software \
   --load-system myapp --entry myapp:main --output hello
 {% endhighlight %}
+
 在程序所在目录运行你的程序
 
 {% highlight bash%}

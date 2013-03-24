@@ -14,6 +14,7 @@ disqus: true
 ## 前言
 
 几天前，我被一个漂亮的个人网站迷住了，于是把他整个网站从github上下载下来改进成自己的。并在推特上follow了这位站长。我清楚地记得他的个人简介里写着：
+
 {% highlight bash %}
 half hacker/half artist
 {% endhighlight %}
@@ -33,9 +34,11 @@ half hacker/half artist
 ### 黒客，是那些破解银行密码的人?
 
 没有几个人现在还记得“黑客”这个词本来的含义了，作者偏偏用了这个词。这本书中的黑客，有这种说法:
+
 {% highlight bash%}
 出于兴趣，解决某个难题，不管它有没有用，这就是黑客。
 {% endhighlight %}
+
 它们信仰分享（Sharing）、开放（Openness）、民主（Decentralization）、计算机的自由使用（Free access to computers）、进步（World Improvement）的价值观。说到底，和电影里的那群牛逼的cracker们有个毛线关系。更详细的在这里[黑客的含义](http://www.ruanyifeng.com/blog/2011/04/on_hacker.html)
 
 ### 我对计算机没有兴趣，对艺术也没有兴趣。
@@ -60,6 +63,7 @@ half hacker/half artist
 那就去看，生命中最可怕的就是等待，拖延的后果就是遥遥无期。不存在没有时间这种事，这种事只存在于意识中而非现实里，忘了我们高中怎么忙里偷闲的？也许读这些书没用，特别是对于讲求经世致用的我国人民。在我看来，潜意识是有力量的。
 
 ### 附上链接
+
 - [Amazon简体中文](http://www.amazon.cn/%E9%BB%91%E5%AE%A2%E4%B8%8E%E7%94%BB%E5%AE%B6-%E7%A1%85%E8%B0%B7%E5%88%9B%E4%B8%9A%E4%B9%8B%E7%88%B6Paul-Graham%E6%96%87%E9%9B%86-%E9%98%AE%E4%B8%80%E5%B3%B0/dp/B004WHZGZQ)
 - [Amazon英文](http://www.amazon.com/Hackers-Painters-Big-Ideas-Computer/dp/0596006624)
 
@@ -135,4 +139,5 @@ half hacker/half artist
 [lisp]: http://zh.wikipedia.org/wiki/LISP
 [Paul Graham]: http://paulgraham.com/
 [hacker and painter]: http://paulgraham.com/hackpaint.html
+
 {% include JB/setup %}

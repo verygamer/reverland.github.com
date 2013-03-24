@@ -22,13 +22,17 @@ disqus: true
 ####设置代理
 
 安装rvm，如果网络良好完全没问题。由于我在学校内使用的是sogou代理，而export http_proxy之流的命令偏偏不顶事，后来发现git和curl的网络链接根本就不继承shell环境的代理。
+
 为了装上rvm，先在curlrc中写入
-proxy=127.0.0.1:1998
+
+    proxy=127.0.0.1:1998
 在gitconfig中写入
+
 {% highlight bash %}
 [http]
     proxy = http://127.0.0.1:1998
 {% endhighlight %}
+
 然后参见文档开始安装就是，我比较悲催，开始不知道可以这样做。直接hack rvm那个安装脚本才搞定
 
 #### ruby环境搭建
@@ -36,19 +40,24 @@ proxy=127.0.0.1:1998
 因为我既是ruby小白又是python小白，所以选什么都没区别，如果你对python熟悉，[Hyde](http://hyde.github.com/index.html)而非jekyll可能是更好的选择。
 
 装好rvm后，使用ruby1.9.2
+
 {% highlight bash %}
 rvm install 1.9.2 && rvm use 1.9.2
 {% endhighlight %}
+
 使用taobao的gem源
 
 {% highlight bash %}
 gem sources -remove http://rubygem.org/ 
 gem sources -a http://ruby.taobao.org/ --http-proxy http://127.0.0.1:1998
 {% endhighlight %}
+
 安装对应的jekyll
+
 {% highlight bash %}
 gem install --http-proxy http://127.0.0.1:1998 jekyll 
 {% endhighlight %}
+
 其它和官方文档就没什么区别了。
 
 ps:如果用socks代理请自行配置tsocks。

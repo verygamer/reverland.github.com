@@ -11,12 +11,16 @@ disqus: true
 ## Lisp中的特殊数据结构
 
 引用原文中的话来形容Lisp,
+
 {% highlight bash %}
 Think of the Babel fish in the Hitchhiker’s Guide to the Galaxy trilogy—something 
 so impossibly useful that it really has no business existing in the first place.
 {% endhighlight %}
+
 现在知道land of lisp的作者为什么把common lisp比作狼狗，为什么说cl强大了。支持list也就算了，支持个array、hash table、OOp、范型(generic)什么乱七八糟一堆其它语言中各种强大的东西，这么逆天的东西根本就不该存在！不过作为代价，丧失了一种纯粹的美。
+
 {% highlight cl %}
+
 lisp is symmetry,while common lisp is powerful.
 {% endhighlight %}
 
@@ -53,6 +57,7 @@ hash表性能总体还是很高的..比如说我们上回写的wumpus游戏，�
 {% endhighlight %}
 
 好吧，我花的时间：
+
 {% highlight cl %}
 (time (dotimes (i 100) (get-connected 1 (make-edge-list))))
 Real time: 64.1503 sec.
@@ -89,7 +94,9 @@ NIL
 (time (dotimes (i 100)
         (get-connected-hash 1 (hash-edges (make-edge-list)))))
 {% endhighlight %}
+
 很显然，效率高多了：
+
 {% highlight cl %}
 (time (dotimes (i 100)
         (get-connected-hash 1 (hash-edges (make-edge-list)))))
@@ -365,6 +372,7 @@ NIL
            (decf *player-strength* 2)))))
 
 {% endhighlight %}
+
 然后这样开始游戏
 
 {% highlight cl %}

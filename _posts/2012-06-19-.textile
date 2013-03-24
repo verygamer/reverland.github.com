@@ -30,6 +30,7 @@ h3. 在common lisp中实现一整套惰性求值函数库
 (force (lazy (+ 1 2)))
 3
 {% endhighlight %}
+
 lazy可以用宏这么实现
 
 {% highlight cl%}
@@ -44,12 +45,14 @@ lazy可以用宏这么实现
            (setf ,forced t))
          ,value))))
 {% endhighlight %}
+
 force可以直接用简单的函数实现
 
 {% highlight cl%}
 (defun force (lazy-value)
   (funcall lazy-value))
 {% endhighlight %}
+
 但我们需要的不只这些，要完成惰性求值需要一整套相应的函数比如延迟的cons、cdr、car、nth、mapcar等等等等。建立延迟的cons和相应的cdr和car
 
 {% highlight cl%}
@@ -71,6 +74,7 @@ force可以直接用简单的函数实现
 (lazy-car (lazy-cdr *integers*)) 
 (lazy-car (lazy-cdr (lazy-cdr *integers*)))
 {% endhighlight %}
+
 我们还需要延迟生成lazy-nil和判断空延迟求值的列表的lazy-null
 
 {% highlight cl%}
@@ -80,6 +84,7 @@ force可以直接用简单的函数实现
 (defun lazy-null (x)
   (not (force x)))
 {% endhighlight %}
+
 然后是将常规列表和惰性列表相互转换的函数make-lazy、take、take-all.注意take-all只能返回有限列表。
 
 {% highlight cl%}
@@ -96,6 +101,7 @@ force可以直接用简单的函数实现
 (take 10 (make-lazy '(a s d f g h j k l q w e r t y u i)))
 (take-all (make-lazy '(a s d f g h j k l q w e r t y u i)))
 {% endhighlight %}
+
 是不是看不懂？作者说它深邃如禅宗公案，需要凝神细视许久才能了悟。
 
 然后是遍历和搜索整个惰性列表的mapcar、mapcan、find-if和nth函数。mapcar和mapcan返回的也是惰性列表，find-if和nth则返回原子。
@@ -124,6 +130,7 @@ force可以直接用简单的函数实现
     (lazy-car lst)
     (lazy-nth (1- n) (lazy-cdr lst))))
 {% endhighlight %}
+
 使用也很直观
 
 {% highlight cl%}

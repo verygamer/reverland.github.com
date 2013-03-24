@@ -53,12 +53,6 @@
     
   
     
-    	
-    	<li><a href="/about.html">About</a></li>
-    	
-    
-  
-    
   
     
     	
@@ -148,15 +142,11 @@
     <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;The sum is ~a&quot;</span> <span class="nv">x</span><span class="p">)</span>
     <span class="nv">x</span><span class="p">))</span> 
 <span class="p">(</span><span class="nv">add</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
-</code></pre>
-</div>
-<p>有没有感觉括号太多了？我们定义个let1宏</p>
+</code></pre></div><p>有没有感觉括号太多了？我们定义个let1宏</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defmacro</span> <span class="nv">let1</span> <span class="p">(</span><span class="nv">var</span> <span class="nv">val</span> <span class="k">&amp;body</span> <span class="nv">body</span><span class="p">)</span>
   <span class="o">`</span><span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="o">,</span><span class="nv">var</span> <span class="o">,</span><span class="nv">val</span><span class="p">))</span>
      <span class="o">,@</span><span class="nv">body</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>&amp;body表示剩下的部分是表达式，而且隐含着一个progn的并行表达式，回忆&quot;`&#8220;与&#8221;,&#8220;的作用&#8221;,@&quot;相对于&quot;，&quot;用来表征并行表达式。</p>
+</code></pre></div><p>&amp;body表示剩下的部分是表达式，而且隐含着一个progn的并行表达式，回忆&quot;`&#8220;与&#8221;,&#8220;的作用&#8221;,@&quot;相对于&quot;，&quot;用来表征并行表达式。</p>
 <p>试试你的宏</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">foo</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)))</span>
   <span class="p">(</span><span class="nb">*</span> <span class="nv">foo</span> <span class="nv">foo</span><span class="p">))</span>
@@ -166,16 +156,12 @@
   <span class="p">(</span><span class="nv">let1</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">a</span> <span class="nv">b</span><span class="p">)</span>
     <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;The sum is ~a&quot;</span> <span class="nv">x</span><span class="p">)</span>
     <span class="nv">x</span><span class="p">))</span>
-</code></pre>
-</div>
-<h2>宏展开</h2>
+</code></pre></div><h2>宏展开</h2>
 <p>宏的展开发生在运行期前，它把你非标准的程序转换成标准的lisp语言,然后传递给标准lisp解释器</p>
 <p>你可以用macroexpand来展开宏</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">macroexpand</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">let1</span> <span class="nv">foo</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="p">(</span><span class="nb">*</span> <span class="nv">foo</span> <span class="nv">foo</span><span class="p">)))</span>
-</code></pre>
-</div>
-<p>这将是很有效的调试方法。</p>
+</code></pre></div><p>这将是很有效的调试方法。</p>
 <h2>更复杂一些的宏</h2>
 <p>回忆下之前我们定义的尾递归优化length函数</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">my-length</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
@@ -184,9 +170,7 @@
                <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">acc</span><span class="p">))</span>
                <span class="nv">acc</span><span class="p">)))</span>
     <span class="p">(</span><span class="nv">f</span> <span class="nv">lst</span> <span class="mi">0</span><span class="p">)))</span>
-</code></pre>
-</div>
-<p>正如所见，我们反复使用cdr，反复检查列表是否为空。我们用冗长的工作去创造局部函数f，我们可以用宏让它更简洁一些。</p>
+</code></pre></div><p>正如所见，我们反复使用cdr，反复检查列表是否为空。我们用冗长的工作去创造局部函数f，我们可以用宏让它更简洁一些。</p>
 <h3>一个分割列表的宏</h3>
 <p>一个能把列表分开，并能把列表头和尾提供给我们用split宏非常有用。我们可以得到这么一个有bug的宏：</p>
 <div class="highlight"><pre><code class="cl"><span class="c1">;Warning!Containing Bugs!</span>
@@ -196,9 +180,7 @@
            <span class="p">(</span><span class="nv">tail</span> <span class="p">(</span><span class="nb">cdr</span> <span class="o">,</span><span class="nv">val</span><span class="p">)))</span>
        <span class="o">,</span><span class="nv">yes</span><span class="p">)</span>
      <span class="o">,</span><span class="nv">no</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>列表的car和cdr分别保存在head和tail中。如果列表不能split，将不会创建head和tail变量。</p>
+</code></pre></div><p>列表的car和cdr分别保存在head和tail中。如果列表不能split，将不会创建head和tail变量。</p>
 <p>于是my-length函数整洁些了</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">my-length</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
   <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">f</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">acc</span><span class="p">)</span>
@@ -206,31 +188,23 @@
                     <span class="p">(</span><span class="nv">f</span> <span class="nv">tail</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">acc</span><span class="p">))</span>
                     <span class="nv">acc</span><span class="p">)))</span>
     <span class="p">(</span><span class="nv">f</span> <span class="nv">lst</span> <span class="mi">0</span><span class="p">)))</span>
-</code></pre>
-</div>
-<h3>避免重复的执行</h3>
+</code></pre></div><h3>避免重复的执行</h3>
 <p>试试这样：</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">split</span> <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Lisp rocks!&quot;</span><span class="p">)</span>
               <span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
        <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;This can be split into ~a and ~a.&quot;</span> <span class="nv">head</span> <span class="nv">tail</span><span class="p">)</span>
        <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;This cannot be split.&quot;</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>哦～为什么会执行三次打印Lisp rocks！展开宏看看</p>
+</code></pre></div><p>哦～为什么会执行三次打印Lisp rocks！展开宏看看</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">macroexpand</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">split</span> <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Lisp rocks!&quot;</span><span class="p">)</span>
                             <span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
                      <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;THis can be split into ~a and ~a.&quot;</span> <span class="nv">head</span> <span class="nv">tail</span><span class="p">)</span>
                      <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;This cannot be split&quot;</span><span class="p">)))</span>
-</code></pre>
-</div>
-<p>你看到了什么……某动作被执行了三次。</p>
+</code></pre></div><p>你看到了什么……某动作被执行了三次。</p>
 <p>我很惊异的是这种情况common lisp也接受，还可以这样把命令写在函数中。</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="k">progn</span> <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Lisp rocks!&quot;</span><span class="p">)</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">3</span><span class="p">)))</span>
 <span class="nv">Lisp</span> <span class="nv">rocks!</span>
 <span class="mi">2</span>
-</code></pre>
-</div>
-<p>为了避免这种情况我们重新改写split宏，注意，还是有bug的版本</p>
+</code></pre></div><p>为了避免这种情况我们重新改写split宏，注意，还是有bug的版本</p>
 <div class="highlight"><pre><code class="cl"><span class="c1">;Warning! Still contains a bug!</span>
 <span class="p">(</span><span class="nb">defmacro</span> <span class="nv">split</span> <span class="p">(</span><span class="nv">val</span> <span class="nv">yes</span> <span class="nv">no</span><span class="p">)</span> 
   <span class="o">`</span><span class="p">(</span><span class="nv">let1</span> <span class="nv">x</span> <span class="o">,</span><span class="nv">val</span> 
@@ -239,29 +213,21 @@
              <span class="p">(</span><span class="nv">tail</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">x</span><span class="p">)))</span>
          <span class="o">,</span><span class="nv">yes</span><span class="p">)</span> 
          <span class="o">,</span><span class="nv">no</span><span class="p">)))</span> 
-</code></pre>
-</div>
-<p>可以在宏内使用其它宏，像这里我们用了之前的let1宏。我们用一个变量绑定表达式，这时就不会重复执行了。但有了个新问题。</p>
+</code></pre></div><p>可以在宏内使用其它宏，像这里我们用了之前的let1宏。我们用一个变量绑定表达式，这时就不会重复执行了。但有了个新问题。</p>
 <h3>避免变量捕获</h3>
 <p>问题在哪里呢？试试下面的式子</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">let1</span> <span class="nv">x</span> <span class="mi">100</span>
   <span class="p">(</span><span class="nv">split</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
          <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">head</span><span class="p">)</span>
          <span class="no">nil</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>什么情况，竟然报错了！！我们展开它看看</p>
+</code></pre></div><p>什么情况，竟然报错了！！我们展开它看看</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">macroexpand</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">split</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
                      <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">head</span><span class="p">)</span>
                      <span class="no">nil</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>split意外地捕获了外部变量x并且覆盖了前者。怎么避免这个问题？？<br />
+</code></pre></div><p>split意外地捕获了外部变量x并且覆盖了前者。怎么避免这个问题？？<br />
 这个函数专门用来解决这类问题</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">gensym</span><span class="p">)</span>
-</code></pre>
-</div>
-<p>它返回随机的名字，并且一定不会和已有的变量重复。使用它我们可以获得最终能安全使用的split版本</p>
+</code></pre></div><p>它返回随机的名字，并且一定不会和已有的变量重复。使用它我们可以获得最终能安全使用的split版本</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defmacro</span> <span class="nv">split</span> <span class="p">(</span><span class="nv">val</span> <span class="nv">yes</span> <span class="nv">no</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">let1</span> <span class="nv">g</span> <span class="p">(</span><span class="nb">gensym</span><span class="p">)</span>
     <span class="o">`</span><span class="p">(</span><span class="nv">let1</span> <span class="o">,</span><span class="nv">g</span> <span class="o">,</span><span class="nv">val</span>
@@ -270,16 +236,12 @@
                <span class="p">(</span><span class="nv">tail</span> <span class="p">(</span><span class="nb">cdr</span> <span class="o">,</span><span class="nv">g</span><span class="p">)))</span>
            <span class="o">,</span><span class="nv">yes</span><span class="p">)</span>
          <span class="o">,</span><span class="nv">no</span><span class="p">))))</span>
-</code></pre>
-</div>
-<p>两次绑定，先随机生成一个变量名，在把具体的值绑在这个随机生成的变量名上。可以展开看看</p>
+</code></pre></div><p>两次绑定，先随机生成一个变量名，在把具体的值绑在这个随机生成的变量名上。可以展开看看</p>
 <div class="highlight"><pre><code class="cl"><span class="c1">;Each time is different</span>
 <span class="p">(</span><span class="nb">macroexpand</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">split</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
                      <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">head</span><span class="p">)</span>
                      <span class="no">nil</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>每次结果都不同。</p>
+</code></pre></div><p>每次结果都不同。</p>
 <h2>递归宏</h2>
 <p>再次考虑我们的my-length函数</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">my-length</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
@@ -288,9 +250,7 @@
                     <span class="p">(</span><span class="nv">f</span> <span class="nv">tail</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">acc</span><span class="p">))</span>
                     <span class="nv">acc</span><span class="p">)))</span>
     <span class="p">(</span><span class="nv">f</span> <span class="nv">lst</span> <span class="mi">0</span><span class="p">)))</span>
-</code></pre>
-</div>
-<p>局部函数f重复的建立。我们可以通过宏来简化它。想象这么一个recurse宏：</p>
+</code></pre></div><p>局部函数f重复的建立。我们可以通过宏来简化它。想象这么一个recurse宏：</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">recurse</span> <span class="p">(</span><span class="nv">n</span> <span class="mi">9</span><span class="p">)</span>
 <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
 <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">zerop</span> <span class="nv">n</span><span class="p">)</span>
@@ -307,14 +267,10 @@
 <span class="mi">2</span>
 <span class="mi">1</span>
 <span class="nv">lift-off!</span>
-</code></pre>
-</div>
-<p>为了将列表奇数项作为变量偶数项作为值，可以写一个函数来生成cons对。像这样</p>
+</code></pre></div><p>为了将列表奇数项作为变量偶数项作为值，可以写一个函数来生成cons对。像这样</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">pairs</span> <span class="o">&#39;</span><span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">d</span> <span class="nv">e</span> <span class="nv">f</span><span class="p">))</span>
 <span class="p">((</span><span class="nv">A</span> <span class="o">.</span> <span class="nv">B</span><span class="p">)</span> <span class="p">(</span><span class="nv">C</span> <span class="o">.</span> <span class="nv">D</span><span class="p">)</span> <span class="p">(</span><span class="nv">E</span> <span class="o">.</span> <span class="nv">F</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>函数可以这样定义,看着真绕……</p>
+</code></pre></div><p>函数可以这样定义,看着真绕……</p>
 <div class="highlight"><pre><code class="cl"><span class="c1">;tail-call-optimized list-eater</span>
 <span class="p">(</span><span class="nb">defun</span> <span class="nv">pairs</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
   <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">f</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">acc</span><span class="p">)</span>
@@ -324,26 +280,20 @@
                       <span class="p">(</span><span class="nb">reverse</span> <span class="nv">acc</span><span class="p">))</span>
                     <span class="p">(</span><span class="nb">reverse</span> <span class="nv">acc</span><span class="p">))))</span>
     <span class="p">(</span><span class="nv">f</span> <span class="nv">lst</span> <span class="no">nil</span><span class="p">)))</span>
-</code></pre>
-</div>
-<p>然后可以写出recurse宏</p>
+</code></pre></div><p>然后可以写出recurse宏</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defmacro</span> <span class="nv">recurse</span> <span class="p">(</span><span class="nv">vars</span> <span class="k">&amp;body</span> <span class="nv">body</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">let1</span> <span class="nv">p</span> <span class="p">(</span><span class="nv">pairs</span> <span class="nv">vars</span><span class="p">)</span>
     <span class="o">`</span><span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">self</span> <span class="o">,</span><span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nb">car</span> <span class="nv">p</span><span class="p">)</span>
                 <span class="o">,@</span><span class="nv">body</span><span class="p">))</span>
        <span class="p">(</span><span class="nv">self</span> <span class="o">,@</span><span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nb">cdr</span> <span class="nv">p</span><span class="p">)))))</span>
-</code></pre>
-</div>
-<p>重新定义我们的my-length函数</p>
+</code></pre></div><p>重新定义我们的my-length函数</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">my-length</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">recurse</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">lst</span>
                 <span class="nv">acc</span> <span class="mi">0</span><span class="p">)</span>
            <span class="p">(</span><span class="nv">split</span> <span class="nv">lst</span>
                   <span class="p">(</span><span class="nv">f</span> <span class="nv">tail</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">acc</span><span class="p">))</span>
                   <span class="nv">acc</span><span class="p">)))</span>
-</code></pre>
-</div>
-<p>作者费了一大圈后认为现在看着很简洁，你觉得呢？</p>
+</code></pre></div><p>作者费了一大圈后认为现在看着很简洁，你觉得呢？</p>
 <h2>宏的危险与其它选择</h2>
 <p>把语言定义成任意你想要的模式，这当然很危险。若干岁月后回头都看不懂你自己写的什么，何况别人！所以，能用函数式解决的问题就别用宏来解决吧，骚年。看看我们的my-length函数，可以用高阶函数reduce轻松简化。</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">my-length</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
@@ -351,9 +301,7 @@
             <span class="p">(</span><span class="nb">1+</span> <span class="nv">x</span><span class="p">))</span>
           <span class="nv">lst</span>
           <span class="ss">:initial-value</span> <span class="mi">0</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>reduce可以连续调用上次结果并与当前列表项一同运算。i代表当前为第几项，对我们没什么用，最后x初值为0一定要加上。</p>
+</code></pre></div><p>reduce可以连续调用上次结果并与当前列表项一同运算。i代表当前为第几项，对我们没什么用，最后x初值为0一定要加上。</p>
 <p>然而仍然有些问题用函数式并不能很好解决而用宏可以轻易处理。下一章？拭目以待吧。</p>
 <h2>小结</h2>
 <ul>
@@ -497,6 +445,12 @@ $(document).ready(function(){
         <li>
         
         <a href="/categories.html#python-ref">python <span>20</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#phase unwrapping-ref">phase unwrapping <span>1</span></a>
         </li>
       
       

@@ -60,11 +60,13 @@ loop是lisp中饱受争议的命令，因为它看起来不这么lispy，但它�
       in '(monday tuesday wednesday thursday friday saturday sunday)
       collect (cons i day))
 {% endhighlight %}
+
 当然还有很多，这个命令异常灵活，以致于作者做了个[loop周期表][1]。
 
 ## Using Loop to Evolve
 
 这个游戏看上去还挺轻松的，很有意思的“生命游戏”。不多说了，上码
+
 {% highlight cl %}
 ;;;The extent of the world
 (defparameter *width* 100)
@@ -208,11 +210,15 @@ loop是lisp中饱受争议的命令，因为它看起来不这么lispy，但它�
                (evolution))))))
 
 {% endhighlight %}
+
 这样开始模拟
+
 {% highlight cl %}
 (evolution)
 {% endhighlight %}
+
 回车看看，100次看看，5000000次看看，据作者说5million次sbcl几分钟就可以搞定。我相信我的计算机比作者那时候好，可是....
+
 {% highlight cl %}
 Evaluation took:
   789.430 seconds of real time
@@ -222,8 +228,11 @@ Evaluation took:
   1,785,005,533,676 processor cycles
   125,872,778,768 bytes consed
 {% endhighlight %}
+
 什么叫手抖竟然开始打成了5billion.这时候科学计数法就发挥作用了，感谢自由建客。
+
 ***
+
 Looks good however，
 
 M代表某无性生殖动物，`*`代表某随机生长植物

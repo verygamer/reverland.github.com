@@ -18,6 +18,7 @@ disqus: true
 ## 可视化lisp数据
 
 用graphviz把lisp中数据可视化的方法，代码如下：
+
 {% highlight cl %}
 ;;切换到工作目录
 (cd "/home/reverland/Documents/lisp/")

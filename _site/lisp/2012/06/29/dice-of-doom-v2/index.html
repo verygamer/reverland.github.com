@@ -53,12 +53,6 @@
     
   
     
-    	
-    	<li><a href="/about.html">About</a></li>
-    	
-    
-  
-    
   
     
     	
@@ -149,14 +143,10 @@
 <p>首先加载之前我们完成的 <a href="/lisp/2012/05/23/dice-of-doom/">Dice of Doom</a> 源码和为惰性求值所实现的一系列库文件。没有的话就从land of lisp网站上下载吧，话说这本书真贵要40刀左右，豆瓣上竟然380元人民币……</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">load</span> <span class="s">&quot;dice_of_doom_v1.lisp&quot;</span><span class="p">)</span>
 <span class="p">(</span><span class="nb">load</span> <span class="s">&quot;lazy.lisp&quot;</span><span class="p">)</span>
-</code></pre>
-</div>
-<p>然后先把游戏board扩大到4x4。</p>
+</code></pre></div><p>然后先把游戏board扩大到4x4。</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*board-size*</span> <span class="mi">4</span><span class="p">)</span>
 <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*board-hexnum*</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*board-size*</span> <span class="vg">*board-size*</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>下面把Dice of Doom游戏全面lazy化吧</p>
+</code></pre></div><p>下面把Dice of Doom游戏全面lazy化吧</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">add-passing-move</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">player</span> <span class="nv">spare-dice</span> <span class="nv">first-move</span> <span class="nv">moves</span><span class="p">)</span>
   <span class="p">(</span><span class="k">if</span> <span class="nv">first-move</span>
     <span class="nv">moves</span>
@@ -195,9 +185,7 @@
           <span class="p">(</span><span class="nv">lazy-nil</span><span class="p">)))</span>
       <span class="p">(</span><span class="nv">make-lazy</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">n</span> <span class="nv">below</span> <span class="vg">*board-hexnum*</span>
                        <span class="nv">collect</span> <span class="nv">n</span><span class="p">)))))</span>
-</code></pre>
-</div>
-<p>注意lazy-mapcan要求被创建的列表是惰性的，现在你知道htdp标明每个函数输入输出的习惯多好了吧……</p>
+</code></pre></div><p>注意lazy-mapcan要求被创建的列表是惰性的，现在你知道htdp标明每个函数输入输出的习惯多好了吧……</p>
 <p>lazy化handle-human函数和play-vs-human函数</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">handle-human</span> <span class="p">(</span><span class="nv">tree</span><span class="p">)</span>
   <span class="p">(</span><span class="nb">fresh-line</span><span class="p">)</span>
@@ -221,9 +209,7 @@
   <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nv">lazy-null</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))</span>
     <span class="p">(</span><span class="nv">play-vs-human</span> <span class="p">(</span><span class="nv">handle-human</span> <span class="nv">tree</span><span class="p">))</span>
     <span class="p">(</span><span class="nv">announce-winner</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">))))</span>
-</code></pre>
-</div>
-<p>现在你可以试试人人对战了，速度不错。</p>
+</code></pre></div><p>现在你可以试试人人对战了，速度不错。</p>
 <h2>让AI运行在更大的游戏区域</h2>
 <p>对AI的惰性化之前，我们先做一些修剪的工作，这是对AI决策树/游戏树算法的优化<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>。</p>
 <p>我们现在的AI很尽职尽责的搜索计算所有的可能的结果。但在大的游戏面板中这样很累，为了在效率上取得平衡，限制AI的考虑决策树深度</p>
@@ -247,9 +233,7 @@
   <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nv">lazy-null</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">))</span> <span class="p">(</span><span class="nv">announce-winner</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)))</span>
         <span class="p">((</span><span class="nb">zerop</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">tree</span><span class="p">))</span> <span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">handle-human</span> <span class="nv">tree</span><span class="p">)))</span>
         <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">handle-computer</span> <span class="nv">tree</span><span class="p">)))))</span>
-</code></pre>
-</div>
-<p>我没看懂……已经深深迷失在car cadr caddr的海洋之中，总之它限制了AI的思考深度，让它把评分限制在4步之内。<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup></p>
+</code></pre></div><p>我没看懂……已经深深迷失在car cadr caddr的海洋之中，总之它限制了AI的思考深度，让它把评分限制在4步之内。<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup></p>
 <h3>启发算法<sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup></h3>
 <p>让AI只思考较少的深度来实现投入和产出的统一。</p>
 <p>让我们用更复杂的启发算法来重新对游戏面板评分:对一个自己的地盘，如果附近有比自己强大的敌人则评分1,否则则评分2。若该地盘属于对手则评分为-1</p>
@@ -272,9 +256,7 @@
                     <span class="p">(</span><span class="nv">ndice</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">nhex</span><span class="p">)))</span>
                <span class="p">(</span><span class="nb">when</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nb">eq</span> <span class="nv">player</span> <span class="nv">nplayer</span><span class="p">))</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="nv">ndice</span> <span class="nv">dice</span><span class="p">))</span>
                  <span class="p">(</span><span class="nb">return</span> <span class="no">t</span><span class="p">))))))</span>
-</code></pre>
-</div>
-<p>有意思的是，关于启发式作者这么说：在开发这个例子时，我模拟了使用不同版本score-board的各种对手，这个版本效果很好，开发启发式算法不是什么科学。囧～</p>
+</code></pre></div><p>有意思的是，关于启发式作者这么说：在开发这个例子时，我模拟了使用不同版本score-board的各种对手，这个版本效果很好，开发启发式算法不是什么科学。囧～</p>
 <p>惰性化get-ratings和rate-position函数</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-ratings</span> <span class="p">(</span><span class="nv">tree</span> <span class="nv">player</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">take-all</span> <span class="p">(</span><span class="nv">lazy-mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">move</span><span class="p">)</span>
@@ -288,13 +270,9 @@
                <span class="nf">#&#39;</span><span class="nb">min</span><span class="p">)</span>
              <span class="p">(</span><span class="nv">get-ratings</span> <span class="nv">tree</span> <span class="nv">player</span><span class="p">))</span>
       <span class="p">(</span><span class="nv">score-board</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)</span> <span class="nv">player</span><span class="p">))))</span>
-</code></pre>
-</div>
-<p>现在可以试试和计算机过招了。</p>
+</code></pre></div><p>现在可以试试和计算机过招了。</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">game-tree</span> <span class="p">(</span><span class="nv">gen-board</span><span class="p">)</span> <span class="mi">0</span> <span class="mi">0</span> <span class="no">t</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>据说先行者有优势，计算机大概有3/4的几率获胜。</p>
+</code></pre></div><p>据说先行者有优势，计算机大概有3/4的几率获胜。</p>
 <h3>alpha-beta 算法<sup class="footnote" id="fnr4"><a href="#fn4">4</a></sup></h3>
 <code>此部分不只所云，请见谅。</code>
 <p>AI实际上执行一种深度优先搜索。</p>
@@ -337,9 +315,7 @@
                                          <span class="nv">upper-limit</span>
                                          <span class="nv">lower-limit</span><span class="p">)))</span>
       <span class="p">(</span><span class="nv">score-board</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)</span> <span class="nv">player</span><span class="p">))))</span>
-</code></pre>
-</div>
-<p>这三个函数怎么实现及实现什么……不知道，深感自己英语不行啊，大段大段看完不知道在讲什么，哪天有兴致了对照对弈程序基本技术再看吧……I am confused now.<sup class="footnote" id="fnr6"><a href="#fn6">6</a></sup></p>
+</code></pre></div><p>这三个函数怎么实现及实现什么……不知道，深感自己英语不行啊，大段大段看完不知道在讲什么，哪天有兴致了对照对弈程序基本技术再看吧……I am confused now.<sup class="footnote" id="fnr6"><a href="#fn6">6</a></sup></p>
 <p>改进我们的handle-computer函数</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">handle-computer</span> <span class="p">(</span><span class="nv">tree</span><span class="p">)</span>
   <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ratings</span> <span class="p">(</span><span class="nv">ab-get-ratings-max</span> <span class="p">(</span><span class="nv">limit-tree-depth</span> <span class="nv">tree</span> <span class="vg">*ai-level*</span><span class="p">)</span>
@@ -347,19 +323,13 @@
                                      <span class="nv">most-positive-fixnum</span>
                                      <span class="nv">most-negative-fixnum</span><span class="p">)))</span>
     <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nv">lazy-nth</span> <span class="p">(</span><span class="nb">position</span> <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">max</span> <span class="nv">ratings</span><span class="p">)</span> <span class="nv">ratings</span><span class="p">)</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))))</span>
-</code></pre>
-</div>
-<p>现在把游戏面板扩大到5x5</p>
+</code></pre></div><p>现在把游戏面板扩大到5x5</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*board-size*</span> <span class="mi">5</span><span class="p">)</span>
 <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*board-hexnum*</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*board-size*</span> <span class="vg">*board-size*</span><span class="p">))</span>
-</code></pre>
-</div>
-<p>由于我们记忆化的原因，之前的4x4面板会被缓存。为了修正这个问题重新定义neighbors函数即可。</p>
+</code></pre></div><p>由于我们记忆化的原因，之前的4x4面板会被缓存。为了修正这个问题重新定义neighbors函数即可。</p>
 <p>实验新的经过改进的游戏</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">game-tree</span> <span class="p">(</span><span class="nv">gen-board</span><span class="p">)</span> <span class="mi">0</span> <span class="mi">0</span> <span class="no">t</span><span class="p">))</span>
-</code></pre>
-</div>
-<h2>小结</h2>
+</code></pre></div><h2>小结</h2>
 <p>本章我们使用惰性求值方法改进我们的游戏，同时通过一些优化限制AI引擎搜索的决策树数目，我们学到了以下几点：</p>
 <ul>
 	<li>惰性列表使你有可能使用无穷的列表和数据结构，并且很有效率</li>
@@ -503,6 +473,12 @@ $(document).ready(function(){
         <li>
         
         <a href="/categories.html#python-ref">python <span>20</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#phase unwrapping-ref">phase unwrapping <span>1</span></a>
         </li>
       
       

@@ -186,19 +186,19 @@ SVMs[^4]尝试构建一个两个类别的最大间隔超平面。它选择输入
 
 - 线性核
 
-    svc = svm.SVC(kernel='linear')
+        svc = svm.SVC(kernel='linear')
 
 - 多项式核
 
-    svc = svm.SVC(kernel='poly',
-    ...               degree=3)
-    # degree: polynomial degree
+        svc = svm.SVC(kernel='poly',
+        ...               degree=3)
+        # degree: polynomial degree
 
 - RBF核(径向基函数)[^5]
 
-     svc = svm.SVC(kernel='rbf')
-     # gamma: inverse of size of
-     # radial kernel
+         svc = svm.SVC(kernel='rbf')
+         # gamma: inverse of size of
+         # radial kernel
 
 **练习**
 

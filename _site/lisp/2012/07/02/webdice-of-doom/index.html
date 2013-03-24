@@ -53,12 +53,6 @@
     
   
     
-    	
-    	<li><a href="/about.html">About</a></li>
-    	
-    
-  
-    
   
     
     	
@@ -147,18 +141,14 @@
 <span class="p">(</span><span class="nb">load</span> <span class="s">&quot;dice_of_doom_v2&quot;</span><span class="p">)</span>
 <span class="p">(</span><span class="nb">load</span> <span class="s">&quot;webserver&quot;</span><span class="p">)</span>
 <span class="p">(</span><span class="nb">load</span> <span class="s">&quot;svg.lisp&quot;</span><span class="p">)</span>
-</code></pre>
-</div>
-<p>然后需要先设定一些常数</p>
+</code></pre></div><p>然后需要先设定一些常数</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*board-width*</span> <span class="mi">900</span><span class="p">)</span><span class="c1">;面板宽度</span>
 <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*board-height*</span> <span class="mi">500</span><span class="p">)</span><span class="c1">;面板高度</span>
 <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*board-scale*</span> <span class="mi">64</span><span class="p">)</span><span class="c1">;面板缩放比例</span>
 <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*top-offset*</span> <span class="mi">3</span><span class="p">)</span><span class="c1">;两摞起来的骰子相对位移</span>
 <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*dice-scale*</span> <span class="mi">40</span><span class="p">)</span><span class="c1">;骰子缩放比例</span>
 <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*dot-size*</span> <span class="mf">0.05</span><span class="p">)</span><span class="c1">;骰子上点的大小</span>
-</code></pre>
-</div>
-<p>接下来画骰子</p>
+</code></pre></div><p>接下来画骰子</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">draw-die-svg</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">y</span> <span class="nv">col</span><span class="p">)</span>
   <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">calc-pt</span> <span class="p">(</span><span class="nv">pt</span><span class="p">)</span>
              <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*dice-scale*</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">pt</span><span class="p">)))</span>
@@ -181,9 +171,7 @@
           <span class="o">&#39;</span><span class="p">(</span><span class="mf">-0.05</span> <span class="mf">0.125</span> <span class="mf">0.3</span> <span class="mf">-0.3</span> <span class="mf">-0.125</span> <span class="mf">0.05</span> <span class="mf">0.2</span> <span class="mf">0.2</span> <span class="mf">0.45</span> <span class="mf">0.45</span> <span class="mf">-0.45</span> <span class="mf">-0.2</span><span class="p">)</span>
           <span class="o">&#39;</span><span class="p">(</span><span class="mf">-0.875</span> <span class="mf">-0.80</span> <span class="mf">-0.725</span> <span class="mf">-0.775</span> <span class="mf">-0.70</span> <span class="mf">-0.625</span> <span class="mf">-0.35</span> <span class="mf">-0.05</span> <span class="mf">-0.45</span> <span class="mf">-0.15</span> <span class="mf">-0.45</span> <span class="mf">-0.05</span><span class="p">))))</span>
 <span class="c1">;(with-open-file (*standard-output* &quot;die.svg&quot; :direction :output :if-exists :supersede) (svg 100 100 (draw-die-svg 50 50 &#39;(255 0 0)))) </span>
-</code></pre>
-</div>
-<p>再画一小块面板</p>
+</code></pre></div><p>再画一小块面板</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">draw-tile-svg</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">y</span> <span class="nv">pos</span> <span class="nv">hex</span> <span class="nv">xx</span> <span class="nv">yy</span> <span class="nv">col</span> <span class="nv">chosen-tile</span><span class="p">)</span>
   <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">z</span> <span class="nv">below</span> <span class="mi">2</span>
         <span class="nb">do</span> <span class="p">(</span><span class="nv">polygon</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">pt</span><span class="p">)</span>
@@ -205,9 +193,7 @@
                          <span class="p">(</span><span class="nb">-</span> <span class="nv">yy</span> <span class="p">(</span><span class="nb">*</span> <span class="vg">*dice-scale*</span> <span class="nv">z</span> <span class="mf">0.8</span><span class="p">))</span> <span class="nv">col</span><span class="p">)))</span>
 
 <span class="c1">;(with-open-file (*standard-output* &quot;tile.svg&quot; :direction :output) (svg 300 300 (draw-tile-svg 0 0 0 &#39;(0 3) 100 150 &#39;(255 0 0) nil)))</span>
-</code></pre>
-</div>
-<p>接下来是整个面板</p>
+</code></pre></div><p>接下来是整个面板</p>
 <div class="highlight"><pre><code class="cl"><span class="c1">;Draw the Board</span>
 <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*die-colors*</span> <span class="o">&#39;</span><span class="p">((</span><span class="mi">255</span> <span class="mi">63</span> <span class="mi">63</span><span class="p">)</span> <span class="p">(</span><span class="mi">63</span> <span class="mi">63</span> <span class="mi">255</span><span class="p">)))</span>
 <span class="p">(</span><span class="nb">defun</span> <span class="nv">draw-board-svg</span> <span class="p">(</span><span class="nv">board</span> <span class="nv">chosen-tile</span> <span class="nv">legal-tiles</span><span class="p">)</span>
@@ -227,9 +213,7 @@
 <span class="p">(</span><span class="nb">defun</span> <span class="nv">make-game-link</span> <span class="p">(</span><span class="nv">pos</span><span class="p">)</span>
   <span class="p">(</span><span class="nb">format</span> <span class="no">nil</span> <span class="s">&quot;/game.html?chosen=~a&quot;</span> <span class="nv">pos</span><span class="p">))</span>
 <span class="c1">;(with-open-file (*standard-output* &quot;board.svg&quot; :direction :output :if-exists :supersede) (svg *board-width* *board-height* (draw-board-svg (gen-board) nil nil)))</span>
-</code></pre>
-</div>
-<p>这有个问题，之前我们svg宏不是像上文中那样定义的，svg宏需要稍加修改，具体参见本书的 <a href="http://landoflisp.com/errata.html">errata</a></p>
+</code></pre></div><p>这有个问题，之前我们svg宏不是像上文中那样定义的，svg宏需要稍加修改，具体参见本书的 <a href="http://landoflisp.com/errata.html">errata</a></p>
 <h2>建立Web服务器</h2>
 <p>先写游戏的驱动</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*cur-game-tree*</span> <span class="no">nil</span><span class="p">)</span><span class="c1">;初始化当前游戏树</span>
@@ -259,9 +243,7 @@
              <span class="p">(</span><span class="nv">draw-dod-page</span> <span class="vg">*cur-game-tree*</span> <span class="vg">*from-tile*</span><span class="p">))</span>
            <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="p">))</span> 
     <span class="p">(</span><span class="nb">princ</span> <span class="s">&quot;Sorry... I don&#39;t know that page.&quot;</span><span class="p">)))</span>
-</code></pre>
-</div>
-<p>在这里我稍作修改，更改了服务器返回给浏览器的信息，使它更加符合标准能在firefox12中运行正常。</p>
+</code></pre></div><p>在这里我稍作修改，更改了服务器返回给浏览器的信息，使它更加符合标准能在firefox12中运行正常。</p>
 <p>我们只做了一个超级简化的服务器，功能弱爆了，但作者许诺能在最后一章很轻易的扩展。之后我们处理些基于webserver的函数</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">web-initialize</span> <span class="p">()</span>
   <span class="p">(</span><span class="nb">setf</span> <span class="vg">*from-tile*</span> <span class="no">nil</span><span class="p">)</span>
@@ -304,9 +286,7 @@
   <span class="p">(</span><span class="nv">tag</span> <span class="nv">script</span> <span class="p">()</span>
     <span class="p">(</span><span class="nb">princ</span>
       <span class="s">&quot;window.setTimeout(&#39;window.location=\&quot;game.html?chosen=NIL\&quot;&#39;,3000)&quot;</span><span class="p">)))</span><span class="c1">;javascript，改成3秒了，感觉5秒在我这里太慢了</span>
-</code></pre>
-</div>
-<p>然后在html中绘制svg游戏面板时有些tweak，首先是svg，你遵照之前errata提到的修正svg宏后才能正常显示，否则只显示一小块或完全看不到时可别吃惊。另外是作者定义两次点击同一片游戏面板代表取消，但它的legal-tile（合法面板）中却没有包含本身，以致于不能正常取消选中。我做了如下修改，把当前选中的游戏面板添加进合法面板中。</p>
+</code></pre></div><p>然后在html中绘制svg游戏面板时有些tweak，首先是svg，你遵照之前errata提到的修正svg宏后才能正常显示，否则只显示一小块或完全看不到时可别吃惊。另外是作者定义两次点击同一片游戏面板代表取消，但它的legal-tile（合法面板）中却没有包含本身，以致于不能正常取消选中。我做了如下修改，把当前选中的游戏面板添加进合法面板中。</p>
 <div class="highlight"><pre><code class="cl"><span class="c1">;caXXXXXXXdr……以后我要用firstsecond改写</span>
 <span class="p">(</span><span class="nb">defun</span> <span class="nv">draw-dod-page</span> <span class="p">(</span><span class="nv">tree</span> <span class="nv">selected-tile</span><span class="p">)</span>
   <span class="p">(</span><span class="nv">svg</span> <span class="vg">*board-width*</span> <span class="c1">;svg要更改！！</span>
@@ -322,13 +302,9 @@
                                          <span class="p">(</span><span class="nb">cadar</span> <span class="nv">move</span><span class="p">)))</span>
                                      <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">))</span>
                                    <span class="p">(</span><span class="nv">lazy-mapcar</span> <span class="nf">#&#39;</span><span class="nb">caar</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">))))))))</span>
-</code></pre>
-</div>
-<p>然后很显然，enjoy我们基于网络的游戏吧</p>
+</code></pre></div><p>然后很显然，enjoy我们基于网络的游戏吧</p>
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">serve</span> <span class="nf">#&#39;</span><span class="nv">dod-request-handler</span><span class="p">)</span>
-</code></pre>
-</div>
-<hr />
+</code></pre></div><hr />
 <h2>游戏截图</h2>
 <p>截个图看看效果</p>
 <p><img src="http://fmn.rrimg.com/fmn064/20120702/1345/p_large_vHyz_01a000007c271262.jpg" alt="" /></p>
@@ -452,6 +428,12 @@ $(document).ready(function(){
         <li>
         
         <a href="/categories.html#python-ref">python <span>20</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#phase unwrapping-ref">phase unwrapping <span>1</span></a>
         </li>
       
       

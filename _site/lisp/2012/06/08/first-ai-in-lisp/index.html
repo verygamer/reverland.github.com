@@ -53,12 +53,6 @@
     
   
     
-    	
-    	<li><a href="/about.html">About</a></li>
-    	
-    
-  
-    
   
     
     	
@@ -181,8 +175,7 @@
   <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">move</span><span class="p">)</span>
             <span class="p">(</span><span class="nv">rate-position</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">move</span><span class="p">)</span> <span class="nv">player</span><span class="p">))</span>
           <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <h2 id="ai">创造一个有AI的游戏循环</h2>
 
@@ -191,8 +184,7 @@
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">handle-computer</span> <span class="p">(</span><span class="nv">tree</span><span class="p">)</span>
   <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ratings</span> <span class="p">(</span><span class="nv">get-ratings</span> <span class="nv">tree</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">tree</span><span class="p">))))</span>
     <span class="p">(</span><span class="nb">cadr</span> <span class="p">(</span><span class="nb">nth</span> <span class="p">(</span><span class="nb">position</span> <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">max</span> <span class="nv">ratings</span><span class="p">)</span> <span class="nv">ratings</span><span class="p">)</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">)))))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>最后，创造一个游戏环境即游戏循环</p>
 
@@ -201,8 +193,7 @@
   <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">null</span> <span class="p">(</span><span class="nb">caddr</span> <span class="nv">tree</span><span class="p">))</span> <span class="p">(</span><span class="nv">announce-winner</span> <span class="p">(</span><span class="nb">cadr</span> <span class="nv">tree</span><span class="p">)))</span>
         <span class="p">((</span><span class="nb">zerop</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">tree</span><span class="p">))</span> <span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">handle-human</span> <span class="nv">tree</span><span class="p">)))</span><span class="c1">;因为游戏中player1即代码0为人类玩家</span>
         <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">handle-computer</span> <span class="nv">tree</span><span class="p">)))))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>finished!!</p>
 
@@ -211,8 +202,7 @@
 <p>在repl中输入</p>
 
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">play-vs-computer</span> <span class="p">(</span><span class="nv">game-tree</span> <span class="p">(</span><span class="nv">gen-board</span><span class="p">)</span> <span class="mi">0</span> <span class="mi">0</span> <span class="no">t</span><span class="p">))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <h2 id="section-3">写在最后</h2>
 
@@ -220,13 +210,17 @@
 
 <p>最后引用首爱默生《人生苦旅》中的诗：</p>
 
-<div class="highlight"><pre><code class="bash">我们把美归于简单
-不含多余部分
-边界清晰
-与一切相关联
-是中庸之道
-</code></pre>
-</div>
+<blockquote>
+  <p>我们把美归于简单</p>
+
+  <p>不含多余部分</p>
+
+  <p>边界清晰</p>
+
+  <p>与一切相关联</p>
+
+  <p>是中庸之道</p>
+</blockquote>
 
 
     
@@ -349,6 +343,12 @@ $(document).ready(function(){
         <li>
         
         <a href="/categories.html#python-ref">python <span>20</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#phase unwrapping-ref">phase unwrapping <span>1</span></a>
         </li>
       
       

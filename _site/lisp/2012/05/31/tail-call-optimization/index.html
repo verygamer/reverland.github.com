@@ -53,12 +53,6 @@
     
   
     
-    	
-    	<li><a href="/about.html">About</a></li>
-    	
-    
-  
-    
   
     
     	
@@ -146,38 +140,34 @@
   <span class="p">(</span><span class="k">if</span> <span class="nv">lst</span>
       <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nv">my-length</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))</span>
       <span class="mi">0</span><span class="p">))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>首先，它会检查列表是否是空的，如果不是，它递归地调用自身计算剩下列表的长度并加上1,如果是空的则返回0.</p>
 
 <p>结果是这个函数相当没有效率…………我们可以试试一个“大列表”：</p>
 
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*biglist*</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">below</span> <span class="mi">100000</span> <span class="nv">collect</span> <span class="ss">&#39;x</span><span class="p">))</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>在clisp中试试……</p>
 
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nv">my-length</span> <span class="vg">*biglist*</span><span class="p">)</span>
 
 <span class="vg">***</span> <span class="nb">-</span> <span class="nv">Program</span> <span class="nv">stack</span> <span class="nv">overflow.</span> <span class="nv">RESET</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>stack overflow！！问题出现在<code>+1</code>函数上，它告诉lisp解释器：“首先计算列表的长度，然后对结果调用<code>+1</code>。”
 问题是每次我们递归调用<code>my-length</code>时，lisp必须记住我们之后要向结果添加1。由于列表有100000项长，lisp在它能<code>+1</code>之前要记住99999次！！clisp的做法是在堆栈中放个提示符，这导致最后堆栈溢出。</p>
 
 <p>我们如何避免这个问题呢？我们重新定义我们的<code>my-length</code>函数</p>
 
-<div class="highlight"><pre><code class="cl"><span class="lineno">1</span> <span class="p">(</span><span class="nb">defun</span> <span class="nv">my-length</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
-<span class="lineno">2</span>   <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">f</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">acc</span><span class="p">)</span>
-<span class="lineno">3</span>               <span class="p">(</span><span class="k">if</span> <span class="nv">lst</span>
-<span class="lineno">4</span>                  <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">acc</span><span class="p">))</span>
-<span class="lineno">5</span>                  <span class="nv">acc</span><span class="p">)))</span>
-<span class="lineno">6</span>      <span class="p">(</span><span class="nv">f</span> <span class="nv">lst</span> <span class="mi">0</span><span class="p">)))</span>
-</code></pre>
-</div>
+<div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">my-length</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">f</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">acc</span><span class="p">)</span>
+              <span class="p">(</span><span class="k">if</span> <span class="nv">lst</span>
+                 <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">acc</span><span class="p">))</span>
+                 <span class="nv">acc</span><span class="p">)))</span>
+     <span class="p">(</span><span class="nv">f</span> <span class="nv">lst</span> <span class="mi">0</span><span class="p">)))</span>
+</code></pre></div>
 
 <p>我们定义了一个局部函数<code>f</code>作为list-eater,但同时多了个acc累加器。这个累加器累加遇到的列表数目，最开始调用f时acc置0.</p>
 
@@ -195,8 +185,7 @@
 
 <div class="highlight"><pre><code class="cl"><span class="p">(</span><span class="nb">compile</span> <span class="ss">&#39;my-length</span><span class="p">)</span>
 <span class="p">(</span><span class="nv">my-length</span> <span class="vg">*biglist*</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>有没有感觉速度超快？</p>
 
@@ -324,6 +313,12 @@ $(document).ready(function(){
         <li>
         
         <a href="/categories.html#python-ref">python <span>20</span></a>
+        </li>
+       
+        
+        <li>
+        
+        <a href="/categories.html#phase unwrapping-ref">phase unwrapping <span>1</span></a>
         </li>
       
       

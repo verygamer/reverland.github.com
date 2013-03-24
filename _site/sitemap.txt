@@ -1,6 +1,5 @@
 
 http://reverland.org/tracker.html
-http://reverland.org/about.html
 http://reverland.org/index.html
 http://reverland.org/archive.html
 http://reverland.org/categories.html
@@ -16,6 +15,7 @@ http://reverland.org/page6/index.html
 http://reverland.org/page7/index.html
 http://reverland.org/page8/index.html
 
+http://reverland.org/phase%20unwrapping/2013/03/24/
 http://reverland.org/python/2013/03/13/advanced-python-constructs
 http://reverland.org/linux-tech/2013/03/11/quickstart-ebuild-guide
 http://reverland.org/python/2013/03/07/image-to-css
