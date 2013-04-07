@@ -9,18 +9,18 @@
  */
 /* @import url('https://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here'); */
 
-@font-face {
+/*@font-face {
   font-family: 'Just Me Again Down Here';
   font-style: normal;
   font-weight: 400;
   src: local('Just Me Again Down Here'), local('Just Me Again Down Here'), url(/assets/themes/twitter/bootstrap/fonts/JustMeAgainDownHere.ttf) format('ttf');
-}
+}*/
 @font-face {
   font-family: 'Patrick Hand SC';
   font-style: normal;
   font-weight: 400;
   src: local('Patrick Hand SC'), local('Patrick Hand SC'), url(/assets/themes/twitter/bootstrap/fonts/PatrickHandSC-Regular.ttf) format('ttf');
-}
+} 
 article,
 aside,
 details,
@@ -619,7 +619,7 @@ video {
 												    h5,
 												    h6 {
 												      margin: 10px 0;
-												      font-family: 'Patrick Hand SC', inherit;
+												      font-family: inherit;
 												      font-weight: bold;
 												      line-height: 20px;
 												      color: inherit;
@@ -3649,8 +3649,8 @@ video {
 																									 }
 																									 .navbar .container {
 																									   width: auto;
-																									   font-size: 25px;
-																									   font-family: 'Just Me Again Down here', 'Helvetica Neue', Monaco, sans-serif;
+																									   font-size: 20px;
+																									   font-family: 'Helvetica Neue', Monaco, sans-serif;
 																									 }
 																									 .nav-collapse.collapse {
 																									   height: auto;
@@ -3665,7 +3665,7 @@ video {
 																									   font-weight: 200;
 																									   color: #eeeeee;
 																									   text-shadow: 0 1px 0 #45347b;
-																									   font-family: 'Just Me Again Down here'
+																									   font-family: 'Patrick Hand SC'
 																									 }
 																									 .navbar .brand:hover {
 																									   text-decoration: none;

@@ -1,5 +1,6 @@
 
 http://reverland.org/tracker.html
+http://reverland.org/about.html
 http://reverland.org/index.html
 http://reverland.org/archive.html
 http://reverland.org/categories.html
