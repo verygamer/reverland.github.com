@@ -159,7 +159,7 @@ $$\oint \nabla \varphi(r) \cdot dr = 2\pi \times \text{(sum of enclosed residue 
 
 ## Off-Topic
 
-相位去包裹笔记放在这里。
+相位去包裹笔记放在[这里](https://github.com/reverland/phase-unwrapping-notes)。
 
 ## Footnotes
 
